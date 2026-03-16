@@ -1,19 +1,11 @@
 <script lang="ts">
-  import { Accordion as AccordionPrimitive } from 'bits-ui';
+  import { Accordion as AccordionPrimitive, type AccordionRootProps } from 'bits-ui';
   import { cn } from '$lib/utils';
   import type { Snippet } from 'svelte';
 
-  interface Props {
-    type?: 'single' | 'multiple';
-    collapsible?: boolean;
-    value?: string | string[];
-    children?: Snippet;
-    class?: string;
-  }
-
-  let { type = 'single', collapsible = false, value = $bindable(), children, class: className, ...restProps }: Props = $props();
+  let { children, class: className, ...restProps }: AccordionRootProps & { children?: Snippet; class?: string } = $props();
 </script>
 
-<AccordionPrimitive.Root {type} {collapsible} bind:value class={cn(className)} {...restProps}>
+<AccordionPrimitive.Root class={cn(className)} {...restProps}>
   {#if children}{@render children()}{/if}
 </AccordionPrimitive.Root>

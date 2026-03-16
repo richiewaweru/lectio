@@ -26,7 +26,7 @@
 		Practice Problems
 	</div>
 
-	<Accordion type="single" collapsible class="space-y-2">
+	<Accordion type="single" class="space-y-2">
 		{#each content.problems as problem, i}
 			{@const diff = difficultyConfig[problem.difficulty]}
 			<AccordionItem value={`problem-${i}`} class="border rounded-lg px-4 bg-card">
