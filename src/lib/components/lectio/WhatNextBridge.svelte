@@ -12,6 +12,12 @@
 	<p class="text-sm leading-relaxed text-foreground/80 mb-2">
 		{content.body}
 	</p>
+	{#if content.prerequisites && content.prerequisites.length > 0}
+		<div class="text-xs text-muted-foreground mb-2">
+			<span class="font-semibold">Prerequisites:</span>
+			{content.prerequisites.join(' · ')}
+		</div>
+	{/if}
 	<p class="text-sm font-semibold text-amber-700">
 		{content.next} &rarr;
 	</p>

@@ -2,6 +2,7 @@
 	import type { WorkedExampleContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
+	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 
 	let {
 		content,
@@ -54,5 +55,31 @@
 		<div class="mt-4 pt-3 border-t text-sm font-medium text-foreground bg-violet-50 rounded-md p-3">
 			{content.conclusion}
 		</div>
+	{/if}
+
+	{#if revealed >= content.steps.length - 1 && content.answer}
+		<div class="mt-3 text-sm bg-violet-100 rounded-md p-3">
+			<span class="font-bold text-violet-700">Answer:</span>
+			<span class="text-foreground">{content.answer}</span>
+		</div>
+	{/if}
+
+	{#if revealed >= content.steps.length - 1 && content.alternatives && content.alternatives.length > 0}
+		<Collapsible class="mt-3">
+			<CollapsibleTrigger>
+				<Button variant="ghost" size="sm" class="text-violet-600 text-xs h-6 px-2">
+					Other approaches &rarr;
+				</Button>
+			</CollapsibleTrigger>
+			<CollapsibleContent>
+				<ul class="mt-2 space-y-1.5">
+					{#each content.alternatives as alt}
+						<li class="text-xs text-muted-foreground bg-muted/50 rounded p-2 leading-relaxed">
+							{alt}
+						</li>
+					{/each}
+				</ul>
+			</CollapsibleContent>
+		</Collapsible>
 	{/if}
 </Card>

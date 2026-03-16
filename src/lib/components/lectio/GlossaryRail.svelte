@@ -17,6 +17,12 @@
 				<li>
 					<div class="text-sm font-semibold text-foreground">{term.term}</div>
 					<div class="text-xs text-muted-foreground leading-relaxed">{term.definition}</div>
+					{#if term.used_in}
+						<div class="text-xs text-muted-foreground/70 mt-0.5">Used in: {term.used_in}</div>
+					{/if}
+					{#if term.related && term.related.length > 0}
+						<div class="text-xs text-muted-foreground/70 mt-0.5">See also: {term.related.join(', ')}</div>
+					{/if}
 				</li>
 			{/each}
 		</ul>

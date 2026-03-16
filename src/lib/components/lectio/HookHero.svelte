@@ -12,15 +12,25 @@
 		?
 	</div>
 
-	<div class="relative">
-		<div class="text-xs font-semibold tracking-widest uppercase text-orange-300 mb-3">
-			Intuition Hook
+	<div class="relative flex gap-6">
+		<div class="flex-1">
+			<div class="text-xs font-semibold tracking-widest uppercase text-orange-300 mb-3">
+				Intuition Hook
+			</div>
+			<h2 class="text-2xl font-bold leading-tight mb-3 max-w-lg">
+				{content.headline}
+			</h2>
+			<p class="text-sm leading-relaxed text-white/70 max-w-lg">
+				{content.body}
+			</p>
 		</div>
-		<h2 class="text-2xl font-bold leading-tight mb-3 max-w-lg">
-			{content.headline}
-		</h2>
-		<p class="text-sm leading-relaxed text-white/70 max-w-lg">
-			{content.body}
-		</p>
+		{#if content.image}
+			<img
+				src={content.image.url}
+				alt={content.image.alt}
+				class="hidden sm:block w-40 h-32 object-cover rounded-lg flex-shrink-0"
+				onerror={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+			/>
+		{/if}
 	</div>
 </div>

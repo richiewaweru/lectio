@@ -1,6 +1,13 @@
 <script lang="ts">
 	import type { ExplanationContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
+	import { BookOpen, Lightbulb, Info } from 'lucide-svelte';
+
+	const calloutConfig = {
+		remember: { label: 'Remember', class: 'bg-blue-50 text-blue-800 border-blue-200', icon: BookOpen },
+		insight: { label: 'Key Insight', class: 'bg-violet-50 text-violet-800 border-violet-200', icon: Lightbulb },
+		sidenote: { label: 'Side Note', class: 'bg-gray-50 text-gray-700 border-gray-200', icon: Info },
+	};
 
 	let { content }: { content: ExplanationContent } = $props();
 
@@ -24,4 +31,18 @@
 	<div class="text-sm leading-relaxed text-foreground/80 prose prose-sm max-w-none">
 		{@html highlightEmphasis(content.body, content.emphasis)}
 	</div>
+	{#if content.callouts && content.callouts.length > 0}
+		<div class="mt-4 space-y-3">
+			{#each content.callouts as callout}
+				{@const cfg = calloutConfig[callout.type]}
+				<div class="flex gap-2.5 rounded-md border p-3 text-xs leading-relaxed {cfg.class}">
+					<cfg.icon class="h-4 w-4 flex-shrink-0 mt-0.5" />
+					<div>
+						<span class="font-semibold">{cfg.label}:</span>
+						{callout.text}
+					</div>
+				</div>
+			{/each}
+		</div>
+	{/if}
 </Card>
