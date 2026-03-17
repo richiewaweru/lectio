@@ -1,4 +1,4 @@
-// The component registry — single source of truth
+// The component registry - single source of truth
 // Drives the showcase page, template generation,
 // and contribution review checklist
 
@@ -19,7 +19,7 @@ export interface ComponentMeta {
 }
 
 export const componentRegistry: Record<string, ComponentMeta> = {
-	// ─── GROUP 1 — FOUNDATION ───
+	// GROUP 1 - FOUNDATION
 
 	SectionHeader: {
 		id: 'section-header',
@@ -32,7 +32,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Badge (for level pills)',
 		capacity: { titleMaxWords: 12, subtitleMaxWords: 20, objectiveMaxWords: 30 },
 		printFallback: 'Full static header',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	HookHero: {
@@ -43,10 +43,10 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		cognitiveJob: 'Create felt need',
 		subjects: ['universal'],
 		behaviourModes: ['static'],
-		shadcnPrimitive: 'none — pure layout',
+		shadcnPrimitive: 'none - pure layout',
 		capacity: { headlineMaxWords: 12, bodyMaxWords: 80 },
 		printFallback: 'Pull quote block with left border',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	ExplanationBlock: {
@@ -60,7 +60,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Typography',
 		capacity: { bodyMaxWords: 350, emphasisMax: 3 },
 		printFallback: 'Static prose',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	PrerequisiteStrip: {
@@ -74,7 +74,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Popover',
 		capacity: { itemsMax: 4 },
 		printFallback: 'Inline list of prerequisites',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	WhatNextBridge: {
@@ -88,24 +88,24 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card',
 		capacity: { bodyMaxWords: 50, nextMaxWords: 15, previewMaxWords: 30 },
 		printFallback: 'Static, amber left rule',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	InterviewAnchor: {
 		id: 'interview-anchor',
 		name: 'InterviewAnchor',
 		group: 1,
-		purpose: 'Makes knowledge speakable — rehearse explaining the concept',
+		purpose: 'Makes knowledge speakable - rehearse explaining the concept',
 		cognitiveJob: 'Make knowledge speakable',
 		subjects: ['universal'],
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'Card',
 		capacity: { promptMaxWords: 35, audienceMaxWords: 10, followUpMaxWords: 25 },
 		printFallback: 'Static with write-in lines',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 2 — DEFINITION AND KNOWLEDGE ───
+	// GROUP 2 - DEFINITION AND KNOWLEDGE
 
 	DefinitionCard: {
 		id: 'definition-card',
@@ -118,7 +118,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Collapsible',
 		capacity: { formalMaxWords: 80, plainMaxWords: 60, relatedTermsMax: 3 },
 		printFallback: 'Both versions shown',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	DefinitionFamily: {
@@ -132,7 +132,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Accordion',
 		capacity: { definitionsMax: 4, introMaxWords: 40 },
 		printFallback: 'All definitions expanded',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	GlossaryRail: {
@@ -146,7 +146,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + ScrollArea + Sheet',
 		capacity: { termsMax: 8, termsWarning: 6, definitionMaxWords: 30 },
 		printFallback: 'Inline vocabulary strip at section end',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	GlossaryInline: {
@@ -160,24 +160,24 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Popover',
 		capacity: { definitionMaxWords: 30 },
 		printFallback: 'Term underlined, definition in footnote',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	InsightStrip: {
 		id: 'insight-strip',
 		name: 'InsightStrip',
 		group: 2,
-		purpose: 'Side-by-side comparison of 2–3 related values or concepts',
+		purpose: 'Side-by-side comparison of 2-3 related values or concepts',
 		cognitiveJob: 'Compare values simultaneously',
 		subjects: ['universal'],
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'CSS Grid',
 		capacity: { cellsMax: 3, cellsMin: 2, cellLinesMax: 2 },
 		printFallback: 'Static table',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 3 — EXAMPLES AND PROCESS ───
+	// GROUP 3 - EXAMPLES AND PROCESS
 
 	WorkedExampleCard: {
 		id: 'worked-example-card',
@@ -190,7 +190,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Collapsible',
 		capacity: { stepsMax: 6, stepsWarning: 4, stepLabelMaxWords: 12, stepContentMaxWords: 80 },
 		printFallback: 'All steps expanded',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	ProcessSteps: {
@@ -204,10 +204,10 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Separator',
 		capacity: { stepsMax: 8, actionMaxWords: 15, detailMaxWords: 60 },
 		printFallback: 'All steps visible, checkbox squares for print',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 4 — ASSESSMENT AND PRACTICE ───
+	// GROUP 4 - ASSESSMENT AND PRACTICE
 
 	PracticeStack: {
 		id: 'practice-stack',
@@ -218,9 +218,15 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		subjects: ['universal'],
 		behaviourModes: ['hint-toggle', 'accordion', 'progressive-hints'],
 		shadcnPrimitive: 'Accordion + Collapsible',
-		capacity: { problemsMin: 2, problemsMax: 5, hintsPerProblemMax: 3, questionMaxWords: 100, hintMaxWords: 60 },
+		capacity: {
+			problemsMin: 2,
+			problemsMax: 5,
+			hintsPerProblemMax: 3,
+			questionMaxWords: 100,
+			hintMaxWords: 60
+		},
 		printFallback: 'All visible, write-in lines rendered',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	QuizCheck: {
@@ -234,7 +240,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Button',
 		capacity: { optionsMin: 3, optionsMax: 4, questionMaxWords: 60, optionMaxWords: 20 },
 		printFallback: 'Question and options shown, correct answer marked',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	ReflectionPrompt: {
@@ -248,10 +254,10 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card',
 		capacity: { promptMaxWords: 40, spaceMax: 6 },
 		printFallback: 'Prompt with write-in lines',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 5 — ALERTS ───
+	// GROUP 5 - ALERTS
 
 	PitfallAlert: {
 		id: 'pitfall-alert',
@@ -264,10 +270,10 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Alert + Collapsible',
 		capacity: { misconceptionMaxWords: 20, correctionMaxWords: 80, exampleMaxWords: 40 },
 		printFallback: 'Full static, amber left border',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 6 — DIAGRAMS ───
+	// GROUP 6 - DIAGRAMS
 
 	DiagramBlock: {
 		id: 'diagram-block',
@@ -280,7 +286,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Dialog',
 		capacity: { calloutsMax: 6, captionMaxWords: 60 },
 		printFallback: 'Static SVG 80% width centred',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	DiagramCompare: {
@@ -294,7 +300,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Slider',
 		capacity: { captionMaxWords: 60 },
 		printFallback: 'Both diagrams shown side by side',
-		status: 'stable',
+		status: 'stable'
 	},
 
 	DiagramSeries: {
@@ -308,10 +314,10 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Tabs or step nav',
 		capacity: { diagramsMax: 4 },
 		printFallback: 'All diagrams in sequence with step labels',
-		status: 'stable',
+		status: 'stable'
 	},
 
-	// ─── GROUP 7 — SIMULATION ───
+	// GROUP 7 - SIMULATION
 
 	SimulationBlock: {
 		id: 'simulation-block',
@@ -324,25 +330,25 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'iframe sandbox',
 		capacity: { onePerSection: 'true' },
 		printFallback: 'Static diagram at midstate',
-		status: 'beta',
-	},
+		status: 'beta'
+	}
 };
 
-// Helper — components ready to use (not planned)
+// Helper - components ready to use (not planned)
 export function getStableComponents(): ComponentMeta[] {
 	return Object.values(componentRegistry).filter(
-		(c) => c.status === 'stable' || c.status === 'beta'
+		(component) => component.status === 'stable' || component.status === 'beta'
 	);
 }
 
-// Helper — components by group
+// Helper - components by group
 export function getComponentsByGroup(group: number): ComponentMeta[] {
-	return Object.values(componentRegistry).filter((c) => c.group === group);
+	return Object.values(componentRegistry).filter((component) => component.group === group);
 }
 
-// Helper — get all component ids for a given subject
+// Helper - get all component ids for a given subject
 export function getComponentsForSubject(subject: string): ComponentMeta[] {
 	return Object.values(componentRegistry).filter(
-		(c) => c.subjects.includes('universal') || c.subjects.includes(subject)
+		(component) => component.subjects.includes('universal') || component.subjects.includes(subject)
 	);
 }

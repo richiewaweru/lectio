@@ -6,19 +6,15 @@
 </script>
 
 <Card class="border-l-4 border-l-amber-400 bg-amber-50/65 p-6">
-	<div class="text-xs font-semibold tracking-widest uppercase text-amber-600 mb-2">
-		What's Next
+	<div class="space-y-3">
+		<p class="eyebrow text-amber-600">What next</p>
+		<p class="text-sm leading-7 text-foreground/80">{content.body}</p>
+		{#if content.prerequisites?.length}
+			<p class="text-xs text-muted-foreground">
+				<span class="font-semibold">Prerequisites:</span>
+				{content.prerequisites.join(' | ')}
+			</p>
+		{/if}
+		<p class="text-sm font-semibold font-serif text-amber-700">{content.next} -></p>
 	</div>
-	<p class="text-sm leading-relaxed text-foreground/80 mb-2">
-		{content.body}
-	</p>
-	{#if content.prerequisites && content.prerequisites.length > 0}
-		<div class="text-xs text-muted-foreground mb-2">
-			<span class="font-semibold">Prerequisites:</span>
-			{content.prerequisites.join(' · ')}
-		</div>
-	{/if}
-	<p class="text-sm font-semibold text-amber-700 font-serif">
-		{content.next} &rarr;
-	</p>
 </Card>

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'katex/dist/katex.min.css';
 
 @theme inline {
 	--color-background: var(--background);
@@ -59,6 +60,9 @@
 	* {
 		@apply border-border;
 	}
+	html {
+		scroll-behavior: smooth;
+	}
 	body {
 		@apply bg-background text-foreground;
 		font-family: var(--font-sans);
@@ -68,6 +72,16 @@
 			radial-gradient(ellipse 80% 60% at 5% 0%, hsl(24 95% 53% / 0.06) 0%, transparent 70%),
 			radial-gradient(ellipse 60% 50% at 95% 0%, hsl(213 37% 17% / 0.04) 0%, transparent 70%);
 		background-attachment: fixed;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		letter-spacing: -0.025em;
+		text-wrap: balance;
+	}
+	p {
+		text-wrap: pretty;
 	}
 
 	/* Styled scrollbar for ScrollArea */
@@ -100,10 +114,106 @@
 
 	/* Step reveal animation */
 	@keyframes fade-in-up {
-		from { opacity: 0; transform: translateY(8px); }
-		to { opacity: 1; transform: translateY(0); }
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 	.animate-step-reveal {
 		animation: fade-in-up 0.3s ease forwards;
+	}
+
+	/* Scale-in animation for dialog/lightbox overlays */
+	@keyframes scale-in {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+	.animate-scale-in {
+		animation: scale-in 0.2s ease-out forwards;
+	}
+}
+
+@layer utilities {
+	.lesson-shell {
+		position: relative;
+		overflow: hidden;
+		border-radius: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		background: rgba(255, 255, 255, 0.85);
+		box-shadow: 0 24px 80px rgba(27, 38, 59, 0.14);
+		backdrop-filter: blur(18px);
+	}
+
+	.lesson-shell::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background-image:
+			linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+			linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+		background-position: 0 0;
+		background-size: 24px 24px;
+		mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.18), transparent 55%);
+	}
+
+	.glass-panel {
+		position: relative;
+		overflow: hidden;
+		border: 1px solid rgba(255, 255, 255, 0.68);
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 248, 240, 0.82)),
+			rgba(255, 255, 255, 0.86);
+		box-shadow:
+			0 24px 70px rgba(27, 38, 59, 0.16),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+		backdrop-filter: blur(22px);
+	}
+
+	.glass-panel::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background:
+			radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 38%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 55%);
+	}
+
+	.page-frame {
+		margin-inline: auto;
+		width: 100%;
+		max-width: 80rem;
+		padding: 2.5rem 1rem;
+	}
+
+	.eyebrow {
+		color: var(--accent);
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+	}
+}
+
+@media (min-width: 640px) {
+	.page-frame {
+		padding-inline: 1.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.page-frame {
+		padding-inline: 2rem;
 	}
 }

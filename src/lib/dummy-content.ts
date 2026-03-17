@@ -20,10 +20,24 @@ export const calculusSection: SectionContent = {
 		headline: 'How fast is something moving at this exact instant?',
 		body: 'You can measure where a ball is at two moments and calculate how far it moved. But what if you need its speed at one precise instant — not over a span, but at a single frozen moment? Algebra gives you averages. It cannot give you an instant.',
 		anchor: 'the gap between average speed and instantaneous speed',
-		image: {
-			url: '/images/falling-ball.jpg',
-			alt: 'A ball frozen mid-fall against a ruler, illustrating instantaneous position',
-		},
+		svg_content: `<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" preserveAspectRatio="xMidYMid meet">
+  <!-- Ruler on the right -->
+  <rect x="130" y="10" width="16" height="180" rx="2" fill="hsl(38 30% 92%)" stroke="hsl(213 37% 17% / 0.3)" stroke-width="1"/>
+  <line x1="130" y1="50" x2="146" y2="50" stroke="hsl(213 37% 17% / 0.3)" stroke-width="0.5"/>
+  <line x1="130" y1="90" x2="146" y2="90" stroke="hsl(213 37% 17% / 0.3)" stroke-width="0.5"/>
+  <line x1="130" y1="130" x2="146" y2="130" stroke="hsl(213 37% 17% / 0.3)" stroke-width="0.5"/>
+  <line x1="130" y1="170" x2="146" y2="170" stroke="hsl(213 37% 17% / 0.3)" stroke-width="0.5"/>
+  <!-- Motion trail -->
+  <circle cx="70" cy="35" r="14" fill="hsl(24 95% 53% / 0.04)"/>
+  <circle cx="70" cy="50" r="18" fill="hsl(24 95% 53% / 0.08)"/>
+  <!-- Ball frozen mid-fall -->
+  <circle cx="70" cy="85" r="22" fill="hsl(24 95% 53% / 0.85)"/>
+  <circle cx="62" cy="78" r="6" fill="hsl(24 95% 53% / 0.4)"/>
+  <!-- Velocity arrow -->
+  <line x1="70" y1="110" x2="70" y2="155" stroke="hsl(213 37% 17% / 0.6)" stroke-width="2"/>
+  <polygon points="64,155 70,168 76,155" fill="hsl(213 37% 17% / 0.6)"/>
+  <text x="85" y="140" font-size="10" fill="hsl(213 37% 17% / 0.5)">v = ?</text>
+</svg>`,
 	},
 
 	explanation: {
@@ -224,18 +238,23 @@ const forceArrowSvg = `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/
   <text x="200" y="180" text-anchor="middle" font-size="13" fill="hsl(213 37% 17% / 0.6)">F_net = 20 − 5 = 15 N →</text>
 </svg>`;
 
-const beforeAccelerationSvg = `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-  <rect x="80" y="30" width="80" height="60" rx="6" fill="hsl(213 37% 17% / 0.08)" stroke="hsl(213 37% 17% / 0.3)" stroke-width="2"/>
-  <text x="120" y="65" text-anchor="middle" font-size="13" fill="hsl(213 37% 17%)">5 kg</text>
-  <text x="150" y="110" text-anchor="middle" font-size="12" fill="hsl(213 37% 17% / 0.5)">At rest (v = 0)</text>
+const beforeAccelerationSvg = `<svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+  <text x="150" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="hsl(213 37% 17%)">v = 0</text>
+  <rect x="100" y="40" width="100" height="70" rx="8" fill="hsl(213 37% 17% / 0.08)" stroke="hsl(213 37% 17% / 0.3)" stroke-width="2"/>
+  <text x="150" y="82" text-anchor="middle" font-size="16" font-weight="bold" fill="hsl(213 37% 17%)">5 kg</text>
+  <line x1="60" y1="115" x2="240" y2="115" stroke="hsl(213 37% 17% / 0.15)" stroke-width="1.5"/>
+  <text x="150" y="145" text-anchor="middle" font-size="13" font-weight="600" fill="hsl(213 37% 17% / 0.6)">Net force = 0 N</text>
 </svg>`;
 
-const afterAccelerationSvg = `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-  <rect x="160" y="30" width="80" height="60" rx="6" fill="hsl(24 95% 53% / 0.15)" stroke="hsl(24 95% 53%)" stroke-width="2"/>
-  <text x="200" y="65" text-anchor="middle" font-size="13" fill="hsl(213 37% 17%)">5 kg</text>
-  <line x1="250" y1="60" x2="290" y2="60" stroke="hsl(24 95% 53%)" stroke-width="2"/>
-  <polygon points="290,55 298,60 290,65" fill="hsl(24 95% 53%)"/>
-  <text x="150" y="110" text-anchor="middle" font-size="12" fill="hsl(24 95% 53%)">a = 3 m/s² →</text>
+const afterAccelerationSvg = `<svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+  <text x="150" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="hsl(24 95% 53%)">a = 3 m/s²</text>
+  <rect x="100" y="40" width="100" height="70" rx="8" fill="hsl(24 95% 53% / 0.12)" stroke="hsl(24 95% 53%)" stroke-width="2"/>
+  <text x="150" y="82" text-anchor="middle" font-size="16" font-weight="bold" fill="hsl(213 37% 17%)">5 kg</text>
+  <line x1="210" y1="70" x2="265" y2="70" stroke="hsl(24 95% 53%)" stroke-width="3"/>
+  <polygon points="265,63 278,70 265,77" fill="hsl(24 95% 53%)"/>
+  <text x="240" y="58" text-anchor="middle" font-size="11" font-weight="bold" fill="hsl(24 95% 53%)">15 N</text>
+  <line x1="60" y1="115" x2="240" y2="115" stroke="hsl(213 37% 17% / 0.15)" stroke-width="1.5"/>
+  <text x="150" y="145" text-anchor="middle" font-size="13" font-weight="600" fill="hsl(24 95% 53%)">F_net = 15 N →</text>
 </svg>`;
 
 const seriesSvg1 = `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -384,10 +403,20 @@ export const physicsSection: SectionContent = {
 	diagram_compare: {
 		before_svg: beforeAccelerationSvg,
 		after_svg: afterAccelerationSvg,
-		before_label: 'Before force applied',
-		after_label: 'After: a = 3 m/s²',
-		caption: 'A 5 kg object at rest (left) vs. the same object accelerating at 3 m/s² under a 15 N net force (right).',
-		alt_text: 'Side-by-side comparison of a stationary 5 kg block and the same block accelerating at 3 metres per second squared.',
+		before_label: 'At rest',
+		after_label: 'Accelerating',
+		before_details: [
+			'Mass stays 5 kg.',
+			'Net force is 0 N.',
+			'Acceleration is 0 m/s², so the object remains at rest.',
+		],
+		after_details: [
+			'Mass is still 5 kg.',
+			'A 15 N net force acts to the right.',
+			'Acceleration becomes 3 m/s² to the right.',
+		],
+		caption: 'A 5 kg object at rest on the left compared with the same object accelerating at 3 m/s² under a 15 N net force on the right.',
+		alt_text: 'Comparison of a stationary 5 kg block and the same block accelerating at 3 metres per second squared under 15 N.',
 	},
 
 	diagram_series: {

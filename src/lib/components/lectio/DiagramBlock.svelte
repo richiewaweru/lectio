@@ -1,63 +1,89 @@
 <script lang="ts">
 	import type { DiagramContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
-	import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '$lib/components/ui/dialog';
+	import {
+		Dialog,
+		DialogTrigger,
+		DialogContent,
+		DialogTitle,
+		DialogOverlay
+	} from '$lib/components/ui/dialog';
 	import { ZoomIn } from 'lucide-svelte';
 
 	let { content }: { content: DiagramContent } = $props();
 </script>
 
-<Card class="p-6">
-	{#if content.figure_number}
-		<div class="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-2">
-			Figure {content.figure_number}
+<Card class="border-primary/10 bg-white/88 p-6">
+	<div class="space-y-4">
+		<div class="flex flex-wrap items-center gap-3">
+			<p class="eyebrow">Diagram</p>
+			{#if content.figure_number}
+				<span class="rounded-full border border-border/70 bg-secondary px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75">
+					Figure {content.figure_number}
+				</span>
+			{/if}
 		</div>
-	{/if}
 
-	<!-- SVG container with callout overlay -->
-	<div class="relative" role="img" aria-label={content.alt_text}>
-		{@html content.svg_content}
-
-		{#if content.callouts && content.callouts.length > 0}
-			{#each content.callouts as callout, i}
-				<Popover>
-					<PopoverTrigger>
-						<button
-							class="absolute w-6 h-6 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-sm"
-							style="left: {callout.x}%; top: {callout.y}%; transform: translate(-50%, -50%);"
-							aria-label={callout.label}
-						>
-							{i + 1}
-						</button>
-					</PopoverTrigger>
-					<PopoverContent class="w-56 rounded-xl border bg-card p-3 shadow-warm-sm">
-						<div class="text-xs font-semibold text-foreground mb-1">{callout.label}</div>
-						<p class="text-xs text-muted-foreground leading-relaxed">{callout.explanation}</p>
-					</PopoverContent>
-				</Popover>
-			{/each}
-		{/if}
-	</div>
-
-	<p class="text-xs text-muted-foreground leading-relaxed mt-3">{content.caption}</p>
-
-	{#if content.zoom_label}
 		<Dialog>
 			<DialogTrigger>
-				<Button variant="ghost" size="sm" class="mt-2 text-xs text-muted-foreground gap-1">
-					<ZoomIn class="h-3.5 w-3.5" />
-					{content.zoom_label}
-				</Button>
-			</DialogTrigger>
-			<DialogContent class="max-w-3xl rounded-2xl border bg-card p-6 shadow-warm">
-				<DialogTitle class="sr-only">{content.caption}</DialogTitle>
-				<div role="img" aria-label={content.alt_text}>
-					{@html content.svg_content}
+				<div class="group relative cursor-pointer" role="img" aria-label={content.alt_text}>
+					<div class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full">
+						{@html content.svg_content}
+					</div>
+
+					{#if content.callouts?.length}
+						{#each content.callouts as callout, index}
+							<Popover>
+								<PopoverTrigger>
+									<button
+										type="button"
+										class="absolute flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-transform hover:scale-105"
+										style="left: {callout.x}%; top: {callout.y}%;"
+										aria-label={callout.label}
+										onclick={(event) => event.stopPropagation()}
+									>
+										{index + 1}
+									</button>
+								</PopoverTrigger>
+								<PopoverContent class="glass-panel w-60 rounded-[1.1rem] p-3 text-sm leading-6 text-foreground/82">
+									<div class="relative z-10">
+										<p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary/70">
+											{callout.label}
+										</p>
+										<p class="mt-2 text-sm leading-6 text-muted-foreground">
+											{callout.explanation}
+										</p>
+									</div>
+								</PopoverContent>
+							</Popover>
+						{/each}
+					{/if}
+
+					<div class="absolute right-3 top-3 rounded-full bg-white/82 p-1.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100">
+						<ZoomIn class="h-4 w-4 text-muted-foreground" />
+					</div>
 				</div>
-				<p class="text-sm text-muted-foreground mt-3">{content.caption}</p>
+			</DialogTrigger>
+
+			<DialogOverlay class="fixed inset-0 bg-black/40 backdrop-blur-sm" />
+			<DialogContent class="glass-panel max-w-4xl rounded-[1.75rem] p-6 animate-scale-in">
+				<div class="relative z-10 space-y-4">
+					<DialogTitle class="text-base font-semibold text-primary">
+						{content.zoom_label ?? 'Diagram detail'}
+					</DialogTitle>
+					<div
+						class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full"
+						role="img"
+						aria-label={content.alt_text}
+					>
+						{@html content.svg_content}
+					</div>
+					<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+				</div>
 			</DialogContent>
 		</Dialog>
-	{/if}
+
+		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+	</div>
 </Card>

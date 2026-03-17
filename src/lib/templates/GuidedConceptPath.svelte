@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SectionContent } from '$lib/types';
-	import { warnIfInvalid } from '$lib/validate';
+	import { validateSection, warnIfInvalid } from '$lib/validate';
 	import {
 		SectionHeader,
 		HookHero,
@@ -10,20 +10,42 @@
 		PracticeStack,
 		PitfallAlert,
 		GlossaryRail,
-		WhatNextBridge,
+		WhatNextBridge
 	} from '$lib/components/lectio';
+	import { Card } from '$lib/components/ui/card';
+	import { AlertTriangle } from 'lucide-svelte';
 
 	let { section }: { section: SectionContent } = $props();
 
-	warnIfInvalid(section);
+	let warnings = $state<string[]>([]);
+
+	$effect(() => {
+		warnings = validateSection(section);
+		warnIfInvalid(section);
+	});
 </script>
 
-<div class="max-w-6xl mx-auto px-4 py-8">
-	<SectionHeader content={section.header} />
+<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+	<div class="lesson-shell p-6 sm:p-8">
+		<div class="relative z-10 space-y-6">
+			<SectionHeader content={section.header} />
 
-	<div class="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-8">
-		<!-- Main content column -->
-		<div class="space-y-6">
+			{#if warnings.length > 0}
+				<Card class="border-amber-300 bg-amber-50/92 p-4">
+					<div class="flex gap-3">
+						<AlertTriangle class="mt-1 h-5 w-5 shrink-0 text-amber-700" />
+						<div>
+							<p class="font-semibold text-amber-900">Schema capacity warnings</p>
+							<ul class="mt-2 space-y-1 text-sm text-amber-950/80">
+								{#each warnings as warning}
+									<li>{warning}</li>
+								{/each}
+							</ul>
+						</div>
+					</div>
+				</Card>
+			{/if}
+
 			<HookHero content={section.hook} />
 			<ExplanationBlock content={section.explanation} />
 
@@ -42,12 +64,11 @@
 			<PracticeStack content={section.practice} />
 			<WhatNextBridge content={section.what_next} />
 		</div>
-
-		<!-- Sidebar -->
-		{#if section.glossary}
-			<aside class="hidden lg:block">
-				<GlossaryRail content={section.glossary} class="sticky top-8" />
-			</aside>
-		{/if}
 	</div>
+
+	{#if section.glossary}
+		<aside class="xl:sticky xl:top-8 xl:self-start">
+			<GlossaryRail content={section.glossary} />
+		</aside>
+	{/if}
 </div>

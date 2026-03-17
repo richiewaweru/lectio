@@ -1,60 +1,188 @@
 <script lang="ts">
 	import type { DiagramCompareContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
+	import { Badge } from '$lib/components/ui/badge';
 
 	let { content }: { content: DiagramCompareContent } = $props();
 
-	let position = $state(50);
+	let position = $state(0);
+
+	const beforeDetails = $derived(content.before_details ?? []);
+	const afterDetails = $derived(content.after_details ?? []);
+	const visibleAfterCount = $derived(
+		afterDetails.length === 0 || position === 0
+			? 0
+			: Math.min(afterDetails.length, Math.max(1, Math.ceil((position / 100) * afterDetails.length)))
+	);
+	const beforeActive = $derived(position < 50);
+	const afterActive = $derived(position > 0);
 </script>
 
-<Card class="p-6">
-	<div class="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
-		Compare
-	</div>
-
-	<!-- Labels -->
-	<div class="flex justify-between text-xs font-semibold mb-2">
-		<span class="text-blue-600">{content.before_label}</span>
-		<span class="text-accent">{content.after_label}</span>
-	</div>
-
-	<!-- Slider comparison -->
-	<div class="relative overflow-hidden rounded-xl border" role="img" aria-label={content.alt_text}>
-		<!-- After (full width background) -->
-		<div class="w-full">
-			{@html content.after_svg}
+<Card class="border-primary/10 bg-white/88 p-6">
+	<div class="space-y-5">
+		<div class="space-y-2">
+			<p class="eyebrow text-accent">Compare</p>
+			<h3 class="text-2xl font-semibold font-serif text-primary">Before and after</h3>
 		</div>
 
-		<!-- Before (clipped overlay) -->
-		<div
-			class="absolute inset-0 overflow-hidden"
-			style="width: {position}%;"
-		>
-			<div class="w-full" style="width: {10000 / position}%;">
-				{@html content.before_svg}
+		<div class="rounded-2xl border bg-gradient-to-b from-white/98 to-secondary/40 p-4 sm:p-5">
+			<div class="mb-3 flex items-center justify-between gap-3">
+				<Badge
+					variant="outline"
+					class={beforeActive
+						? 'border-primary/20 bg-primary/5 text-primary'
+						: 'border-border bg-white/80 text-foreground/70'}
+				>
+					{content.before_label}
+				</Badge>
+				<span class="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground/80">
+					Reveal change
+				</span>
+				<Badge
+					variant="outline"
+					class={afterActive
+						? 'border-amber-300 bg-amber-50 text-amber-900'
+						: 'border-border bg-white/80 text-foreground/70'}
+				>
+					{content.after_label}
+				</Badge>
+			</div>
+
+			<div
+				class="relative overflow-hidden rounded-xl border bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
+				role="img"
+				aria-label={content.alt_text}
+			>
+				<div class="w-full [&_svg]:h-auto [&_svg]:w-full">
+					{@html content.after_svg}
+				</div>
+
+				<div
+					class="absolute inset-0 [&_svg]:h-auto [&_svg]:w-full"
+					style="clip-path: inset(0 0 0 {position}%);"
+				>
+					{@html content.before_svg}
+				</div>
+
+				{#if position > 0 && position < 100}
+					<div
+						class="pointer-events-none absolute inset-y-0 w-0.5 bg-white/95 shadow-[0_0_0_1px_rgba(15,23,42,0.12)]"
+						style="left: {position}%;"
+					></div>
+				{/if}
+			</div>
+
+			<div class="mt-4 rounded-xl border bg-white/80 p-4">
+				<div class="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+					<span>Before focus</span>
+					<span>{position}% revealed</span>
+					<span>After focus</span>
+				</div>
+				<div class="mt-3 h-2 overflow-hidden rounded-full bg-muted">
+					<div
+						class="h-full rounded-full bg-gradient-to-r from-primary via-sky-500 to-amber-500 transition-all duration-100"
+						style="width: {position}%"
+					></div>
+				</div>
+				<input
+					type="range"
+					min="0"
+					max="100"
+					bind:value={position}
+					class="compare-slider mt-3 w-full"
+					aria-label="Reveal the after state"
+				/>
+				<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+					Slide from the full {content.before_label.toLowerCase()} state toward the full
+					{content.after_label.toLowerCase()} state.
+				</p>
 			</div>
 		</div>
 
-		<!-- Drag handle -->
-		<div
-			class="absolute top-0 bottom-0 w-0.5 bg-foreground/40"
-			style="left: {position}%;"
-		>
-			<div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border-2 border-foreground/40 shadow-sm flex items-center justify-center">
-				<span class="text-xs text-muted-foreground">⇔</span>
+		{#if beforeDetails.length > 0 || afterDetails.length > 0}
+			<div class="grid gap-3 lg:grid-cols-2">
+				{#if beforeDetails.length > 0}
+					<div
+						class="rounded-xl border p-4 transition-all {beforeActive
+							? 'border-primary/20 bg-primary/5 shadow-sm'
+							: 'border-border bg-white/70 opacity-75'}"
+					>
+						<div class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary/70">
+							{content.before_label} details
+						</div>
+						<ul class="space-y-2 text-sm leading-relaxed text-foreground/80">
+							{#each beforeDetails as detail}
+								<li class="flex gap-2">
+									<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60"></span>
+									<span>{detail}</span>
+								</li>
+							{/each}
+						</ul>
+					</div>
+				{/if}
+
+				{#if afterDetails.length > 0}
+					<div
+						class="rounded-xl border p-4 transition-all {afterActive
+							? 'border-amber-300/70 bg-amber-50/70 shadow-sm'
+							: 'border-border bg-white/70'}"
+					>
+						<div class="mb-3 text-xs font-semibold uppercase tracking-widest text-amber-800/70">
+							{content.after_label} details
+						</div>
+						{#if visibleAfterCount > 0}
+							<ul class="space-y-2 text-sm leading-relaxed text-foreground/80">
+								{#each afterDetails.slice(0, visibleAfterCount) as detail}
+									<li class="flex gap-2">
+										<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600/70"></span>
+										<span>{detail}</span>
+									</li>
+								{/each}
+							</ul>
+						{:else}
+							<p class="text-sm leading-relaxed text-muted-foreground">
+								Move the slider to begin revealing what changes in the after state.
+							</p>
+						{/if}
+					</div>
+				{/if}
 			</div>
-		</div>
+		{/if}
+
+		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
 	</div>
-
-	<!-- Range slider control -->
-	<input
-		type="range"
-		min="5"
-		max="95"
-		bind:value={position}
-		class="w-full mt-2 accent-accent"
-		aria-label="Compare position slider"
-	/>
-
-	<p class="text-xs text-muted-foreground leading-relaxed mt-2">{content.caption}</p>
 </Card>
+
+<style>
+	.compare-slider {
+		-webkit-appearance: none;
+		appearance: none;
+		height: 6px;
+		border-radius: 9999px;
+		background: hsl(38 25% 93%);
+		outline: none;
+		cursor: pointer;
+	}
+
+	.compare-slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: white;
+		border: 2px solid hsl(213 37% 17%);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		cursor: pointer;
+	}
+
+	.compare-slider::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: white;
+		border: 2px solid hsl(213 37% 17%);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		cursor: pointer;
+	}
+</style>

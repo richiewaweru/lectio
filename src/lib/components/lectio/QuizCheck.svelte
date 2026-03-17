@@ -2,7 +2,7 @@
 	import type { QuizContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import { CircleCheck, CircleX } from 'lucide-svelte';
+	import { CircleCheck, CircleX, RotateCcw } from 'lucide-svelte';
 
 	let { content }: { content: QuizContent } = $props();
 
@@ -19,64 +19,85 @@
 		selected = null;
 		submitted = false;
 	}
+
+	const isCorrect = $derived(selected !== null && Boolean(content.options[selected]?.correct));
 </script>
 
-<Card class="border-l-4 border-l-emerald-400 p-6">
-	<div class="text-xs font-semibold tracking-widest uppercase text-emerald-600 mb-2">
-		Concept Check
-	</div>
-	<p class="text-sm font-medium text-foreground leading-relaxed mb-4">{content.question}</p>
+<Card class="border-primary/10 bg-white/85 p-6">
+	<div class="space-y-4">
+		<div class="space-y-2">
+			<p class="eyebrow text-emerald-600">Quiz</p>
+			<h3 class="text-2xl font-semibold font-serif text-primary">Quick concept check</h3>
+			<p class="text-base leading-7 text-foreground/84">{content.question}</p>
+		</div>
 
-	<div class="space-y-2">
-		{#each content.options as option, i}
-			{@const isSelected = selected === i}
-			{@const isCorrect = option.correct}
-			{@const showResult = submitted && isSelected}
-			<button
-				class="w-full text-left rounded-xl border p-3 text-sm transition-all duration-200 cursor-pointer
-					{submitted
-						? isSelected
-							? isCorrect
-								? 'border-emerald-400 bg-emerald-50'
-								: 'border-red-400 bg-red-50'
-							: submitted && isCorrect
-								? 'border-emerald-300 bg-emerald-50/50'
-								: 'border-border bg-card opacity-60'
-						: 'border-border bg-card hover:border-emerald-300 hover:bg-emerald-50/30'}"
-				onclick={() => select(i)}
-				disabled={submitted}
-			>
-				<div class="flex items-start gap-2">
-					{#if showResult}
-						{#if isCorrect}
-							<CircleCheck class="h-4 w-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+		<div class="space-y-2">
+			{#each content.options as option, i}
+				{@const isSelected = selected === i}
+				{@const showResult = submitted && isSelected}
+				<button
+					class="w-full cursor-pointer rounded-[1rem] border bg-white/80 p-4 text-left text-sm transition-colors
+						{submitted
+							? isSelected
+								? option.correct
+									? 'border-emerald-300 bg-emerald-50/75'
+									: 'border-amber-300 bg-amber-50/75'
+								: option.correct
+									? 'border-emerald-200 bg-emerald-50/55'
+									: 'border-border/70 opacity-65'
+							: 'border-border/70 hover:border-emerald-200 hover:bg-emerald-50/40'}"
+					onclick={() => select(i)}
+					disabled={submitted}
+				>
+					<div class="flex items-start gap-3">
+						{#if showResult}
+							{#if option.correct}
+								<CircleCheck class="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
+							{:else}
+								<CircleX class="mt-1 h-4 w-4 shrink-0 text-amber-600" />
+							{/if}
+						{:else if submitted && option.correct}
+							<CircleCheck class="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
 						{:else}
-							<CircleX class="h-4 w-4 text-red-600 flex-shrink-0 mt-0.5" />
+							<div class="mt-1 h-4 w-4 shrink-0 rounded-full border-2 border-muted-foreground/30"></div>
 						{/if}
-					{:else if submitted && isCorrect}
-						<CircleCheck class="h-4 w-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-					{:else}
-						<div class="w-4 h-4 rounded-full border-2 border-muted-foreground/30 flex-shrink-0 mt-0.5"></div>
-					{/if}
-					<div>
-						<span>{option.text}</span>
-						{#if submitted && (content.show_explanations !== false)}
-							<p class="text-xs text-muted-foreground mt-1">{option.explanation}</p>
-						{/if}
+
+						<div class="space-y-2">
+							<p class="text-sm font-semibold text-foreground/88">{option.text}</p>
+							{#if submitted && content.show_explanations !== false}
+								<p class="text-sm leading-6 text-muted-foreground">{option.explanation}</p>
+							{/if}
+						</div>
+					</div>
+				</button>
+			{/each}
+		</div>
+
+		{#if submitted}
+			{#if isCorrect}
+				<div class="rounded-[1rem] bg-emerald-50 p-4 text-sm leading-6 text-emerald-900">
+					<p class="font-semibold">Correct!</p>
+					<p class="mt-1">{content.feedback_correct}</p>
+				</div>
+			{:else}
+				<div class="rounded-[1rem] bg-amber-50 p-4">
+					<div class="flex items-start gap-2">
+						<CircleX class="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+						<div class="flex-1">
+							<p class="text-sm font-semibold text-amber-900">Not quite!</p>
+							<p class="mt-1 text-sm leading-6 text-amber-900/85">
+								{content.feedback_incorrect}
+							</p>
+						</div>
+					</div>
+					<div class="mt-3 flex justify-end">
+						<Button variant="outline" size="sm" class="gap-1.5 text-xs" onclick={reset}>
+							<RotateCcw class="h-3 w-3" />
+							Try again
+						</Button>
 					</div>
 				</div>
-			</button>
-		{/each}
+			{/if}
+		{/if}
 	</div>
-
-	{#if submitted}
-		<div class="mt-4 flex items-center justify-between">
-			<p class="text-sm font-medium {selected !== null && content.options[selected].correct ? 'text-emerald-700' : 'text-red-700'}">
-				{selected !== null && content.options[selected].correct ? content.feedback_correct : content.feedback_incorrect}
-			</p>
-			<Button variant="ghost" size="sm" class="text-xs" onclick={reset}>
-				Try again
-			</Button>
-		</div>
-	{/if}
 </Card>

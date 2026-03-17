@@ -55,6 +55,7 @@ export interface HookHeroContent {
 	anchor: string; // the felt need this creates
 	type?: HookType; // default: 'prose'
 	image?: HookImage;
+	svg_content?: string; // inline SVG markup, rendered with {@html} when present
 	// if type === 'quote'
 	quote_attribution?: string;
 	// if type === 'question'
@@ -315,6 +316,8 @@ export interface DiagramCompareContent {
 	after_svg: string;
 	before_label: string; // max 6 words
 	after_label: string; // max 6 words
+	before_details?: string[]; // bullet points describing the before state
+	after_details?: string[]; // bullet points describing the after state (revealed progressively)
 	caption: string; // max 60 words
 	alt_text: string;
 }

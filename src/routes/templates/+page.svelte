@@ -2,55 +2,66 @@
 	import { calculusSection, physicsSection } from '$lib/dummy-content';
 	import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 	import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
-	import { Separator } from '$lib/components/ui/separator';
+	import { Button } from '$lib/components/ui/button';
 
 	let activeTemplate = $state<'guided' | 'enriched'>('guided');
 </script>
 
-<div class="py-8">
-	<div class="max-w-4xl mx-auto px-6 mb-8">
-		<h1 class="text-3xl font-bold tracking-tight font-serif mb-2">Templates</h1>
-		<p class="text-muted-foreground mb-6">
-			Templates assemble components into complete instructional arcs. Choose a template to preview.
-		</p>
+<div class="page-frame space-y-8">
+	<header class="lesson-shell p-8 sm:p-10">
+		<div class="relative z-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+			<div class="space-y-4">
+				<p class="eyebrow">Templates</p>
+				<h1 class="max-w-4xl text-4xl font-semibold tracking-tight font-serif text-primary sm:text-5xl">
+					Preview full instructional arcs, not just isolated parts.
+				</h1>
+				<p class="max-w-3xl text-base leading-7 text-muted-foreground">
+					Templates assemble the component library into named teaching strategies while
+					keeping the same underlying schema and interaction patterns.
+				</p>
+			</div>
 
-		<div class="flex gap-2">
-			<button
-				class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer
-					{activeTemplate === 'guided'
-						? 'bg-foreground text-background'
-						: 'border bg-card hover:bg-muted'}"
-				onclick={() => (activeTemplate = 'guided')}
-			>
-				GuidedConceptPath
-			</button>
-			<button
-				class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer
-					{activeTemplate === 'enriched'
-						? 'bg-foreground text-background'
-						: 'border bg-card hover:bg-muted'}"
-				onclick={() => (activeTemplate = 'enriched')}
-			>
-				EnrichedLearningPath
-			</button>
+			<div class="flex flex-wrap gap-2">
+				<Button
+					variant={activeTemplate === 'guided' ? 'default' : 'outline'}
+					class="rounded-full"
+					onclick={() => (activeTemplate = 'guided')}
+				>
+					GuidedConceptPath
+				</Button>
+				<Button
+					variant={activeTemplate === 'enriched' ? 'default' : 'outline'}
+					class="rounded-full"
+					onclick={() => (activeTemplate = 'enriched')}
+				>
+					EnrichedLearningPath
+				</Button>
+			</div>
 		</div>
-	</div>
-
-	<Separator class="mb-8" />
+	</header>
 
 	{#if activeTemplate === 'guided'}
-		<div class="max-w-4xl mx-auto px-6 mb-4">
-			<p class="text-sm text-muted-foreground">
-				Original template — Hook &rarr; Explain &rarr; Define &rarr; Worked Example &rarr; Pitfall &rarr; Practice &rarr; What's Next. Uses calculus content.
-			</p>
-		</div>
-		<GuidedConceptPath section={calculusSection} />
+		<section class="space-y-4">
+			<div class="px-1">
+				<p class="eyebrow">GuidedConceptPath</p>
+				<p class="mt-2 max-w-4xl text-sm leading-6 text-muted-foreground">
+					Hook -> Explain -> Define -> Worked Example -> Pitfall -> Practice -> What Next.
+					This keeps the original instructional arc and uses the calculus lesson content.
+				</p>
+			</div>
+			<GuidedConceptPath section={calculusSection} />
+		</section>
 	{:else}
-		<div class="max-w-4xl mx-auto px-6 mb-4">
-			<p class="text-sm text-muted-foreground">
-				Full template — Prerequisites &rarr; Hook &rarr; Explain &rarr; Insights &rarr; Definitions &rarr; Diagrams &rarr; Worked Example &rarr; Process &rarr; Pitfalls &rarr; Quiz &rarr; Practice &rarr; Reflection &rarr; Interview &rarr; What's Next. Uses physics content.
-			</p>
-		</div>
-		<EnrichedLearningPath section={physicsSection} />
+		<section class="space-y-4">
+			<div class="px-1">
+				<p class="eyebrow">EnrichedLearningPath</p>
+				<p class="mt-2 max-w-4xl text-sm leading-6 text-muted-foreground">
+					Prerequisites -> Hook -> Explain -> Insights -> Definitions -> Diagrams -> Worked
+					Example -> Process -> Pitfalls -> Quiz -> Practice -> Reflection -> Interview ->
+					What Next. This uses the physics lesson content.
+				</p>
+			</div>
+			<EnrichedLearningPath section={physicsSection} />
+		</section>
 	{/if}
 </div>

@@ -7,15 +7,15 @@
 <Popover>
 	<PopoverTrigger>
 		<button
-			class="inline underline decoration-dotted decoration-purple-300 underline-offset-2 text-foreground font-medium cursor-pointer hover:decoration-purple-500 transition-colors"
+			class="inline cursor-pointer font-medium text-foreground underline decoration-dotted decoration-purple-300 underline-offset-2 transition-colors hover:decoration-purple-500"
 		>
 			{term}
 		</button>
 	</PopoverTrigger>
-	<PopoverContent
-		class="w-56 rounded-xl border bg-card p-3 shadow-warm-sm"
-	>
-		<div class="text-xs font-semibold text-purple-600 mb-1">{term}</div>
-		<p class="text-xs text-muted-foreground leading-relaxed">{definition}</p>
+	<PopoverContent class="glass-panel w-56 rounded-[1.1rem] p-3">
+		<div class="relative z-10">
+			<div class="mb-1 text-xs font-semibold text-purple-600">{term}</div>
+			<p class="text-xs leading-relaxed text-muted-foreground">{definition}</p>
+		</div>
 	</PopoverContent>
 </Popover>

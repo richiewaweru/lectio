@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SectionContent } from '$lib/types';
-	import { warnIfInvalid } from '$lib/validate';
+	import { validateSection, warnIfInvalid } from '$lib/validate';
 	import {
 		SectionHeader,
 		PrerequisiteStrip,
@@ -21,25 +21,58 @@
 		InterviewAnchor,
 		WhatNextBridge,
 		GlossaryRail,
+		GlossaryInline
 	} from '$lib/components/lectio';
+	import { Card } from '$lib/components/ui/card';
+	import { AlertTriangle } from 'lucide-svelte';
 
 	let { section }: { section: SectionContent } = $props();
 
-	warnIfInvalid(section);
+	let warnings = $state<string[]>([]);
+	const inlineTerm = $derived(section.glossary?.terms[0] ?? null);
+
+	$effect(() => {
+		warnings = validateSection(section);
+		warnIfInvalid(section);
+	});
 </script>
 
-<div class="max-w-6xl mx-auto px-4 py-8">
-	<SectionHeader content={section.header} />
+<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+	<div class="lesson-shell p-6 sm:p-8">
+		<div class="relative z-10 space-y-6">
+			<SectionHeader content={section.header} />
 
-	<div class="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-8">
-		<!-- Main content column -->
-		<div class="space-y-6">
+			{#if warnings.length > 0}
+				<Card class="border-amber-300 bg-amber-50/92 p-4">
+					<div class="flex gap-3">
+						<AlertTriangle class="mt-1 h-5 w-5 shrink-0 text-amber-700" />
+						<div>
+							<p class="font-semibold text-amber-900">Schema capacity warnings</p>
+							<ul class="mt-2 space-y-1 text-sm text-amber-950/80">
+								{#each warnings as warning}
+									<li>{warning}</li>
+								{/each}
+							</ul>
+						</div>
+					</div>
+				</Card>
+			{/if}
+
 			{#if section.prerequisites}
 				<PrerequisiteStrip content={section.prerequisites} />
 			{/if}
 
 			<HookHero content={section.hook} />
 			<ExplanationBlock content={section.explanation} />
+
+			{#if inlineTerm}
+				<div class="rounded-[1.35rem] border border-border/70 bg-white/82 p-4 text-sm leading-7 text-muted-foreground">
+					Inline term preview:
+					<GlossaryInline term={inlineTerm.term} definition={inlineTerm.definition} />
+					can sit inside narrative text without pulling the learner away from the main
+					explanation.
+				</div>
+			{/if}
 
 			{#if section.insight_strip}
 				<InsightStrip content={section.insight_strip} />
@@ -60,9 +93,14 @@
 			{/if}
 
 			{#if section.worked_examples}
-				{#each section.worked_examples as ex}
-					<WorkedExampleCard content={ex} mode="step-reveal" />
-				{/each}
+				<div class="space-y-5">
+					{#each section.worked_examples as ex, index}
+						<WorkedExampleCard
+							content={ex}
+							mode={index === 0 ? 'step-reveal' : 'accordion'}
+						/>
+					{/each}
+				</div>
 			{/if}
 
 			{#if section.process}
@@ -82,9 +120,11 @@
 			{/if}
 
 			{#if section.pitfalls}
-				{#each section.pitfalls as p}
-					<PitfallAlert content={p} />
-				{/each}
+				<div class="space-y-4">
+					{#each section.pitfalls as pitfall}
+						<PitfallAlert content={pitfall} />
+					{/each}
+				</div>
 			{/if}
 
 			{#if section.quiz}
@@ -103,12 +143,11 @@
 
 			<WhatNextBridge content={section.what_next} />
 		</div>
-
-		<!-- Sidebar -->
-		{#if section.glossary}
-			<aside class="hidden lg:block">
-				<GlossaryRail content={section.glossary} class="sticky top-8" />
-			</aside>
-		{/if}
 	</div>
+
+	{#if section.glossary}
+		<aside class="xl:sticky xl:top-8 xl:self-start">
+			<GlossaryRail content={section.glossary} />
+		</aside>
+	{/if}
 </div>
