@@ -2,8 +2,13 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
 	import { getTemplateById } from '$lib/template-registry';
+	import TemplateContractPanel from '$lib/templates/TemplateContractPanel.svelte';
+	import TemplateContractDrawer from '$lib/templates/TemplateContractDrawer.svelte';
+	import { cn } from '$lib/utils';
 
 	let { templateId }: { templateId: string } = $props();
+	let desktopContractOpen = $state(false);
+	let isDesktopContractLayout = $state(false);
 
 	const definition = $derived(getTemplateById(templateId));
 </script>
@@ -37,6 +42,12 @@
 					>
 						Back to gallery
 					</a>
+					<TemplateContractDrawer
+						contract={definition.contract}
+						presets={definition.presets}
+						bind:desktopOpen={desktopContractOpen}
+						bind:isDesktop={isDesktopContractLayout}
+					/>
 					<a
 						href="/components"
 						class="inline-flex items-center rounded-xl border border-input bg-background px-4 py-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -47,99 +58,30 @@
 			</div>
 		</header>
 
-		<div class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-			<Card class="border-white/60 bg-white/82 p-6">
-				<div class="space-y-5">
-					<h2 class="text-2xl text-primary font-serif">Template contract</h2>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Best for</p>
-						<ul class="mt-2 space-y-2 text-sm leading-6 text-muted-foreground">
-							{#each definition.contract.bestFor as item}
-								<li>- {item}</li>
-							{/each}
-						</ul>
+		<div
+			class={cn(
+				'space-y-6',
+				isDesktopContractLayout &&
+					desktopContractOpen &&
+					'md:grid md:grid-cols-[22rem_minmax(0,1fr)] md:items-start md:gap-6 md:space-y-0 lg:grid-cols-[24rem_minmax(0,1fr)]'
+			)}
+		>
+			{#if isDesktopContractLayout && desktopContractOpen}
+				<aside
+					id="template-contract-panel"
+					aria-label="Template contract"
+					class="md:sticky md:top-6 md:max-h-[calc(100vh-1.5rem)] md:overflow-y-auto"
+				>
+					<div class="rounded-[1.75rem] border border-white/60 bg-white/82 p-6 shadow-[0_12px_36px_rgba(15,23,42,0.08)]">
+						<TemplateContractPanel
+							contract={definition.contract}
+							presets={definition.presets}
+						/>
 					</div>
+				</aside>
+			{/if}
 
-					<div>
-						<p class="text-sm font-semibold text-primary">Not ideal for</p>
-						<ul class="mt-2 space-y-2 text-sm leading-6 text-muted-foreground">
-							{#each definition.contract.notIdealFor as item}
-								<li>- {item}</li>
-							{/each}
-						</ul>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Lesson flow</p>
-						<p class="mt-2 text-sm leading-6 text-muted-foreground">
-							{definition.contract.lessonFlow.join(' -> ')}
-						</p>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Required components</p>
-						<div class="mt-2 flex flex-wrap gap-2">
-							{#each definition.contract.requiredComponents as component}
-								<Badge variant="outline">{component}</Badge>
-							{/each}
-						</div>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Optional components</p>
-						<div class="mt-2 flex flex-wrap gap-2">
-							{#each definition.contract.optionalComponents as component}
-								<Badge variant="outline">{component}</Badge>
-							{/each}
-						</div>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Default behaviours</p>
-						<div class="mt-2 flex flex-wrap gap-2">
-							{#if Object.entries(definition.contract.defaultBehaviours).length}
-								{#each Object.entries(definition.contract.defaultBehaviours) as [component, behaviour]}
-									<Badge class="bg-secondary text-secondary-foreground hover:bg-secondary">
-										{component}: {behaviour}
-									</Badge>
-								{/each}
-							{:else}
-								<p class="text-sm text-muted-foreground">Static by default.</p>
-							{/if}
-						</div>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Responsive notes</p>
-						<ul class="mt-2 space-y-2 text-sm leading-6 text-muted-foreground">
-							{#each definition.contract.responsiveRules as rule}
-								<li>- {rule}</li>
-							{/each}
-						</ul>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Print notes</p>
-						<ul class="mt-2 space-y-2 text-sm leading-6 text-muted-foreground">
-							{#each definition.contract.printRules as rule}
-								<li>- {rule}</li>
-							{/each}
-						</ul>
-					</div>
-
-					<div>
-						<p class="text-sm font-semibold text-primary">Allowed presets</p>
-						<div class="mt-2 flex flex-wrap gap-2">
-							{#each definition.presets as preset}
-								<Badge>{preset.name}</Badge>
-							{/each}
-						</div>
-					</div>
-				</div>
-			</Card>
-
-			<section class="space-y-4">
+			<section class="space-y-4 md:min-w-0">
 				<div>
 					<p class="eyebrow">Live preview</p>
 					<p class="mt-2 text-sm leading-6 text-muted-foreground">

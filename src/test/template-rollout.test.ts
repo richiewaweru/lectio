@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import ComparisonGrid from '$lib/components/lectio/ComparisonGrid.svelte';
 import GlossaryRail from '$lib/components/lectio/GlossaryRail.svelte';
@@ -15,6 +15,18 @@ import { figureFirstPreview } from '$lib/templates/figure-first/preview';
 import { focusFlowPreview } from '$lib/templates/focus-flow/preview';
 import { processTrainerPreview } from '$lib/templates/process-trainer/preview';
 import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+
+const STORAGE_KEY = 'template-contract-drawer-open';
+const testWindow = window as Window & { __setMockViewportWidth: (width: number) => void };
+
+function setViewportWidth(width: number) {
+	testWindow.__setMockViewportWidth(width);
+}
+
+beforeEach(() => {
+	setViewportWidth(1280);
+	window.localStorage.clear();
+});
 
 describe('template registry', () => {
 	it('registers all 10 starter templates with valid contracts and previews', () => {
@@ -126,7 +138,7 @@ describe('template pages', () => {
 		expect(screen.queryByText(/Timeline Narrative/i)).not.toBeInTheDocument();
 	});
 
-	it('renders the detail view by template id and shows the live preview', () => {
+	it('keeps the persistent contract panel hidden on md+ until toggled open and remembers the preference', async () => {
 		render(TemplateDetailView, {
 			props: { templateId: 'timeline-narrative' }
 		});
@@ -134,5 +146,76 @@ describe('template pages', () => {
 		expect(screen.getByText(/Timeline Narrative/i)).toBeInTheDocument();
 		expect(screen.getByText(/How germ theory took hold/i)).toBeInTheDocument();
 		expect(screen.getByText(/The road to germ theory/i)).toBeInTheDocument();
+		expect(
+			screen.queryByRole('heading', { name: /template contract/i })
+		).not.toBeInTheDocument();
+		expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: /show contract/i }));
+
+		expect(
+			await screen.findByRole('heading', { name: /template contract/i })
+		).toBeInTheDocument();
+		expect(screen.getByText(/Best for/i)).toBeInTheDocument();
+		expect(window.localStorage.getItem(STORAGE_KEY)).toBe('true');
+		expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+		expect(
+			screen
+				.getByLabelText(/template contract/i)
+				.compareDocumentPosition(screen.getByText(/^live preview$/i)) &
+				Node.DOCUMENT_POSITION_FOLLOWING
+		).toBeTruthy();
+
+		await fireEvent.click(screen.getByRole('button', { name: /hide contract/i }));
+
+		await waitFor(() => {
+			expect(
+				screen.queryByRole('heading', { name: /template contract/i })
+			).not.toBeInTheDocument();
+		});
+		expect(window.localStorage.getItem(STORAGE_KEY)).toBe('false');
+	});
+
+	it('restores the remembered desktop drawer state on a different template detail page', async () => {
+		window.localStorage.setItem(STORAGE_KEY, 'true');
+
+		render(TemplateDetailView, {
+			props: { templateId: 'figure-first' }
+		});
+
+		expect(await screen.findByRole('heading', { name: /template contract/i })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: /hide contract/i })).toBeInTheDocument();
+		expect(screen.getByText(/Figure First/i)).toBeInTheDocument();
+	});
+
+	it('keeps the mobile contract closed on first render and opens it as a temporary sheet', async () => {
+		setViewportWidth(480);
+		window.localStorage.setItem(STORAGE_KEY, 'true');
+
+		render(TemplateDetailView, {
+			props: { templateId: 'timeline-narrative' }
+		});
+
+		expect(
+			screen.queryByRole('heading', { name: /template contract/i })
+		).not.toBeInTheDocument();
+		expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+		expect(screen.getByText(/How germ theory took hold/i)).toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: /show contract/i }));
+
+		const dialog = await screen.findByRole('dialog');
+
+		expect(dialog).toBeInTheDocument();
+		expect(screen.getByText(/Best for/i)).toBeInTheDocument();
+		expect(window.localStorage.getItem(STORAGE_KEY)).toBe('true');
+		expect(dialog.className).toContain('left-0');
+		expect(dialog.className).toContain('rounded-r-[1.75rem]');
+
+		await fireEvent.click(screen.getByRole('button', { name: /close contract/i }));
+
+		await waitFor(() => {
+			expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+		});
 	});
 });

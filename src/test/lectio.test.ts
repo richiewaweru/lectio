@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import HookHero from '$lib/components/lectio/HookHero.svelte';
 import DefinitionFamily from '$lib/components/lectio/DefinitionFamily.svelte';
+import DiagramBlock from '$lib/components/lectio/DiagramBlock.svelte';
 import DiagramSeries from '$lib/components/lectio/DiagramSeries.svelte';
 import DiagramCompare from '$lib/components/lectio/DiagramCompare.svelte';
 import QuizCheck from '$lib/components/lectio/QuizCheck.svelte';
@@ -76,6 +77,23 @@ describe('Lectio component harmonization', () => {
 
 		expect(screen.getByText('Mass is still 5 kg.')).toBeInTheDocument();
 		expect(screen.queryByText('Move the slider to begin revealing what changes in the after state.')).not.toBeInTheDocument();
+	});
+
+	it('renders labeled diagram callout buttons with guidance text', () => {
+		const { container } = render(DiagramBlock, {
+			props: { content: physicsSection.diagram! }
+		});
+
+		const calloutButtons = Array.from(
+			container.querySelectorAll<HTMLButtonElement>('button[data-popover-trigger]')
+		).map((button) => button.getAttribute('aria-label'));
+
+		expect(calloutButtons).toContain('Applied force');
+		expect(calloutButtons).toContain('Friction');
+		expect(calloutButtons).toContain('Net force');
+		expect(
+			screen.getByText(/Tap a numbered point to see the labeled detail/i)
+		).toBeInTheDocument();
 	});
 
 	it('evaluates quiz answers immediately and resets with Try again', async () => {

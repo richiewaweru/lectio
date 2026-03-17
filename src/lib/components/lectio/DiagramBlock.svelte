@@ -12,6 +12,18 @@
 	import { ZoomIn } from 'lucide-svelte';
 
 	let { content }: { content: DiagramContent } = $props();
+
+	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
+
+	function getMarkerPosition(callout: DiagramCallout) {
+		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
+		const verticalOffset = callout.y >= 72 ? -20 : callout.y <= 28 ? 20 : -18;
+
+		return {
+			left: `calc(${callout.x}% ${horizontalOffset >= 0 ? '+' : '-'} ${Math.abs(horizontalOffset)}px)`,
+			top: `calc(${callout.y}% ${verticalOffset >= 0 ? '+' : '-'} ${Math.abs(verticalOffset)}px)`
+		};
+	}
 </script>
 
 <Card class="border-primary/10 bg-white/88 p-6">
@@ -34,24 +46,43 @@
 
 					{#if content.callouts?.length}
 						{#each content.callouts as callout, index}
+							{@const markerPosition = getMarkerPosition(callout)}
+							<div
+								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)]"
+								style="left: {callout.x}%; top: {callout.y}%;"
+							></div>
 							<Popover>
 								<PopoverTrigger>
-									<button
-										type="button"
-										class="absolute flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/20 bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-transform hover:scale-105"
-										style="left: {callout.x}%; top: {callout.y}%;"
-										aria-label={callout.label}
-										onclick={(event) => event.stopPropagation()}
-									>
-										{index + 1}
-									</button>
+									{#snippet child({ props })}
+										<button
+											{...props}
+											type="button"
+											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04]"
+											style="left: {markerPosition.left}; top: {markerPosition.top};"
+											aria-label={callout.label}
+											onpointerdown={(event) => event.stopPropagation()}
+											onclick={(event) => event.stopPropagation()}
+										>
+											{index + 1}
+										</button>
+									{/snippet}
 								</PopoverTrigger>
-								<PopoverContent class="glass-panel w-60 rounded-[1.1rem] p-3 text-sm leading-6 text-foreground/82">
-									<div class="relative z-10">
-										<p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary/70">
-											{callout.label}
-										</p>
-										<p class="mt-2 text-sm leading-6 text-muted-foreground">
+								<PopoverContent class="glass-panel w-64 rounded-[1.1rem] p-3 text-sm leading-6 text-foreground/82">
+									<div class="relative z-10 space-y-2">
+										<div class="flex items-start gap-3">
+											<span
+												class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
+											>
+												{index + 1}
+											</span>
+											<div>
+												<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+													Diagram point
+												</p>
+												<p class="text-sm font-semibold text-foreground">{callout.label}</p>
+											</div>
+										</div>
+										<p class="text-sm leading-6 text-foreground/80">
 											{callout.explanation}
 										</p>
 									</div>
@@ -83,6 +114,12 @@
 				</div>
 			</DialogContent>
 		</Dialog>
+
+		{#if content.callouts?.length}
+			<p class="text-xs leading-5 text-muted-foreground">
+				Tap a numbered point to see the labeled detail for that part of the diagram.
+			</p>
+		{/if}
 
 		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
 	</div>

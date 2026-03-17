@@ -66,7 +66,7 @@
 			<ExplanationBlock content={section.explanation} />
 
 			{#if inlineTerm}
-				<div class="rounded-[1.35rem] border border-border/70 bg-white/82 p-4 text-sm leading-7 text-muted-foreground">
+				<div class="rounded-[1.35rem] border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
 					Inline term preview:
 					<GlossaryInline term={inlineTerm.term} definition={inlineTerm.definition} />
 					can sit inside narrative text without pulling the learner away from the main

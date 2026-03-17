@@ -6,16 +6,21 @@
 	let { content }: { content: DiagramCompareContent } = $props();
 
 	let position = $state(0);
+	const stagePosition = $derived(Math.min(100, Math.max(0, position)));
 
 	const beforeDetails = $derived(content.before_details ?? []);
 	const afterDetails = $derived(content.after_details ?? []);
 	const visibleAfterCount = $derived(
-		afterDetails.length === 0 || position === 0
+		afterDetails.length === 0 || stagePosition === 0
 			? 0
-			: Math.min(afterDetails.length, Math.max(1, Math.ceil((position / 100) * afterDetails.length)))
+			: Math.min(
+					afterDetails.length,
+					Math.max(1, Math.ceil((stagePosition / 100) * afterDetails.length))
+				)
 	);
-	const beforeActive = $derived(position < 50);
-	const afterActive = $derived(position > 0);
+	const beforeActive = $derived(stagePosition < 50);
+	const afterActive = $derived(stagePosition > 0);
+	const seamVisible = $derived(stagePosition > 0 && stagePosition < 100);
 </script>
 
 <Card class="border-primary/10 bg-white/88 p-6">
@@ -49,25 +54,29 @@
 			</div>
 
 			<div
-				class="relative overflow-hidden rounded-xl border bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
+				class="compare-stage relative overflow-hidden rounded-xl border bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
 				role="img"
 				aria-label={content.alt_text}
 			>
-				<div class="w-full [&_svg]:h-auto [&_svg]:w-full">
+				<div class="compare-layer compare-layer-after w-full">
 					{@html content.after_svg}
 				</div>
 
 				<div
-					class="absolute inset-0 [&_svg]:h-auto [&_svg]:w-full"
-					style="clip-path: inset(0 0 0 {position}%);"
+					class="compare-layer compare-layer-before absolute inset-0"
+					style="clip-path: inset(0 0 0 {stagePosition}%);"
 				>
 					{@html content.before_svg}
 				</div>
 
-				{#if position > 0 && position < 100}
+				{#if seamVisible}
 					<div
-						class="pointer-events-none absolute inset-y-0 w-0.5 bg-white/95 shadow-[0_0_0_1px_rgba(15,23,42,0.12)]"
-						style="left: {position}%;"
+						class="pointer-events-none absolute inset-y-2 w-10 -translate-x-1/2 bg-gradient-to-r from-white/0 via-white/85 to-white/0 blur-sm"
+						style="left: {stagePosition}%;"
+					></div>
+					<div
+						class="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white/95 shadow-[0_0_0_1px_rgba(15,23,42,0.12)]"
+						style="left: {stagePosition}%;"
 					></div>
 				{/if}
 			</div>
@@ -75,13 +84,13 @@
 			<div class="mt-4 rounded-xl border bg-white/80 p-4">
 				<div class="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted-foreground">
 					<span>Before focus</span>
-					<span>{position}% revealed</span>
+					<span>{stagePosition}% revealed</span>
 					<span>After focus</span>
 				</div>
 				<div class="mt-3 h-2 overflow-hidden rounded-full bg-muted">
 					<div
 						class="h-full rounded-full bg-gradient-to-r from-primary via-sky-500 to-amber-500 transition-all duration-100"
-						style="width: {position}%"
+						style="width: {stagePosition}%"
 					></div>
 				</div>
 				<input
@@ -184,5 +193,28 @@
 		border: 2px solid hsl(213 37% 17%);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 		cursor: pointer;
+	}
+
+	.compare-stage {
+		isolation: isolate;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.92)),
+			radial-gradient(circle at top, rgba(255, 255, 255, 0.5), transparent 60%);
+	}
+
+	.compare-layer {
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.92)),
+			linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.35));
+	}
+
+	.compare-layer :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.compare-layer-before {
+		will-change: clip-path;
 	}
 </style>
