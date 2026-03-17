@@ -2,7 +2,6 @@
 	import type { PitfallContent } from '$lib/types';
 	import { Alert, AlertTitle, AlertDescription } from '$lib/components/ui/alert';
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
-	import { Button } from '$lib/components/ui/button';
 	import { TriangleAlert } from 'lucide-svelte';
 
 	let { content }: { content: PitfallContent } = $props();
@@ -29,10 +28,10 @@
 
 	{#if displayExamples.length > 0}
 		<Collapsible class="mt-2">
-			<CollapsibleTrigger>
-				<Button variant="ghost" size="sm" class="h-6 px-2 text-xs text-orange-600">
-					{displayExamples.length === 1 ? 'See example' : `See examples (${displayExamples.length})`} ->
-				</Button>
+			<CollapsibleTrigger
+				class="inline-flex h-6 items-center justify-center rounded-xl px-2 text-xs font-medium text-orange-600 transition-colors hover:bg-accent hover:text-orange-700"
+			>
+				{displayExamples.length === 1 ? 'See example' : `See examples (${displayExamples.length})`} ->
 			</CollapsibleTrigger>
 			<CollapsibleContent>
 				<div class="mt-2 space-y-2">

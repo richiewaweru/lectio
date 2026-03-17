@@ -146,14 +146,10 @@
 
 		{#if isComplete && content.alternative}
 			<Collapsible>
-				<CollapsibleTrigger>
-					<Button
-						variant="ghost"
-						size="sm"
-						class="px-0 text-violet-700 hover:bg-transparent hover:text-violet-800"
-					>
-						Alternative method
-					</Button>
+				<CollapsibleTrigger
+					class="inline-flex h-9 items-center justify-center rounded-xl px-0 text-sm font-medium text-violet-700 transition-colors hover:text-violet-800"
+				>
+					Alternative method
 				</CollapsibleTrigger>
 				<CollapsibleContent class="pt-2">
 					{@render methodPreview(content.alternative)}
@@ -163,14 +159,10 @@
 
 		{#if isComplete && content.alternatives?.length}
 			<Collapsible>
-				<CollapsibleTrigger>
-					<Button
-						variant="ghost"
-						size="sm"
-						class="px-0 text-violet-700 hover:bg-transparent hover:text-violet-800"
-					>
-						Other approaches
-					</Button>
+				<CollapsibleTrigger
+					class="inline-flex h-9 items-center justify-center rounded-xl px-0 text-sm font-medium text-violet-700 transition-colors hover:text-violet-800"
+				>
+					Other approaches
 				</CollapsibleTrigger>
 				<CollapsibleContent class="rounded-[1.25rem] bg-white/80 p-4 text-sm leading-6 text-foreground/82">
 					<ul class="list-disc space-y-2 pl-5">

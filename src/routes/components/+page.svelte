@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { getStableComponents } from '$lib/registry';
 	import { calculusSection, physicsSection } from '$lib/dummy-content';
+	import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
+	import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import {
@@ -15,6 +17,7 @@
 		GlossaryRail,
 		GlossaryInline,
 		InsightStrip,
+		ComparisonGrid,
 		WorkedExampleCard,
 		ProcessSteps,
 		PracticeStack,
@@ -23,7 +26,8 @@
 		PitfallAlert,
 		DiagramBlock,
 		DiagramCompare,
-		DiagramSeries
+		DiagramSeries,
+		TimelineBlock
 	} from '$lib/components/lectio';
 
 	const components = getStableComponents();
@@ -45,6 +49,7 @@
 			}
 		},
 		'insight-strip': { content: physicsSection.insight_strip },
+		'comparison-grid': { content: compareAndApplyPreview.section.comparison_grid },
 		'worked-example-card': { content: calculusSection.worked_example },
 		'process-steps': { content: physicsSection.process },
 		'practice-stack': { content: calculusSection.practice },
@@ -53,7 +58,8 @@
 		'pitfall-alert': { content: calculusSection.pitfall },
 		'diagram-block': { content: physicsSection.diagram },
 		'diagram-compare': { content: physicsSection.diagram_compare },
-		'diagram-series': { content: physicsSection.diagram_series }
+		'diagram-series': { content: physicsSection.diagram_series },
+		'timeline-block': { content: timelineNarrativePreview.section.timeline }
 	};
 
 	function formatCapacityKey(key: string): string {
@@ -168,6 +174,8 @@
 									</div>
 								{:else if comp.id === 'insight-strip'}
 									<InsightStrip content={preview.content} />
+								{:else if comp.id === 'comparison-grid'}
+									<ComparisonGrid content={preview.content} />
 								{:else if comp.id === 'worked-example-card'}
 									<WorkedExampleCard content={preview.content} mode="step-reveal" />
 								{:else if comp.id === 'process-steps'}
@@ -186,6 +194,8 @@
 									<DiagramCompare content={preview.content} />
 								{:else if comp.id === 'diagram-series'}
 									<DiagramSeries content={preview.content} />
+								{:else if comp.id === 'timeline-block'}
+									<TimelineBlock content={preview.content} />
 								{:else if comp.id === 'simulation-block'}
 									<Card class="rounded-[1.35rem] border-dashed bg-white/70 p-6 text-center text-muted-foreground">
 										<p class="text-sm italic">

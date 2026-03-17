@@ -177,6 +177,20 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		status: 'stable'
 	},
 
+	ComparisonGrid: {
+		id: 'comparison-grid',
+		name: 'ComparisonGrid',
+		group: 2,
+		purpose: 'Holds multiple concepts in view so distinctions become structural',
+		cognitiveJob: 'Compare and classify in parallel',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'CSS Grid + Card',
+		capacity: { columnsMin: 2, columnsMax: 4, rowsMax: 6, criterionMaxWords: 8, valueMaxWords: 20 },
+		printFallback: 'Static comparison table',
+		status: 'stable'
+	},
+
 	// GROUP 3 - EXAMPLES AND PROCESS
 
 	WorkedExampleCard: {
@@ -216,7 +230,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		purpose: 'Problems at calibrated difficulty with progressive hints and optional solutions',
 		cognitiveJob: 'Apply understanding under calibrated difficulty',
 		subjects: ['universal'],
-		behaviourModes: ['hint-toggle', 'accordion', 'progressive-hints'],
+		behaviourModes: ['hint-toggle', 'accordion', 'progressive-hints', 'flat-list'],
 		shadcnPrimitive: 'Accordion + Collapsible',
 		capacity: {
 			problemsMin: 2,
@@ -317,6 +331,20 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		status: 'stable'
 	},
 
+	TimelineBlock: {
+		id: 'timeline-block',
+		name: 'TimelineBlock',
+		group: 6,
+		purpose: 'Turns chronology into a readable instructional spine',
+		cognitiveJob: 'Follow cause and sequence over time',
+		subjects: ['history', 'science', 'universal'],
+		behaviourModes: ['static', 'timeline-scrubber'],
+		shadcnPrimitive: 'Card + Button',
+		capacity: { eventsMin: 3, eventsMax: 8, titleMaxWords: 10, summaryMaxWords: 50 },
+		printFallback: 'Vertical event list',
+		status: 'stable'
+	},
+
 	// GROUP 7 - SIMULATION
 
 	SimulationBlock: {
@@ -351,4 +379,8 @@ export function getComponentsForSubject(subject: string): ComponentMeta[] {
 	return Object.values(componentRegistry).filter(
 		(component) => component.subjects.includes('universal') || component.subjects.includes(subject)
 	);
+}
+
+export function getComponentById(componentId: string): ComponentMeta | undefined {
+	return Object.values(componentRegistry).find((component) => component.id === componentId);
 }

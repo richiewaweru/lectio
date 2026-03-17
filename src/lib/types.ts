@@ -19,7 +19,9 @@ export type BehaviourMode =
 	| 'drawer'
 	| 'inline-strip'
 	| 'progressive-hints'
-	| 'compare';
+	| 'compare'
+	| 'flat-list'
+	| 'timeline-scrubber';
 
 // ─────────────────────────────────────────────
 // GROUP 1 — FOUNDATION COMPONENTS
@@ -164,6 +166,29 @@ export interface InsightCell {
 
 export interface InsightStripContent {
 	cells: InsightCell[]; // max 3, min 2
+}
+
+export interface ComparisonColumn {
+	id: string;
+	title: string;
+	summary: string;
+	badge?: string;
+	detail?: string;
+	highlight?: boolean;
+}
+
+export interface ComparisonRow {
+	criterion: string;
+	values: string[];
+	takeaway?: string;
+}
+
+export interface ComparisonGridContent {
+	title: string;
+	intro?: string;
+	columns: ComparisonColumn[];
+	rows: ComparisonRow[];
+	apply_prompt?: string;
 }
 
 // ─────────────────────────────────────────────
@@ -333,6 +358,23 @@ export interface DiagramSeriesContent {
 	}>; // max 4 diagrams
 }
 
+export interface TimelineEvent {
+	id: string;
+	era?: string;
+	year: string;
+	title: string;
+	summary: string;
+	impact?: string;
+	tags?: string[];
+}
+
+export interface TimelineContent {
+	title: string;
+	intro?: string;
+	events: TimelineEvent[];
+	closing_takeaway?: string;
+}
+
 // ─────────────────────────────────────────────
 // GROUP 7 — SIMULATION
 // ─────────────────────────────────────────────
@@ -396,6 +438,8 @@ export interface SectionContent {
 	diagram?: DiagramContent;
 	diagram_compare?: DiagramCompareContent;
 	diagram_series?: DiagramSeriesContent;
+	comparison_grid?: ComparisonGridContent;
+	timeline?: TimelineContent;
 	insight_strip?: InsightStripContent;
 	pitfall?: PitfallContent;
 	pitfalls?: PitfallContent[]; // some sections have multiple

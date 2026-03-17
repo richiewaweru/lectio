@@ -1,65 +1,79 @@
 <script lang="ts">
 	import type { ProcessContent } from '$lib/types';
+	import { Button } from '$lib/components/ui/button';
 	import { Card } from '$lib/components/ui/card';
-	import { TriangleAlert } from 'lucide-svelte';
 
-	let { content }: { content: ProcessContent } = $props();
+	let {
+		content,
+		mode = 'static'
+	}: { content: ProcessContent; mode?: 'static' | 'step-reveal' } = $props();
+
+	let visibleSteps = $state(0);
+
+	$effect(() => {
+		visibleSteps = mode === 'step-reveal' ? Math.min(1, content.steps.length) : content.steps.length;
+	});
+
+	const renderedSteps = $derived(
+		mode === 'step-reveal' ? content.steps.slice(0, visibleSteps) : content.steps
+	);
+
+	function formatInputOutput(step: ProcessContent['steps'][number]) {
+		const pieces: string[] = [];
+
+		if (step.input) {
+			pieces.push(`Input: ${step.input}`);
+		}
+
+		if (step.output) {
+			pieces.push(`Output: ${step.output}`);
+		}
+
+		return pieces.join('  ');
+	}
 </script>
 
-<Card class="border-l-4 border-l-indigo-400 bg-white/85 p-6">
+<Card class="border-emerald-200 bg-emerald-50/45 p-6">
 	<div class="space-y-4">
 		<div class="space-y-2">
-			<p class="eyebrow text-indigo-600">Process</p>
+			<p class="eyebrow text-emerald-700">Process</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">{content.title}</h3>
 			{#if content.intro}
 				<p class="text-sm leading-6 text-muted-foreground">{content.intro}</p>
 			{/if}
 		</div>
 
-		<div class="space-y-4">
-			{#each content.steps as step, index}
-				<div class="flex gap-3">
-					<div class="flex flex-col items-center">
-						<div
-							class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold {content.checklist_mode
-								? 'border-2 border-indigo-300 text-indigo-600'
-								: 'bg-indigo-100 text-indigo-700'}"
-						>
-							{content.checklist_mode ? '' : step.number}
-						</div>
-						{#if index < content.steps.length - 1}
-							<div class="mt-1 w-px flex-1 bg-indigo-200"></div>
-						{/if}
+		{#each renderedSteps as step}
+			<div class="rounded-[1.25rem] border border-emerald-100 bg-white/82 p-4">
+				<div class="flex items-start gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+						{step.number}
 					</div>
-
-					<div class="flex-1 pb-2">
-						<div class="text-sm font-semibold text-foreground">{step.action}</div>
-						<p class="mt-0.5 text-sm leading-relaxed text-muted-foreground">{step.detail}</p>
-
+					<div class="space-y-2">
+						<p class="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+							{step.action}
+						</p>
+						<p class="text-base leading-7 text-foreground/84">{step.detail}</p>
 						{#if step.input || step.output}
-							<div class="mt-1.5 flex gap-4 text-xs">
-								{#if step.input}
-									<span class="text-muted-foreground">
-										<span class="font-semibold">In:</span> {step.input}
-									</span>
-								{/if}
-								{#if step.output}
-									<span class="text-muted-foreground">
-										<span class="font-semibold">Out:</span> {step.output}
-									</span>
-								{/if}
-							</div>
+							<p class="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+								{formatInputOutput(step)}
+							</p>
 						{/if}
-
 						{#if step.warning}
-							<div class="mt-2 flex items-start gap-1.5 rounded-xl bg-amber-50 p-2 text-xs text-amber-700">
-								<TriangleAlert class="mt-0.5 h-3.5 w-3.5 shrink-0" />
-								<span>{step.warning}</span>
-							</div>
+							<p class="text-sm italic leading-6 text-amber-800">Watch for: {step.warning}</p>
 						{/if}
 					</div>
 				</div>
-			{/each}
-		</div>
+			</div>
+		{/each}
+
+		{#if mode === 'step-reveal' && visibleSteps < content.steps.length}
+			<Button
+				variant="outline"
+				onclick={() => (visibleSteps = Math.min(visibleSteps + 1, content.steps.length))}
+			>
+				Show next step
+			</Button>
+		{/if}
 	</div>
 </Card>

@@ -1,0 +1,138 @@
+import { fireEvent, render, screen } from '@testing-library/svelte';
+import { describe, expect, it } from 'vitest';
+
+import ComparisonGrid from '$lib/components/lectio/ComparisonGrid.svelte';
+import GlossaryRail from '$lib/components/lectio/GlossaryRail.svelte';
+import PracticeStack from '$lib/components/lectio/PracticeStack.svelte';
+import ProcessSteps from '$lib/components/lectio/ProcessSteps.svelte';
+import TimelineBlock from '$lib/components/lectio/TimelineBlock.svelte';
+import { getStableComponents } from '$lib/registry';
+import { templateRegistry, validateAllTemplates } from '$lib/template-registry';
+import TemplateDetailView from '$lib/templates/TemplateDetailView.svelte';
+import TemplatesGallery from '$lib/templates/TemplatesGallery.svelte';
+import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
+import { figureFirstPreview } from '$lib/templates/figure-first/preview';
+import { focusFlowPreview } from '$lib/templates/focus-flow/preview';
+import { processTrainerPreview } from '$lib/templates/process-trainer/preview';
+import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+
+describe('template registry', () => {
+	it('registers all 10 starter templates with valid contracts and previews', () => {
+		expect(templateRegistry).toHaveLength(10);
+
+		const results = validateAllTemplates();
+
+		expect(results.every((result) => result.errors.length === 0)).toBe(true);
+	});
+
+	it('publishes the new components into the stable registry', () => {
+		const stableComponents = getStableComponents();
+		const stableNames = stableComponents.map((component) => component.name);
+
+		expect(stableNames).toEqual(expect.arrayContaining(['ComparisonGrid', 'TimelineBlock']));
+	});
+});
+
+describe('new components', () => {
+	it('renders the comparison grid with visible criteria and columns', () => {
+		render(ComparisonGrid, {
+			props: { content: compareAndApplyPreview.section.comparison_grid! }
+		});
+
+		expect(screen.getByText(/Compare the two families/i)).toBeInTheDocument();
+		expect(screen.getByText(/^Bond pattern$/i)).toBeInTheDocument();
+		expect(screen.getAllByText(/^Alkene$/i).length).toBeGreaterThan(0);
+	});
+
+	it('advances the timeline scrubber when the next button is pressed', async () => {
+		render(TimelineBlock, {
+			props: { content: timelineNarrativePreview.section.timeline! }
+		});
+
+		expect(screen.getByText(/Microscopic life observed/i)).toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+		expect(screen.getByText(/Handwashing evidence/i)).toBeInTheDocument();
+	});
+});
+
+describe('adapted behaviours', () => {
+	it('renders flat-list practice without requiring accordion expansion', async () => {
+		render(PracticeStack, {
+			props: { content: focusFlowPreview.section.practice, mode: 'flat-list' }
+		});
+
+		expect(screen.getByText(/A circle is split into 4 equal pieces/i)).toBeInTheDocument();
+		expect(
+			screen.getByText(/A rectangle is split into 3 pieces/i)
+		).toBeInTheDocument();
+
+		await fireEvent.click(screen.getAllByRole('button', { name: /show hint/i })[0]);
+
+		expect(
+			screen.getByText(/The denominator is the total number of equal parts/i)
+		).toBeInTheDocument();
+	});
+
+	it('reveals process steps progressively in step-reveal mode', async () => {
+		render(ProcessSteps, {
+			props: {
+				content: processTrainerPreview.section.process!,
+				mode: 'step-reveal'
+			}
+		});
+
+		expect(screen.getByText(/Count atoms first/i)).toBeInTheDocument();
+		expect(
+			screen.queryByText(/Adjust one substance with coefficients/i)
+		).not.toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: /show next step/i }));
+
+		expect(
+			screen.getByText(/Adjust one substance with coefficients/i)
+		).toBeInTheDocument();
+	});
+
+	it('supports glossary drawer and inline-strip variants', async () => {
+		const glossary = figureFirstPreview.section.glossary!;
+		const { rerender } = render(GlossaryRail, {
+			props: { content: glossary, mode: 'drawer' }
+		});
+
+		await fireEvent.click(screen.getByRole('button', { name: /show key terms/i }));
+		expect(screen.getByText(/Chloroplast/i)).toBeInTheDocument();
+
+		await rerender({ content: glossary, mode: 'inline-strip' });
+
+		expect(screen.getByText(/Glossary strip/i)).toBeInTheDocument();
+		expect(screen.getAllByText(/^Glucose$/i).length).toBeGreaterThan(0);
+	});
+});
+
+describe('template pages', () => {
+	it('filters the gallery client-side', async () => {
+		render(TemplatesGallery, {
+			props: {
+				templates: templateRegistry.map((definition) => definition.contract)
+			}
+		});
+
+		await fireEvent.click(screen.getByRole('button', { name: /visual-first/i }));
+
+		expect(screen.getByText(/Figure First/i)).toBeInTheDocument();
+		expect(screen.getByText(/Diagram-Led Lesson/i)).toBeInTheDocument();
+		expect(screen.queryByText(/Timeline Narrative/i)).not.toBeInTheDocument();
+	});
+
+	it('renders the detail view by template id and shows the live preview', () => {
+		render(TemplateDetailView, {
+			props: { templateId: 'timeline-narrative' }
+		});
+
+		expect(screen.getByText(/Timeline Narrative/i)).toBeInTheDocument();
+		expect(screen.getByText(/How germ theory took hold/i)).toBeInTheDocument();
+		expect(screen.getByText(/The road to germ theory/i)).toBeInTheDocument();
+	});
+});

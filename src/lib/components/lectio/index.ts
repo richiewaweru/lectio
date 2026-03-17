@@ -12,6 +12,7 @@ export { default as DefinitionFamily } from './DefinitionFamily.svelte';
 export { default as GlossaryRail } from './GlossaryRail.svelte';
 export { default as GlossaryInline } from './GlossaryInline.svelte';
 export { default as InsightStrip } from './InsightStrip.svelte';
+export { default as ComparisonGrid } from './ComparisonGrid.svelte';
 
 // Group 3 — Examples & Process
 export { default as WorkedExampleCard } from './WorkedExampleCard.svelte';
@@ -29,3 +30,4 @@ export { default as PitfallAlert } from './PitfallAlert.svelte';
 export { default as DiagramBlock } from './DiagramBlock.svelte';
 export { default as DiagramCompare } from './DiagramCompare.svelte';
 export { default as DiagramSeries } from './DiagramSeries.svelte';
+export { default as TimelineBlock } from './TimelineBlock.svelte';

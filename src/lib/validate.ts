@@ -2,6 +2,7 @@
 // Prevents content from quietly overflowing components
 
 import type { SectionContent } from './types';
+import type { ComparisonGridContent, TimelineContent } from './types';
 
 function words(text: string): number {
 	return text.trim().split(/\s+/).filter(Boolean).length;
@@ -9,6 +10,73 @@ function words(text: string): number {
 
 function warn(location: string, message: string): string {
 	return `[Lectio/${location}] ${message}`;
+}
+
+function validateComparisonGrid(content: ComparisonGridContent, warnings: string[]) {
+	if (words(content.title) > 10) warnings.push(warn('ComparisonGrid', 'title exceeds 10 words'));
+	if (content.intro && words(content.intro) > 60)
+		warnings.push(warn('ComparisonGrid', 'intro exceeds 60 words'));
+	if (content.columns.length < 2 || content.columns.length > 4)
+		warnings.push(
+			warn('ComparisonGrid', `has ${content.columns.length} columns; expected between 2 and 4`)
+		);
+
+	content.columns.forEach((column, index) => {
+		if (words(column.title) > 6)
+			warnings.push(warn('ComparisonGrid', `column ${index + 1} title exceeds 6 words`));
+		if (words(column.summary) > 24)
+			warnings.push(warn('ComparisonGrid', `column ${index + 1} summary exceeds 24 words`));
+		if (column.detail && words(column.detail) > 50)
+			warnings.push(warn('ComparisonGrid', `column ${index + 1} detail exceeds 50 words`));
+	});
+
+	if (content.rows.length > 6)
+		warnings.push(warn('ComparisonGrid', `has ${content.rows.length} rows; max is 6`));
+
+	content.rows.forEach((row, index) => {
+		if (words(row.criterion) > 8)
+			warnings.push(warn('ComparisonGrid', `row ${index + 1} criterion exceeds 8 words`));
+		if (row.values.length !== content.columns.length)
+			warnings.push(
+				warn(
+					'ComparisonGrid',
+					`row ${index + 1} has ${row.values.length} values; expected ${content.columns.length}`
+				)
+			);
+		row.values.forEach((value, valueIndex) => {
+			if (words(value) > 20)
+				warnings.push(
+					warn('ComparisonGrid', `row ${index + 1} value ${valueIndex + 1} exceeds 20 words`)
+				);
+		});
+		if (row.takeaway && words(row.takeaway) > 24)
+			warnings.push(warn('ComparisonGrid', `row ${index + 1} takeaway exceeds 24 words`));
+	});
+}
+
+function validateTimeline(content: TimelineContent, warnings: string[]) {
+	if (words(content.title) > 10) warnings.push(warn('TimelineBlock', 'title exceeds 10 words'));
+	if (content.intro && words(content.intro) > 60)
+		warnings.push(warn('TimelineBlock', 'intro exceeds 60 words'));
+	if (content.events.length < 3) warnings.push(warn('TimelineBlock', 'requires at least 3 events'));
+	if (content.events.length > 8)
+		warnings.push(warn('TimelineBlock', `has ${content.events.length} events; max is 8`));
+
+	content.events.forEach((event, index) => {
+		if (words(event.title) > 8)
+			warnings.push(warn('TimelineBlock', `event ${index + 1} title exceeds 8 words`));
+		if (words(event.summary) > 50)
+			warnings.push(warn('TimelineBlock', `event ${index + 1} summary exceeds 50 words`));
+		if (event.impact && words(event.impact) > 24)
+			warnings.push(warn('TimelineBlock', `event ${index + 1} impact exceeds 24 words`));
+		if (event.tags && event.tags.length > 3)
+			warnings.push(
+				warn('TimelineBlock', `event ${index + 1} has ${event.tags.length} tags; max is 3`)
+			);
+	});
+
+	if (content.closing_takeaway && words(content.closing_takeaway) > 40)
+		warnings.push(warn('TimelineBlock', 'closing_takeaway exceeds 40 words'));
 }
 
 export function validateSection(section: SectionContent): string[] {
@@ -127,6 +195,10 @@ export function validateSection(section: SectionContent): string[] {
 			w.push(warn('InsightStrip', 'cells min 2'));
 	}
 
+	if (section.comparison_grid) {
+		validateComparisonGrid(section.comparison_grid, w);
+	}
+
 	// Glossary
 	if (section.glossary) {
 		if (section.glossary.terms.length > 8)
@@ -142,6 +214,10 @@ export function validateSection(section: SectionContent): string[] {
 			if (words(t.definition) > 30)
 				w.push(warn(`GlossaryRail term ${i + 1}`, 'definition exceeds 30 words'));
 		});
+	}
+
+	if (section.timeline) {
+		validateTimeline(section.timeline, w);
 	}
 
 	// What next

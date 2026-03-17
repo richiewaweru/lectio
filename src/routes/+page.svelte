@@ -61,7 +61,7 @@
 							3. Templates
 						</p>
 						<p class="mt-2 text-sm leading-6 text-foreground/82">
-							Named instructional arcs like GuidedConceptPath and EnrichedLearningPath.
+							Registry-driven starter templates for guided, visual, compare, timeline, and process lessons.
 						</p>
 					</div>
 				</div>
