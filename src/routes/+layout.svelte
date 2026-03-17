@@ -58,6 +58,14 @@
 							GuidedConceptPath
 						</a>
 					</li>
+					<li>
+						<a
+							href="/templates"
+							class="block px-2 py-1 rounded-md hover:bg-muted transition-colors text-foreground/80 hover:text-foreground"
+						>
+							EnrichedLearningPath
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
