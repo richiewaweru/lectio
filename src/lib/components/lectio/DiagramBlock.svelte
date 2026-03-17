@@ -4,6 +4,7 @@
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
 	import {
 		Dialog,
+		DialogPortal,
 		DialogTrigger,
 		DialogContent,
 		DialogTitle,
@@ -97,22 +98,26 @@
 				</div>
 			</DialogTrigger>
 
-			<DialogOverlay class="fixed inset-0 bg-black/40 backdrop-blur-sm" />
-			<DialogContent class="glass-panel max-w-4xl rounded-[1.75rem] p-6 animate-scale-in">
-				<div class="relative z-10 space-y-4">
-					<DialogTitle class="text-base font-semibold text-primary">
-						{content.zoom_label ?? 'Diagram detail'}
-					</DialogTitle>
-					<div
-						class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full"
-						role="img"
-						aria-label={content.alt_text}
-					>
-						{@html content.svg_content}
+			<DialogPortal>
+				<DialogOverlay class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
+				<DialogContent
+					class="glass-panel fixed left-1/2 top-1/2 z-50 max-h-[min(88vh,56rem)] w-[min(92vw,64rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-[1.75rem] p-6 animate-scale-in sm:p-7"
+				>
+					<div class="relative z-10 space-y-4">
+						<DialogTitle class="text-base font-semibold text-primary">
+							{content.zoom_label ?? 'Diagram detail'}
+						</DialogTitle>
+						<div
+							class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full"
+							role="img"
+							aria-label={content.alt_text}
+						>
+							{@html content.svg_content}
+						</div>
+						<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
 					</div>
-					<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
-				</div>
-			</DialogContent>
+				</DialogContent>
+			</DialogPortal>
 		</Dialog>
 
 		{#if content.callouts?.length}

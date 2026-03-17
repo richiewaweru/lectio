@@ -96,6 +96,29 @@ describe('Lectio component harmonization', () => {
 		).toBeInTheDocument();
 	});
 
+	it('opens diagram inspect content in a centered viewport-bounded dialog', async () => {
+		render(DiagramBlock, {
+			props: { content: physicsSection.diagram! }
+		});
+
+		await fireEvent.click(screen.getByRole('img', { name: physicsSection.diagram!.alt_text }));
+
+		expect(screen.getAllByRole('img', { name: physicsSection.diagram!.alt_text })).toHaveLength(2);
+		expect(screen.getAllByText(physicsSection.diagram!.caption)).toHaveLength(2);
+
+		const centeredDialog = Array.from(document.body.querySelectorAll<HTMLElement>('div')).find(
+			(element) =>
+				element.className.includes('fixed') &&
+				element.className.includes('left-1/2') &&
+				element.className.includes('top-1/2')
+		);
+
+		expect(centeredDialog).toBeTruthy();
+		expect(centeredDialog?.className).toContain('-translate-x-1/2');
+		expect(centeredDialog?.className).toContain('-translate-y-1/2');
+		expect(centeredDialog?.className).toContain('overflow-y-auto');
+	});
+
 	it('evaluates quiz answers immediately and resets with Try again', async () => {
 		render(QuizCheck, {
 			props: { content: physicsSection.quiz! }
