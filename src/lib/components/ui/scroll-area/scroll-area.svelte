@@ -11,6 +11,6 @@
   let { children, class: className, ...restProps }: Props = $props();
 </script>
 
-<div class={cn('overflow-auto', className)} {...restProps}>
+<div class={cn('overflow-auto scrollbar-styled', className)} {...restProps}>
   {#if children}{@render children()}{/if}
 </div>

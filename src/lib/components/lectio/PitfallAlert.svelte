@@ -10,7 +10,7 @@
 	const displayExamples = content.examples ?? (content.example ? [content.example] : []);
 </script>
 
-<Alert class="border-orange-200 bg-orange-50">
+<Alert class="border-orange-200 bg-orange-50/80">
 	<TriangleAlert class="h-4 w-4 text-orange-600" />
 	<AlertTitle class="text-orange-700 font-semibold text-sm">
 		Common Pitfall &mdash; {content.misconception}
@@ -34,7 +34,7 @@
 			<CollapsibleContent>
 				<div class="mt-2 space-y-2">
 					{#each displayExamples as ex}
-						<div class="text-xs text-muted-foreground bg-white/60 rounded p-2 italic">
+						<div class="text-xs text-muted-foreground bg-white/70 rounded-xl p-2 italic">
 							{ex}
 						</div>
 					{/each}

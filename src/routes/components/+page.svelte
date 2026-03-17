@@ -34,7 +34,7 @@
 </script>
 
 <div class="max-w-4xl mx-auto px-6 py-12">
-	<h1 class="text-3xl font-bold tracking-tight mb-2">Components</h1>
+	<h1 class="text-3xl font-bold tracking-tight font-serif mb-2">Components</h1>
 	<p class="text-muted-foreground mb-8">
 		Each component encodes a cognitive job — a specific role in the instructional arc. Previews
 		use calculus dummy content.
@@ -48,7 +48,7 @@
 					<!-- Header -->
 					<div class="flex items-start justify-between gap-4 mb-4">
 						<div>
-							<h2 class="text-xl font-semibold">{comp.name}</h2>
+							<h2 class="text-xl font-semibold font-serif">{comp.name}</h2>
 							<p class="text-sm text-muted-foreground mt-1">{comp.purpose}</p>
 						</div>
 						<Badge variant="outline" class="shrink-0">{comp.shadcnPrimitive}</Badge>

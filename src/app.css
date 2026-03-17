@@ -24,29 +24,35 @@
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
+	--font-sans: var(--font-sans);
+	--font-serif: var(--font-serif);
+	--shadow-warm: 0 24px 80px rgba(27, 38, 59, 0.14);
+	--shadow-warm-sm: 0 4px 24px rgba(27, 38, 59, 0.08);
 }
 
 :root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--destructive-foreground: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--radius: 0.625rem;
+	--background: hsl(38, 52%, 96%);
+	--foreground: hsl(213, 37%, 17%);
+	--card: hsl(38, 40%, 98%);
+	--card-foreground: hsl(213, 37%, 17%);
+	--popover: hsl(38, 40%, 98%);
+	--popover-foreground: hsl(213, 37%, 17%);
+	--primary: hsl(213, 37%, 17%);
+	--primary-foreground: hsl(38, 52%, 96%);
+	--secondary: hsl(38, 30%, 92%);
+	--secondary-foreground: hsl(213, 37%, 17%);
+	--muted: hsl(38, 25%, 93%);
+	--muted-foreground: hsl(213, 20%, 46%);
+	--accent: hsl(24, 95%, 53%);
+	--accent-foreground: hsl(38, 52%, 96%);
+	--destructive: hsl(0, 72%, 51%);
+	--destructive-foreground: hsl(0, 0%, 100%);
+	--border: hsl(38, 20%, 88%);
+	--input: hsl(38, 20%, 88%);
+	--ring: hsl(24, 95%, 53%);
+	--radius: 1rem;
+	--font-sans: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+	--font-serif: 'Fraunces', ui-serif, Georgia, serif;
 }
 
 @layer base {
@@ -55,5 +61,49 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		background-image:
+			radial-gradient(ellipse 80% 60% at 5% 0%, hsl(24 95% 53% / 0.06) 0%, transparent 70%),
+			radial-gradient(ellipse 60% 50% at 95% 0%, hsl(213 37% 17% / 0.04) 0%, transparent 70%);
+		background-attachment: fixed;
+	}
+
+	/* Styled scrollbar for ScrollArea */
+	.scrollbar-styled::-webkit-scrollbar {
+		width: 10px;
+	}
+	.scrollbar-styled::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	.scrollbar-styled::-webkit-scrollbar-thumb {
+		background: hsl(213 37% 17% / 0.2);
+		border-radius: 9999px;
+	}
+	.scrollbar-styled::-webkit-scrollbar-thumb:hover {
+		background: hsl(213 37% 17% / 0.35);
+	}
+	.scrollbar-styled {
+		scrollbar-width: thin;
+		scrollbar-color: hsl(213 37% 17% / 0.2) transparent;
+	}
+
+	/* Emphasis highlight for {@html} content */
+	.lectio-emphasis {
+		border-radius: 0.125rem;
+		background-color: hsl(24 95% 53% / 0.12);
+		padding-inline: 0.25rem;
+		font-weight: 600;
+		color: var(--foreground);
+	}
+
+	/* Step reveal animation */
+	@keyframes fade-in-up {
+		from { opacity: 0; transform: translateY(8px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	.animate-step-reveal {
+		animation: fade-in-up 0.3s ease forwards;
 	}
 }

@@ -158,6 +158,46 @@ export const calculusSection: SectionContent = {
 				definition: 'At a single exact moment, not averaged over any interval.',
 				related: ['Limit', 'Derivative'],
 			},
+			{
+				term: 'Continuous Function',
+				definition:
+					'A function with no breaks, jumps, or holes — you can draw its graph without lifting your pen.',
+				used_in: 'Explanation',
+				related: ['Limit', 'Differentiable'],
+			},
+			{
+				term: 'Differentiable',
+				definition:
+					'A function is differentiable at a point if a derivative exists there — the curve is smooth, not kinked.',
+				related: ['Derivative', 'Continuous Function'],
+			},
+			{
+				term: 'Secant Line',
+				definition:
+					'A straight line connecting two points on a curve, representing the average rate of change between them.',
+				used_in: 'Worked Example',
+				related: ['Tangent Line', 'Derivative'],
+			},
+			{
+				term: 'Tangent Line',
+				definition:
+					'A line that just touches a curve at one point, representing the instantaneous rate of change there.',
+				used_in: 'Worked Example',
+				related: ['Secant Line', 'Derivative', 'Limit'],
+			},
+			{
+				term: 'Rate of Change',
+				definition:
+					'How quickly one quantity changes relative to another — the slope of a function over an interval or at a point.',
+				used_in: 'Explanation, Worked Example',
+				related: ['Derivative', 'Secant Line'],
+			},
+			{
+				term: 'Fundamental Theorem',
+				definition:
+					'The theorem linking differentiation and integration — the two main operations of calculus are inverses of each other.',
+				related: ['Derivative', 'Integral'],
+			},
 		],
 	},
 

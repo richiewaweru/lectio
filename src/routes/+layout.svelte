@@ -18,7 +18,7 @@
 	<!-- Sidebar -->
 	<aside class="hidden md:flex w-64 flex-col border-r bg-muted/30 p-6">
 		<a href="/" class="block mb-6">
-			<div class="text-xl font-bold tracking-tight">Lectio</div>
+			<div class="text-xl font-bold tracking-tight font-serif">Lectio</div>
 			<div class="text-xs text-muted-foreground">Educational Components</div>
 		</a>
 
@@ -64,7 +64,7 @@
 	</aside>
 
 	<!-- Main content -->
-	<main class="flex-1 overflow-y-auto">
+	<main class="flex-1 min-h-0">
 		{@render children()}
 	</main>
 </div>

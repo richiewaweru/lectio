@@ -45,7 +45,7 @@
 			{@const diff = difficultyConfig[problem.difficulty]}
 			{@const hints = getHints(problem)}
 			{@const shown = hintsRevealed[i] ?? 0}
-			<AccordionItem value={`problem-${i}`} class="border rounded-lg px-4 bg-card">
+			<AccordionItem value={`problem-${i}`} class="border rounded-xl px-4 bg-card">
 				<AccordionTrigger class="hover:no-underline py-4">
 					<div class="flex items-start gap-3 text-left">
 						<Badge variant="outline" class={diff.className}>
@@ -61,7 +61,7 @@
 					{#if shown > 0}
 						<div class="space-y-2 mb-2">
 							{#each hints.slice(0, shown) as hint, h}
-								<div class="text-sm text-muted-foreground bg-muted/50 rounded-md p-3 leading-relaxed">
+								<div class="text-sm text-muted-foreground bg-muted/50 rounded-xl p-3 leading-relaxed">
 									{#if hints.length > 1}
 										<span class="font-semibold text-xs">Hint {h + 1}:</span>
 									{/if}
@@ -90,7 +90,7 @@
 								</Button>
 							</CollapsibleTrigger>
 							<CollapsibleContent>
-								<div class="mt-2 text-sm bg-emerald-50 text-emerald-800 rounded-md p-3 leading-relaxed font-medium">
+								<div class="mt-2 text-sm bg-emerald-50 text-emerald-800 rounded-xl p-3 leading-relaxed font-medium">
 									{problem.answer}
 								</div>
 							</CollapsibleContent>
@@ -106,7 +106,7 @@
 								</Button>
 							</CollapsibleTrigger>
 							<CollapsibleContent>
-								<div class="mt-2 text-sm text-muted-foreground bg-muted/50 rounded-md p-3 leading-relaxed">
+								<div class="mt-2 text-sm text-muted-foreground bg-muted/50 rounded-xl p-3 leading-relaxed">
 									{problem.solution}
 								</div>
 							</CollapsibleContent>

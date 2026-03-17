@@ -23,7 +23,7 @@
 		<div class="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-1">
 			{section.subject} · {section.grade_band}
 		</div>
-		<h1 class="text-3xl font-bold tracking-tight">{section.title}</h1>
+		<h1 class="text-3xl font-bold tracking-tight font-serif">{section.title}</h1>
 		{#if section.subtitle}
 			<p class="text-lg text-muted-foreground mt-1">{section.subtitle}</p>
 		{/if}

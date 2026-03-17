@@ -5,7 +5,7 @@
 	let { content }: { content: WhatNextContent } = $props();
 </script>
 
-<Card class="border-l-4 border-l-amber-400 p-6">
+<Card class="border-l-4 border-l-amber-400 bg-amber-50/65 p-6">
 	<div class="text-xs font-semibold tracking-widest uppercase text-amber-600 mb-2">
 		What's Next
 	</div>
@@ -18,7 +18,7 @@
 			{content.prerequisites.join(' · ')}
 		</div>
 	{/if}
-	<p class="text-sm font-semibold text-amber-700">
+	<p class="text-sm font-semibold text-amber-700 font-serif">
 		{content.next} &rarr;
 	</p>
 </Card>

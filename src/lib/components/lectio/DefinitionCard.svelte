@@ -8,11 +8,11 @@
 	let showFormal = $state(false);
 </script>
 
-<Card class="border-l-4 border-l-purple-400 bg-purple-50/50 p-6">
+<Card class="border-l-4 border-l-purple-400 bg-purple-50/65 p-6">
 	<div class="text-xs font-semibold tracking-widest uppercase text-purple-600 mb-2">
 		Definition
 	</div>
-	<div class="text-base font-semibold text-foreground mb-2">
+	<div class="text-base font-semibold text-foreground mb-2 font-serif">
 		{content.term}
 	</div>
 	<p class="text-sm leading-relaxed text-foreground">
