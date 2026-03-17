@@ -4,6 +4,7 @@
 
 - The Svelte repo now ships the registry-driven template system as the public template experience.
 - The public routes are `/components`, `/templates`, and `/templates/[templateId]`.
+- The public app shell includes a shared desktop-only sticky sidebar for components and templates, driven directly from the live registries.
 - The template detail page uses a left-side persistent contract drawer on `md+` and a temporary left-side sheet on mobile, with desktop preference remembered in `localStorage`.
 
 ## Library Surface
@@ -40,6 +41,7 @@
 - `docs/reference/component-guide.md`
 - `docs/project/runs/phase7-contract-drawer-update.md`
 - `docs/project/runs/phase8-source-of-truth-sync.md`
+- `docs/project/runs/phase9-sidebar-navigation-alignment.md`
 
 Historical planning docs were retained, but they now carry a status note directing readers back to the live implementation.
 

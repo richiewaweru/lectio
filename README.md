@@ -37,4 +37,5 @@ npm run build
 ## Notes
 
 - The template detail page uses a left-side persistent contract drawer on `md+` and a temporary mobile sheet, with desktop preference stored in `localStorage`.
+- The public app shell includes a shared desktop-only sticky sidebar that derives its component and template links from the live registries.
 - The current code in `src/lib/` is the source of truth over older planning briefs.
