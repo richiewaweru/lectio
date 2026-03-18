@@ -4,32 +4,62 @@
  * Exports everything the Python pipeline needs to know about
  * Lectio's templates and components into agents/contracts/.
  *
- * Run this whenever templates or components change:
+ * Run this whenever templates, components, or presets change:
  *   npm run export-contracts
+ *   npm run export-contracts -- --out /path/to/output
  *
  * Output files:
- *   agents/contracts/{template-id}.json   — one per template
- *   agents/contracts/component-field-map.json  — component → SectionContent field
- *   agents/contracts/component-registry.json   — full component metadata
+ *   {out}/{template-id}.json          — one per template
+ *   {out}/component-field-map.json    — component → SectionContent field
+ *   {out}/component-registry.json     — full component metadata
+ *   {out}/preset-registry.json        — preset palette and style metadata
  *
  * The pipeline reads these files. It never imports from src/.
  * Single source of truth stays here in TypeScript.
  */
 
 import { mkdirSync, writeFileSync } from 'fs';
-import { templateRegistry } from '../src/lib/template-registry';
+import { resolve } from 'path';
 import { componentRegistry, getComponentFieldMap } from '../src/lib/registry';
+import { basePresets } from '../src/lib/presets/base-presets';
 
-const OUT = 'agents/contracts';
+// Import contracts directly from config files to avoid pulling in
+// .svelte layout files through template-registry.ts.
+import { compareAndApplyContract } from '../src/lib/templates/compare-and-apply/config';
+import { diagramLedLessonContract } from '../src/lib/templates/diagram-led-lesson/config';
+import { distinctionGridContract } from '../src/lib/templates/distinction-grid/config';
+import { figureFirstContract } from '../src/lib/templates/figure-first/config';
+import { focusFlowContract } from '../src/lib/templates/focus-flow/config';
+import { formalTrackContract } from '../src/lib/templates/formal-track/config';
+import { guidedConceptCompactContract } from '../src/lib/templates/guided-concept-compact/config';
+import { guidedConceptPathContract } from '../src/lib/templates/guided-concept-path/config';
+import { processTrainerContract } from '../src/lib/templates/process-trainer/config';
+import { timelineNarrativeContract } from '../src/lib/templates/timeline-narrative/config';
+
+const outArgIndex = process.argv.indexOf('--out');
+const outFromArg  = outArgIndex !== -1 ? process.argv[outArgIndex + 1] : null;
+const outFromEnv  = process.env.LECTIO_CONTRACTS_DIR ?? null;
+const OUT         = resolve(outFromArg ?? outFromEnv ?? 'agents/contracts');
 mkdirSync(OUT, { recursive: true });
 
 // ── 1. Template contracts ─────────────────────────────────────────────────────
 // Export only the fields the pipeline needs — not the Svelte render
 // component, not the preset UI definitions, not the preview section.
 
-for (const template of templateRegistry) {
-	const { contract } = template;
+const contracts = [
+	compareAndApplyContract,
+	diagramLedLessonContract,
+	distinctionGridContract,
+	figureFirstContract,
+	focusFlowContract,
+	formalTrackContract,
+	guidedConceptCompactContract,
+	guidedConceptPathContract,
+	processTrainerContract,
+	timelineNarrativeContract,
+];
 
+for (const contract of contracts) {
 	const summary = {
 		id: contract.id,
 		name: contract.name,
@@ -51,7 +81,8 @@ for (const template of templateRegistry) {
 		not_ideal_for: contract.notIdealFor,
 		learner_fit: contract.learnerFit,
 		subjects: contract.subjects,
-		interaction_level: contract.interactionLevel
+		interaction_level: contract.interactionLevel,
+		allowed_presets: contract.allowedPresets
 	};
 
 	writeFileSync(`${OUT}/${contract.id}.json`, JSON.stringify(summary, null, 2));
@@ -88,13 +119,34 @@ const registryExport = Object.fromEntries(
 
 writeFileSync(`${OUT}/component-registry.json`, JSON.stringify(registryExport, null, 2));
 
+// ── 4. Preset registry ───────────────────────────────────────────────────────
+// Visual preset metadata for the pipeline.
+
+const presetExport = Object.fromEntries(
+	basePresets.map((p) => [
+		p.id,
+		{
+			id:            p.id,
+			name:          p.name,
+			palette:       p.palette,
+			typography:    p.typography,
+			density:       p.density,
+			surface_style: p.surfaceStyle,
+		}
+	])
+);
+
+writeFileSync(`${OUT}/preset-registry.json`, JSON.stringify(presetExport, null, 2));
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
+const templateCount = contracts.length;
 const fieldCount = Object.keys(componentFieldMap).length;
-const templateCount = templateRegistry.length;
 const componentCount = Object.keys(registryExport).length;
+const presetCount = Object.keys(presetExport).length;
 
 console.log(`✓ Exported ${templateCount} template contracts`);
 console.log(`✓ Exported component field map (${fieldCount} components with section fields)`);
 console.log(`✓ Exported full component registry (${componentCount} total components)`);
+console.log(`✓ Exported preset registry (${presetCount} presets)`);
 console.log(`  Output: ${OUT}/`);
