@@ -18,6 +18,7 @@
 		QuizCheck,
 		PracticeStack,
 		ReflectionPrompt,
+		SimulationBlock,
 		InterviewAnchor,
 		WhatNextBridge,
 		GlossaryRail,
@@ -135,6 +136,10 @@
 
 			{#if section.reflection}
 				<ReflectionPrompt content={section.reflection} />
+			{/if}
+
+			{#if section.simulation}
+				<SimulationBlock content={section.simulation} />
 			{/if}
 
 			{#if section.interview}

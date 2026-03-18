@@ -27,6 +27,7 @@
 		DiagramBlock,
 		DiagramCompare,
 		DiagramSeries,
+		SimulationBlock,
 		TimelineBlock
 	} from '$lib/components/lectio';
 
@@ -59,6 +60,7 @@
 		'diagram-block': { content: physicsSection.diagram },
 		'diagram-compare': { content: physicsSection.diagram_compare },
 		'diagram-series': { content: physicsSection.diagram_series },
+		'simulation-block': { content: physicsSection.simulation },
 		'timeline-block': { content: timelineNarrativePreview.section.timeline }
 	};
 
@@ -194,14 +196,10 @@
 									<DiagramCompare content={preview.content} />
 								{:else if comp.id === 'diagram-series'}
 									<DiagramSeries content={preview.content} />
+								{:else if comp.id === 'simulation-block'}
+									<SimulationBlock content={preview.content} />
 								{:else if comp.id === 'timeline-block'}
 									<TimelineBlock content={preview.content} />
-								{:else if comp.id === 'simulation-block'}
-									<Card class="rounded-[1.35rem] border-dashed bg-white/70 p-6 text-center text-muted-foreground">
-										<p class="text-sm italic">
-											SimulationBlock - coming soon. Depends on the interaction pipeline.
-										</p>
-									</Card>
 								{/if}
 							{:else}
 								<div class="rounded-xl border bg-muted/30 p-6 text-center text-sm italic text-muted-foreground">

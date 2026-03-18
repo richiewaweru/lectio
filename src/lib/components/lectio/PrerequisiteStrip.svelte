@@ -20,6 +20,7 @@
 					<PopoverTrigger>
 						<button
 							class="inline-flex cursor-pointer items-center gap-1 rounded-full border border-teal-200 bg-white px-3 py-1 text-xs font-medium text-teal-700 transition-all duration-200 hover:border-teal-300 hover:bg-teal-100"
+							aria-label={`Show refresher for ${item.concept}`}
 						>
 							{item.concept}
 							<span class="text-teal-400">?</span>

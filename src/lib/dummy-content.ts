@@ -584,6 +584,33 @@ export const physicsSection: SectionContent = {
 		space: 4,
 	},
 
+	simulation: {
+		explanation:
+			'Eventually this block will let learners vary net force and mass to watch acceleration respond in real time.',
+		spec: {
+			type: 'graph_slider',
+			goal: 'Discover how changing force and mass affects acceleration in Newton\'s Second Law.',
+			anchor_content: { equation: 'F = ma', starting_mass: 5, starting_force: 15 },
+			context: {
+				learner_level: 'secondary',
+				template_id: 'enriched_learning_path_v1',
+				color_mode: 'light',
+				accent_color: '#f97316',
+				surface_color: '#fff7ed',
+				font_mono: 'ui-monospace'
+			},
+			dimensions: { width: '100%', height: 280, resizable: false },
+			print_translation: 'static_diagram'
+		},
+		fallback_diagram: {
+			svg_content: forceArrowSvg,
+			caption:
+				'Fallback view of the free-body setup while the interactive simulation is unavailable.',
+			alt_text:
+				'Fallback diagram showing a 5 kilogram block with applied force and friction arrows.'
+		}
+	},
+
 	interview: {
 		prompt: "Explain to them why a fully loaded shopping trolley is harder to push than an empty one, using Newton's Second Law.",
 		audience: 'a curious 10-year-old',

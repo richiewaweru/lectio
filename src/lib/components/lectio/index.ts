@@ -31,3 +31,6 @@ export { default as DiagramBlock } from './DiagramBlock.svelte';
 export { default as DiagramCompare } from './DiagramCompare.svelte';
 export { default as DiagramSeries } from './DiagramSeries.svelte';
 export { default as TimelineBlock } from './TimelineBlock.svelte';
+
+// Group 7 — Simulation
+export { default as SimulationBlock } from './SimulationBlock.svelte';

@@ -33,6 +33,10 @@ describe('sidebar navigation', () => {
 			'href',
 			'/components#timeline-block'
 		);
+		expect(screen.getByRole('link', { name: /SimulationBlock/i })).toHaveAttribute(
+			'href',
+			'/components#simulation-block'
+		);
 		expect(screen.getByRole('link', { name: /Template gallery/i })).toHaveAttribute(
 			'href',
 			'/templates'

@@ -6,10 +6,18 @@ import DefinitionFamily from '$lib/components/lectio/DefinitionFamily.svelte';
 import DiagramBlock from '$lib/components/lectio/DiagramBlock.svelte';
 import DiagramSeries from '$lib/components/lectio/DiagramSeries.svelte';
 import DiagramCompare from '$lib/components/lectio/DiagramCompare.svelte';
+import GlossaryInline from '$lib/components/lectio/GlossaryInline.svelte';
+import PrerequisiteStrip from '$lib/components/lectio/PrerequisiteStrip.svelte';
 import QuizCheck from '$lib/components/lectio/QuizCheck.svelte';
+import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
 import { calculusSection, physicsSection } from '$lib/dummy-content';
+import { getStableComponents } from '$lib/registry';
+import { validateSection } from '$lib/validate';
+
+const repeatWords = (word: string, count: number) =>
+	Array.from({ length: count }, () => word).join(' ');
 
 describe('Lectio component harmonization', () => {
 	it('renders inline hook SVG ahead of image fallback when both are present', () => {
@@ -61,6 +69,25 @@ describe('Lectio component harmonization', () => {
 		expect(
 			screen.getByText('Applying force F to mass m produces acceleration a = F/m.')
 		).toBeInTheDocument();
+	});
+
+	it('recovers when the diagrams array shrinks after the current step is selected', async () => {
+		const { rerender } = render(DiagramSeries, {
+			props: { content: physicsSection.diagram_series! }
+		});
+
+		await fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+		expect(screen.getByText('Step 2 of 3')).toBeInTheDocument();
+
+		await rerender({
+			content: {
+				...physicsSection.diagram_series!,
+				diagrams: [physicsSection.diagram_series!.diagrams[0]]
+			}
+		});
+
+		expect(screen.getByText('Step 1 of 1')).toBeInTheDocument();
+		expect(screen.getByText('An object at rest with no applied force remains at rest (First Law).')).toBeInTheDocument();
 	});
 
 	it('reveals after-state details progressively in diagram compare', async () => {
@@ -133,6 +160,171 @@ describe('Lectio component harmonization', () => {
 		expect(screen.queryByText('Not quite!')).not.toBeInTheDocument();
 	});
 
+	it('renders the simulation scaffold with metadata and a fallback diagram', () => {
+		const { getByText } = render(SimulationBlock, {
+			props: { content: physicsSection.simulation! }
+		});
+
+		expect(getByText('Manipulate and discover')).toBeInTheDocument();
+		expect(
+			getByText(/Interactive experience will mount here when the interaction pipeline is connected/i)
+		).toHaveStyle('min-height: 280px');
+		expect(getByText('graph_slider')).toBeInTheDocument();
+		expect(getByText('Fallback diagram')).toBeInTheDocument();
+		expect(
+			getByText('Fallback view of the free-body setup while the interactive simulation is unavailable.')
+		).toBeInTheDocument();
+	});
+
+	it('adds descriptive aria-labels to refresher and glossary triggers', () => {
+		render(PrerequisiteStrip, {
+			props: {
+				content: {
+					label: 'Before we begin',
+					items: [{ concept: 'Force', refresher: 'A push or pull.' }]
+				}
+			}
+		});
+		render(GlossaryInline, {
+			props: {
+				term: 'Derivative',
+				definition: 'The local slope at a point.'
+			}
+		});
+
+		expect(screen.getByRole('button', { name: 'Show refresher for Force' })).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: 'Definition of Derivative' })).toBeInTheDocument();
+	});
+
+	it('reports the new validation coverage for simulation, diagrams, quiz, reflection, interview, and what-next content', () => {
+		const oversizedCallouts = Array.from({ length: 7 }, (_, index) => ({
+			...physicsSection.diagram!.callouts![0],
+			id: `callout-${index}`
+		}));
+		const warnings = validateSection({
+			...physicsSection,
+			interview: {
+				...physicsSection.interview!,
+				prompt: repeatWords('prompt', 36),
+				audience: repeatWords('audience', 11),
+				follow_up: repeatWords('follow', 26)
+			},
+			quiz: {
+				...physicsSection.quiz!,
+				question: repeatWords('question', 61),
+				options: [
+					{
+						...physicsSection.quiz!.options[0],
+						text: repeatWords('option', 21),
+						explanation: repeatWords('explanation', 41)
+					},
+					...physicsSection.quiz!.options.slice(1),
+					{
+						text: 'Extra option',
+						correct: false,
+						explanation: 'Extra explanation'
+					}
+				],
+				feedback_correct: repeatWords('correct', 31),
+				feedback_incorrect: repeatWords('incorrect', 31)
+			},
+			reflection: {
+				...physicsSection.reflection!,
+				prompt: repeatWords('reflection', 41),
+				space: 7
+			},
+			diagram: {
+				...physicsSection.diagram!,
+				caption: repeatWords('caption', 61),
+				alt_text: repeatWords('alt', 81),
+				callouts: oversizedCallouts
+			},
+			diagram_compare: {
+				...physicsSection.diagram_compare!,
+				before_label: repeatWords('before', 7),
+				after_label: repeatWords('after', 7),
+				caption: repeatWords('compare', 61)
+			},
+			diagram_series: {
+				...physicsSection.diagram_series!,
+				title: repeatWords('series', 11),
+				diagrams: [
+					{
+						...physicsSection.diagram_series!.diagrams[0],
+						step_label: repeatWords('step', 9),
+						caption: repeatWords('seriescaption', 41)
+					},
+					...physicsSection.diagram_series!.diagrams.slice(1),
+					physicsSection.diagram_series!.diagrams[0],
+					physicsSection.diagram_series!.diagrams[1]
+				]
+			},
+			simulation: {
+				...physicsSection.simulation!,
+				explanation: repeatWords('simulation', 61),
+				spec: {
+					...physicsSection.simulation!.spec,
+					goal: repeatWords('goal', 41),
+					dimensions: {
+						...physicsSection.simulation!.spec.dimensions,
+						height: 0
+					}
+				},
+				fallback_diagram: {
+					...physicsSection.diagram!,
+					caption: repeatWords('fallback', 61),
+					alt_text: repeatWords('fallbackalt', 81),
+					callouts: oversizedCallouts
+				}
+			},
+			what_next: {
+				...physicsSection.what_next,
+				next: repeatWords('next', 16),
+				preview: repeatWords('preview', 31),
+				prerequisites: ['one', 'two', 'three', 'four', 'five']
+			}
+		});
+
+		expect(warnings).toEqual(
+			expect.arrayContaining([
+				'[Lectio/InterviewAnchor] prompt exceeds 35 words',
+				'[Lectio/InterviewAnchor] audience exceeds 10 words',
+				'[Lectio/InterviewAnchor] follow_up exceeds 25 words',
+				'[Lectio/QuizCheck] question exceeds 60 words',
+				'[Lectio/QuizCheck] options must be 3-4',
+				'[Lectio/QuizCheck] option 1 text exceeds 20 words',
+				'[Lectio/QuizCheck] option 1 explanation exceeds 40 words',
+				'[Lectio/ReflectionPrompt] prompt exceeds 40 words',
+				'[Lectio/ReflectionPrompt] space exceeds 6 lines',
+				'[Lectio/DiagramBlock] caption exceeds 60 words',
+				'[Lectio/DiagramBlock] alt_text exceeds 80 words',
+				'[Lectio/DiagramBlock] callouts max 6',
+				'[Lectio/DiagramCompare] before_label exceeds 6 words',
+				'[Lectio/DiagramCompare] after_label exceeds 6 words',
+				'[Lectio/DiagramCompare] caption exceeds 60 words',
+				'[Lectio/DiagramSeries] title exceeds 10 words',
+				'[Lectio/DiagramSeries] diagrams max 4',
+				'[Lectio/DiagramSeries] diagram 1 step_label exceeds 8 words',
+				'[Lectio/DiagramSeries] diagram 1 caption exceeds 40 words',
+				'[Lectio/SimulationBlock] goal exceeds 40 words',
+				'[Lectio/SimulationBlock] explanation exceeds 60 words',
+				'[Lectio/SimulationBlock] dimensions.height must be positive',
+				'[Lectio/SimulationBlock/FallbackDiagram] caption exceeds 60 words',
+				'[Lectio/SimulationBlock/FallbackDiagram] alt_text exceeds 80 words',
+				'[Lectio/SimulationBlock/FallbackDiagram] callouts max 6',
+				'[Lectio/WhatNextBridge] next exceeds 15 words',
+				'[Lectio/WhatNextBridge] preview exceeds 30 words',
+				'[Lectio/WhatNextBridge] prerequisites max 4'
+			])
+		);
+	});
+
+	it('keeps SimulationBlock in the stable component surfaces while it remains beta', () => {
+		expect(getStableComponents().some((component) => component.name === 'SimulationBlock')).toBe(
+			true
+		);
+	});
+
 	it('renders GuidedConceptPath and EnrichedLearningPath without breaking key content', () => {
 		const guided = render(GuidedConceptPath, {
 			props: { section: calculusSection }
@@ -149,5 +341,6 @@ describe('Lectio component harmonization', () => {
 
 		expect(screen.getByText("Newton's Second Law of Motion")).toBeInTheDocument();
 		expect(screen.getByText('Before we begin')).toBeInTheDocument();
+		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
 	});
 });

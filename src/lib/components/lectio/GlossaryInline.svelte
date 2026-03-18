@@ -8,6 +8,7 @@
 	<PopoverTrigger>
 		<button
 			class="inline cursor-pointer font-medium text-foreground underline decoration-dotted decoration-purple-500/70 underline-offset-2 transition-colors hover:text-foreground hover:decoration-purple-600"
+			aria-label={`Definition of ${term}`}
 		>
 			{term}
 		</button>
