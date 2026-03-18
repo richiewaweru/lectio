@@ -13,7 +13,7 @@ import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
 import { calculusSection, physicsSection } from '$lib/dummy-content';
-import { getStableComponents } from '$lib/registry';
+import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/registry';
 import { validateSection } from '$lib/validate';
 
 const repeatWords = (word: string, count: number) =>
@@ -323,6 +323,30 @@ describe('Lectio component harmonization', () => {
 		expect(getStableComponents().some((component) => component.name === 'SimulationBlock')).toBe(
 			true
 		);
+	});
+
+	it('derives a non-empty component field map from the registry', () => {
+		const map = getComponentFieldMap();
+		expect(Object.keys(map).length).toBeGreaterThan(0);
+	});
+
+	it('includes every registry component with a non-null sectionField in the field map', () => {
+		const map = getComponentFieldMap();
+		for (const component of Object.values(componentRegistry)) {
+			if (component.sectionField !== null) {
+				expect(map[component.id]).toBe(component.sectionField);
+			}
+		}
+	});
+
+	it('excludes GlossaryInline (sectionField: null) from the field map', () => {
+		const map = getComponentFieldMap();
+		expect(map['glossary-inline']).toBeUndefined();
+	});
+
+	it('includes SimulationBlock in the field map (bug fix verification)', () => {
+		const map = getComponentFieldMap();
+		expect(map['simulation-block']).toBe('simulation');
 	});
 
 	it('renders GuidedConceptPath and EnrichedLearningPath without breaking key content', () => {

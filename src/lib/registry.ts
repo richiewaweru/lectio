@@ -1,8 +1,16 @@
-// The component registry - single source of truth
-// Drives the showcase page, template generation,
-// and contribution review checklist
+// The component registry — single source of truth.
+// Drives the showcase, template generation, validation,
+// and the pipeline contract export.
+//
+// ── HOW TO ADD A NEW COMPONENT ───────────────────────
+// 1. Create the .svelte file in src/lib/components/lectio/
+// 2. Add an entry here with sectionField declared
+// 3. Add the corresponding field to SectionContent in types.ts
+// 4. Run: npm run export-contracts
+// Nothing else needs to change.
+// ─────────────────────────────────────────────────────
 
-import type { BehaviourMode } from './types';
+import type { BehaviourMode, SectionContent } from './types';
 
 export interface ComponentMeta {
 	id: string;
@@ -16,6 +24,18 @@ export interface ComponentMeta {
 	printFallback: string;
 	status: 'stable' | 'beta' | 'planned';
 	group: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+	/**
+	 * The field in SectionContent this component reads from.
+	 *
+	 * null means the component has no dedicated SectionContent block field.
+	 * Example: GlossaryInline is used inline in prose — it is not a block.
+	 *
+	 * This is the single source of truth for the component-to-field mapping.
+	 * template-validation.ts and scripts/export-contracts.ts both derive
+	 * their maps from this field via getComponentFieldMap().
+	 * Never hardcode this mapping anywhere else.
+	 */
+	sectionField: keyof SectionContent | null;
 }
 
 export const componentRegistry: Record<string, ComponentMeta> = {
@@ -23,6 +43,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SectionHeader: {
 		id: 'section-header',
+		sectionField: 'header',
 		name: 'SectionHeader',
 		group: 1,
 		purpose: 'Opens a section with title, subject, objective, and level indicators',
@@ -37,6 +58,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	HookHero: {
 		id: 'hook-hero',
+		sectionField: 'hook',
 		name: 'HookHero',
 		group: 1,
 		purpose: 'Creates felt need before explanation arrives',
@@ -51,6 +73,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ExplanationBlock: {
 		id: 'explanation-block',
+		sectionField: 'explanation',
 		name: 'ExplanationBlock',
 		group: 1,
 		purpose: 'Sustained prose that builds a mental model',
@@ -65,6 +88,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PrerequisiteStrip: {
 		id: 'prerequisite-strip',
+		sectionField: 'prerequisites',
 		name: 'PrerequisiteStrip',
 		group: 1,
 		purpose: 'Lists assumed knowledge with optional refresher pop-ups',
@@ -79,6 +103,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	WhatNextBridge: {
 		id: 'what-next-bridge',
+		sectionField: 'what_next',
 		name: 'WhatNextBridge',
 		group: 1,
 		purpose: 'Connects the section forward to what the concept enables',
@@ -93,6 +118,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	InterviewAnchor: {
 		id: 'interview-anchor',
+		sectionField: 'interview',
 		name: 'InterviewAnchor',
 		group: 1,
 		purpose: 'Makes knowledge speakable - rehearse explaining the concept',
@@ -109,6 +135,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DefinitionCard: {
 		id: 'definition-card',
+		sectionField: 'definition',
 		name: 'DefinitionCard',
 		group: 2,
 		purpose: 'Anchors a formal term with formal and plain versions',
@@ -123,6 +150,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DefinitionFamily: {
 		id: 'definition-family',
+		sectionField: 'definition_family',
 		name: 'DefinitionFamily',
 		group: 2,
 		purpose: 'Groups related terms that belong together conceptually',
@@ -137,6 +165,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	GlossaryRail: {
 		id: 'glossary-rail',
+		sectionField: 'glossary',
 		name: 'GlossaryRail',
 		group: 2,
 		purpose: 'Vocabulary visible in peripheral field, updates by section',
@@ -151,6 +180,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	GlossaryInline: {
 		id: 'glossary-inline',
+		sectionField: null, // inline in prose — no dedicated SectionContent block field
 		name: 'GlossaryInline',
 		group: 2,
 		purpose: 'In-text definition pop-up on a defined term',
@@ -165,6 +195,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	InsightStrip: {
 		id: 'insight-strip',
+		sectionField: 'insight_strip',
 		name: 'InsightStrip',
 		group: 2,
 		purpose: 'Side-by-side comparison of 2-3 related values or concepts',
@@ -179,6 +210,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ComparisonGrid: {
 		id: 'comparison-grid',
+		sectionField: 'comparison_grid',
 		name: 'ComparisonGrid',
 		group: 2,
 		purpose: 'Holds multiple concepts in view so distinctions become structural',
@@ -195,6 +227,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	WorkedExampleCard: {
 		id: 'worked-example-card',
+		sectionField: 'worked_example',
 		name: 'WorkedExampleCard',
 		group: 3,
 		purpose: 'Shows reasoning in action step by step, each step justified',
@@ -209,6 +242,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ProcessSteps: {
 		id: 'process-steps',
+		sectionField: 'process',
 		name: 'ProcessSteps',
 		group: 3,
 		purpose: 'A repeatable procedure where order is non-negotiable',
@@ -225,6 +259,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PracticeStack: {
 		id: 'practice-stack',
+		sectionField: 'practice',
 		name: 'PracticeStack',
 		group: 4,
 		purpose: 'Problems at calibrated difficulty with progressive hints and optional solutions',
@@ -245,6 +280,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	QuizCheck: {
 		id: 'quiz-check',
+		sectionField: 'quiz',
 		name: 'QuizCheck',
 		group: 4,
 		purpose: 'Quick concept check with immediate feedback mid-section',
@@ -259,6 +295,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ReflectionPrompt: {
 		id: 'reflection-prompt',
+		sectionField: 'reflection',
 		name: 'ReflectionPrompt',
 		group: 4,
 		purpose: 'Pauses forward motion and turns attention inward',
@@ -275,6 +312,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PitfallAlert: {
 		id: 'pitfall-alert',
+		sectionField: 'pitfall',
 		name: 'PitfallAlert',
 		group: 5,
 		purpose: 'Names a specific misconception before the learner makes it',
@@ -291,6 +329,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramBlock: {
 		id: 'diagram-block',
+		sectionField: 'diagram',
 		name: 'DiagramBlock',
 		group: 6,
 		purpose: 'Makes spatial or relational structure visible',
@@ -305,6 +344,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramCompare: {
 		id: 'diagram-compare',
+		sectionField: 'diagram_compare',
 		name: 'DiagramCompare',
 		group: 6,
 		purpose: 'Before and after comparison with a drag slider',
@@ -319,6 +359,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramSeries: {
 		id: 'diagram-series',
+		sectionField: 'diagram_series',
 		name: 'DiagramSeries',
 		group: 6,
 		purpose: 'A progression of diagrams that tells a sequence',
@@ -333,6 +374,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	TimelineBlock: {
 		id: 'timeline-block',
+		sectionField: 'timeline',
 		name: 'TimelineBlock',
 		group: 6,
 		purpose: 'Turns chronology into a readable instructional spine',
@@ -349,6 +391,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SimulationBlock: {
 		id: 'simulation-block',
+		sectionField: 'simulation',
 		name: 'SimulationBlock',
 		group: 7,
 		purpose: 'Manipulate a variable and discover the concept through observation',
@@ -383,4 +426,27 @@ export function getComponentsForSubject(subject: string): ComponentMeta[] {
 
 export function getComponentById(componentId: string): ComponentMeta | undefined {
 	return Object.values(componentRegistry).find((component) => component.id === componentId);
+}
+
+/**
+ * Derive the component-id → SectionContent-field map from the registry.
+ *
+ * This is the authoritative mapping used by:
+ *   - template-validation.ts  (preview field presence checks)
+ *   - scripts/export-contracts.ts  (pipeline contract export)
+ *
+ * Components with sectionField: null are excluded — they have no
+ * corresponding block field in SectionContent.
+ *
+ * When you register a new component with a sectionField, it appears
+ * in this map automatically. No other file needs to change.
+ */
+export function getComponentFieldMap(): Record<string, keyof SectionContent> {
+	const map: Record<string, keyof SectionContent> = {};
+	for (const component of Object.values(componentRegistry)) {
+		if (component.sectionField !== null) {
+			map[component.id] = component.sectionField;
+		}
+	}
+	return map;
 }
