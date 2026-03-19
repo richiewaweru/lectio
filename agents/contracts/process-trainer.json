@@ -1,0 +1,64 @@
+{
+  "id": "process-trainer",
+  "name": "Process Trainer",
+  "family": "process-procedure",
+  "intent": "teach-procedure",
+  "tagline": "Turn a repeatable procedure into a clear sequence the learner can follow and rehearse.",
+  "lesson_flow": [
+    "Hook",
+    "Procedure",
+    "Worked case",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "process-steps",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "worked-example-card",
+    "pitfall-alert",
+    "explanation-block"
+  ],
+  "default_behaviours": {
+    "process-steps": "step-reveal",
+    "practice-stack": "flat-list"
+  },
+  "generation_guidance": {
+    "tone": "clear and procedural",
+    "pacing": "ordered and steady",
+    "chunking": "step by step",
+    "emphasis": "show why each step enables the next",
+    "avoid": [
+      "jumping ahead",
+      "burying the method under too much exposition"
+    ]
+  },
+  "best_for": [
+    "repeatable methods in math and science",
+    "algorithmic or checklist-driven tasks",
+    "lessons where order is non-negotiable"
+  ],
+  "not_ideal_for": [
+    "open-ended narrative topics",
+    "classification lessons with no clear execution order"
+  ],
+  "learner_fit": [
+    "general",
+    "scaffolded"
+  ],
+  "subjects": [
+    "mathematics",
+    "chemistry",
+    "physics"
+  ],
+  "interaction_level": "light",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "minimal-light"
+  ]
+}

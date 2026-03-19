@@ -1,14 +1,20 @@
-# Lectio Svelte Component Guide
+# Lectio Library Guide
 
-This guide documents the current public Svelte library surface after the registry-driven template rollout.
+This guide documents the current public library surface after the packaging, runtime-surface, and template-expansion work shipped on March 19, 2026.
 
 ## What Ships Now
 
 - Framework: SvelteKit + Svelte 5 runes + TypeScript + Tailwind CSS v4
-- Public component entrypoint: `src/lib/components/lectio/index.ts`
-- Public teaching component count: 22
-- Public template count: 10 starter templates in `src/lib/template-registry.ts`
-- Public routes:
+- Public package entrypoint: `src/lib/index.ts`
+- Public stylesheet entrypoint: `src/lib/theme.css` via `import 'lectio/theme.css'`
+- Public teaching component count: 23
+- Public template count: 12 registry-backed templates in `src/lib/template-registry.ts`
+- Public runtime surfaces:
+  - `TemplatePreviewSurface`
+  - `TemplateRuntimeSurface`
+  - `LectioThemeSurface`
+  - `ResolvedTemplatePreviewSurface`
+- Showcase routes:
   - `/components`
   - `/templates`
   - `/templates/[templateId]`
@@ -55,17 +61,23 @@ This guide documents the current public Svelte library surface after the registr
 - `DiagramSeries`
 - `TimelineBlock`
 
-## Current Template System
+### Interactive
+
+- `SimulationBlock`
+
+## Public Template System
 
 The public template system is registry-driven.
 
 - Registry: `src/lib/template-registry.ts`
 - Shared contracts and selectors: `src/lib/template-types.ts`
 - Validation: `src/lib/template-validation.ts`
+- Runtime helpers: `src/lib/templates/runtime-resolver.ts`
+- Consumer surfaces: `src/lib/templates/TemplatePreviewSurface.svelte` and `src/lib/templates/TemplateRuntimeSurface.svelte`
 - Gallery shell: `src/lib/templates/TemplatesGallery.svelte`
 - Detail shell: `src/lib/templates/TemplateDetailView.svelte`
 
-The 10 shipped starter templates are:
+The 12 shipped templates are:
 
 - Guided Concept Path
 - Figure First
@@ -77,29 +89,61 @@ The 10 shipped starter templates are:
 - Distinction Grid
 - Timeline Narrative
 - Process Trainer
+- Interactive Lab
+- Guided Discovery
 
-## Published Component Additions
+## Rendering From A Consumer App
 
-These components were added during the cross-repo template rollout and are now part of the public library:
+Build the library and import the shared theme once:
 
-- `ComparisonGrid`
-- `TimelineBlock`
+```bash
+npm run package
+```
 
-These existing components were extended to support the template system:
+```css
+@import 'tailwindcss';
+@import 'lectio/theme.css';
+```
 
-- `PracticeStack`: `accordion | flat-list`
-- `GlossaryRail`: `sticky | drawer | inline-strip`
-- `ProcessSteps`: `static | step-reveal`
+Render a seeded preview or a real section through the public runtime wrappers:
 
-## Template Detail Drawer
+```svelte
+<script lang="ts">
+  import { TemplatePreviewSurface, TemplateRuntimeSurface } from 'lectio';
+  import type { SectionContent } from 'lectio';
 
-The template detail route now uses a persistent left-side contract drawer on `md+`.
+  let { section }: { section: SectionContent } = $props();
+</script>
 
-- Desktop: in-layout persistent drawer that resizes the preview area
-- Mobile: temporary left-side sheet
-- Desktop state key: `template-contract-drawer-open`
+<TemplatePreviewSurface templateId="interactive-lab" presetId="blue-classroom" />
+<TemplateRuntimeSurface
+  templateId="interactive-lab"
+  presetId="blue-classroom"
+  {section}
+/>
+```
 
-## Copy or Fork Checklist
+Use the higher-level surfaces unless you are composing your own preview chrome. `LectioThemeSurface` and `ResolvedTemplatePreviewSurface` are exported for advanced consumers only.
+
+## Contract Snapshots
+
+External pipelines should read JSON from `agents/contracts/`, not import Typescript from `src/`.
+
+```bash
+npm run export-contracts
+npm run export-contracts -- --out ../some-other-project/contracts
+```
+
+The export now writes:
+
+- 12 `{template-id}.json` files
+- `component-field-map.json`
+- `component-registry.json`
+- `preset-registry.json`
+
+Whenever template contracts, presets, or registry metadata change, rerun both `npm run package` and `npm run export-contracts` before publishing.
+
+## Copy Or Fork Checklist
 
 If you want to reuse a component or template outside this repo, copy these pieces together:
 
@@ -108,10 +152,11 @@ If you want to reuse a component or template outside this repo, copy these piece
 3. `src/lib/types.ts` for the content contracts.
 4. `src/lib/registry.ts` and `src/lib/template-registry.ts` if you want showcase and template metadata.
 5. `src/lib/validate.ts` and `src/lib/template-validation.ts` if you want the same validation behavior.
-6. `src/lib/utils.ts` and shared styling from `src/app.css`.
+6. `src/lib/theme.css` for shared tokens, utilities, animations, and preset styling.
+7. `src/lib/utils.ts` for class merging helpers.
 
 ## Important Current Notes
 
-- `SimulationContent` still exists in `src/lib/types.ts`, but this Svelte workspace does not export a public `SimulationBlock`.
-- Legacy template files such as `GuidedConceptPath.svelte` and `EnrichedLearningPath.svelte` are not the public template browsing experience anymore.
-- Treat the current implementation in `src/lib/` and the template registry as source of truth over older planning briefs.
+- `SimulationBlock` is part of the public library and now supports iframe-backed `html_content`, fallback diagrams, and an expanded modal view.
+- `TemplateDetailView` now renders previews through `TemplatePreviewSurface`, so the showcase uses the same public preview path as consumers.
+- Legacy internal templates such as `GuidedConceptPath.svelte` and `EnrichedLearningPath.svelte` still exist for showcase and regression coverage, but the registry plus public surfaces are the source of truth for consumers.

@@ -1,0 +1,66 @@
+{
+  "id": "compare-and-apply",
+  "name": "Compare and Apply",
+  "family": "compare-distinguish",
+  "intent": "compare-ideas",
+  "tagline": "Teach the distinction by holding two ideas in view at the same time and then applying it.",
+  "lesson_flow": [
+    "Hook",
+    "Frame",
+    "Compare",
+    "Apply",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "comparison-grid",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "definition-family",
+    "insight-strip",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {
+    "practice-stack": "accordion",
+    "definition-card": "plain-formal-toggle"
+  },
+  "generation_guidance": {
+    "tone": "precise and analytical",
+    "pacing": "compare early, apply immediately after",
+    "chunking": "tight",
+    "emphasis": "surface the decision points between the ideas",
+    "avoid": [
+      "burying the contrast in prose",
+      "practice that does not depend on the distinction"
+    ]
+  },
+  "best_for": [
+    "chemistry contrasts, biology comparisons, and civics distinctions",
+    "analytical learners who benefit from explicit criteria",
+    "lessons where choosing correctly depends on noticing a difference"
+  ],
+  "not_ideal_for": [
+    "chronological stories",
+    "single-concept introductions with no meaningful rival idea"
+  ],
+  "learner_fit": [
+    "analytical",
+    "general"
+  ],
+  "subjects": [
+    "chemistry",
+    "biology",
+    "civics",
+    "literature"
+  ],
+  "interaction_level": "light",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "high-contrast-focus"
+  ]
+}

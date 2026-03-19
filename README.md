@@ -2,6 +2,11 @@
 
 Educational component library built on SvelteKit + Svelte 5 + TypeScript + Tailwind CSS v4. Renders structured lesson content into reusable teaching components and registry-driven lesson templates.
 
+## Related Docs
+
+- `docs/reference/component-guide.md` - public library surface, runtime wrappers, and template inventory
+- `docs/reference/registry-field-map.md` - contract export pipeline, JSON outputs, and extension workflow
+
 ## Using Lectio as a Local Library
 
 Lectio is packaged with `@sveltejs/package`. Another SvelteKit project can consume it via a local file reference.
@@ -61,6 +66,13 @@ npm install -D @tailwindcss/vite tailwindcss @types/katex
 <ExplanationBlock content={section.explanation} />
 ```
 
+Import the shared Lectio theme once in your app stylesheet so template shells, tokens, KaTeX styles, and preset-scoped visuals are available:
+
+```css
+@import 'tailwindcss';
+@import 'lectio/theme.css';
+```
+
 After changing Lectio source, rebuild with `npm run package` for changes to appear in the consuming project.
 
 ## Public API
@@ -91,16 +103,48 @@ const allComponents = getStableComponents();
 const hook = getComponentById('hook-hero');
 ```
 
-### Templates (10)
+### Templates (12)
 
 ```ts
-import { templateRegistry, getTemplateById, filterTemplates } from 'lectio';
-import type { TemplateDefinition, TemplateContract } from 'lectio';
+import {
+  TemplatePreviewSurface,
+  TemplateRuntimeSurface
+} from 'lectio';
+import type { SectionContent } from 'lectio';
 
-const template = getTemplateById('guided-concept-path');
+const section: SectionContent = /* your section */;
 ```
 
-Available templates: `guided-concept-path`, `figure-first`, `compare-and-apply`, `focus-flow`, `guided-concept-compact`, `formal-track`, `diagram-led-lesson`, `distinction-grid`, `timeline-narrative`, `process-trainer`.
+```svelte
+<script lang="ts">
+  import { TemplatePreviewSurface, TemplateRuntimeSurface } from 'lectio';
+  import type { SectionContent } from 'lectio';
+
+  let { section }: { section: SectionContent } = $props();
+</script>
+
+<TemplatePreviewSurface templateId="guided-concept-path" presetId="blue-classroom" />
+<TemplateRuntimeSurface
+  templateId="guided-concept-path"
+  presetId="blue-classroom"
+  {section}
+/>
+```
+
+Available templates: `guided-concept-path`, `figure-first`, `compare-and-apply`, `focus-flow`, `guided-concept-compact`, `formal-track`, `diagram-led-lesson`, `distinction-grid`, `timeline-narrative`, `process-trainer`, `interactive-lab`, `guided-discovery`.
+
+For advanced or internal consumers, Lectio also exports the low-level runtime pieces:
+
+```ts
+import {
+  LectioThemeSurface,
+  ResolvedTemplatePreviewSurface,
+  templateRegistry,
+  templateRegistryMap,
+  getTemplateById,
+  filterTemplates
+} from 'lectio';
+```
 
 ### Validation
 
@@ -136,7 +180,7 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts  # Via env var
 ```
 
 Output files:
-- `{template-id}.json` (×10) — template contract with lesson flow, required/optional components, generation guidance, and `allowed_presets`
+- `{template-id}.json` (x12) — template contract with lesson flow, required/optional components, generation guidance, and `allowed_presets`
 - `component-field-map.json` — maps component IDs to their `SectionContent` field names
 - `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, etc.)
 - `preset-registry.json` — visual preset palette, typography, density, and surface style

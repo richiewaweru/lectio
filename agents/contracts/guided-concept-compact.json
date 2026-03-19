@@ -1,0 +1,66 @@
+{
+  "id": "guided-concept-compact",
+  "name": "Guided Concept Compact",
+  "family": "guided-concept",
+  "intent": "introduce-concept",
+  "tagline": "Keep the same guided arc, but compress it for confident learners and tighter lessons.",
+  "lesson_flow": [
+    "Hook",
+    "Explain",
+    "Define",
+    "Example",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {
+    "worked-example-card": "accordion",
+    "practice-stack": "accordion"
+  },
+  "generation_guidance": {
+    "tone": "direct and efficient",
+    "pacing": "faster than the full guided path",
+    "chunking": "tight",
+    "emphasis": "clarity without extra support furniture",
+    "avoid": [
+      "too many optional blocks",
+      "slow detours"
+    ]
+  },
+  "best_for": [
+    "confident learners who still benefit from a clear arc",
+    "shorter classroom segments",
+    "revision lessons that still need a quick concept scaffold"
+  ],
+  "not_ideal_for": [
+    "learners who need heavy vocabulary or side support",
+    "topics that require a dominant figure or comparison spine"
+  ],
+  "learner_fit": [
+    "general",
+    "advanced"
+  ],
+  "subjects": [
+    "mathematics",
+    "science",
+    "economics",
+    "english"
+  ],
+  "interaction_level": "light",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "minimal-light"
+  ]
+}

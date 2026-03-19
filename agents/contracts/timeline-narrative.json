@@ -1,0 +1,65 @@
+{
+  "id": "timeline-narrative",
+  "name": "Timeline Narrative",
+  "family": "narrative-timeline",
+  "intent": "teach-sequence",
+  "tagline": "Teach through chronology so the learner experiences the concept as forward motion through time.",
+  "lesson_flow": [
+    "Hook",
+    "Timeline",
+    "Explain",
+    "Reflect",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "timeline-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "explanation-block",
+    "reflection-prompt",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {
+    "timeline-block": "timeline-scrubber",
+    "practice-stack": "accordion"
+  },
+  "generation_guidance": {
+    "tone": "story-forward and explanatory",
+    "pacing": "chronological",
+    "chunking": "event by event",
+    "emphasis": "show how one moment leads to the next",
+    "avoid": [
+      "dropping the chronology",
+      "isolated facts with no sequence"
+    ]
+  },
+  "best_for": [
+    "history lessons and discovery stories",
+    "topics where sequence and cause matter more than static definition",
+    "learners who retain ideas best as a story"
+  ],
+  "not_ideal_for": [
+    "pure classification lessons",
+    "procedures where the learner must execute each step directly"
+  ],
+  "learner_fit": [
+    "narrative",
+    "general"
+  ],
+  "subjects": [
+    "history",
+    "science",
+    "english"
+  ],
+  "interaction_level": "medium",
+  "allowed_presets": [
+    "warm-paper",
+    "blue-classroom",
+    "minimal-light"
+  ]
+}

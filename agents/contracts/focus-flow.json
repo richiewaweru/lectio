@@ -1,0 +1,70 @@
+{
+  "id": "focus-flow",
+  "name": "Focus Flow",
+  "family": "focus-accommodation",
+  "intent": "reduce-overload",
+  "tagline": "Reduce simultaneous load and present one meaningful chunk at a time.",
+  "lesson_flow": [
+    "Hook",
+    "Short explain",
+    "Support cue",
+    "Practice",
+    "Reflect",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "glossary-inline",
+    "pitfall-alert",
+    "reflection-prompt"
+  ],
+  "default_behaviours": {
+    "practice-stack": "flat-list",
+    "glossary-inline": "hint-toggle",
+    "definition-card": "plain-formal-toggle"
+  },
+  "generation_guidance": {
+    "tone": "calm and supportive",
+    "pacing": "slow enough to breathe between ideas",
+    "chunking": "short",
+    "emphasis": "one idea at a time",
+    "avoid": [
+      "visual crowding",
+      "long explanatory walls",
+      "competing side content"
+    ]
+  },
+  "best_for": [
+    "learners who benefit from fewer competing elements",
+    "ADHD-friendly and dyslexia-sensitive support",
+    "scaffolded classroom or intervention settings"
+  ],
+  "not_ideal_for": [
+    "dense comparison lessons",
+    "topics that require multiple simultaneous visuals"
+  ],
+  "learner_fit": [
+    "adhd-friendly",
+    "dyslexia-sensitive",
+    "scaffolded"
+  ],
+  "subjects": [
+    "mathematics",
+    "science",
+    "english"
+  ],
+  "interaction_level": "light",
+  "allowed_presets": [
+    "high-contrast-focus",
+    "calm-green",
+    "warm-paper",
+    "minimal-light"
+  ]
+}

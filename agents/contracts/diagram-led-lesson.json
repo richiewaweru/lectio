@@ -1,0 +1,67 @@
+{
+  "id": "diagram-led-lesson",
+  "name": "Diagram-Led Lesson",
+  "family": "visual-exploration",
+  "intent": "explain-visually",
+  "tagline": "Use a sequence of diagrams to teach change over stages before prose fills the gaps.",
+  "lesson_flow": [
+    "Hook",
+    "Diagram series",
+    "Explain",
+    "Process",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "diagram-series",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "process-steps",
+    "glossary-rail",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {
+    "diagram-series": "static",
+    "process-steps": "step-reveal",
+    "glossary-rail": "inline-strip"
+  },
+  "generation_guidance": {
+    "tone": "observational and explanatory",
+    "pacing": "move stage by stage",
+    "chunking": "medium",
+    "emphasis": "show how each stage changes the system",
+    "avoid": [
+      "burying the stage sequence under prose",
+      "using only one diagram when change is the point"
+    ]
+  },
+  "best_for": [
+    "processes that unfold in visible stages",
+    "science lessons where each stage changes the structure",
+    "classes that benefit from stepwise visual progression"
+  ],
+  "not_ideal_for": [
+    "single static visuals",
+    "topics with no meaningful stage progression"
+  ],
+  "learner_fit": [
+    "visual",
+    "general"
+  ],
+  "subjects": [
+    "biology",
+    "chemistry",
+    "earth-science"
+  ],
+  "interaction_level": "medium",
+  "allowed_presets": [
+    "calm-green",
+    "blue-classroom",
+    "warm-paper"
+  ]
+}

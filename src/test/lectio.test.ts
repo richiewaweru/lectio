@@ -160,20 +160,16 @@ describe('Lectio component harmonization', () => {
 		expect(screen.queryByText('Not quite!')).not.toBeInTheDocument();
 	});
 
-	it('renders the simulation scaffold with metadata and a fallback diagram', () => {
-		const { getByText } = render(SimulationBlock, {
+	it('renders the simulation block with live content and metadata', () => {
+		render(SimulationBlock, {
 			props: { content: physicsSection.simulation! }
 		});
 
-		expect(getByText('Manipulate and discover')).toBeInTheDocument();
-		expect(
-			getByText(/Interactive experience will mount here when the interaction pipeline is connected/i)
-		).toHaveStyle('min-height: 280px');
-		expect(getByText('graph_slider')).toBeInTheDocument();
-		expect(getByText('Fallback diagram')).toBeInTheDocument();
-		expect(
-			getByText('Fallback view of the free-body setup while the interactive simulation is unavailable.')
-		).toBeInTheDocument();
+		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
+		expect(screen.getByRole('button', { name: /Expand simulation/i })).toBeInTheDocument();
+		expect(screen.getByTitle(physicsSection.simulation!.spec.goal)).toBeInTheDocument();
+		expect(screen.getAllByText('graph slider').length).toBeGreaterThan(0);
+		expect(screen.getByText('static_diagram')).toBeInTheDocument();
 	});
 
 	it('adds descriptive aria-labels to refresher and glossary triggers', () => {

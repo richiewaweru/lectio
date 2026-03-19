@@ -1,0 +1,72 @@
+{
+  "id": "interactive-lab",
+  "name": "Interactive Lab",
+  "family": "visual-exploration",
+  "intent": "explain-visually",
+  "tagline": "Manipulate variables, observe the result, then read why it works.",
+  "lesson_flow": [
+    "Hook",
+    "Simulate",
+    "Explain",
+    "Define",
+    "Example",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "simulation-block",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert",
+    "glossary-inline",
+    "diagram-block"
+  ],
+  "default_behaviours": {
+    "practice-stack": "hint-toggle",
+    "diagram-block": "zoom"
+  },
+  "generation_guidance": {
+    "tone": "curious and encouraging — frame explanation as confirming what the learner just discovered",
+    "pacing": "brisk setup, generous exploration, concise theory",
+    "chunking": "short",
+    "emphasis": "simulation context before formal definitions",
+    "avoid": [
+      "leading with theory before the interactive",
+      "long prose before the simulation"
+    ]
+  },
+  "best_for": [
+    "STEM topics where hands-on exploration reveals the concept",
+    "lessons where the formula is best understood through manipulation",
+    "physics, chemistry, and statistics simulations"
+  ],
+  "not_ideal_for": [
+    "topics that require significant context before interaction makes sense",
+    "narrative or history-driven subjects with no quantitative relationships"
+  ],
+  "learner_fit": [
+    "visual",
+    "general",
+    "scaffolded"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "chemistry",
+    "statistics"
+  ],
+  "interaction_level": "high",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "calm-green",
+    "high-contrast-focus"
+  ]
+}

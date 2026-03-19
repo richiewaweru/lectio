@@ -1,0 +1,63 @@
+{
+  "id": "distinction-grid",
+  "name": "Distinction Grid",
+  "family": "compare-distinguish",
+  "intent": "compare-ideas",
+  "tagline": "Classify three or more related ideas by keeping every distinguishing criterion visible.",
+  "lesson_flow": [
+    "Hook",
+    "Frame",
+    "Classify",
+    "Apply",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "comparison-grid",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-family",
+    "insight-strip",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {
+    "practice-stack": "flat-list"
+  },
+  "generation_guidance": {
+    "tone": "precise and classificatory",
+    "pacing": "frame the criteria before applying them",
+    "chunking": "tight",
+    "emphasis": "help the learner sort categories confidently",
+    "avoid": [
+      "unlabeled criteria",
+      "classification practice without a visible grid"
+    ]
+  },
+  "best_for": [
+    "three-way or four-way concept distinctions",
+    "classification tasks in civics, biology, or social science",
+    "lessons where learners confuse adjacent categories"
+  ],
+  "not_ideal_for": [
+    "binary contrasts that only need two concepts",
+    "narrative or process-driven lessons"
+  ],
+  "learner_fit": [
+    "analytical",
+    "advanced"
+  ],
+  "subjects": [
+    "civics",
+    "biology",
+    "history"
+  ],
+  "interaction_level": "light",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "high-contrast-focus"
+  ]
+}

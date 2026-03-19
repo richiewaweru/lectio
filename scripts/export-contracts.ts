@@ -33,6 +33,8 @@ import { focusFlowContract } from '../src/lib/templates/focus-flow/config';
 import { formalTrackContract } from '../src/lib/templates/formal-track/config';
 import { guidedConceptCompactContract } from '../src/lib/templates/guided-concept-compact/config';
 import { guidedConceptPathContract } from '../src/lib/templates/guided-concept-path/config';
+import { guidedDiscoveryContract } from '../src/lib/templates/guided-discovery/config';
+import { interactiveLabContract } from '../src/lib/templates/interactive-lab/config';
 import { processTrainerContract } from '../src/lib/templates/process-trainer/config';
 import { timelineNarrativeContract } from '../src/lib/templates/timeline-narrative/config';
 
@@ -55,6 +57,8 @@ const contracts = [
 	formalTrackContract,
 	guidedConceptCompactContract,
 	guidedConceptPathContract,
+	guidedDiscoveryContract,
+	interactiveLabContract,
 	processTrainerContract,
 	timelineNarrativeContract,
 ];

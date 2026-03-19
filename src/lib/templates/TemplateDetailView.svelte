@@ -4,6 +4,7 @@
 	import { getTemplateById } from '$lib/template-registry';
 	import TemplateContractPanel from '$lib/templates/TemplateContractPanel.svelte';
 	import TemplateContractDrawer from '$lib/templates/TemplateContractDrawer.svelte';
+	import TemplatePreviewSurface from '$lib/templates/TemplatePreviewSurface.svelte';
 	import { cn } from '$lib/utils';
 
 	let { templateId }: { templateId: string } = $props();
@@ -14,8 +15,6 @@
 </script>
 
 {#if definition}
-	{@const PreviewComponent = definition.render}
-
 	<div class="page-frame space-y-8">
 		<header class="lesson-shell p-8 sm:p-10">
 			<div class="relative z-10 space-y-5">
@@ -82,14 +81,11 @@
 			{/if}
 
 			<section class="space-y-4 md:min-w-0">
-				<div>
-					<p class="eyebrow">Live preview</p>
-					<p class="mt-2 text-sm leading-6 text-muted-foreground">
-						{definition.preview.summary}
-					</p>
-				</div>
-
-				<PreviewComponent section={definition.preview.section} />
+				<TemplatePreviewSurface
+					templateId={templateId}
+					presetId={definition.presets[0]?.id}
+					showMetadata={false}
+				/>
 			</section>
 		</div>
 	</div>

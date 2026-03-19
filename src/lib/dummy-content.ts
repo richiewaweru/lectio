@@ -586,7 +586,41 @@ export const physicsSection: SectionContent = {
 
 	simulation: {
 		explanation:
-			'Eventually this block will let learners vary net force and mass to watch acceleration respond in real time.',
+			'Drag the force slider to see how acceleration changes for a fixed mass. A simple, direct test of F = ma.',
+		html_content: `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#fff7ed;color:#1c1917;padding:16px;display:flex;flex-direction:column;gap:12px;height:100vh;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px}
+label{font-size:13px;font-weight:600;color:#44403c;min-width:52px}
+label span{color:#f97316;font-variant-numeric:tabular-nums}
+input[type=range]{flex:1;accent-color:#f97316;height:6px;cursor:pointer}
+.result{flex:1;display:flex;align-items:center;justify-content:center;gap:16px;min-height:0}
+.eq{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.eq .hl{color:#f97316}
+.bar-wrap{width:48px;height:140px;background:#fef3c7;border:2px solid #f59e0b33;border-radius:10px;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+.bar-fill{width:100%;background:linear-gradient(180deg,#f97316,#ea580c);border-radius:0 0 8px 8px;transition:height .15s ease}
+.bar-lbl{font-size:10px;color:#78716c;text-align:center}
+</style></head><body>
+<div class="row">
+  <label>Force <span id="fv">10 N</span></label>
+  <input type="range" id="force" min="1" max="40" value="10">
+</div>
+<div class="row" style="font-size:13px;color:#78716c">Mass fixed at <strong style="margin-left:4px">5 kg</strong></div>
+<div class="result">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <div class="bar-wrap"><div class="bar-fill" id="bar"></div></div>
+    <div class="bar-lbl">Acceleration</div>
+  </div>
+  <div class="eq">a = <span class="hl" id="av">2.00</span> m/s²</div>
+</div>
+<script>
+const fs=document.getElementById('force'),fv=document.getElementById('fv');
+const bar=document.getElementById('bar'),av=document.getElementById('av');
+function upd(){const f=+fs.value,a=f/5;fv.textContent=f+' N';av.textContent=a.toFixed(2);bar.style.height=Math.min(a/8*100,100)+'%'}
+fs.addEventListener('input',upd);upd();
+</script></body></html>`,
 		spec: {
 			type: 'graph_slider',
 			goal: 'Discover how changing force and mass affects acceleration in Newton\'s Second Law.',

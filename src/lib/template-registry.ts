@@ -33,6 +33,14 @@ import { guidedConceptPathContract } from '$lib/templates/guided-concept-path/co
 import GuidedConceptPathLayout from '$lib/templates/guided-concept-path/layout.svelte';
 import { guidedConceptPathPresets } from '$lib/templates/guided-concept-path/presets';
 import { guidedConceptPathPreview } from '$lib/templates/guided-concept-path/preview';
+import { guidedDiscoveryContract } from '$lib/templates/guided-discovery/config';
+import GuidedDiscoveryLayout from '$lib/templates/guided-discovery/layout.svelte';
+import { guidedDiscoveryPresets } from '$lib/templates/guided-discovery/presets';
+import { guidedDiscoveryPreview } from '$lib/templates/guided-discovery/preview';
+import { interactiveLabContract } from '$lib/templates/interactive-lab/config';
+import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
+import { interactiveLabPresets } from '$lib/templates/interactive-lab/presets';
+import { interactiveLabPreview } from '$lib/templates/interactive-lab/preview';
 import { processTrainerContract } from '$lib/templates/process-trainer/config';
 import ProcessTrainerLayout from '$lib/templates/process-trainer/layout.svelte';
 import { processTrainerPresets } from '$lib/templates/process-trainer/presets';
@@ -112,6 +120,20 @@ export const templateRegistry: TemplateDefinition[] = [
 		presets: processTrainerPresets,
 		render: ProcessTrainerLayout,
 		readmePath: 'src/lib/templates/process-trainer/README.md'
+	},
+	{
+		contract: interactiveLabContract,
+		preview: interactiveLabPreview,
+		presets: interactiveLabPresets,
+		render: InteractiveLabLayout,
+		readmePath: 'src/lib/templates/interactive-lab/README.md'
+	},
+	{
+		contract: guidedDiscoveryContract,
+		preview: guidedDiscoveryPreview,
+		presets: guidedDiscoveryPresets,
+		render: GuidedDiscoveryLayout,
+		readmePath: 'src/lib/templates/guided-discovery/README.md'
 	}
 ];
 

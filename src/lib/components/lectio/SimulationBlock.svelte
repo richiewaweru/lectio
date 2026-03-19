@@ -2,16 +2,47 @@
 	import type { SimulationContent } from '$lib/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
+	import { X, ZoomIn, ZoomOut } from 'lucide-svelte';
 
 	let { content }: { content: SimulationContent } = $props();
+
+	let expanded = $state(false);
+
+	const hasLiveContent = $derived(!!content.html_content);
+	const typeLabel = $derived(content.spec.type.replace(/_/g, ' '));
+
+	function toggleExpanded() {
+		expanded = !expanded;
+	}
+
+	function closeExpanded() {
+		expanded = false;
+	}
+
+	function handleBackdropClick(event: MouseEvent) {
+		if (event.target === event.currentTarget) {
+			closeExpanded();
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && expanded) {
+			closeExpanded();
+		}
+	}
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <Card class="border-primary/10 bg-white/88 p-6">
 	<div class="space-y-4">
 		<div class="space-y-3">
 			<div class="flex flex-wrap items-center gap-3">
 				<p class="eyebrow">Simulation</p>
-				<Badge variant="outline">Scaffold</Badge>
+				<Badge variant="outline">{typeLabel}</Badge>
+				{#if !hasLiveContent}
+					<Badge variant="secondary">Scaffold</Badge>
+				{/if}
 			</div>
 			<h3 class="text-2xl font-semibold font-serif text-primary">Manipulate and discover</h3>
 		</div>
@@ -20,33 +51,30 @@
 			<p class="text-base leading-7 text-foreground/84">{content.explanation}</p>
 		{/if}
 
-		<div
-			class="flex items-center justify-center rounded-[1.25rem] border border-dashed border-border/80 bg-secondary/35 p-6 text-center text-sm leading-6 text-muted-foreground"
-			style="min-height: {content.spec.dimensions.height}px;"
-		>
-			Interactive experience will mount here when the interaction pipeline is connected.
-		</div>
-
-		<div class="grid gap-3 rounded-[1.25rem] bg-white/82 p-4 text-sm leading-6 text-foreground/82 md:grid-cols-2">
-			<div>
-				<p class="font-semibold text-primary">Type</p>
-				<p>{content.spec.type}</p>
+		{#if hasLiveContent}
+			<!-- Live simulation in sandboxed iframe -->
+			<div class="relative">
+				<div class="absolute right-2 top-2 z-10">
+					<button
+						type="button"
+						class="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-primary shadow-sm border border-border/50 hover:bg-white transition-colors"
+						onclick={toggleExpanded}
+						aria-label="Expand simulation"
+					>
+						<ZoomIn size={14} />
+						Expand
+					</button>
+				</div>
+				<iframe
+					srcdoc={content.html_content}
+					sandbox="allow-scripts"
+					title={content.spec.goal}
+					class="w-full rounded-[1.25rem] border border-border/60 bg-white"
+					style="height: {content.spec.dimensions.height}px;"
+				></iframe>
 			</div>
-			<div>
-				<p class="font-semibold text-primary">Goal</p>
-				<p>{content.spec.goal}</p>
-			</div>
-			<div>
-				<p class="font-semibold text-primary">Dimensions</p>
-				<p>{content.spec.dimensions.width} by {content.spec.dimensions.height}px</p>
-			</div>
-			<div>
-				<p class="font-semibold text-primary">Print fallback</p>
-				<p>{content.spec.print_translation}</p>
-			</div>
-		</div>
-
-		{#if content.fallback_diagram}
+		{:else if content.fallback_diagram}
+			<!-- Fallback diagram when no live content -->
 			<div class="space-y-3 rounded-[1.25rem] border border-border/70 bg-background/75 p-4">
 				<p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
 					Fallback diagram
@@ -62,6 +90,78 @@
 					{content.fallback_diagram.caption}
 				</p>
 			</div>
+		{:else}
+			<!-- Scaffold placeholder -->
+			<div
+				class="flex items-center justify-center rounded-[1.25rem] border border-dashed border-border/80 bg-secondary/35 p-6 text-center text-sm leading-6 text-muted-foreground"
+				style="min-height: {content.spec.dimensions.height}px;"
+			>
+				Interactive experience will mount here when the interaction pipeline is connected.
+			</div>
 		{/if}
+
+		<!-- Metadata panel -->
+		<div class="grid gap-3 rounded-[1.25rem] bg-white/82 p-4 text-sm leading-6 text-foreground/82 md:grid-cols-2">
+			<div>
+				<p class="font-semibold text-primary">Type</p>
+				<p>{typeLabel}</p>
+			</div>
+			<div>
+				<p class="font-semibold text-primary">Goal</p>
+				<p>{content.spec.goal}</p>
+			</div>
+			<div>
+				<p class="font-semibold text-primary">Dimensions</p>
+				<p>{content.spec.dimensions.width} &times; {content.spec.dimensions.height}px</p>
+			</div>
+			<div>
+				<p class="font-semibold text-primary">Print fallback</p>
+				<p>{content.spec.print_translation}</p>
+			</div>
+		</div>
 	</div>
 </Card>
+
+<!-- Expanded overlay -->
+{#if expanded && hasLiveContent}
+	<div
+		class="fixed inset-0 z-50 grid place-items-center p-6 bg-black/40 backdrop-blur-sm"
+		role="presentation"
+		onclick={handleBackdropClick}
+	>
+		<div class="relative w-full max-w-5xl rounded-[1.5rem] bg-white shadow-2xl overflow-hidden">
+			<div class="flex items-center justify-between border-b border-border/40 px-5 py-3">
+				<div class="flex items-center gap-3">
+					<p class="text-sm font-semibold text-primary">Simulation</p>
+					<Badge variant="outline">{typeLabel}</Badge>
+				</div>
+				<div class="flex items-center gap-2">
+					<button
+						type="button"
+						class="flex items-center gap-1.5 rounded-full bg-secondary/50 px-3 py-1.5 text-xs font-medium text-foreground/70 hover:bg-secondary transition-colors"
+						onclick={closeExpanded}
+						aria-label="Collapse simulation"
+					>
+						<ZoomOut size={14} />
+						Collapse
+					</button>
+					<button
+						type="button"
+						class="flex items-center justify-center rounded-full bg-secondary/50 p-1.5 text-foreground/60 hover:bg-secondary transition-colors"
+						onclick={closeExpanded}
+						aria-label="Close"
+					>
+						<X size={16} />
+					</button>
+				</div>
+			</div>
+			<iframe
+				srcdoc={content.html_content}
+				sandbox="allow-scripts"
+				title={content.spec.goal}
+				class="w-full"
+				style="height: min(80vh, 640px);"
+			></iframe>
+		</div>
+	</div>
+{/if}

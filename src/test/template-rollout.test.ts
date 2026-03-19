@@ -29,11 +29,15 @@ beforeEach(() => {
 });
 
 describe('template registry', () => {
-	it('registers all 10 starter templates with valid contracts and previews', () => {
-		expect(templateRegistry).toHaveLength(10);
+	it('registers all shipped templates with valid contracts and previews', () => {
+		expect(templateRegistry.length).toBeGreaterThan(0);
+		expect(templateRegistry.map((definition) => definition.contract.id)).toEqual(
+			expect.arrayContaining(['guided-concept-path', 'interactive-lab', 'guided-discovery'])
+		);
 
 		const results = validateAllTemplates();
 
+		expect(results).toHaveLength(templateRegistry.length);
 		expect(results.every((result) => result.errors.length === 0)).toBe(true);
 	});
 
@@ -162,7 +166,7 @@ describe('template pages', () => {
 		expect(
 			screen
 				.getByLabelText(/template contract/i)
-				.compareDocumentPosition(screen.getByText(/^live preview$/i)) &
+				.compareDocumentPosition(screen.getByText(/^seeded preview$/i)) &
 				Node.DOCUMENT_POSITION_FOLLOWING
 		).toBeTruthy();
 

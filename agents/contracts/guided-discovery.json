@@ -1,0 +1,76 @@
+{
+  "id": "guided-discovery",
+  "name": "Guided Discovery",
+  "family": "guided-concept",
+  "intent": "introduce-concept",
+  "tagline": "Read the concept, then test it hands-on before practising.",
+  "lesson_flow": [
+    "Hook",
+    "Explain",
+    "Define",
+    "Simulate",
+    "Example",
+    "Practice",
+    "Reflect",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "simulation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert",
+    "glossary-rail",
+    "diagram-block",
+    "reflection-prompt"
+  ],
+  "default_behaviours": {
+    "practice-stack": "progressive-hints",
+    "glossary-rail": "sticky",
+    "worked-example-card": "step-reveal",
+    "diagram-block": "zoom"
+  },
+  "generation_guidance": {
+    "tone": "clear and teacherly — build understanding before interaction",
+    "pacing": "steady, explanation-first",
+    "chunking": "medium",
+    "emphasis": "explanation leads, simulation confirms",
+    "avoid": [
+      "skipping explanation before simulation",
+      "overwhelming the interactive with too much context"
+    ]
+  },
+  "best_for": [
+    "concepts that need context before interaction makes sense",
+    "lessons where learners benefit from explanation then verification",
+    "STEM and life-science topics with quantitative relationships"
+  ],
+  "not_ideal_for": [
+    "topics best learned through pure exploration without guidance",
+    "highly visual subjects where the figure should lead entirely"
+  ],
+  "learner_fit": [
+    "general",
+    "scaffolded",
+    "analytical"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "biology",
+    "chemistry"
+  ],
+  "interaction_level": "high",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "calm-green",
+    "minimal-light"
+  ]
+}

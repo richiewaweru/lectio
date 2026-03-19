@@ -1,0 +1,71 @@
+{
+  "id": "guided-concept-path",
+  "name": "Guided Concept Path",
+  "family": "guided-concept",
+  "intent": "introduce-concept",
+  "tagline": "Lead with felt need, then move steadily toward formal understanding and practice.",
+  "lesson_flow": [
+    "Hook",
+    "Explain",
+    "Define",
+    "Example",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert",
+    "glossary-rail",
+    "diagram-block"
+  ],
+  "default_behaviours": {
+    "worked-example-card": "step-reveal",
+    "practice-stack": "accordion",
+    "glossary-rail": "sticky",
+    "diagram-block": "zoom"
+  },
+  "generation_guidance": {
+    "tone": "clear and teacherly",
+    "pacing": "steady",
+    "chunking": "medium",
+    "emphasis": "explanation before formality",
+    "avoid": [
+      "long uninterrupted prose",
+      "overloaded side content"
+    ]
+  },
+  "best_for": [
+    "first exposure to a concept",
+    "math, science, economics, and grammar lessons",
+    "teacher-led or student-led structured reading"
+  ],
+  "not_ideal_for": [
+    "highly visual topics that need the figure to lead",
+    "comparison-heavy lessons with multiple equal concepts"
+  ],
+  "learner_fit": [
+    "general",
+    "scaffolded"
+  ],
+  "subjects": [
+    "mathematics",
+    "science",
+    "economics",
+    "english"
+  ],
+  "interaction_level": "medium",
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "calm-green",
+    "high-contrast-focus"
+  ]
+}

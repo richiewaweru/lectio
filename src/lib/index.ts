@@ -100,6 +100,10 @@ export {
 	getTemplateFamilies,
 	validateAllTemplates
 } from './template-registry';
+export { default as LectioThemeSurface } from './templates/LectioThemeSurface.svelte';
+export { default as ResolvedTemplatePreviewSurface } from './templates/ResolvedTemplatePreviewSurface.svelte';
+export { default as TemplateRuntimeSurface } from './templates/TemplateRuntimeSurface.svelte';
+export { default as TemplatePreviewSurface } from './templates/TemplatePreviewSurface.svelte';
 export type {
 	TemplateContract,
 	TemplateDefinition,

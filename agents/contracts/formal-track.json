@@ -1,0 +1,62 @@
+{
+  "id": "formal-track",
+  "name": "Formal Track",
+  "family": "guided-concept",
+  "intent": "build-rigor",
+  "tagline": "Move quickly into formal definitions and rigorous reasoning with minimal hand-holding.",
+  "lesson_flow": [
+    "Hook",
+    "Formal explanation",
+    "Definition",
+    "Worked case",
+    "Practice",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "definition-card",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "worked-example-card",
+    "pitfall-alert"
+  ],
+  "default_behaviours": {},
+  "generation_guidance": {
+    "tone": "formal and precise",
+    "pacing": "brisk",
+    "chunking": "tight",
+    "emphasis": "definitions, notation, and justification",
+    "avoid": [
+      "chatty analogies",
+      "excess side support",
+      "visual ornament"
+    ]
+  },
+  "best_for": [
+    "advanced learners",
+    "proof-adjacent or definition-heavy lessons",
+    "print-first or exam-prep contexts"
+  ],
+  "not_ideal_for": [
+    "first exposure with fragile conceptual footing",
+    "learners who need heavy visual or vocabulary scaffolding"
+  ],
+  "learner_fit": [
+    "advanced",
+    "analytical"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "economics"
+  ],
+  "interaction_level": "none",
+  "allowed_presets": [
+    "warm-paper",
+    "minimal-light"
+  ]
+}
