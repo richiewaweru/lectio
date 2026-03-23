@@ -16,8 +16,14 @@
 
 				<div class="flex flex-wrap gap-3">
 					<a
-						href="/components"
+						href="/docs"
 						class="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+					>
+						Read the docs
+					</a>
+					<a
+						href="/components"
+						class="inline-flex items-center rounded-full border border-border bg-white/80 px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-secondary"
 					>
 						Browse components
 					</a>

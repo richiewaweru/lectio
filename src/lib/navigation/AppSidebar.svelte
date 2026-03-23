@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
+	import { getDocsNavigation } from '$lib/navigation/docs-navigation';
 	import { getSidebarNavigation } from '$lib/navigation/sidebar-navigation';
 
 	let { frameworkLabel }: { frameworkLabel: string } = $props();
 
 	const navigation = getSidebarNavigation();
+	const docsNav = getDocsNavigation();
 </script>
 
 <aside class="hidden w-72 shrink-0 xl:sticky xl:top-3 xl:block xl:self-start">
@@ -26,6 +28,32 @@
 			</a>
 
 			<nav class="mt-6 flex-1 space-y-6 overflow-y-auto pr-1 text-sm scrollbar-styled" aria-label="Primary navigation">
+				<div>
+					<p class="eyebrow">Documentation</p>
+					<ul class="mt-3 space-y-3">
+						{#each docsNav as group}
+							<li>
+								<p class="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+									{group.eyebrow}
+								</p>
+								<ul class="mt-2 space-y-1.5">
+									{#each group.items as item}
+										<li>
+											<a
+												href={item.href}
+												class="block rounded-xl px-3 py-2 text-foreground/80 transition-colors hover:bg-primary/5 hover:text-primary"
+											>
+												<span class="font-medium">{item.label}</span>
+												<span class="mt-1 block text-xs text-muted-foreground">{item.meta}</span>
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</li>
+						{/each}
+					</ul>
+				</div>
+
 				<div>
 					<p class="eyebrow">Components</p>
 					<ul class="mt-3 space-y-1.5">
