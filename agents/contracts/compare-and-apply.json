@@ -31,51 +31,31 @@
     "literature"
   ],
   "interaction_level": "light",
-  "lesson_flow": [
-    "Hook",
-    "Frame",
-    "Compare",
-    "Apply",
-    "What next"
-  ],
-  "required_components": [
-    "section-header",
-    "hook-hero",
-    "comparison-grid",
-    "practice-stack",
-    "what-next-bridge"
-  ],
-  "optional_components": [
-    "definition-card",
-    "definition-family",
-    "insight-strip",
-    "pitfall-alert"
-  ],
   "always_present": [
     "section-header",
-    "hook-hero",
-    "comparison-grid",
-    "practice-stack",
     "what-next-bridge"
   ],
   "available_components": [
-    "section-header",
     "hook-hero",
     "comparison-grid",
-    "practice-stack",
-    "what-next-bridge",
-    "definition-card",
+    "explanation-block",
     "definition-family",
     "insight-strip",
-    "pitfall-alert"
+    "practice-stack",
+    "pitfall-alert",
+    "callout-block",
+    "student-textbox",
+    "summary-block",
+    "short-answer",
+    "fill-in-blank",
+    "section-divider"
   ],
   "component_budget": {
-    "comparison-grid": 1,
-    "practice-stack": 1
+    "comparison-grid": 1
   },
   "max_per_section": {
-    "comparison-grid": 1,
-    "practice-stack": 1
+    "practice-stack": 1,
+    "quiz-check": 1
   },
   "default_behaviours": {
     "practice-stack": "accordion",
@@ -83,57 +63,55 @@
   },
   "section_role_defaults": {
     "intro": [
-      "hook-hero"
+      "hook-hero",
+      "callout-block"
     ],
     "compare": [
       "comparison-grid",
-      "definition-family",
-      "insight-strip"
-    ],
-    "explain": [
-      "definition-card",
       "definition-family"
     ],
+    "explain": [
+      "explanation-block",
+      "insight-strip"
+    ],
     "practice": [
-      "practice-stack"
+      "practice-stack",
+      "short-answer"
     ],
     "summary": [
+      "summary-block",
       "what-next-bridge"
     ]
   },
   "signal_affinity": {
     "topic_type": {
-      "concept": 0.75,
-      "process": 0.25,
-      "facts": 0.9,
-      "mixed": 0.82
+      "concept": 0.8,
+      "process": 0.3,
+      "facts": 0.7,
+      "mixed": 0.9
     },
     "learning_outcome": {
-      "understand-why": 0.62,
-      "be-able-to-do": 0.42,
-      "remember-terms": 0.98,
-      "apply-to-new": 0.82
+      "understand-why": 0.8,
+      "be-able-to-do": 0.5,
+      "remember-terms": 0.7,
+      "apply-to-new": 0.9
     },
     "class_style": {
-      "tries-before-told": 0.34,
-      "needs-explanation-first": 0.62,
-      "engages-with-visuals": 0.46,
-      "responds-to-worked-examples": 0.52,
-      "restless-without-activity": 0.44
+      "needs-explanation-first": 0.7,
+      "responds-to-worked-examples": 0.6,
+      "engages-with-visuals": 0.5,
+      "restless-without-activity": 0.5,
+      "tries-before-told": 0.4
     },
     "format": {
-      "printed-booklet": 0.84,
-      "screen-based": 0.62,
-      "both": 0.72
+      "printed-booklet": 0.7,
+      "screen-based": 0.7,
+      "both": 0.8
     }
   },
   "layout_notes": [
     "The comparison grid is the center of gravity.",
     "Short framing content should clarify the contrast before practice asks the learner to choose."
-  ],
-  "responsive_rules": [
-    "The grid can scroll horizontally on smaller screens but should stay readable.",
-    "Practice stays beneath the comparison rather than splitting into a sidebar."
   ],
   "print_rules": [
     "Render the comparison as a static table in print.",

@@ -11,10 +11,10 @@ import { templateRegistry, validateAllTemplates } from '$lib/template-registry';
 import TemplateDetailView from '$lib/templates/TemplateDetailView.svelte';
 import TemplatesGallery from '$lib/templates/TemplatesGallery.svelte';
 import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
-import { figureFirstPreview } from '$lib/templates/figure-first/preview';
-import { focusFlowPreview } from '$lib/templates/focus-flow/preview';
-import { processTrainerPreview } from '$lib/templates/process-trainer/preview';
-import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+import { visualLedPreview } from '$lib/templates/visual-led/preview';
+import { lowLoadPreview } from '$lib/templates/low-load/preview';
+import { procedurePreview } from '$lib/templates/procedure/preview';
+import { timelinePreview } from '$lib/templates/timeline/preview';
 
 const STORAGE_KEY = 'template-contract-drawer-open';
 const testWindow = window as Window & { __setMockViewportWidth: (width: number) => void };
@@ -38,7 +38,8 @@ describe('template registry', () => {
 		const results = validateAllTemplates();
 
 		expect(results).toHaveLength(templateRegistry.length);
-		expect(results.every((result) => result.errors.length === 0)).toBe(true);
+		const allErrors = results.flatMap((r) => r.errors);
+		expect(allErrors).toEqual([]);
 	});
 
 	it('publishes the new components into the stable registry', () => {
@@ -62,7 +63,7 @@ describe('new components', () => {
 
 	it('advances the timeline scrubber when the next button is pressed', async () => {
 		render(TimelineBlock, {
-			props: { content: timelineNarrativePreview.section.timeline! }
+			props: { content: timelinePreview.section.timeline! }
 		});
 
 		expect(screen.getByText(/Microscopic life observed/i)).toBeInTheDocument();
@@ -76,7 +77,7 @@ describe('new components', () => {
 describe('adapted behaviours', () => {
 	it('renders flat-list practice without requiring accordion expansion', async () => {
 		render(PracticeStack, {
-			props: { content: focusFlowPreview.section.practice, mode: 'flat-list' }
+			props: { content: lowLoadPreview.section.practice, mode: 'flat-list' }
 		});
 
 		expect(screen.getByText(/A circle is split into 4 equal pieces/i)).toBeInTheDocument();
@@ -94,7 +95,7 @@ describe('adapted behaviours', () => {
 	it('reveals process steps progressively in step-reveal mode', async () => {
 		render(ProcessSteps, {
 			props: {
-				content: processTrainerPreview.section.process!,
+				content: procedurePreview.section.process!,
 				mode: 'step-reveal'
 			}
 		});
@@ -112,7 +113,7 @@ describe('adapted behaviours', () => {
 	});
 
 	it('supports glossary drawer and inline-strip variants', async () => {
-		const glossary = figureFirstPreview.section.glossary!;
+		const glossary = visualLedPreview.section.glossary!;
 		const { rerender } = render(GlossaryRail, {
 			props: { content: glossary, mode: 'drawer' }
 		});
@@ -137,17 +138,17 @@ describe('template pages', () => {
 
 		await fireEvent.click(screen.getByRole('button', { name: /visual-first/i }));
 
-		expect(screen.getByText(/Figure First/i)).toBeInTheDocument();
-		expect(screen.getByText(/Diagram-Led Lesson/i)).toBeInTheDocument();
-		expect(screen.queryByText(/Timeline Narrative/i)).not.toBeInTheDocument();
+		expect(screen.getByText(/Visual Led/i)).toBeInTheDocument();
+		expect(screen.getByText(/Diagram Led/i)).toBeInTheDocument();
+		expect(screen.queryByText(/^Timeline$/i)).not.toBeInTheDocument();
 	});
 
 	it('keeps the persistent contract panel hidden on md+ until toggled open and remembers the preference', async () => {
 		render(TemplateDetailView, {
-			props: { templateId: 'timeline-narrative' }
+			props: { templateId: 'timeline' }
 		});
 
-		expect(screen.getByText(/Timeline Narrative/i)).toBeInTheDocument();
+		expect(screen.getByRole('heading', { name: /^Timeline$/i, level: 1 })).toBeInTheDocument();
 		expect(screen.getByText(/How germ theory took hold/i)).toBeInTheDocument();
 		expect(screen.getByText(/The road to germ theory/i)).toBeInTheDocument();
 		expect(
@@ -184,12 +185,12 @@ describe('template pages', () => {
 		window.localStorage.setItem(STORAGE_KEY, 'true');
 
 		render(TemplateDetailView, {
-			props: { templateId: 'figure-first' }
+			props: { templateId: 'visual-led' }
 		});
 
 		expect(await screen.findByRole('heading', { name: /template contract/i })).toBeInTheDocument();
 		expect(screen.getByRole('button', { name: /hide contract/i })).toBeInTheDocument();
-		expect(screen.getByText(/Figure First/i)).toBeInTheDocument();
+		expect(screen.getByText(/Visual Led/i)).toBeInTheDocument();
 	});
 
 	it('keeps the mobile contract closed on first render and opens it as a temporary sheet', async () => {
@@ -197,7 +198,7 @@ describe('template pages', () => {
 		window.localStorage.setItem(STORAGE_KEY, 'true');
 
 		render(TemplateDetailView, {
-			props: { templateId: 'timeline-narrative' }
+			props: { templateId: 'timeline' }
 		});
 
 		expect(

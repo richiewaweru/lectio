@@ -32,66 +32,34 @@
     "chemistry"
   ],
   "interaction_level": "high",
-  "lesson_flow": [
-    "Hook",
-    "Explain",
-    "Define",
-    "Simulate",
-    "Example",
-    "Practice",
-    "Reflect",
-    "What next"
-  ],
-  "required_components": [
-    "section-header",
-    "hook-hero",
-    "explanation-block",
-    "simulation-block",
-    "practice-stack",
-    "what-next-bridge"
-  ],
-  "optional_components": [
-    "definition-card",
-    "worked-example-card",
-    "pitfall-alert",
-    "glossary-rail",
-    "diagram-block",
-    "reflection-prompt"
-  ],
   "always_present": [
     "section-header",
     "hook-hero",
     "explanation-block",
-    "simulation-block",
-    "practice-stack",
     "what-next-bridge"
   ],
   "available_components": [
-    "section-header",
-    "hook-hero",
-    "explanation-block",
     "simulation-block",
-    "practice-stack",
-    "what-next-bridge",
     "definition-card",
     "worked-example-card",
+    "practice-stack",
     "pitfall-alert",
     "glossary-rail",
     "diagram-block",
-    "reflection-prompt"
+    "reflection-prompt",
+    "callout-block",
+    "student-textbox",
+    "summary-block",
+    "short-answer",
+    "section-divider"
   ],
   "component_budget": {
-    "simulation-block": 1,
-    "practice-stack": 1,
-    "worked-example-card": 1,
-    "diagram-block": 1,
-    "reflection-prompt": 1
+    "simulation-block": 1
   },
   "max_per_section": {
-    "simulation-block": 1,
-    "practice-stack": 1,
-    "worked-example-card": 1,
     "diagram-block": 1,
+    "worked-example-card": 1,
+    "practice-stack": 1,
     "reflection-prompt": 1
   },
   "default_behaviours": {
@@ -102,62 +70,57 @@
   },
   "section_role_defaults": {
     "intro": [
-      "hook-hero"
-    ],
-    "discover": [
-      "simulation-block",
-      "diagram-block",
-      "explanation-block"
+      "hook-hero",
+      "callout-block"
     ],
     "explain": [
       "explanation-block",
-      "definition-card",
-      "glossary-rail",
-      "worked-example-card"
+      "definition-card"
+    ],
+    "discover": [
+      "simulation-block",
+      "callout-block"
     ],
     "practice": [
       "practice-stack",
-      "reflection-prompt"
+      "student-textbox"
     ],
     "summary": [
-      "what-next-bridge",
-      "reflection-prompt"
+      "summary-block",
+      "reflection-prompt",
+      "what-next-bridge"
     ]
   },
   "signal_affinity": {
     "topic_type": {
-      "concept": 0.9,
-      "process": 0.45,
-      "facts": 0.6,
-      "mixed": 0.72
+      "concept": 0.7,
+      "process": 0.5,
+      "facts": 0.4,
+      "mixed": 0.7
     },
     "learning_outcome": {
       "understand-why": 0.9,
-      "be-able-to-do": 0.6,
-      "remember-terms": 0.6,
-      "apply-to-new": 0.65
+      "be-able-to-do": 0.7,
+      "remember-terms": 0.4,
+      "apply-to-new": 0.8
     },
     "class_style": {
-      "tries-before-told": 0.92,
-      "needs-explanation-first": 0.48,
-      "engages-with-visuals": 0.94,
-      "responds-to-worked-examples": 0.88,
-      "restless-without-activity": 0.82
+      "needs-explanation-first": 0.8,
+      "responds-to-worked-examples": 0.6,
+      "engages-with-visuals": 0.7,
+      "restless-without-activity": 0.7,
+      "tries-before-told": 0.6
     },
     "format": {
-      "printed-booklet": 0.84,
-      "screen-based": 0.86,
-      "both": 0.82
+      "printed-booklet": 0.3,
+      "screen-based": 1,
+      "both": 0.5
     }
   },
   "layout_notes": [
     "Two-column layout: main content with glossary sidebar on desktop.",
     "Simulation appears after explanation — learners verify what they just read.",
     "Reflection prompt closes the loop before the what-next bridge."
-  ],
-  "responsive_rules": [
-    "Collapse glossary sidebar into inline vocabulary below tablet.",
-    "Simulation stays full width of the main column at all breakpoints."
   ],
   "print_rules": [
     "Replace simulation with its fallback diagram.",

@@ -31,56 +31,36 @@
     "english"
   ],
   "interaction_level": "medium",
-  "lesson_flow": [
-    "Hook",
-    "Explain",
-    "Define",
-    "Example",
-    "Practice",
-    "What next"
-  ],
-  "required_components": [
-    "section-header",
-    "hook-hero",
-    "explanation-block",
-    "practice-stack",
-    "what-next-bridge"
-  ],
-  "optional_components": [
-    "definition-card",
-    "worked-example-card",
-    "pitfall-alert",
-    "glossary-rail",
-    "diagram-block"
-  ],
   "always_present": [
     "section-header",
     "hook-hero",
     "explanation-block",
-    "practice-stack",
     "what-next-bridge"
   ],
   "available_components": [
-    "section-header",
-    "hook-hero",
-    "explanation-block",
-    "practice-stack",
-    "what-next-bridge",
     "definition-card",
     "worked-example-card",
+    "practice-stack",
     "pitfall-alert",
     "glossary-rail",
-    "diagram-block"
+    "diagram-block",
+    "callout-block",
+    "student-textbox",
+    "summary-block",
+    "short-answer",
+    "key-fact",
+    "fill-in-blank",
+    "reflection-prompt",
+    "section-divider"
   ],
   "component_budget": {
-    "practice-stack": 1,
-    "worked-example-card": 1,
-    "diagram-block": 1
+    "diagram-block": 2
   },
   "max_per_section": {
-    "practice-stack": 1,
     "worked-example-card": 1,
-    "diagram-block": 1
+    "practice-stack": 1,
+    "quiz-check": 1,
+    "reflection-prompt": 1
   },
   "default_behaviours": {
     "worked-example-card": "step-reveal",
@@ -90,55 +70,53 @@
   },
   "section_role_defaults": {
     "intro": [
-      "hook-hero"
+      "hook-hero",
+      "callout-block"
     ],
     "explain": [
       "explanation-block",
       "definition-card",
-      "glossary-rail",
       "worked-example-card"
     ],
     "practice": [
-      "practice-stack"
+      "practice-stack",
+      "student-textbox"
     ],
     "summary": [
+      "summary-block",
       "what-next-bridge"
     ]
   },
   "signal_affinity": {
     "topic_type": {
       "concept": 0.9,
-      "process": 0.45,
+      "process": 0.5,
       "facts": 0.6,
-      "mixed": 0.72
+      "mixed": 0.7
     },
     "learning_outcome": {
       "understand-why": 0.9,
       "be-able-to-do": 0.5,
       "remember-terms": 0.6,
-      "apply-to-new": 0.65
+      "apply-to-new": 0.6
     },
     "class_style": {
-      "tries-before-told": 0.34,
-      "needs-explanation-first": 0.88,
-      "engages-with-visuals": 0.94,
-      "responds-to-worked-examples": 0.88,
-      "restless-without-activity": 0.64
+      "needs-explanation-first": 0.9,
+      "responds-to-worked-examples": 0.8,
+      "engages-with-visuals": 0.5,
+      "restless-without-activity": 0.4,
+      "tries-before-told": 0.3
     },
     "format": {
-      "printed-booklet": 0.84,
-      "screen-based": 0.86,
-      "both": 0.82
+      "printed-booklet": 0.7,
+      "screen-based": 0.8,
+      "both": 0.7
     }
   },
   "layout_notes": [
     "Main reading column leads the page.",
     "Glossary can live in a sticky right rail on desktop.",
     "Examples and practice arrive after the core explanation."
-  ],
-  "responsive_rules": [
-    "Collapse to a single reading column below desktop.",
-    "Move glossary support into inline vocabulary support on smaller screens."
   ],
   "print_rules": [
     "Expand step-based content for print.",

@@ -22,26 +22,47 @@ export const guidedConceptPathContract: TemplateContract = {
 	learnerFit: ['general', 'scaffolded'],
 	subjects: ['mathematics', 'science', 'economics', 'english'],
 	interactionLevel: 'medium',
-	lessonFlow: ['Hook', 'Explain', 'Define', 'Example', 'Practice', 'What next'],
-	requiredComponents: [
+	always_present: [
 		'section-header',
 		'hook-hero',
 		'explanation-block',
-		'practice-stack',
 		'what-next-bridge'
 	],
-	optionalComponents: [
+	available_components: [
 		'definition-card',
 		'worked-example-card',
+		'practice-stack',
 		'pitfall-alert',
 		'glossary-rail',
-		'diagram-block'
+		'diagram-block',
+		'callout-block',
+		'student-textbox',
+		'summary-block',
+		'short-answer',
+		'key-fact',
+		'fill-in-blank',
+		'reflection-prompt',
+		'section-divider'
 	],
+	component_budget: { 'diagram-block': 2 },
+	max_per_section: { 'worked-example-card': 1, 'practice-stack': 1, 'quiz-check': 1, 'reflection-prompt': 1 },
 	defaultBehaviours: {
 		'worked-example-card': 'step-reveal',
 		'practice-stack': 'accordion',
 		'glossary-rail': 'sticky',
 		'diagram-block': 'zoom'
+	},
+	signal_affinity: {
+		topic_type: { concept: 0.9, process: 0.5, facts: 0.6, mixed: 0.7 },
+		learning_outcome: { 'understand-why': 0.9, 'be-able-to-do': 0.5, 'remember-terms': 0.6, 'apply-to-new': 0.6 },
+		class_style: { 'needs-explanation-first': 0.9, 'responds-to-worked-examples': 0.8, 'engages-with-visuals': 0.5, 'restless-without-activity': 0.4, 'tries-before-told': 0.3 },
+		format: { 'printed-booklet': 0.7, 'screen-based': 0.8, both: 0.7 }
+	},
+	section_role_defaults: {
+		intro: ['hook-hero', 'callout-block'],
+		explain: ['explanation-block', 'definition-card', 'worked-example-card'],
+		practice: ['practice-stack', 'student-textbox'],
+		summary: ['summary-block', 'what-next-bridge']
 	},
 	layoutNotes: [
 		'Main reading column leads the page.',

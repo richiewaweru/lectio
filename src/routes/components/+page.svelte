@@ -2,7 +2,7 @@
 	import { getStableComponents } from '$lib/registry';
 	import { calculusSection, physicsSection } from '$lib/dummy-content';
 	import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
-	import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+	import { timelinePreview } from '$lib/templates/timeline/preview';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import {
@@ -12,17 +12,24 @@
 		PrerequisiteStrip,
 		WhatNextBridge,
 		InterviewAnchor,
+		CalloutBlock,
+		SummaryBlock,
+		SectionDivider,
 		DefinitionCard,
 		DefinitionFamily,
 		GlossaryRail,
 		GlossaryInline,
 		InsightStrip,
+		KeyFact,
 		ComparisonGrid,
 		WorkedExampleCard,
 		ProcessSteps,
 		PracticeStack,
 		QuizCheck,
 		ReflectionPrompt,
+		StudentTextbox,
+		ShortAnswerQuestion,
+		FillInTheBlank,
 		PitfallAlert,
 		DiagramBlock,
 		DiagramCompare,
@@ -40,6 +47,9 @@
 		'prerequisite-strip': { content: physicsSection.prerequisites },
 		'what-next-bridge': { content: calculusSection.what_next },
 		'interview-anchor': { content: physicsSection.interview },
+		'callout-block': { content: physicsSection.callout },
+		'summary-block': { content: physicsSection.summary },
+		'section-divider': { content: physicsSection.divider },
 		'definition-card': { content: calculusSection.definition },
 		'definition-family': { content: physicsSection.definition_family },
 		'glossary-rail': { content: calculusSection.glossary },
@@ -50,18 +60,22 @@
 			}
 		},
 		'insight-strip': { content: physicsSection.insight_strip },
+		'key-fact': { content: physicsSection.key_fact },
 		'comparison-grid': { content: compareAndApplyPreview.section.comparison_grid },
 		'worked-example-card': { content: calculusSection.worked_example },
 		'process-steps': { content: physicsSection.process },
 		'practice-stack': { content: calculusSection.practice },
 		'quiz-check': { content: physicsSection.quiz },
 		'reflection-prompt': { content: physicsSection.reflection },
+		'student-textbox': { content: physicsSection.student_textbox },
+		'short-answer': { content: physicsSection.short_answer },
+		'fill-in-blank': { content: physicsSection.fill_in_blank },
 		'pitfall-alert': { content: calculusSection.pitfall },
 		'diagram-block': { content: physicsSection.diagram },
 		'diagram-compare': { content: physicsSection.diagram_compare },
 		'diagram-series': { content: physicsSection.diagram_series },
 		'simulation-block': { content: physicsSection.simulation },
-		'timeline-block': { content: timelineNarrativePreview.section.timeline }
+		'timeline-block': { content: timelinePreview.section.timeline }
 	};
 
 	function formatCapacityKey(key: string): string {
@@ -158,6 +172,12 @@
 									<WhatNextBridge content={preview.content} />
 								{:else if comp.id === 'interview-anchor'}
 									<InterviewAnchor content={preview.content} />
+								{:else if comp.id === 'callout-block'}
+									<CalloutBlock content={preview.content} />
+								{:else if comp.id === 'summary-block'}
+									<SummaryBlock content={preview.content} />
+								{:else if comp.id === 'section-divider'}
+									<SectionDivider content={preview.content} />
 								{:else if comp.id === 'definition-card'}
 									<DefinitionCard content={preview.content} />
 								{:else if comp.id === 'definition-family'}
@@ -176,6 +196,8 @@
 									</div>
 								{:else if comp.id === 'insight-strip'}
 									<InsightStrip content={preview.content} />
+								{:else if comp.id === 'key-fact'}
+									<KeyFact content={preview.content} />
 								{:else if comp.id === 'comparison-grid'}
 									<ComparisonGrid content={preview.content} />
 								{:else if comp.id === 'worked-example-card'}
@@ -188,6 +210,12 @@
 									<QuizCheck content={preview.content} />
 								{:else if comp.id === 'reflection-prompt'}
 									<ReflectionPrompt content={preview.content} />
+								{:else if comp.id === 'student-textbox'}
+									<StudentTextbox content={preview.content} />
+								{:else if comp.id === 'short-answer'}
+									<ShortAnswerQuestion content={preview.content} />
+								{:else if comp.id === 'fill-in-blank'}
+									<FillInTheBlank content={preview.content} />
 								{:else if comp.id === 'pitfall-alert'}
 									<PitfallAlert content={preview.content} />
 								{:else if comp.id === 'diagram-block'}

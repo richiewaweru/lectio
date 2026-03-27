@@ -52,7 +52,7 @@ const discoveryMathSection: SectionContent = {
 		subtitle: 'When two things happen in sequence — how do the odds combine?',
 		subject: 'Mathematics',
 		grade_band: 'secondary',
-		objective: 'Use tree diagrams and the multiplication rule to calculate compound probabilities',
+		objectives: ['Use tree diagrams and the multiplication rule to calculate compound probabilities'],
 	},
 
 	hook: {

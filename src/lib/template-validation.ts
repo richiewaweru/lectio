@@ -39,16 +39,29 @@ export function validateTemplateContract(contract: TemplateContract): TemplateVa
 		errors.push(`${contract.id}: bestFor and notIdealFor are required.`);
 	}
 
-	if (!contract.requiredComponents.length) {
-		errors.push(`${contract.id}: requiredComponents must not be empty.`);
+	if (!contract.always_present.length) {
+		errors.push(`${contract.id}: always_present must not be empty.`);
 	}
 
 	// ── All component ids must exist in the registry ──────
-	const allComponentIds = [...contract.requiredComponents, ...contract.optionalComponents];
+	const allComponentIds = [...contract.always_present, ...contract.available_components];
 
 	for (const componentId of allComponentIds) {
 		if (!getComponentById(componentId)) {
 			errors.push(`${contract.id}: unknown component "${componentId}".`);
+		}
+	}
+
+	// ── Budget keys must reference valid components ───────
+	for (const componentId of Object.keys(contract.component_budget)) {
+		if (!getComponentById(componentId)) {
+			errors.push(`${contract.id}: component_budget references unknown component "${componentId}".`);
+		}
+	}
+
+	for (const componentId of Object.keys(contract.max_per_section)) {
+		if (!getComponentById(componentId)) {
+			errors.push(`${contract.id}: max_per_section references unknown component "${componentId}".`);
 		}
 	}
 
@@ -95,13 +108,13 @@ export function validateTemplatePreview(
 	const errors: string[] = [];
 	const warnings: string[] = [];
 
-	// Every required component must have corresponding content
+	// Every always_present component must have corresponding content
 	// in the preview section, so the gallery card renders correctly.
-	for (const componentId of definition.contract.requiredComponents) {
+	for (const componentId of definition.contract.always_present) {
 		if (!hasPreviewField(definition.preview.section, componentId)) {
 			errors.push(
 				`${definition.contract.id}: preview is missing content for ` +
-				`required component "${componentId}".`
+				`always_present component "${componentId}".`
 			);
 		}
 	}

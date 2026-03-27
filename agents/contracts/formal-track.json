@@ -30,102 +30,78 @@
     "economics"
   ],
   "interaction_level": "none",
-  "lesson_flow": [
-    "Hook",
-    "Formal explanation",
-    "Definition",
-    "Worked case",
-    "Practice",
-    "What next"
-  ],
-  "required_components": [
-    "section-header",
-    "hook-hero",
-    "explanation-block",
-    "definition-card",
-    "practice-stack",
-    "what-next-bridge"
-  ],
-  "optional_components": [
-    "worked-example-card",
-    "pitfall-alert"
-  ],
   "always_present": [
     "section-header",
-    "hook-hero",
     "explanation-block",
-    "definition-card",
-    "practice-stack",
     "what-next-bridge"
   ],
   "available_components": [
-    "section-header",
     "hook-hero",
-    "explanation-block",
     "definition-card",
-    "practice-stack",
-    "what-next-bridge",
     "worked-example-card",
-    "pitfall-alert"
+    "practice-stack",
+    "pitfall-alert",
+    "key-fact",
+    "short-answer",
+    "fill-in-blank",
+    "callout-block",
+    "section-divider"
   ],
-  "component_budget": {
-    "practice-stack": 1,
-    "worked-example-card": 1
-  },
+  "component_budget": {},
   "max_per_section": {
+    "worked-example-card": 1,
     "practice-stack": 1,
-    "worked-example-card": 1
+    "quiz-check": 1
   },
   "default_behaviours": {},
   "section_role_defaults": {
     "intro": [
-      "hook-hero"
+      "hook-hero",
+      "definition-card"
     ],
     "explain": [
       "explanation-block",
-      "definition-card",
+      "key-fact",
       "worked-example-card"
     ],
     "practice": [
-      "practice-stack"
+      "practice-stack",
+      "short-answer"
     ],
     "summary": [
+      "summary-block",
       "what-next-bridge"
     ]
   },
   "signal_affinity": {
     "topic_type": {
-      "concept": 0.76,
-      "process": 0.56,
-      "facts": 0.72,
-      "mixed": 0.64
+      "concept": 0.7,
+      "process": 0.6,
+      "facts": 0.8,
+      "mixed": 0.5
     },
     "learning_outcome": {
-      "understand-why": 0.78,
-      "be-able-to-do": 0.62,
-      "remember-terms": 0.74,
+      "understand-why": 0.7,
+      "be-able-to-do": 0.6,
+      "remember-terms": 0.8,
       "apply-to-new": 0.7
     },
     "class_style": {
-      "tries-before-told": 0.34,
-      "needs-explanation-first": 0.88,
-      "engages-with-visuals": 0.46,
-      "responds-to-worked-examples": 0.88,
-      "restless-without-activity": 0.44
+      "needs-explanation-first": 1,
+      "responds-to-worked-examples": 0.8,
+      "engages-with-visuals": 0.2,
+      "restless-without-activity": 0.1,
+      "tries-before-told": 0.2
     },
     "format": {
-      "printed-booklet": 0.84,
-      "screen-based": 0.62,
-      "both": 0.72
+      "printed-booklet": 0.9,
+      "screen-based": 0.6,
+      "both": 0.7
     }
   },
   "layout_notes": [
     "Keep the lesson in a print-first single column.",
     "Prefer formal explanation and static worked examples over progressive disclosure."
-  ],
-  "responsive_rules": [
-    "No sidebar or split layouts.",
-    "Preserve the same ordering and density across breakpoints."
   ],
   "print_rules": [
     "Render as a clean static worksheet-like page.",

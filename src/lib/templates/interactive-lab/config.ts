@@ -22,22 +22,36 @@ export const interactiveLabContract: TemplateContract = {
 	learnerFit: ['visual', 'general', 'scaffolded'],
 	subjects: ['mathematics', 'physics', 'chemistry', 'statistics'],
 	interactionLevel: 'high',
-	lessonFlow: ['Hook', 'Simulate', 'Explain', 'Define', 'Example', 'Practice', 'What next'],
-	requiredComponents: [
-		'section-header',
+	always_present: ['section-header', 'simulation-block', 'what-next-bridge'],
+	available_components: [
 		'hook-hero',
-		'simulation-block',
 		'explanation-block',
-		'practice-stack',
-		'what-next-bridge'
-	],
-	optionalComponents: [
 		'definition-card',
 		'worked-example-card',
+		'practice-stack',
 		'pitfall-alert',
-		'glossary-inline',
-		'diagram-block'
+		'diagram-block',
+		'callout-block',
+		'student-textbox',
+		'summary-block',
+		'short-answer',
+		'section-divider'
 	],
+	component_budget: { 'simulation-block': 1 },
+	max_per_section: { 'diagram-block': 1, 'worked-example-card': 1, 'practice-stack': 1 },
+	signal_affinity: {
+		topic_type: { concept: 0.5, process: 0.6, facts: 0.3, mixed: 0.6 },
+		learning_outcome: { 'understand-why': 0.8, 'be-able-to-do': 0.7, 'remember-terms': 0.3, 'apply-to-new': 0.9 },
+		class_style: { 'needs-explanation-first': 0.3, 'responds-to-worked-examples': 0.5, 'engages-with-visuals': 0.8, 'restless-without-activity': 1.0, 'tries-before-told': 1.0 },
+		format: { 'printed-booklet': 0.1, 'screen-based': 1.0, both: 0.4 }
+	},
+	section_role_defaults: {
+		intro: ['hook-hero'],
+		discover: ['simulation-block', 'callout-block'],
+		explain: ['explanation-block', 'definition-card'],
+		practice: ['practice-stack', 'student-textbox'],
+		summary: ['summary-block', 'what-next-bridge']
+	},
 	defaultBehaviours: {
 		'practice-stack': 'hint-toggle',
 		'diagram-block': 'zoom'

@@ -6,17 +6,24 @@ export {
 	PrerequisiteStrip,
 	WhatNextBridge,
 	InterviewAnchor,
+	CalloutBlock,
+	SummaryBlock,
+	SectionDivider,
 	DefinitionCard,
 	DefinitionFamily,
 	GlossaryRail,
 	GlossaryInline,
 	InsightStrip,
+	KeyFact,
 	ComparisonGrid,
 	WorkedExampleCard,
 	ProcessSteps,
 	PracticeStack,
 	QuizCheck,
 	ReflectionPrompt,
+	StudentTextbox,
+	ShortAnswerQuestion,
+	FillInTheBlank,
 	PitfallAlert,
 	DiagramBlock,
 	DiagramCompare,
@@ -74,7 +81,17 @@ export type {
 	BehaviourMode,
 	Difficulty,
 	GradeBand,
-	HintLevel
+	HintLevel,
+	CalloutVariant,
+	CalloutBlockContent,
+	SummaryItem,
+	SummaryBlockContent,
+	SectionDividerContent,
+	KeyFactContent,
+	StudentTextboxContent,
+	ShortAnswerContent,
+	FillInBlankSegment,
+	FillInBlankContent
 } from './types';
 
 // ── Registry ────────────────────────────────────────
@@ -116,6 +133,7 @@ export type {
 	LearnerFit,
 	InteractionLevel,
 	ReadingStyle,
+	SectionRole,
 	TemplateFilters,
 	TemplateValidationResult
 } from './template-types';

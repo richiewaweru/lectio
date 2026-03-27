@@ -13,8 +13,9 @@
 <h2>SectionContent</h2>
 <p>
 	<code>SectionContent</code> (from <code>lectio</code>) aggregates optional blocks: header, hook,
-	explanation, definitions, practice, quiz, diagrams, timeline, simulation, and more. Each block maps
-	to a lectio component through the component registry’s <code>sectionField</code>.
+	explanation, definitions, practice, quiz, diagrams, timeline, simulation, callouts, summaries,
+	student textboxes, and more. Each block maps to a lectio component through the component
+	registry’s <code>sectionField</code>.
 </p>
 <p>
 	Individual components take a typed <code>content</code> prop, for example
@@ -31,8 +32,9 @@
 
 <h2>Templates</h2>
 <p>
-	Twelve public templates (for example <code>guided-concept-path</code>,
-	<code>compare-and-apply</code>, <code>interactive-lab</code>) are defined in the template registry.
+	Thirteen public templates (for example <code>guided-concept-path</code>,
+	<code>visual-led</code>, <code>interactive-lab</code>, <code>open-canvas</code>) are defined in
+	the template registry.
 	Each has a contract describing required and optional components, generation guidance, and
 	<code>allowed_presets</code>.
 </p>

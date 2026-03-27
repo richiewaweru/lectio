@@ -6,6 +6,10 @@ export { default as PrerequisiteStrip } from './PrerequisiteStrip.svelte';
 export { default as WhatNextBridge } from './WhatNextBridge.svelte';
 export { default as InterviewAnchor } from './InterviewAnchor.svelte';
 
+export { default as CalloutBlock } from './CalloutBlock.svelte';
+export { default as SummaryBlock } from './SummaryBlock.svelte';
+export { default as SectionDivider } from './SectionDivider.svelte';
+
 // Group 2 — Definition & Knowledge
 export { default as DefinitionCard } from './DefinitionCard.svelte';
 export { default as DefinitionFamily } from './DefinitionFamily.svelte';
@@ -13,6 +17,7 @@ export { default as GlossaryRail } from './GlossaryRail.svelte';
 export { default as GlossaryInline } from './GlossaryInline.svelte';
 export { default as InsightStrip } from './InsightStrip.svelte';
 export { default as ComparisonGrid } from './ComparisonGrid.svelte';
+export { default as KeyFact } from './KeyFact.svelte';
 
 // Group 3 — Examples & Process
 export { default as WorkedExampleCard } from './WorkedExampleCard.svelte';
@@ -22,6 +27,10 @@ export { default as ProcessSteps } from './ProcessSteps.svelte';
 export { default as PracticeStack } from './PracticeStack.svelte';
 export { default as QuizCheck } from './QuizCheck.svelte';
 export { default as ReflectionPrompt } from './ReflectionPrompt.svelte';
+
+export { default as StudentTextbox } from './StudentTextbox.svelte';
+export { default as ShortAnswerQuestion } from './ShortAnswerQuestion.svelte';
+export { default as FillInTheBlank } from './FillInTheBlank.svelte';
 
 // Group 5 — Alerts
 export { default as PitfallAlert } from './PitfallAlert.svelte';

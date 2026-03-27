@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ExplanationContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
-	import { BookOpen, Lightbulb, Info } from 'lucide-svelte';
+	import { BookOpen, Lightbulb, Info, TriangleAlert, GraduationCap } from 'lucide-svelte';
 
 	const calloutConfig = {
 		remember: {
@@ -18,6 +18,16 @@
 			label: 'Side note',
 			className: 'border-gray-200 bg-gray-50/75 text-gray-700',
 			icon: Info
+		},
+		warning: {
+			label: 'Warning',
+			className: 'border-amber-200 bg-amber-50/75 text-amber-800',
+			icon: TriangleAlert
+		},
+		'exam-tip': {
+			label: 'Exam tip',
+			className: 'border-emerald-200 bg-emerald-50/75 text-emerald-800',
+			icon: GraduationCap
 		}
 	};
 

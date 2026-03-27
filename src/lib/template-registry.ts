@@ -1,34 +1,26 @@
 import type { TemplateDefinition, TemplateFilters } from '$lib/template-types';
 import { validateTemplateDefinition } from '$lib/template-validation';
 
+import { classificationContract } from '$lib/templates/classification/config';
+import ClassificationLayout from '$lib/templates/classification/layout.svelte';
+import { classificationPresets } from '$lib/templates/classification/presets';
+import { classificationPreview } from '$lib/templates/classification/preview';
 import { compareAndApplyContract } from '$lib/templates/compare-and-apply/config';
 import CompareAndApplyLayout from '$lib/templates/compare-and-apply/layout.svelte';
 import { compareAndApplyPresets } from '$lib/templates/compare-and-apply/presets';
 import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
-import { diagramLedLessonContract } from '$lib/templates/diagram-led-lesson/config';
-import DiagramLedLessonLayout from '$lib/templates/diagram-led-lesson/layout.svelte';
-import { diagramLedLessonPresets } from '$lib/templates/diagram-led-lesson/presets';
-import { diagramLedLessonPreview } from '$lib/templates/diagram-led-lesson/preview';
-import { distinctionGridContract } from '$lib/templates/distinction-grid/config';
-import DistinctionGridLayout from '$lib/templates/distinction-grid/layout.svelte';
-import { distinctionGridPresets } from '$lib/templates/distinction-grid/presets';
-import { distinctionGridPreview } from '$lib/templates/distinction-grid/preview';
-import { figureFirstContract } from '$lib/templates/figure-first/config';
-import FigureFirstLayout from '$lib/templates/figure-first/layout.svelte';
-import { figureFirstPresets } from '$lib/templates/figure-first/presets';
-import { figureFirstPreview } from '$lib/templates/figure-first/preview';
-import { focusFlowContract } from '$lib/templates/focus-flow/config';
-import FocusFlowLayout from '$lib/templates/focus-flow/layout.svelte';
-import { focusFlowPresets } from '$lib/templates/focus-flow/presets';
-import { focusFlowPreview } from '$lib/templates/focus-flow/preview';
+import { conceptCompactContract } from '$lib/templates/concept-compact/config';
+import ConceptCompactLayout from '$lib/templates/concept-compact/layout.svelte';
+import { conceptCompactPresets } from '$lib/templates/concept-compact/presets';
+import { conceptCompactPreview } from '$lib/templates/concept-compact/preview';
+import { diagramLedContract } from '$lib/templates/diagram-led/config';
+import DiagramLedLayout from '$lib/templates/diagram-led/layout.svelte';
+import { diagramLedPresets } from '$lib/templates/diagram-led/presets';
+import { diagramLedPreview } from '$lib/templates/diagram-led/preview';
 import { formalTrackContract } from '$lib/templates/formal-track/config';
 import FormalTrackLayout from '$lib/templates/formal-track/layout.svelte';
 import { formalTrackPresets } from '$lib/templates/formal-track/presets';
 import { formalTrackPreview } from '$lib/templates/formal-track/preview';
-import { guidedConceptCompactContract } from '$lib/templates/guided-concept-compact/config';
-import GuidedConceptCompactLayout from '$lib/templates/guided-concept-compact/layout.svelte';
-import { guidedConceptCompactPresets } from '$lib/templates/guided-concept-compact/presets';
-import { guidedConceptCompactPreview } from '$lib/templates/guided-concept-compact/preview';
 import { guidedConceptPathContract } from '$lib/templates/guided-concept-path/config';
 import GuidedConceptPathLayout from '$lib/templates/guided-concept-path/layout.svelte';
 import { guidedConceptPathPresets } from '$lib/templates/guided-concept-path/presets';
@@ -41,14 +33,26 @@ import { interactiveLabContract } from '$lib/templates/interactive-lab/config';
 import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
 import { interactiveLabPresets } from '$lib/templates/interactive-lab/presets';
 import { interactiveLabPreview } from '$lib/templates/interactive-lab/preview';
-import { processTrainerContract } from '$lib/templates/process-trainer/config';
-import ProcessTrainerLayout from '$lib/templates/process-trainer/layout.svelte';
-import { processTrainerPresets } from '$lib/templates/process-trainer/presets';
-import { processTrainerPreview } from '$lib/templates/process-trainer/preview';
-import { timelineNarrativeContract } from '$lib/templates/timeline-narrative/config';
-import TimelineNarrativeLayout from '$lib/templates/timeline-narrative/layout.svelte';
-import { timelineNarrativePresets } from '$lib/templates/timeline-narrative/presets';
-import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+import { lowLoadContract } from '$lib/templates/low-load/config';
+import LowLoadLayout from '$lib/templates/low-load/layout.svelte';
+import { lowLoadPresets } from '$lib/templates/low-load/presets';
+import { lowLoadPreview } from '$lib/templates/low-load/preview';
+import { procedureContract } from '$lib/templates/procedure/config';
+import ProcedureLayout from '$lib/templates/procedure/layout.svelte';
+import { procedurePresets } from '$lib/templates/procedure/presets';
+import { procedurePreview } from '$lib/templates/procedure/preview';
+import { timelineContract } from '$lib/templates/timeline/config';
+import TimelineLayout from '$lib/templates/timeline/layout.svelte';
+import { timelinePresets } from '$lib/templates/timeline/presets';
+import { timelinePreview } from '$lib/templates/timeline/preview';
+import { openCanvasContract } from '$lib/templates/open-canvas/config';
+import OpenCanvasLayout from '$lib/templates/open-canvas/layout.svelte';
+import { openCanvasPresets } from '$lib/templates/open-canvas/presets';
+import { openCanvasPreview } from '$lib/templates/open-canvas/preview';
+import { visualLedContract } from '$lib/templates/visual-led/config';
+import VisualLedLayout from '$lib/templates/visual-led/layout.svelte';
+import { visualLedPresets } from '$lib/templates/visual-led/presets';
+import { visualLedPreview } from '$lib/templates/visual-led/preview';
 
 export const templateRegistry: TemplateDefinition[] = [
 	{
@@ -59,11 +63,11 @@ export const templateRegistry: TemplateDefinition[] = [
 		readmePath: 'src/lib/templates/guided-concept-path/README.md'
 	},
 	{
-		contract: figureFirstContract,
-		preview: figureFirstPreview,
-		presets: figureFirstPresets,
-		render: FigureFirstLayout,
-		readmePath: 'src/lib/templates/figure-first/README.md'
+		contract: visualLedContract,
+		preview: visualLedPreview,
+		presets: visualLedPresets,
+		render: VisualLedLayout,
+		readmePath: 'src/lib/templates/visual-led/README.md'
 	},
 	{
 		contract: compareAndApplyContract,
@@ -73,18 +77,18 @@ export const templateRegistry: TemplateDefinition[] = [
 		readmePath: 'src/lib/templates/compare-and-apply/README.md'
 	},
 	{
-		contract: focusFlowContract,
-		preview: focusFlowPreview,
-		presets: focusFlowPresets,
-		render: FocusFlowLayout,
-		readmePath: 'src/lib/templates/focus-flow/README.md'
+		contract: lowLoadContract,
+		preview: lowLoadPreview,
+		presets: lowLoadPresets,
+		render: LowLoadLayout,
+		readmePath: 'src/lib/templates/low-load/README.md'
 	},
 	{
-		contract: guidedConceptCompactContract,
-		preview: guidedConceptCompactPreview,
-		presets: guidedConceptCompactPresets,
-		render: GuidedConceptCompactLayout,
-		readmePath: 'src/lib/templates/guided-concept-compact/README.md'
+		contract: conceptCompactContract,
+		preview: conceptCompactPreview,
+		presets: conceptCompactPresets,
+		render: ConceptCompactLayout,
+		readmePath: 'src/lib/templates/concept-compact/README.md'
 	},
 	{
 		contract: formalTrackContract,
@@ -94,32 +98,32 @@ export const templateRegistry: TemplateDefinition[] = [
 		readmePath: 'src/lib/templates/formal-track/README.md'
 	},
 	{
-		contract: diagramLedLessonContract,
-		preview: diagramLedLessonPreview,
-		presets: diagramLedLessonPresets,
-		render: DiagramLedLessonLayout,
-		readmePath: 'src/lib/templates/diagram-led-lesson/README.md'
+		contract: diagramLedContract,
+		preview: diagramLedPreview,
+		presets: diagramLedPresets,
+		render: DiagramLedLayout,
+		readmePath: 'src/lib/templates/diagram-led/README.md'
 	},
 	{
-		contract: distinctionGridContract,
-		preview: distinctionGridPreview,
-		presets: distinctionGridPresets,
-		render: DistinctionGridLayout,
-		readmePath: 'src/lib/templates/distinction-grid/README.md'
+		contract: classificationContract,
+		preview: classificationPreview,
+		presets: classificationPresets,
+		render: ClassificationLayout,
+		readmePath: 'src/lib/templates/classification/README.md'
 	},
 	{
-		contract: timelineNarrativeContract,
-		preview: timelineNarrativePreview,
-		presets: timelineNarrativePresets,
-		render: TimelineNarrativeLayout,
-		readmePath: 'src/lib/templates/timeline-narrative/README.md'
+		contract: timelineContract,
+		preview: timelinePreview,
+		presets: timelinePresets,
+		render: TimelineLayout,
+		readmePath: 'src/lib/templates/timeline/README.md'
 	},
 	{
-		contract: processTrainerContract,
-		preview: processTrainerPreview,
-		presets: processTrainerPresets,
-		render: ProcessTrainerLayout,
-		readmePath: 'src/lib/templates/process-trainer/README.md'
+		contract: procedureContract,
+		preview: procedurePreview,
+		presets: procedurePresets,
+		render: ProcedureLayout,
+		readmePath: 'src/lib/templates/procedure/README.md'
 	},
 	{
 		contract: interactiveLabContract,
@@ -134,6 +138,13 @@ export const templateRegistry: TemplateDefinition[] = [
 		presets: guidedDiscoveryPresets,
 		render: GuidedDiscoveryLayout,
 		readmePath: 'src/lib/templates/guided-discovery/README.md'
+	},
+	{
+		contract: openCanvasContract,
+		preview: openCanvasPreview,
+		presets: openCanvasPresets,
+		render: OpenCanvasLayout,
+		readmePath: 'src/lib/templates/open-canvas/README.md'
 	}
 ];
 
