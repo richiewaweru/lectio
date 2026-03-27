@@ -645,6 +645,64 @@ fs.addEventListener('input',upd);upd();
 		}
 	},
 
+	callout: {
+		variant: 'exam-tip',
+		heading: 'Exam technique',
+		body: 'Always state Newton\'s Second Law before substituting numbers: write F = ma, identify each symbol, then solve. Examiners award method marks for this.',
+	},
+
+	summary: {
+		heading: 'In summary',
+		items: [
+			{ text: 'F = ma links net force, mass, and acceleration in a single equation.' },
+			{ text: 'Acceleration is directly proportional to net force and inversely proportional to mass.' },
+			{ text: 'Always use net force — the vector sum of all forces — not a single applied force.' },
+			{ text: 'Units: force in Newtons (N), mass in kg, acceleration in m/s².' },
+		],
+		closing: 'Master the free-body diagram and the rest of dynamics falls into place.',
+	},
+
+	divider: {
+		label: 'Exam practice',
+	},
+
+	key_fact: {
+		fact: '1 Newton = the force needed to accelerate 1 kg by 1 m/s²',
+		context: 'This definition makes F = ma more than a formula — it defines the unit of force itself.',
+		source: 'SI base units definition',
+	},
+
+	student_textbox: {
+		prompt: 'In your own words, explain why a fully loaded lorry takes much longer to stop than an empty one, even if both brakes apply the same force.',
+		lines: 5,
+		label: 'Your explanation',
+	},
+
+	short_answer: {
+		question: 'A net force of 18 N acts on a 3 kg object. Calculate the acceleration. Show your working. [2 marks]',
+		marks: 2,
+		lines: 4,
+		mark_scheme: '1 mark: correct rearrangement a = F/m. 1 mark: correct answer 6 m/s² with unit.',
+	},
+
+	fill_in_blank: {
+		instruction: 'Complete the passage using the words in the box.',
+		segments: [
+			{ text: "Newton's Second Law states that the ", is_blank: false },
+			{ text: 'acceleration', is_blank: true, answer: 'acceleration' },
+			{ text: ' of an object is directly proportional to the ', is_blank: false },
+			{ text: 'net force', is_blank: true, answer: 'net force' },
+			{ text: ' acting on it and inversely proportional to its ', is_blank: false },
+			{ text: 'mass', is_blank: true, answer: 'mass' },
+			{ text: '. Doubling the force ', is_blank: false },
+			{ text: 'doubles', is_blank: true, answer: 'doubles' },
+			{ text: ' the acceleration. The SI unit of force is the ', is_blank: false },
+			{ text: 'Newton', is_blank: true, answer: 'Newton' },
+			{ text: '.', is_blank: false },
+		],
+		word_bank: ['acceleration', 'net force', 'mass', 'doubles', 'halves', 'Newton', 'kilogram'],
+	},
+
 	interview: {
 		prompt: "Explain to them why a fully loaded shopping trolley is harder to push than an empty one, using Newton's Second Law.",
 		audience: 'a curious 10-year-old',
