@@ -22,7 +22,7 @@ const labPhysicsSection: SectionContent = {
 		subtitle: 'Force, mass, and acceleration — the equation that runs the universe',
 		subject: 'Physics',
 		grade_band: 'secondary',
-		objective: 'Discover how force and mass determine acceleration by manipulating variables directly',
+		objectives: ['Discover how force and mass determine acceleration by manipulating variables directly'],
 	},
 
 	hook: {

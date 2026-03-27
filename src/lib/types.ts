@@ -38,7 +38,7 @@ export interface SectionHeaderContent {
 	subject: string;
 	section_number?: string; // e.g. "Section 01"
 	grade_band: GradeBand;
-	objective?: string; // max 30 words — learning goal
+	objectives?: string[]; // 2–4 learning objectives
 	level_pills?: LevelPill[];
 }
 
@@ -73,7 +73,7 @@ export interface HookHeroContent {
 // ──
 
 export interface ExplanationCallout {
-	type: 'remember' | 'insight' | 'sidenote';
+	type: 'remember' | 'insight' | 'sidenote' | 'warning' | 'exam-tip';
 	text: string; // max 60 words
 }
 
@@ -110,6 +110,34 @@ export interface InterviewContent {
 	prompt: string; // max 35 words — conversational question
 	audience: string; // max 10 words — who they are explaining to
 	follow_up?: string; // max 25 words — a harder follow-on question
+}
+
+// ── CALLOUT BLOCK ────────────────────────────
+
+export type CalloutVariant = 'info' | 'tip' | 'warning' | 'exam-tip' | 'remember';
+
+export interface CalloutBlockContent {
+	variant: CalloutVariant;
+	heading?: string; // short label, e.g. "Key point"
+	body: string; // the callout text, max ~60 words
+}
+
+// ── SUMMARY BLOCK ────────────────────────────
+
+export interface SummaryItem {
+	text: string; // one takeaway, max 25 words
+}
+
+export interface SummaryBlockContent {
+	heading?: string; // defaults to "In summary" if omitted
+	items: SummaryItem[]; // 2–5 bullet takeaways
+	closing?: string; // optional 1-sentence closing, max 30 words
+}
+
+// ── SECTION DIVIDER ──────────────────────────
+
+export interface SectionDividerContent {
+	label: string; // e.g. "Part A", "Extension", "Exam practice"
 }
 
 // ─────────────────────────────────────────────
@@ -166,6 +194,14 @@ export interface InsightCell {
 
 export interface InsightStripContent {
 	cells: InsightCell[]; // max 3, min 2
+}
+
+// ── KEY FACT ─────────────────────────────────
+
+export interface KeyFactContent {
+	fact: string; // the prominent fact, formula, or figure — max 20 words
+	context?: string; // optional 1-sentence explanation, max 30 words
+	source?: string; // optional attribution
 }
 
 export interface ComparisonColumn {
@@ -249,6 +285,7 @@ export interface PracticeSolution {
 
 export interface PracticeProblem {
 	difficulty: Difficulty;
+	problem_type?: 'structured' | 'open'; // default: 'structured'
 	question: string; // max 100 words
 	hints: PracticeHint[]; // 1–3 hints, progressive
 	solution?: PracticeSolution;
@@ -274,7 +311,8 @@ export interface QuizOption {
 
 export interface QuizContent {
 	question: string; // max 60 words
-	options: QuizOption[]; // 3–4 options
+	quiz_type?: 'multiple-choice' | 'true-false'; // default: 'multiple-choice'
+	options: QuizOption[]; // 3–4 options (exactly 2 for true-false)
 	feedback_correct: string; // max 30 words
 	feedback_incorrect: string; // max 30 words
 	show_explanations?: boolean; // default true
@@ -298,6 +336,37 @@ export interface ReflectionContent {
 	sentence_stem?: string; // if type === 'sentence-stem'
 	time_minutes?: number; // if type === 'timed'
 	pair_instruction?: string; // if type === 'pair-share'
+}
+
+// ── STUDENT TEXTBOX ──────────────────────────
+
+export interface StudentTextboxContent {
+	prompt: string; // the write-in instruction, max 40 words
+	lines?: number; // hint for print rendering: how many lines to draw (default 4)
+	label?: string; // optional small label above box, e.g. "Your answer"
+}
+
+// ── SHORT ANSWER QUESTION ────────────────────
+
+export interface ShortAnswerContent {
+	question: string; // the question text, max 60 words
+	marks?: number; // optional mark allocation shown to student
+	lines?: number; // lines for print (default 6)
+	mark_scheme?: string; // optional teacher-facing answer notes (hidden from student)
+}
+
+// ── FILL IN THE BLANK ────────────────────────
+
+export interface FillInBlankSegment {
+	text: string; // prose segment
+	is_blank: boolean; // if true, render as a blank
+	answer?: string; // the correct word/phrase for this blank
+}
+
+export interface FillInBlankContent {
+	instruction?: string; // e.g. "Complete the passage using the words below"
+	segments: FillInBlankSegment[];
+	word_bank?: string[]; // optional list of words to choose from
 }
 
 // ─────────────────────────────────────────────
@@ -449,4 +518,13 @@ export interface SectionContent {
 	glossary?: GlossaryContent;
 	simulation?: SimulationContent;
 	interview?: InterviewContent;
+
+	// New harmonisation components
+	callout?: CalloutBlockContent;
+	summary?: SummaryBlockContent;
+	student_textbox?: StudentTextboxContent;
+	short_answer?: ShortAnswerContent;
+	fill_in_blank?: FillInBlankContent;
+	divider?: SectionDividerContent;
+	key_fact?: KeyFactContent;
 }

@@ -2,7 +2,7 @@
 	import { getStableComponents } from '$lib/registry';
 	import { calculusSection, physicsSection } from '$lib/dummy-content';
 	import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
-	import { timelineNarrativePreview } from '$lib/templates/timeline-narrative/preview';
+	import { timelinePreview } from '$lib/templates/timeline/preview';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import {
@@ -61,7 +61,7 @@
 		'diagram-compare': { content: physicsSection.diagram_compare },
 		'diagram-series': { content: physicsSection.diagram_series },
 		'simulation-block': { content: physicsSection.simulation },
-		'timeline-block': { content: timelineNarrativePreview.section.timeline }
+		'timeline-block': { content: timelinePreview.section.timeline }
 	};
 
 	function formatCapacityKey(key: string): string {

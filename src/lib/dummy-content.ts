@@ -13,7 +13,7 @@ export const calculusSection: SectionContent = {
 		subtitle: 'Two questions algebra cannot answer',
 		subject: 'Mathematics',
 		grade_band: 'secondary',
-		objective: 'Understand the motivation for calculus and distinguish it from algebra',
+		objectives: ['Understand the motivation for calculus and distinguish it from algebra'],
 	},
 
 	hook: {
@@ -291,7 +291,7 @@ export const physicsSection: SectionContent = {
 		subject: 'Physics',
 		section_number: 'Section 02',
 		grade_band: 'secondary',
-		objective: 'Apply F = ma to predict the motion of objects under known forces',
+		objectives: ['Apply F = ma to predict the motion of objects under known forces'],
 		level_pills: [
 			{ label: 'All levels', variant: 'all' },
 			{ label: 'Warm-up', variant: 'warm' },

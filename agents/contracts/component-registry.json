@@ -104,6 +104,58 @@
     ],
     "print_fallback": "Static with write-in lines"
   },
+  "callout-block": {
+    "id": "callout-block",
+    "name": "CalloutBlock",
+    "purpose": "Standalone highlighted callout — tip, warning, info, or exam note",
+    "cognitive_job": "Flag what matters",
+    "section_field": "callout",
+    "group": 1,
+    "status": "stable",
+    "capacity": {
+      "bodyMaxWords": 60,
+      "headingMaxWords": 6
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Bordered callout box"
+  },
+  "summary-block": {
+    "id": "summary-block",
+    "name": "SummaryBlock",
+    "purpose": "Lists what this section covered — key takeaways as bullets",
+    "cognitive_job": "Consolidate and close",
+    "section_field": "summary",
+    "group": 1,
+    "status": "stable",
+    "capacity": {
+      "itemsMin": 2,
+      "itemsMax": 5,
+      "itemMaxWords": 25,
+      "closingMaxWords": 30
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Bulleted list with border"
+  },
+  "section-divider": {
+    "id": "section-divider",
+    "name": "SectionDivider",
+    "purpose": "Named visual break between parts within a section",
+    "cognitive_job": "Signal a phase change",
+    "section_field": "divider",
+    "group": 1,
+    "status": "stable",
+    "capacity": {
+      "labelMaxWords": 4
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Horizontal rule with label"
+  },
   "definition-card": {
     "id": "definition-card",
     "name": "DefinitionCard",
@@ -194,6 +246,23 @@
       "static"
     ],
     "print_fallback": "Static table"
+  },
+  "key-fact": {
+    "id": "key-fact",
+    "name": "KeyFact",
+    "purpose": "Visually prominent stat, formula, or date that anchors the section",
+    "cognitive_job": "Anchor a critical fact",
+    "section_field": "key_fact",
+    "group": 2,
+    "status": "stable",
+    "capacity": {
+      "factMaxWords": 20,
+      "contextMaxWords": 30
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Bold bordered fact box"
   },
   "comparison-grid": {
     "id": "comparison-grid",
@@ -314,6 +383,60 @@
       "static"
     ],
     "print_fallback": "Prompt with write-in lines"
+  },
+  "student-textbox": {
+    "id": "student-textbox",
+    "name": "StudentTextbox",
+    "purpose": "Simple write-in box for student responses — no framing beyond a prompt",
+    "cognitive_job": "Record thinking",
+    "section_field": "student_textbox",
+    "group": 4,
+    "status": "stable",
+    "capacity": {
+      "promptMaxWords": 40,
+      "linesMax": 10
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Lined write-in area"
+  },
+  "short-answer": {
+    "id": "short-answer",
+    "name": "ShortAnswerQuestion",
+    "purpose": "Open question with write-in space and optional mark scheme",
+    "cognitive_job": "Recall and explain in own words",
+    "section_field": "short_answer",
+    "group": 4,
+    "status": "stable",
+    "capacity": {
+      "questionMaxWords": 60,
+      "linesMax": 10,
+      "marksMax": 10
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Question with lined answer space, mark allocation shown"
+  },
+  "fill-in-blank": {
+    "id": "fill-in-blank",
+    "name": "FillInTheBlank",
+    "purpose": "Cloze passage with student-completed blanks — tests recall not recognition",
+    "cognitive_job": "Retrieve and complete",
+    "section_field": "fill_in_blank",
+    "group": 4,
+    "status": "stable",
+    "capacity": {
+      "segmentsMax": 60,
+      "blanksMax": 10,
+      "wordBankMax": 15
+    },
+    "behaviour_modes": [
+      "static",
+      "hint-toggle"
+    ],
+    "print_fallback": "Passage with underlined blanks, word bank box below"
   },
   "pitfall-alert": {
     "id": "pitfall-alert",

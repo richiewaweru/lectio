@@ -22,23 +22,37 @@ export const guidedDiscoveryContract: TemplateContract = {
 	learnerFit: ['general', 'scaffolded', 'analytical'],
 	subjects: ['mathematics', 'physics', 'biology', 'chemistry'],
 	interactionLevel: 'high',
-	lessonFlow: ['Hook', 'Explain', 'Define', 'Simulate', 'Example', 'Practice', 'Reflect', 'What next'],
-	requiredComponents: [
-		'section-header',
-		'hook-hero',
-		'explanation-block',
+	always_present: ['section-header', 'hook-hero', 'explanation-block', 'what-next-bridge'],
+	available_components: [
 		'simulation-block',
-		'practice-stack',
-		'what-next-bridge'
-	],
-	optionalComponents: [
 		'definition-card',
 		'worked-example-card',
+		'practice-stack',
 		'pitfall-alert',
 		'glossary-rail',
 		'diagram-block',
-		'reflection-prompt'
+		'reflection-prompt',
+		'callout-block',
+		'student-textbox',
+		'summary-block',
+		'short-answer',
+		'section-divider'
 	],
+	component_budget: { 'simulation-block': 1 },
+	max_per_section: { 'diagram-block': 1, 'worked-example-card': 1, 'practice-stack': 1, 'reflection-prompt': 1 },
+	signal_affinity: {
+		topic_type: { concept: 0.7, process: 0.5, facts: 0.4, mixed: 0.7 },
+		learning_outcome: { 'understand-why': 0.9, 'be-able-to-do': 0.7, 'remember-terms': 0.4, 'apply-to-new': 0.8 },
+		class_style: { 'needs-explanation-first': 0.8, 'responds-to-worked-examples': 0.6, 'engages-with-visuals': 0.7, 'restless-without-activity': 0.7, 'tries-before-told': 0.6 },
+		format: { 'printed-booklet': 0.3, 'screen-based': 1.0, both: 0.5 }
+	},
+	section_role_defaults: {
+		intro: ['hook-hero', 'callout-block'],
+		explain: ['explanation-block', 'definition-card'],
+		discover: ['simulation-block', 'callout-block'],
+		practice: ['practice-stack', 'student-textbox'],
+		summary: ['summary-block', 'reflection-prompt', 'what-next-bridge']
+	},
 	defaultBehaviours: {
 		'practice-stack': 'progressive-hints',
 		'glossary-rail': 'sticky',

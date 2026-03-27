@@ -131,6 +131,51 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		status: 'stable'
 	},
 
+	CalloutBlock: {
+		id: 'callout-block',
+		sectionField: 'callout',
+		name: 'CalloutBlock',
+		group: 1,
+		purpose: 'Standalone highlighted callout — tip, warning, info, or exam note',
+		cognitiveJob: 'Flag what matters',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Alert',
+		capacity: { bodyMaxWords: 60, headingMaxWords: 6 },
+		printFallback: 'Bordered callout box',
+		status: 'stable'
+	},
+
+	SummaryBlock: {
+		id: 'summary-block',
+		sectionField: 'summary',
+		name: 'SummaryBlock',
+		group: 1,
+		purpose: 'Lists what this section covered — key takeaways as bullets',
+		cognitiveJob: 'Consolidate and close',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Card',
+		capacity: { itemsMin: 2, itemsMax: 5, itemMaxWords: 25, closingMaxWords: 30 },
+		printFallback: 'Bulleted list with border',
+		status: 'stable'
+	},
+
+	SectionDivider: {
+		id: 'section-divider',
+		sectionField: 'divider',
+		name: 'SectionDivider',
+		group: 1,
+		purpose: 'Named visual break between parts within a section',
+		cognitiveJob: 'Signal a phase change',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Separator',
+		capacity: { labelMaxWords: 4 },
+		printFallback: 'Horizontal rule with label',
+		status: 'stable'
+	},
+
 	// GROUP 2 - DEFINITION AND KNOWLEDGE
 
 	DefinitionCard: {
@@ -205,6 +250,21 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'CSS Grid',
 		capacity: { cellsMax: 3, cellsMin: 2, cellLinesMax: 2 },
 		printFallback: 'Static table',
+		status: 'stable'
+	},
+
+	KeyFact: {
+		id: 'key-fact',
+		sectionField: 'key_fact',
+		name: 'KeyFact',
+		group: 2,
+		purpose: 'Visually prominent stat, formula, or date that anchors the section',
+		cognitiveJob: 'Anchor a critical fact',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Card',
+		capacity: { factMaxWords: 20, contextMaxWords: 30 },
+		printFallback: 'Bold bordered fact box',
 		status: 'stable'
 	},
 
@@ -305,6 +365,51 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card',
 		capacity: { promptMaxWords: 40, spaceMax: 6 },
 		printFallback: 'Prompt with write-in lines',
+		status: 'stable'
+	},
+
+	StudentTextbox: {
+		id: 'student-textbox',
+		sectionField: 'student_textbox',
+		name: 'StudentTextbox',
+		group: 4,
+		purpose: 'Simple write-in box for student responses — no framing beyond a prompt',
+		cognitiveJob: 'Record thinking',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Textarea (print: lined box)',
+		capacity: { promptMaxWords: 40, linesMax: 10 },
+		printFallback: 'Lined write-in area',
+		status: 'stable'
+	},
+
+	ShortAnswerQuestion: {
+		id: 'short-answer',
+		sectionField: 'short_answer',
+		name: 'ShortAnswerQuestion',
+		group: 4,
+		purpose: 'Open question with write-in space and optional mark scheme',
+		cognitiveJob: 'Recall and explain in own words',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Card + Collapsible (mark scheme)',
+		capacity: { questionMaxWords: 60, linesMax: 10, marksMax: 10 },
+		printFallback: 'Question with lined answer space, mark allocation shown',
+		status: 'stable'
+	},
+
+	FillInTheBlank: {
+		id: 'fill-in-blank',
+		sectionField: 'fill_in_blank',
+		name: 'FillInTheBlank',
+		group: 4,
+		purpose: 'Cloze passage with student-completed blanks — tests recall not recognition',
+		cognitiveJob: 'Retrieve and complete',
+		subjects: ['universal'],
+		behaviourModes: ['static', 'hint-toggle'],
+		shadcnPrimitive: 'Input inline',
+		capacity: { segmentsMax: 60, blanksMax: 10, wordBankMax: 15 },
+		printFallback: 'Passage with underlined blanks, word bank box below',
 		status: 'stable'
 	},
 

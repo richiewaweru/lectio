@@ -25,18 +25,19 @@ import { basePresets } from '../src/lib/presets/base-presets';
 
 // Import contracts directly from config files to avoid pulling in
 // .svelte layout files through template-registry.ts.
+import { classificationContract } from '../src/lib/templates/classification/config';
 import { compareAndApplyContract } from '../src/lib/templates/compare-and-apply/config';
-import { diagramLedLessonContract } from '../src/lib/templates/diagram-led-lesson/config';
-import { distinctionGridContract } from '../src/lib/templates/distinction-grid/config';
-import { figureFirstContract } from '../src/lib/templates/figure-first/config';
-import { focusFlowContract } from '../src/lib/templates/focus-flow/config';
+import { conceptCompactContract } from '../src/lib/templates/concept-compact/config';
+import { diagramLedContract } from '../src/lib/templates/diagram-led/config';
 import { formalTrackContract } from '../src/lib/templates/formal-track/config';
-import { guidedConceptCompactContract } from '../src/lib/templates/guided-concept-compact/config';
 import { guidedConceptPathContract } from '../src/lib/templates/guided-concept-path/config';
 import { guidedDiscoveryContract } from '../src/lib/templates/guided-discovery/config';
 import { interactiveLabContract } from '../src/lib/templates/interactive-lab/config';
-import { processTrainerContract } from '../src/lib/templates/process-trainer/config';
-import { timelineNarrativeContract } from '../src/lib/templates/timeline-narrative/config';
+import { lowLoadContract } from '../src/lib/templates/low-load/config';
+import { openCanvasContract } from '../src/lib/templates/open-canvas/config';
+import { procedureContract } from '../src/lib/templates/procedure/config';
+import { timelineContract } from '../src/lib/templates/timeline/config';
+import { visualLedContract } from '../src/lib/templates/visual-led/config';
 
 const outArgIndex = process.argv.indexOf('--out');
 const outFromArg  = outArgIndex !== -1 ? process.argv[outArgIndex + 1] : null;
@@ -49,18 +50,19 @@ mkdirSync(OUT, { recursive: true });
 // component, not the preset UI definitions, not the preview section.
 
 const contracts = [
+	classificationContract,
 	compareAndApplyContract,
-	diagramLedLessonContract,
-	distinctionGridContract,
-	figureFirstContract,
-	focusFlowContract,
+	conceptCompactContract,
+	diagramLedContract,
 	formalTrackContract,
-	guidedConceptCompactContract,
 	guidedConceptPathContract,
 	guidedDiscoveryContract,
 	interactiveLabContract,
-	processTrainerContract,
-	timelineNarrativeContract,
+	lowLoadContract,
+	openCanvasContract,
+	procedureContract,
+	timelineContract,
+	visualLedContract,
 ];
 
 for (const contract of contracts) {
@@ -70,23 +72,31 @@ for (const contract of contracts) {
 		family: contract.family,
 		intent: contract.intent,
 		tagline: contract.tagline,
-		lesson_flow: contract.lessonFlow,
-		required_components: contract.requiredComponents,
-		optional_components: contract.optionalComponents,
+		reading_style: contract.readingStyle,
+		tags: contract.tags,
+		best_for: contract.bestFor,
+		not_ideal_for: contract.notIdealFor,
+		learner_fit: contract.learnerFit,
+		subjects: contract.subjects,
+		interaction_level: contract.interactionLevel,
+		always_present: contract.always_present,
+		available_components: contract.available_components,
+		component_budget: contract.component_budget,
+		max_per_section: contract.max_per_section,
 		default_behaviours: contract.defaultBehaviours,
+		section_role_defaults: contract.section_role_defaults,
+		signal_affinity: contract.signal_affinity,
+		layout_notes: contract.layoutNotes,
+		print_rules: contract.printRules,
+		allowed_presets: contract.allowedPresets,
+		why_this_template_exists: contract.whyThisTemplateExists,
 		generation_guidance: {
 			tone: contract.generationGuidance.tone,
 			pacing: contract.generationGuidance.pacing,
 			chunking: contract.generationGuidance.chunking,
 			emphasis: contract.generationGuidance.emphasis,
 			avoid: contract.generationGuidance.avoid
-		},
-		best_for: contract.bestFor,
-		not_ideal_for: contract.notIdealFor,
-		learner_fit: contract.learnerFit,
-		subjects: contract.subjects,
-		interaction_level: contract.interactionLevel,
-		allowed_presets: contract.allowedPresets
+		}
 	};
 
 	writeFileSync(`${OUT}/${contract.id}.json`, JSON.stringify(summary, null, 2));

@@ -23,15 +23,23 @@ export const compareAndApplyContract: TemplateContract = {
 	learnerFit: ['analytical', 'general'],
 	subjects: ['chemistry', 'biology', 'civics', 'literature'],
 	interactionLevel: 'light',
-	lessonFlow: ['Hook', 'Frame', 'Compare', 'Apply', 'What next'],
-	requiredComponents: [
-		'section-header',
-		'hook-hero',
-		'comparison-grid',
-		'practice-stack',
-		'what-next-bridge'
-	],
-	optionalComponents: ['definition-card', 'definition-family', 'insight-strip', 'pitfall-alert'],
+	always_present: ['section-header', 'what-next-bridge'],
+	available_components: ['hook-hero', 'comparison-grid', 'explanation-block', 'definition-family', 'insight-strip', 'practice-stack', 'pitfall-alert', 'callout-block', 'student-textbox', 'summary-block', 'short-answer', 'fill-in-blank', 'section-divider'],
+	component_budget: { 'comparison-grid': 1 },
+	max_per_section: { 'practice-stack': 1, 'quiz-check': 1 },
+	signal_affinity: {
+		topic_type: { concept: 0.8, process: 0.3, facts: 0.7, mixed: 0.9 },
+		learning_outcome: { 'understand-why': 0.8, 'be-able-to-do': 0.5, 'remember-terms': 0.7, 'apply-to-new': 0.9 },
+		class_style: { 'needs-explanation-first': 0.7, 'responds-to-worked-examples': 0.6, 'engages-with-visuals': 0.5, 'restless-without-activity': 0.5, 'tries-before-told': 0.4 },
+		format: { 'printed-booklet': 0.7, 'screen-based': 0.7, both: 0.8 }
+	},
+	section_role_defaults: {
+		intro: ['hook-hero', 'callout-block'],
+		compare: ['comparison-grid', 'definition-family'],
+		explain: ['explanation-block', 'insight-strip'],
+		practice: ['practice-stack', 'short-answer'],
+		summary: ['summary-block', 'what-next-bridge']
+	},
 	defaultBehaviours: {
 		'practice-stack': 'accordion',
 		'definition-card': 'plain-formal-toggle'

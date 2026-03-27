@@ -10,8 +10,8 @@ export const compareAndApplyPreview: TemplatePreview = {
 			subject: 'Chemistry',
 			section_number: 'Section 06',
 			grade_band: 'secondary',
-			objective:
-				'Distinguish saturated and unsaturated hydrocarbons and apply the difference to reactivity.'
+			objectives:
+				['Distinguish saturated and unsaturated hydrocarbons and apply the difference to reactivity.']
 		},
 		hook: {
 			headline: 'Why do two hydrocarbon families act so differently in reactions?',

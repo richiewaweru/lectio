@@ -22,17 +22,38 @@ export const formalTrackContract: TemplateContract = {
 	learnerFit: ['advanced', 'analytical'],
 	subjects: ['mathematics', 'physics', 'economics'],
 	interactionLevel: 'none',
-	lessonFlow: ['Hook', 'Formal explanation', 'Definition', 'Worked case', 'Practice', 'What next'],
-	requiredComponents: [
+	always_present: [
 		'section-header',
-		'hook-hero',
 		'explanation-block',
-		'definition-card',
-		'practice-stack',
 		'what-next-bridge'
 	],
-	optionalComponents: ['worked-example-card', 'pitfall-alert'],
+	available_components: [
+		'hook-hero',
+		'definition-card',
+		'worked-example-card',
+		'practice-stack',
+		'pitfall-alert',
+		'key-fact',
+		'short-answer',
+		'fill-in-blank',
+		'callout-block',
+		'section-divider'
+	],
+	component_budget: {},
+	max_per_section: { 'worked-example-card': 1, 'practice-stack': 1, 'quiz-check': 1 },
 	defaultBehaviours: {},
+	signal_affinity: {
+		topic_type: { concept: 0.7, process: 0.6, facts: 0.8, mixed: 0.5 },
+		learning_outcome: { 'understand-why': 0.7, 'be-able-to-do': 0.6, 'remember-terms': 0.8, 'apply-to-new': 0.7 },
+		class_style: { 'needs-explanation-first': 1.0, 'responds-to-worked-examples': 0.8, 'engages-with-visuals': 0.2, 'restless-without-activity': 0.1, 'tries-before-told': 0.2 },
+		format: { 'printed-booklet': 0.9, 'screen-based': 0.6, both: 0.7 }
+	},
+	section_role_defaults: {
+		intro: ['hook-hero', 'definition-card'],
+		explain: ['explanation-block', 'key-fact', 'worked-example-card'],
+		practice: ['practice-stack', 'short-answer'],
+		summary: ['summary-block', 'what-next-bridge']
+	},
 	layoutNotes: [
 		'Keep the lesson in a print-first single column.',
 		'Prefer formal explanation and static worked examples over progressive disclosure.'

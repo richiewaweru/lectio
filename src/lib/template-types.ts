@@ -49,7 +49,19 @@ export interface TemplateGenerationGuidance {
   avoid: string[];
 }
 
+export type SectionRole =
+  | 'intro'
+  | 'explain'
+  | 'practice'
+  | 'summary'
+  | 'process'
+  | 'compare'
+  | 'timeline'
+  | 'visual'
+  | 'discover';
+
 export interface TemplateContract {
+  // ── Identity ──────────────────────────────────────────────────────────────
   id: string;
   name: string;
   family: TemplateFamily;
@@ -57,18 +69,38 @@ export interface TemplateContract {
   tagline: string;
   readingStyle: ReadingStyle;
   tags: string[];
+
+  // ── Audience and fit ──────────────────────────────────────────────────────
   bestFor: string[];
   notIdealFor: string[];
   learnerFit: LearnerFit[];
   subjects: string[];
   interactionLevel: InteractionLevel;
-  lessonFlow: string[];
-  requiredComponents: string[];
-  optionalComponents: string[];
+
+  // ── Component contract ─────────────────────────────────────────────────────
+  always_present: string[];
+  available_components: string[];
+  component_budget: Partial<Record<string, number>>;
+  max_per_section: Partial<Record<string, number>>;
   defaultBehaviours: Partial<Record<string, BehaviourMode>>;
+
+  // ── Section role defaults ──────────────────────────────────────────────────
+  section_role_defaults: Partial<Record<SectionRole, string[]>>;
+
+  // ── Signal affinity ────────────────────────────────────────────────────────
+  signal_affinity: {
+    topic_type: Partial<Record<'concept' | 'process' | 'facts' | 'mixed', number>>;
+    learning_outcome: Partial<Record<'understand-why' | 'be-able-to-do' | 'remember-terms' | 'apply-to-new', number>>;
+    class_style: Partial<Record<'tries-before-told' | 'needs-explanation-first' | 'engages-with-visuals' | 'responds-to-worked-examples' | 'restless-without-activity', number>>;
+    format: Partial<Record<'printed-booklet' | 'screen-based' | 'both', number>>;
+  };
+
+  // ── Layout and print ───────────────────────────────────────────────────────
   layoutNotes: string[];
   responsiveRules: string[];
   printRules: string[];
+
+  // ── Meta ────────────────────────────────────────────────────────────────────
   allowedPresets: string[];
   whyThisTemplateExists: string;
   generationGuidance: TemplateGenerationGuidance;
