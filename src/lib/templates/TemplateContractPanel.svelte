@@ -39,25 +39,18 @@
 	</div>
 
 	<div>
-		<p class="text-sm font-semibold text-primary">Lesson flow</p>
-		<p class="mt-2 text-sm leading-6 text-muted-foreground">
-			{contract.lessonFlow.join(' -> ')}
-		</p>
-	</div>
-
-	<div>
-		<p class="text-sm font-semibold text-primary">Required components</p>
+		<p class="text-sm font-semibold text-primary">Always present</p>
 		<div class="mt-2 flex flex-wrap gap-2">
-			{#each contract.requiredComponents as component}
+			{#each contract.always_present as component}
 				<Badge variant="outline">{component}</Badge>
 			{/each}
 		</div>
 	</div>
 
 	<div>
-		<p class="text-sm font-semibold text-primary">Optional components</p>
+		<p class="text-sm font-semibold text-primary">Available components</p>
 		<div class="mt-2 flex flex-wrap gap-2">
-			{#each contract.optionalComponents as component}
+			{#each contract.available_components as component}
 				<Badge variant="outline">{component}</Badge>
 			{/each}
 		</div>

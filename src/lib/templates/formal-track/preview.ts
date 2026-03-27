@@ -10,7 +10,7 @@ export const formalTrackPreview: TemplatePreview = {
 			subject: 'Mathematics',
 			section_number: 'Section 08',
 			grade_band: 'advanced',
-			objective: 'Interpret and apply the formal limit definition of the derivative.'
+			objectives: ['Interpret and apply the formal limit definition of the derivative.']
 		},
 		hook: {
 			headline: 'How do we define local slope without hand-waving?',

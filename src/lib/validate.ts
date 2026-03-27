@@ -129,8 +129,14 @@ export function validateSection(section: SectionContent): string[] {
 	// Header
 	if (words(section.header.title) > 12)
 		w.push(warn('SectionHeader', 'title exceeds 12 words'));
-	if (section.header.objective && words(section.header.objective) > 30)
-		w.push(warn('SectionHeader', 'objective exceeds 30 words'));
+	if (section.header.objectives) {
+		for (const obj of section.header.objectives) {
+			if (words(obj) > 30) {
+				w.push(warn('SectionHeader', 'an objective exceeds 30 words'));
+				break;
+			}
+		}
+	}
 
 	// Hook
 	if (words(section.hook.headline) > 12)

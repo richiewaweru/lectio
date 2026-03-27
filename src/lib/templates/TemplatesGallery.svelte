@@ -234,9 +234,11 @@
 								{/each}
 							</div>
 
-							<p class="text-sm leading-6 text-muted-foreground">
-								Flow: {template.lessonFlow.join(' -> ')}
-							</p>
+							<div class="flex flex-wrap gap-1">
+								{#each template.always_present as component}
+									<span class="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">{component}</span>
+								{/each}
+							</div>
 
 							<a
 								href={`/templates/${template.id}`}

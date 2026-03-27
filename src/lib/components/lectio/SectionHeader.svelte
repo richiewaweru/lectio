@@ -40,13 +40,17 @@
 			{/if}
 		</div>
 
-		{#if content.objective}
-			<p class="max-w-2xl text-base leading-7 text-primary-foreground/86">
-				<span class="font-semibold uppercase tracking-[0.18em] text-primary-foreground/65">
-					Objective
+		{#if content.objectives?.length}
+			<div class="max-w-2xl space-y-1">
+				<span class="text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground/65">
+					Objectives
 				</span>
-				{content.objective}
-			</p>
+				<ul class="list-disc list-inside space-y-0.5 text-base leading-7 text-primary-foreground/86">
+					{#each content.objectives as obj}
+						<li>{obj}</li>
+					{/each}
+				</ul>
+			</div>
 		{/if}
 
 		{#if content.level_pills?.length}
