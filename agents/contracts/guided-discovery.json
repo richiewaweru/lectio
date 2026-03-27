@@ -4,6 +4,34 @@
   "family": "guided-concept",
   "intent": "introduce-concept",
   "tagline": "Read the concept, then test it hands-on before practising.",
+  "reading_style": "linear-guided",
+  "tags": [
+    "Scaffolded",
+    "Simulation-supported",
+    "Glossary sidebar",
+    "Screen-first"
+  ],
+  "best_for": [
+    "concepts that need context before interaction makes sense",
+    "lessons where learners benefit from explanation then verification",
+    "STEM and life-science topics with quantitative relationships"
+  ],
+  "not_ideal_for": [
+    "topics best learned through pure exploration without guidance",
+    "highly visual subjects where the figure should lead entirely"
+  ],
+  "learner_fit": [
+    "general",
+    "scaffolded",
+    "analytical"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "biology",
+    "chemistry"
+  ],
+  "interaction_level": "high",
   "lesson_flow": [
     "Hook",
     "Explain",
@@ -30,12 +58,119 @@
     "diagram-block",
     "reflection-prompt"
   ],
+  "always_present": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "simulation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "available_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "simulation-block",
+    "practice-stack",
+    "what-next-bridge",
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert",
+    "glossary-rail",
+    "diagram-block",
+    "reflection-prompt"
+  ],
+  "component_budget": {
+    "simulation-block": 1,
+    "practice-stack": 1,
+    "worked-example-card": 1,
+    "diagram-block": 1,
+    "reflection-prompt": 1
+  },
+  "max_per_section": {
+    "simulation-block": 1,
+    "practice-stack": 1,
+    "worked-example-card": 1,
+    "diagram-block": 1,
+    "reflection-prompt": 1
+  },
   "default_behaviours": {
     "practice-stack": "progressive-hints",
     "glossary-rail": "sticky",
     "worked-example-card": "step-reveal",
     "diagram-block": "zoom"
   },
+  "section_role_defaults": {
+    "intro": [
+      "hook-hero"
+    ],
+    "discover": [
+      "simulation-block",
+      "diagram-block",
+      "explanation-block"
+    ],
+    "explain": [
+      "explanation-block",
+      "definition-card",
+      "glossary-rail",
+      "worked-example-card"
+    ],
+    "practice": [
+      "practice-stack",
+      "reflection-prompt"
+    ],
+    "summary": [
+      "what-next-bridge",
+      "reflection-prompt"
+    ]
+  },
+  "signal_affinity": {
+    "topic_type": {
+      "concept": 0.9,
+      "process": 0.45,
+      "facts": 0.6,
+      "mixed": 0.72
+    },
+    "learning_outcome": {
+      "understand-why": 0.9,
+      "be-able-to-do": 0.6,
+      "remember-terms": 0.6,
+      "apply-to-new": 0.65
+    },
+    "class_style": {
+      "tries-before-told": 0.92,
+      "needs-explanation-first": 0.48,
+      "engages-with-visuals": 0.94,
+      "responds-to-worked-examples": 0.88,
+      "restless-without-activity": 0.82
+    },
+    "format": {
+      "printed-booklet": 0.84,
+      "screen-based": 0.86,
+      "both": 0.82
+    }
+  },
+  "layout_notes": [
+    "Two-column layout: main content with glossary sidebar on desktop.",
+    "Simulation appears after explanation — learners verify what they just read.",
+    "Reflection prompt closes the loop before the what-next bridge."
+  ],
+  "responsive_rules": [
+    "Collapse glossary sidebar into inline vocabulary below tablet.",
+    "Simulation stays full width of the main column at all breakpoints."
+  ],
+  "print_rules": [
+    "Replace simulation with its fallback diagram.",
+    "Flatten glossary rail into inline notes at section end.",
+    "Expand step-reveal worked examples for print."
+  ],
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "calm-green",
+    "minimal-light"
+  ],
+  "why_this_template_exists": "Not every concept is best learned by jumping in blind. This template gives learners enough context to interact meaningfully, then uses the simulation to confirm and deepen understanding.",
   "generation_guidance": {
     "tone": "clear and teacherly — build understanding before interaction",
     "pacing": "steady, explanation-first",
@@ -45,32 +180,5 @@
       "skipping explanation before simulation",
       "overwhelming the interactive with too much context"
     ]
-  },
-  "best_for": [
-    "concepts that need context before interaction makes sense",
-    "lessons where learners benefit from explanation then verification",
-    "STEM and life-science topics with quantitative relationships"
-  ],
-  "not_ideal_for": [
-    "topics best learned through pure exploration without guidance",
-    "highly visual subjects where the figure should lead entirely"
-  ],
-  "learner_fit": [
-    "general",
-    "scaffolded",
-    "analytical"
-  ],
-  "subjects": [
-    "mathematics",
-    "physics",
-    "biology",
-    "chemistry"
-  ],
-  "interaction_level": "high",
-  "allowed_presets": [
-    "blue-classroom",
-    "warm-paper",
-    "calm-green",
-    "minimal-light"
-  ]
+  }
 }

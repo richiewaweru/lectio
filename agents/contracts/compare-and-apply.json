@@ -4,40 +4,13 @@
   "family": "compare-distinguish",
   "intent": "compare-ideas",
   "tagline": "Teach the distinction by holding two ideas in view at the same time and then applying it.",
-  "lesson_flow": [
-    "Hook",
-    "Frame",
-    "Compare",
-    "Apply",
-    "What next"
+  "reading_style": "side-by-side",
+  "tags": [
+    "Comparison",
+    "Analytical",
+    "Two-column thinking",
+    "Apply after contrast"
   ],
-  "required_components": [
-    "section-header",
-    "hook-hero",
-    "comparison-grid",
-    "practice-stack",
-    "what-next-bridge"
-  ],
-  "optional_components": [
-    "definition-card",
-    "definition-family",
-    "insight-strip",
-    "pitfall-alert"
-  ],
-  "default_behaviours": {
-    "practice-stack": "accordion",
-    "definition-card": "plain-formal-toggle"
-  },
-  "generation_guidance": {
-    "tone": "precise and analytical",
-    "pacing": "compare early, apply immediately after",
-    "chunking": "tight",
-    "emphasis": "surface the decision points between the ideas",
-    "avoid": [
-      "burying the contrast in prose",
-      "practice that does not depend on the distinction"
-    ]
-  },
   "best_for": [
     "chemistry contrasts, biology comparisons, and civics distinctions",
     "analytical learners who benefit from explicit criteria",
@@ -58,9 +31,128 @@
     "literature"
   ],
   "interaction_level": "light",
+  "lesson_flow": [
+    "Hook",
+    "Frame",
+    "Compare",
+    "Apply",
+    "What next"
+  ],
+  "required_components": [
+    "section-header",
+    "hook-hero",
+    "comparison-grid",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "optional_components": [
+    "definition-card",
+    "definition-family",
+    "insight-strip",
+    "pitfall-alert"
+  ],
+  "always_present": [
+    "section-header",
+    "hook-hero",
+    "comparison-grid",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "available_components": [
+    "section-header",
+    "hook-hero",
+    "comparison-grid",
+    "practice-stack",
+    "what-next-bridge",
+    "definition-card",
+    "definition-family",
+    "insight-strip",
+    "pitfall-alert"
+  ],
+  "component_budget": {
+    "comparison-grid": 1,
+    "practice-stack": 1
+  },
+  "max_per_section": {
+    "comparison-grid": 1,
+    "practice-stack": 1
+  },
+  "default_behaviours": {
+    "practice-stack": "accordion",
+    "definition-card": "plain-formal-toggle"
+  },
+  "section_role_defaults": {
+    "intro": [
+      "hook-hero"
+    ],
+    "compare": [
+      "comparison-grid",
+      "definition-family",
+      "insight-strip"
+    ],
+    "explain": [
+      "definition-card",
+      "definition-family"
+    ],
+    "practice": [
+      "practice-stack"
+    ],
+    "summary": [
+      "what-next-bridge"
+    ]
+  },
+  "signal_affinity": {
+    "topic_type": {
+      "concept": 0.75,
+      "process": 0.25,
+      "facts": 0.9,
+      "mixed": 0.82
+    },
+    "learning_outcome": {
+      "understand-why": 0.62,
+      "be-able-to-do": 0.42,
+      "remember-terms": 0.98,
+      "apply-to-new": 0.82
+    },
+    "class_style": {
+      "tries-before-told": 0.34,
+      "needs-explanation-first": 0.62,
+      "engages-with-visuals": 0.46,
+      "responds-to-worked-examples": 0.52,
+      "restless-without-activity": 0.44
+    },
+    "format": {
+      "printed-booklet": 0.84,
+      "screen-based": 0.62,
+      "both": 0.72
+    }
+  },
+  "layout_notes": [
+    "The comparison grid is the center of gravity.",
+    "Short framing content should clarify the contrast before practice asks the learner to choose."
+  ],
+  "responsive_rules": [
+    "The grid can scroll horizontally on smaller screens but should stay readable.",
+    "Practice stays beneath the comparison rather than splitting into a sidebar."
+  ],
+  "print_rules": [
+    "Render the comparison as a static table in print.",
+    "Keep the apply practice directly after the contrast."
+  ],
   "allowed_presets": [
     "blue-classroom",
     "warm-paper",
     "high-contrast-focus"
-  ]
+  ],
+  "why_this_template_exists": "Some concepts only become clear when the learner can compare them criterion by criterion. This template makes that contrast structural.",
+  "generation_guidance": {
+    "tone": "precise and analytical",
+    "pacing": "compare early, apply immediately after",
+    "chunking": "tight",
+    "emphasis": "surface the decision points between the ideas",
+    "avoid": [
+      "burying the contrast in prose",
+      "practice that does not depend on the distinction"
+    ]
+  }
 }

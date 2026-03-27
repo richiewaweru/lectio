@@ -4,6 +4,32 @@
   "family": "guided-concept",
   "intent": "build-rigor",
   "tagline": "Move quickly into formal definitions and rigorous reasoning with minimal hand-holding.",
+  "reading_style": "formal-rigorous",
+  "tags": [
+    "Print-first",
+    "Formal",
+    "Advanced",
+    "Low ornament"
+  ],
+  "best_for": [
+    "advanced learners",
+    "proof-adjacent or definition-heavy lessons",
+    "print-first or exam-prep contexts"
+  ],
+  "not_ideal_for": [
+    "first exposure with fragile conceptual footing",
+    "learners who need heavy visual or vocabulary scaffolding"
+  ],
+  "learner_fit": [
+    "advanced",
+    "analytical"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "economics"
+  ],
+  "interaction_level": "none",
   "lesson_flow": [
     "Hook",
     "Formal explanation",
@@ -24,7 +50,92 @@
     "worked-example-card",
     "pitfall-alert"
   ],
+  "always_present": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "definition-card",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "available_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "definition-card",
+    "practice-stack",
+    "what-next-bridge",
+    "worked-example-card",
+    "pitfall-alert"
+  ],
+  "component_budget": {
+    "practice-stack": 1,
+    "worked-example-card": 1
+  },
+  "max_per_section": {
+    "practice-stack": 1,
+    "worked-example-card": 1
+  },
   "default_behaviours": {},
+  "section_role_defaults": {
+    "intro": [
+      "hook-hero"
+    ],
+    "explain": [
+      "explanation-block",
+      "definition-card",
+      "worked-example-card"
+    ],
+    "practice": [
+      "practice-stack"
+    ],
+    "summary": [
+      "what-next-bridge"
+    ]
+  },
+  "signal_affinity": {
+    "topic_type": {
+      "concept": 0.76,
+      "process": 0.56,
+      "facts": 0.72,
+      "mixed": 0.64
+    },
+    "learning_outcome": {
+      "understand-why": 0.78,
+      "be-able-to-do": 0.62,
+      "remember-terms": 0.74,
+      "apply-to-new": 0.7
+    },
+    "class_style": {
+      "tries-before-told": 0.34,
+      "needs-explanation-first": 0.88,
+      "engages-with-visuals": 0.46,
+      "responds-to-worked-examples": 0.88,
+      "restless-without-activity": 0.44
+    },
+    "format": {
+      "printed-booklet": 0.84,
+      "screen-based": 0.62,
+      "both": 0.72
+    }
+  },
+  "layout_notes": [
+    "Keep the lesson in a print-first single column.",
+    "Prefer formal explanation and static worked examples over progressive disclosure."
+  ],
+  "responsive_rules": [
+    "No sidebar or split layouts.",
+    "Preserve the same ordering and density across breakpoints."
+  ],
+  "print_rules": [
+    "Render as a clean static worksheet-like page.",
+    "Avoid introducing any interaction-dependent supports."
+  ],
+  "allowed_presets": [
+    "warm-paper",
+    "minimal-light"
+  ],
+  "why_this_template_exists": "Some classes want the rigorous version immediately. Formal Track provides a direct path without decorative scaffolding.",
   "generation_guidance": {
     "tone": "formal and precise",
     "pacing": "brisk",
@@ -35,28 +146,5 @@
       "excess side support",
       "visual ornament"
     ]
-  },
-  "best_for": [
-    "advanced learners",
-    "proof-adjacent or definition-heavy lessons",
-    "print-first or exam-prep contexts"
-  ],
-  "not_ideal_for": [
-    "first exposure with fragile conceptual footing",
-    "learners who need heavy visual or vocabulary scaffolding"
-  ],
-  "learner_fit": [
-    "advanced",
-    "analytical"
-  ],
-  "subjects": [
-    "mathematics",
-    "physics",
-    "economics"
-  ],
-  "interaction_level": "none",
-  "allowed_presets": [
-    "warm-paper",
-    "minimal-light"
-  ]
+  }
 }

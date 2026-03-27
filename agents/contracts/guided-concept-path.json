@@ -4,6 +4,33 @@
   "family": "guided-concept",
   "intent": "introduce-concept",
   "tagline": "Lead with felt need, then move steadily toward formal understanding and practice.",
+  "reading_style": "linear-guided",
+  "tags": [
+    "Universal",
+    "Sidebar glossary",
+    "Step reveal",
+    "Screen-first"
+  ],
+  "best_for": [
+    "first exposure to a concept",
+    "math, science, economics, and grammar lessons",
+    "teacher-led or student-led structured reading"
+  ],
+  "not_ideal_for": [
+    "highly visual topics that need the figure to lead",
+    "comparison-heavy lessons with multiple equal concepts"
+  ],
+  "learner_fit": [
+    "general",
+    "scaffolded"
+  ],
+  "subjects": [
+    "mathematics",
+    "science",
+    "economics",
+    "english"
+  ],
+  "interaction_level": "medium",
   "lesson_flow": [
     "Hook",
     "Explain",
@@ -26,12 +53,104 @@
     "glossary-rail",
     "diagram-block"
   ],
+  "always_present": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge"
+  ],
+  "available_components": [
+    "section-header",
+    "hook-hero",
+    "explanation-block",
+    "practice-stack",
+    "what-next-bridge",
+    "definition-card",
+    "worked-example-card",
+    "pitfall-alert",
+    "glossary-rail",
+    "diagram-block"
+  ],
+  "component_budget": {
+    "practice-stack": 1,
+    "worked-example-card": 1,
+    "diagram-block": 1
+  },
+  "max_per_section": {
+    "practice-stack": 1,
+    "worked-example-card": 1,
+    "diagram-block": 1
+  },
   "default_behaviours": {
     "worked-example-card": "step-reveal",
     "practice-stack": "accordion",
     "glossary-rail": "sticky",
     "diagram-block": "zoom"
   },
+  "section_role_defaults": {
+    "intro": [
+      "hook-hero"
+    ],
+    "explain": [
+      "explanation-block",
+      "definition-card",
+      "glossary-rail",
+      "worked-example-card"
+    ],
+    "practice": [
+      "practice-stack"
+    ],
+    "summary": [
+      "what-next-bridge"
+    ]
+  },
+  "signal_affinity": {
+    "topic_type": {
+      "concept": 0.9,
+      "process": 0.45,
+      "facts": 0.6,
+      "mixed": 0.72
+    },
+    "learning_outcome": {
+      "understand-why": 0.9,
+      "be-able-to-do": 0.5,
+      "remember-terms": 0.6,
+      "apply-to-new": 0.65
+    },
+    "class_style": {
+      "tries-before-told": 0.34,
+      "needs-explanation-first": 0.88,
+      "engages-with-visuals": 0.94,
+      "responds-to-worked-examples": 0.88,
+      "restless-without-activity": 0.64
+    },
+    "format": {
+      "printed-booklet": 0.84,
+      "screen-based": 0.86,
+      "both": 0.82
+    }
+  },
+  "layout_notes": [
+    "Main reading column leads the page.",
+    "Glossary can live in a sticky right rail on desktop.",
+    "Examples and practice arrive after the core explanation."
+  ],
+  "responsive_rules": [
+    "Collapse to a single reading column below desktop.",
+    "Move glossary support into inline vocabulary support on smaller screens."
+  ],
+  "print_rules": [
+    "Expand step-based content for print.",
+    "Flatten the glossary rail into inline vocabulary notes at the end of the section."
+  ],
+  "allowed_presets": [
+    "blue-classroom",
+    "warm-paper",
+    "calm-green",
+    "high-contrast-focus"
+  ],
+  "why_this_template_exists": "This is the stable baseline Lectio lesson: predictable enough for first exposure, flexible enough to fit most classroom subjects.",
   "generation_guidance": {
     "tone": "clear and teacherly",
     "pacing": "steady",
@@ -41,31 +160,5 @@
       "long uninterrupted prose",
       "overloaded side content"
     ]
-  },
-  "best_for": [
-    "first exposure to a concept",
-    "math, science, economics, and grammar lessons",
-    "teacher-led or student-led structured reading"
-  ],
-  "not_ideal_for": [
-    "highly visual topics that need the figure to lead",
-    "comparison-heavy lessons with multiple equal concepts"
-  ],
-  "learner_fit": [
-    "general",
-    "scaffolded"
-  ],
-  "subjects": [
-    "mathematics",
-    "science",
-    "economics",
-    "english"
-  ],
-  "interaction_level": "medium",
-  "allowed_presets": [
-    "blue-classroom",
-    "warm-paper",
-    "calm-green",
-    "high-contrast-focus"
-  ]
+  }
 }
