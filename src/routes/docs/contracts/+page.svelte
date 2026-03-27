@@ -25,8 +25,8 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>{'{'}template-id{'}'}.json</code> (×12)</td>
-			<td>Template contract: flow, required/optional components, guidance, <code>allowed_presets</code></td>
+			<td><code>{'{'}template-id{'}'}.json</code> (×13)</td>
+			<td>Template contract: <code>always_present</code>, <code>available_components</code>, <code>component_budget</code>, <code>max_per_section</code>, <code>signal_affinity</code>, <code>section_role_defaults</code>, generation guidance, <code>allowed_presets</code></td>
 		</tr>
 		<tr>
 			<td><code>component-field-map.json</code></td>

@@ -13,8 +13,8 @@
 <ul>
 	<li>
 		<strong>Match template intent</strong> — Pick a template whose contract fits the instructional
-		flow (compare/contrast vs lab vs formal track). Required components in the contract are there for
-		a reason.
+		flow (compare/contrast vs lab vs formal track). Components listed in <code>always_present</code>
+		are there for a reason.
 	</li>
 	<li>
 		<strong>Respect capacities</strong> — Registry entries document min/max items, hint limits, and

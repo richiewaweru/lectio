@@ -79,14 +79,14 @@ After changing Lectio source, rebuild with `npm run package` for changes to appe
 
 Everything is exported from a single entry point: `import { ... } from 'lectio'`.
 
-### Components (23)
+### Components (30)
 
 | Group | Components |
 |-------|-----------|
-| Foundation | `SectionHeader`, `HookHero`, `ExplanationBlock`, `PrerequisiteStrip`, `WhatNextBridge`, `InterviewAnchor` |
-| Definition & Knowledge | `DefinitionCard`, `DefinitionFamily`, `GlossaryRail`, `GlossaryInline`, `InsightStrip`, `ComparisonGrid` |
+| Foundation | `SectionHeader`, `HookHero`, `ExplanationBlock`, `PrerequisiteStrip`, `WhatNextBridge`, `InterviewAnchor`, `CalloutBlock`, `SummaryBlock`, `SectionDivider` |
+| Definition & Knowledge | `DefinitionCard`, `DefinitionFamily`, `GlossaryRail`, `GlossaryInline`, `InsightStrip`, `KeyFact`, `ComparisonGrid` |
 | Examples & Process | `WorkedExampleCard`, `ProcessSteps` |
-| Assessment & Practice | `PracticeStack`, `QuizCheck`, `ReflectionPrompt` |
+| Assessment & Practice | `PracticeStack`, `QuizCheck`, `ReflectionPrompt`, `StudentTextbox`, `ShortAnswerQuestion`, `FillInTheBlank` |
 | Alerts | `PitfallAlert` |
 | Diagrams | `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `TimelineBlock` |
 | Simulation | `SimulationBlock` |
@@ -103,7 +103,7 @@ const allComponents = getStableComponents();
 const hook = getComponentById('hook-hero');
 ```
 
-### Templates (12)
+### Templates (13)
 
 ```ts
 import {
@@ -131,7 +131,7 @@ const section: SectionContent = /* your section */;
 />
 ```
 
-Available templates: `guided-concept-path`, `figure-first`, `compare-and-apply`, `focus-flow`, `guided-concept-compact`, `formal-track`, `diagram-led-lesson`, `distinction-grid`, `timeline-narrative`, `process-trainer`, `interactive-lab`, `guided-discovery`.
+Available templates: `guided-concept-path`, `visual-led`, `compare-and-apply`, `low-load`, `concept-compact`, `formal-track`, `diagram-led`, `classification`, `timeline`, `procedure`, `interactive-lab`, `guided-discovery`, `open-canvas`.
 
 For advanced or internal consumers, Lectio also exports the low-level runtime pieces:
 
@@ -180,7 +180,7 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts  # Via env var
 ```
 
 Output files:
-- `{template-id}.json` (x12) — template contract with lesson flow, required/optional components, generation guidance, and `allowed_presets`
+- `{template-id}.json` (x13) — template contract: `always_present`, `available_components`, `component_budget`, `max_per_section`, `signal_affinity`, `section_role_defaults`, generation guidance, and `allowed_presets`
 - `component-field-map.json` — maps component IDs to their `SectionContent` field names
 - `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, etc.)
 - `preset-registry.json` — visual preset palette, typography, density, and surface style
@@ -219,7 +219,7 @@ src/lib/
 ├── template-types.ts           # Template type interfaces
 ├── template-validation.ts      # Template contract validation
 ├── presets/base-presets.ts      # Colour preset definitions
-├── components/lectio/          # 23 educational components
+├── components/lectio/          # 30 educational components
 ├── components/ui/              # shadcn-svelte primitives (internal)
 └── templates/                  # Template layout files (internal)
 ```

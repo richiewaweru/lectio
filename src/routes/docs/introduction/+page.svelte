@@ -35,7 +35,7 @@
 		sample content.
 	</li>
 	<li>
-		<a href="/templates">Templates</a> — Twelve registry-backed lesson templates with previews and
+		<a href="/templates">Templates</a> — Thirteen registry-backed lesson templates with previews and
 		per-template detail pages.
 	</li>
 	<li>
