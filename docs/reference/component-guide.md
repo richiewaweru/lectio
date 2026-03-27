@@ -7,8 +7,8 @@ This guide documents the current public library surface after the packaging, run
 - Framework: SvelteKit + Svelte 5 runes + TypeScript + Tailwind CSS v4
 - Public package entrypoint: `src/lib/index.ts`
 - Public stylesheet entrypoint: `src/lib/theme.css` via `import 'lectio/theme.css'`
-- Public teaching component count: 23
-- Public template count: 12 registry-backed templates in `src/lib/template-registry.ts`
+- Public teaching component count: 30
+- Public template count: 13 registry-backed templates in `src/lib/template-registry.ts`
 - Public runtime surfaces:
   - `TemplatePreviewSurface`
   - `TemplateRuntimeSurface`
@@ -29,6 +29,9 @@ This guide documents the current public library surface after the packaging, run
 - `PrerequisiteStrip`
 - `WhatNextBridge`
 - `InterviewAnchor`
+- `CalloutBlock`
+- `SummaryBlock`
+- `SectionDivider`
 
 ### Definition and Knowledge
 
@@ -37,6 +40,7 @@ This guide documents the current public library surface after the packaging, run
 - `GlossaryRail`
 - `GlossaryInline`
 - `InsightStrip`
+- `KeyFact`
 - `ComparisonGrid`
 
 ### Examples and Process
@@ -49,6 +53,9 @@ This guide documents the current public library surface after the packaging, run
 - `PracticeStack`
 - `QuizCheck`
 - `ReflectionPrompt`
+- `StudentTextbox`
+- `ShortAnswerQuestion`
+- `FillInTheBlank`
 
 ### Alerts
 
@@ -77,20 +84,21 @@ The public template system is registry-driven.
 - Gallery shell: `src/lib/templates/TemplatesGallery.svelte`
 - Detail shell: `src/lib/templates/TemplateDetailView.svelte`
 
-The 12 shipped templates are:
+The 13 shipped templates are:
 
 - Guided Concept Path
-- Figure First
+- Visual Led
 - Compare and Apply
-- Focus Flow
-- Guided Concept Compact
+- Low Load
+- Concept Compact
 - Formal Track
-- Diagram-Led Lesson
-- Distinction Grid
-- Timeline Narrative
-- Process Trainer
+- Diagram Led
+- Classification
+- Timeline
+- Procedure
 - Interactive Lab
 - Guided Discovery
+- Open Canvas
 
 ## Rendering From A Consumer App
 
@@ -136,7 +144,7 @@ npm run export-contracts -- --out ../some-other-project/contracts
 
 The export now writes:
 
-- 12 `{template-id}.json` files
+- 13 `{template-id}.json` files
 - `component-field-map.json`
 - `component-registry.json`
 - `preset-registry.json`
@@ -157,6 +165,9 @@ If you want to reuse a component or template outside this repo, copy these piece
 
 ## Important Current Notes
 
-- `SimulationBlock` is part of the public library and now supports iframe-backed `html_content`, fallback diagrams, and an expanded modal view.
-- `TemplateDetailView` now renders previews through `TemplatePreviewSurface`, so the showcase uses the same public preview path as consumers.
+- **7 new stable components** shipped in the 2026-03-27 harmonisation: `CalloutBlock`, `SummaryBlock`, `SectionDivider`, `KeyFact`, `StudentTextbox`, `ShortAnswerQuestion`, `FillInTheBlank`. Each has a corresponding `SectionContent` field and registry entry.
+- **TemplateContract no longer uses** `lessonFlow`, `requiredComponents`, or `optionalComponents`. The current shape uses `always_present` (required), `available_components` (optional), `component_budget` (lesson-level caps), `max_per_section` (per-section caps), `signal_affinity`, and `section_role_defaults`.
+- **7 templates were renamed** for clarity: figure-first→visual-led, focus-flow→low-load, guided-concept-compact→concept-compact, diagram-led-lesson→diagram-led, distinction-grid→classification, process-trainer→procedure, timeline-narrative→timeline.
+- `SimulationBlock` is part of the public library and supports iframe-backed `html_content`, fallback diagrams, and an expanded modal view.
+- `TemplateDetailView` renders previews through `TemplatePreviewSurface`, so the showcase uses the same public preview path as consumers.
 - Legacy internal templates such as `GuidedConceptPath.svelte` and `EnrichedLearningPath.svelte` still exist for showcase and regression coverage, but the registry plus public surfaces are the source of truth for consumers.
