@@ -11,9 +11,14 @@
 // ─────────────────────────────────────────────────────
 
 import type { BehaviourMode, SectionContent } from './types';
+import { teacherFor } from './teacher-facing';
 
 export interface ComponentMeta {
 	id: string;
+	/** Short label for the builder palette */
+	teacherLabel: string;
+	/** One-sentence description for teachers */
+	teacherDescription: string;
 	name: string;
 	purpose: string;
 	cognitiveJob: string;
@@ -43,6 +48,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SectionHeader: {
 		id: 'section-header',
+		...teacherFor('section-header'),
 		sectionField: 'header',
 		name: 'SectionHeader',
 		group: 1,
@@ -58,6 +64,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	HookHero: {
 		id: 'hook-hero',
+		...teacherFor('hook-hero'),
 		sectionField: 'hook',
 		name: 'HookHero',
 		group: 1,
@@ -73,6 +80,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ExplanationBlock: {
 		id: 'explanation-block',
+		...teacherFor('explanation-block'),
 		sectionField: 'explanation',
 		name: 'ExplanationBlock',
 		group: 1,
@@ -88,6 +96,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PrerequisiteStrip: {
 		id: 'prerequisite-strip',
+		...teacherFor('prerequisite-strip'),
 		sectionField: 'prerequisites',
 		name: 'PrerequisiteStrip',
 		group: 1,
@@ -103,6 +112,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	WhatNextBridge: {
 		id: 'what-next-bridge',
+		...teacherFor('what-next-bridge'),
 		sectionField: 'what_next',
 		name: 'WhatNextBridge',
 		group: 1,
@@ -118,6 +128,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	InterviewAnchor: {
 		id: 'interview-anchor',
+		...teacherFor('interview-anchor'),
 		sectionField: 'interview',
 		name: 'InterviewAnchor',
 		group: 1,
@@ -133,6 +144,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	CalloutBlock: {
 		id: 'callout-block',
+		...teacherFor('callout-block'),
 		sectionField: 'callout',
 		name: 'CalloutBlock',
 		group: 1,
@@ -148,6 +160,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SummaryBlock: {
 		id: 'summary-block',
+		...teacherFor('summary-block'),
 		sectionField: 'summary',
 		name: 'SummaryBlock',
 		group: 1,
@@ -163,6 +176,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SectionDivider: {
 		id: 'section-divider',
+		...teacherFor('section-divider'),
 		sectionField: 'divider',
 		name: 'SectionDivider',
 		group: 1,
@@ -180,6 +194,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DefinitionCard: {
 		id: 'definition-card',
+		...teacherFor('definition-card'),
 		sectionField: 'definition',
 		name: 'DefinitionCard',
 		group: 2,
@@ -195,6 +210,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DefinitionFamily: {
 		id: 'definition-family',
+		...teacherFor('definition-family'),
 		sectionField: 'definition_family',
 		name: 'DefinitionFamily',
 		group: 2,
@@ -210,6 +226,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	GlossaryRail: {
 		id: 'glossary-rail',
+		...teacherFor('glossary-rail'),
 		sectionField: 'glossary',
 		name: 'GlossaryRail',
 		group: 2,
@@ -225,6 +242,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	GlossaryInline: {
 		id: 'glossary-inline',
+		...teacherFor('glossary-inline'),
 		sectionField: null, // inline in prose — no dedicated SectionContent block field
 		name: 'GlossaryInline',
 		group: 2,
@@ -240,6 +258,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	InsightStrip: {
 		id: 'insight-strip',
+		...teacherFor('insight-strip'),
 		sectionField: 'insight_strip',
 		name: 'InsightStrip',
 		group: 2,
@@ -255,6 +274,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	KeyFact: {
 		id: 'key-fact',
+		...teacherFor('key-fact'),
 		sectionField: 'key_fact',
 		name: 'KeyFact',
 		group: 2,
@@ -270,6 +290,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ComparisonGrid: {
 		id: 'comparison-grid',
+		...teacherFor('comparison-grid'),
 		sectionField: 'comparison_grid',
 		name: 'ComparisonGrid',
 		group: 2,
@@ -287,6 +308,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	WorkedExampleCard: {
 		id: 'worked-example-card',
+		...teacherFor('worked-example-card'),
 		sectionField: 'worked_example',
 		name: 'WorkedExampleCard',
 		group: 3,
@@ -302,6 +324,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ProcessSteps: {
 		id: 'process-steps',
+		...teacherFor('process-steps'),
 		sectionField: 'process',
 		name: 'ProcessSteps',
 		group: 3,
@@ -319,6 +342,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PracticeStack: {
 		id: 'practice-stack',
+		...teacherFor('practice-stack'),
 		sectionField: 'practice',
 		name: 'PracticeStack',
 		group: 4,
@@ -340,6 +364,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	QuizCheck: {
 		id: 'quiz-check',
+		...teacherFor('quiz-check'),
 		sectionField: 'quiz',
 		name: 'QuizCheck',
 		group: 4,
@@ -355,6 +380,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ReflectionPrompt: {
 		id: 'reflection-prompt',
+		...teacherFor('reflection-prompt'),
 		sectionField: 'reflection',
 		name: 'ReflectionPrompt',
 		group: 4,
@@ -370,6 +396,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	StudentTextbox: {
 		id: 'student-textbox',
+		...teacherFor('student-textbox'),
 		sectionField: 'student_textbox',
 		name: 'StudentTextbox',
 		group: 4,
@@ -385,6 +412,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	ShortAnswerQuestion: {
 		id: 'short-answer',
+		...teacherFor('short-answer'),
 		sectionField: 'short_answer',
 		name: 'ShortAnswerQuestion',
 		group: 4,
@@ -400,6 +428,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	FillInTheBlank: {
 		id: 'fill-in-blank',
+		...teacherFor('fill-in-blank'),
 		sectionField: 'fill_in_blank',
 		name: 'FillInTheBlank',
 		group: 4,
@@ -417,6 +446,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	PitfallAlert: {
 		id: 'pitfall-alert',
+		...teacherFor('pitfall-alert'),
 		sectionField: 'pitfall',
 		name: 'PitfallAlert',
 		group: 5,
@@ -434,6 +464,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramBlock: {
 		id: 'diagram-block',
+		...teacherFor('diagram-block'),
 		sectionField: 'diagram',
 		name: 'DiagramBlock',
 		group: 6,
@@ -449,6 +480,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramCompare: {
 		id: 'diagram-compare',
+		...teacherFor('diagram-compare'),
 		sectionField: 'diagram_compare',
 		name: 'DiagramCompare',
 		group: 6,
@@ -464,6 +496,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	DiagramSeries: {
 		id: 'diagram-series',
+		...teacherFor('diagram-series'),
 		sectionField: 'diagram_series',
 		name: 'DiagramSeries',
 		group: 6,
@@ -479,6 +512,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	TimelineBlock: {
 		id: 'timeline-block',
+		...teacherFor('timeline-block'),
 		sectionField: 'timeline',
 		name: 'TimelineBlock',
 		group: 6,
@@ -496,6 +530,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 
 	SimulationBlock: {
 		id: 'simulation-block',
+		...teacherFor('simulation-block'),
 		sectionField: 'simulation',
 		name: 'SimulationBlock',
 		group: 7,

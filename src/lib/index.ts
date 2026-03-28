@@ -108,6 +108,23 @@ export type { ComponentMeta } from './registry';
 // ── Validation ──────────────────────────────────────
 export { validateSection, warnIfInvalid } from './validate';
 
+// ── Lesson document interchange + builder utilities ──
+export type {
+	LessonDocument,
+	LessonDocumentVersion,
+	BlockInstance,
+	DocumentSection,
+	MediaReference,
+	DocumentValidationResult,
+	FromSectionContentsMetadata
+} from './document';
+export { fromSectionContents, toSectionContents, validateDocument, getFieldComponentMap } from './document';
+
+export { getEmptyContent, getPreviewContent, assertFactoriesCoverRegistry } from './content-factories';
+
+export { getEditSchema } from './edit-schemas';
+export type { EditSchema, FieldSchema, FieldInputType } from './edit-schemas';
+
 // ── Template system ─────────────────────────────────
 export {
 	templateRegistry,

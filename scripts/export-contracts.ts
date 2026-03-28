@@ -108,6 +108,8 @@ const registryExport = Object.fromEntries(
 			id: component.id,
 			name: component.name,
 			purpose: component.purpose,
+			teacher_label: component.teacherLabel,
+			teacher_description: component.teacherDescription,
 			cognitive_job: component.cognitiveJob,
 			section_field: component.sectionField,
 			group: component.group,
