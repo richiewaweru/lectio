@@ -21,6 +21,8 @@ Every component in the registry declares a `sectionField` property:
 
 export interface ComponentMeta {
   sectionField: keyof SectionContent | null;
+  teacherLabel: string;
+  teacherDescription: string;
 }
 ```
 
@@ -40,6 +42,19 @@ const map = getComponentFieldMap();
 
 - Components with `sectionField: null` are excluded.
 - This helper is used by both `template-validation.ts` and `scripts/export-contracts.ts`.
+
+### `getFieldComponentMap()` (lesson documents)
+
+The inverse mapping (field name → component id) is exported from the package for lesson interchange and builder code:
+
+```typescript
+import { getFieldComponentMap } from 'lectio';
+
+const reverse = getFieldComponentMap();
+// => { header: "section-header", hook: "hook-hero", ... }
+```
+
+See [lesson-document.md](lesson-document.md) for `fromSectionContents` / `toSectionContents`.
 
 ## How To Add A New Component
 
@@ -74,7 +89,7 @@ This produces four types of files:
 |---|---|
 | `{template-id}.json` | Template contract (required/optional components, generation guidance, behaviours, `allowed_presets`) |
 | `component-field-map.json` | Component ID to `SectionContent` field mapping |
-| `component-registry.json` | Full component metadata (capacity limits, behaviour modes, status) |
+| `component-registry.json` | Full component metadata (capacity limits, behaviour modes, status, `teacher_label`, `teacher_description`) |
 | `preset-registry.json` | Preset palette, typography, density, and surface-style metadata |
 
 ### Using The Field Map
@@ -102,6 +117,8 @@ The `component-registry.json` file provides capacity limits and metadata for eac
   "practice-stack": {
     "id": "practice-stack",
     "name": "PracticeStack",
+    "teacher_label": "Practice Problems",
+    "teacher_description": "Problems at varied difficulty with progressive hints.",
     "section_field": "practice",
     "capacity": {
       "problemsMin": 2,
@@ -155,7 +172,9 @@ src/lib/registry.ts          (single source of truth)
 
 | File | Role |
 |---|---|
-| `src/lib/registry.ts` | Component registry with `sectionField` and `getComponentFieldMap()` |
+| `src/lib/registry.ts` | Component registry with `sectionField`, teacher-facing fields, and `getComponentFieldMap()` |
+| `src/lib/teacher-facing.ts` | Strings merged into each registry entry |
+| `src/lib/document.ts` | `LessonDocument` conversion and validation |
 | `src/lib/template-validation.ts` | Template validation that derives the field map from the registry |
 | `scripts/export-contracts.ts` | Exports contracts to `agents/contracts/` |
 | `src/lib/presets/base-presets.ts` | Source of truth for preset metadata exported to JSON |

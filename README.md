@@ -4,8 +4,9 @@ Educational component library built on SvelteKit + Svelte 5 + TypeScript + Tailw
 
 ## Related Docs
 
-- `docs/reference/component-guide.md` - public library surface, runtime wrappers, and template inventory
-- `docs/reference/registry-field-map.md` - contract export pipeline, JSON outputs, and extension workflow
+- `docs/reference/component-guide.md` — public library surface, runtime wrappers, and template inventory
+- `docs/reference/registry-field-map.md` — contract export pipeline, JSON outputs, and extension workflow
+- `docs/reference/lesson-document.md` — `LessonDocument` interchange, conversion helpers, edit schemas, builder utilities
 
 ## Using Lectio as a Local Library
 
@@ -101,7 +102,38 @@ import type { ComponentMeta } from 'lectio';
 
 const allComponents = getStableComponents();
 const hook = getComponentById('hook-hero');
+// ComponentMeta includes teacherLabel + teacherDescription for builder UIs
 ```
+
+### Lesson document interchange (generators & editors)
+
+Portable JSON for export/import between apps that both depend on Lectio only:
+
+```ts
+import {
+  fromSectionContents,
+  toSectionContents,
+  validateDocument,
+  getEmptyContent,
+  getEditSchema,
+  getFieldComponentMap,
+  type LessonDocument,
+  type SectionContent
+} from 'lectio';
+
+const doc: LessonDocument = fromSectionContents(sections, {
+  title: 'My lesson',
+  subject: 'Mathematics',
+  preset_id: 'blue-classroom',
+  source: 'generated',
+  source_generation_id: 'gen-123'
+});
+
+const back: SectionContent[] = toSectionContents(doc);
+const result = validateDocument(doc);
+```
+
+See `docs/reference/lesson-document.md` for the full API and design notes.
 
 ### Templates (13)
 
@@ -182,7 +214,7 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts  # Via env var
 Output files:
 - `{template-id}.json` (x13) — template contract: `always_present`, `available_components`, `component_budget`, `max_per_section`, `signal_affinity`, `section_role_defaults`, generation guidance, and `allowed_presets`
 - `component-field-map.json` — maps component IDs to their `SectionContent` field names
-- `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, etc.)
+- `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, `teacher_label`, `teacher_description`, etc.)
 - `preset-registry.json` — visual preset palette, typography, density, and surface style
 
 Run this whenever templates, components, or presets change. The pipeline reads these files — it never imports from `src/`.
@@ -214,6 +246,10 @@ src/lib/
 ├── index.ts                    # Library entry point (barrel export)
 ├── types.ts                    # All content type interfaces
 ├── registry.ts                 # Component metadata registry
+├── teacher-facing.ts           # Teacher labels/descriptions for registry entries
+├── document.ts                 # LessonDocument types + from/to/validate conversion
+├── content-factories.ts        # getEmptyContent / getPreviewContent for blocks
+├── edit-schemas.ts             # getEditSchema for builder forms
 ├── validate.ts                 # Content capacity validation
 ├── template-registry.ts        # Template definitions + helpers
 ├── template-types.ts           # Template type interfaces

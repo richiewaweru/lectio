@@ -133,6 +133,12 @@ Render a seeded preview or a real section through the public runtime wrappers:
 
 Use the higher-level surfaces unless you are composing your own preview chrome. `LectioThemeSurface` and `ResolvedTemplatePreviewSurface` are exported for advanced consumers only.
 
+## Lesson document interchange
+
+For cross-app lesson files (generator export → builder import), Lectio exposes `LessonDocument`, `fromSectionContents`, `toSectionContents`, `validateDocument`, `getEmptyContent`, `getEditSchema`, and `getFieldComponentMap()`. Registry entries include `teacherLabel` and `teacherDescription` for palette UI.
+
+Full reference: [lesson-document.md](lesson-document.md).
+
 ## Contract Snapshots
 
 External pipelines should read JSON from `agents/contracts/`, not import Typescript from `src/`.
