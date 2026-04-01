@@ -135,6 +135,16 @@ const factories: Record<string, () => Record<string, unknown>> = {
 		title: '',
 		diagrams: [] as { svg_content: string; step_label: string; caption: string }[]
 	}),
+	'video-embed': () => ({
+		media_id: '',
+		print_fallback: 'thumbnail' as const
+	}),
+	'image-block': () => ({
+		media_id: '',
+		alt_text: '',
+		width: 'full' as const,
+		alignment: 'center' as const
+	}),
 	'timeline-block': () => ({
 		title: '',
 		events: [] as { id: string; year: string; title: string; summary: string }[]

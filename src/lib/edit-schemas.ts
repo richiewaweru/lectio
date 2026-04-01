@@ -467,6 +467,69 @@ const schemasById: Record<string, EditSchema> = {
 			}
 		]
 	},
+	'video-embed': {
+		component_id: 'video-embed',
+		fields: [
+			{ field: 'media_id', label: 'Video', input: 'media', required: true, help: 'YouTube or Vimeo URL' },
+			{ field: 'caption', label: 'Caption', input: 'textarea', required: false, maxWords: 40 },
+			{ field: 'start_time', label: 'Start time (seconds)', input: 'number', required: false },
+			{ field: 'end_time', label: 'End time (seconds)', input: 'number', required: false },
+			{
+				field: 'print_fallback',
+				label: 'Print fallback',
+				input: 'select',
+				required: true,
+				options: [
+					{ value: 'thumbnail', label: 'Thumbnail' },
+					{ value: 'qr-link', label: 'QR link' },
+					{ value: 'hide', label: 'Hide' }
+				]
+			}
+		]
+	},
+	'image-block': {
+		component_id: 'image-block',
+		fields: [
+			{
+				field: 'media_id',
+				label: 'Image',
+				input: 'media',
+				required: true,
+				help: 'Upload PNG, JPEG, WebP, or GIF (max 2 MB)'
+			},
+			{
+				field: 'alt_text',
+				label: 'Alt text (accessibility)',
+				input: 'textarea',
+				required: true,
+				maxWords: 80,
+				help: 'Describe the image for screen readers and learners who cannot see it.'
+			},
+			{ field: 'caption', label: 'Caption', input: 'textarea', required: false, maxWords: 40 },
+			{
+				field: 'width',
+				label: 'Width',
+				input: 'select',
+				required: false,
+				options: [
+					{ value: 'full', label: 'Full width' },
+					{ value: 'half', label: 'Half width' },
+					{ value: 'third', label: 'Third width' }
+				]
+			},
+			{
+				field: 'alignment',
+				label: 'Alignment',
+				input: 'select',
+				required: false,
+				options: [
+					{ value: 'left', label: 'Left' },
+					{ value: 'center', label: 'Center' },
+					{ value: 'right', label: 'Right' }
+				]
+			}
+		]
+	},
 	'timeline-block': {
 		component_id: 'timeline-block',
 		fields: [
