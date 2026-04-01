@@ -39,6 +39,8 @@ export { default as PitfallAlert } from './PitfallAlert.svelte';
 export { default as DiagramBlock } from './DiagramBlock.svelte';
 export { default as DiagramCompare } from './DiagramCompare.svelte';
 export { default as DiagramSeries } from './DiagramSeries.svelte';
+export { default as VideoEmbed } from './VideoEmbed.svelte';
+export { default as ImageBlock } from './ImageBlock.svelte';
 export { default as TimelineBlock } from './TimelineBlock.svelte';
 
 // Group 7 — Simulation

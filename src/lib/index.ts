@@ -28,6 +28,8 @@ export {
 	DiagramBlock,
 	DiagramCompare,
 	DiagramSeries,
+	VideoEmbed,
+	ImageBlock,
 	TimelineBlock,
 	SimulationBlock
 } from './components/lectio';
@@ -91,7 +93,9 @@ export type {
 	StudentTextboxContent,
 	ShortAnswerContent,
 	FillInBlankSegment,
-	FillInBlankContent
+	FillInBlankContent,
+	VideoEmbedContent,
+	ImageBlockContent
 } from './types';
 
 // ── Registry ────────────────────────────────────────

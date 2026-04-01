@@ -115,6 +115,14 @@ export const TEACHER_LOOKUP: Record<string, { teacherLabel: string; teacherDescr
 		teacherLabel: 'Diagram Series',
 		teacherDescription: 'Sequence of diagrams that tells a visual story.'
 	},
+	'video-embed': {
+		teacherLabel: 'Video',
+		teacherDescription: 'Embed a YouTube or Vimeo video with a caption.'
+	},
+	'image-block': {
+		teacherLabel: 'Image',
+		teacherDescription: 'Photo, screenshot, or illustration from an uploaded image.'
+	},
 	'timeline-block': {
 		teacherLabel: 'Timeline',
 		teacherDescription: 'Chronological events with summaries along a spine.'
