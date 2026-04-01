@@ -12,12 +12,14 @@ import QuizCheck from '$lib/components/lectio/QuizCheck.svelte';
 import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
+import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
 import { calculusSection, physicsSection } from '$lib/dummy-content';
 import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/registry';
 import { validateSection } from '$lib/validate';
 
 const repeatWords = (word: string, count: number) =>
 	Array.from({ length: count }, () => word).join(' ');
+const primarySimulation = physicsSection.simulations![0];
 
 describe('Lectio component harmonization', () => {
 	it('renders inline hook SVG ahead of image fallback when both are present', () => {
@@ -146,6 +148,24 @@ describe('Lectio component harmonization', () => {
 		expect(centeredDialog?.className).toContain('overflow-y-auto');
 	});
 
+	it('renders image-backed diagrams without SVG callouts and still supports zoom', async () => {
+		const imageDiagram = {
+			caption: 'A raster-backed diagram.',
+			alt_text: 'Raster diagram fallback',
+			image_url: 'https://example.com/diagram.png',
+			callouts: physicsSection.diagram!.callouts
+		};
+		const { container } = render(DiagramBlock, {
+			props: { content: imageDiagram }
+		});
+
+		expect(container.querySelectorAll('img')).toHaveLength(1);
+		expect(screen.queryByText(/Tap a numbered point to see the labeled detail/i)).not.toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('img', { name: imageDiagram.alt_text }));
+		expect(container.querySelectorAll('img').length).toBeGreaterThanOrEqual(1);
+	});
+
 	it('evaluates quiz answers immediately and resets with Try again', async () => {
 		render(QuizCheck, {
 			props: { content: physicsSection.quiz! }
@@ -162,14 +182,50 @@ describe('Lectio component harmonization', () => {
 
 	it('renders the simulation block with live content and metadata', () => {
 		render(SimulationBlock, {
-			props: { content: physicsSection.simulation! }
+			props: { content: primarySimulation }
 		});
 
 		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
 		expect(screen.getByRole('button', { name: /Expand simulation/i })).toBeInTheDocument();
-		expect(screen.getByTitle(physicsSection.simulation!.spec.goal)).toBeInTheDocument();
+		expect(screen.getByTitle(primarySimulation.spec.goal)).toBeInTheDocument();
 		expect(screen.getAllByText('graph slider').length).toBeGreaterThan(0);
 		expect(screen.getByText('static_diagram')).toBeInTheDocument();
+	});
+
+	it('renders multiple simulations in high-interaction templates', () => {
+		const secondSimulation = {
+			...primarySimulation,
+			explanation: 'A second simulation reinforces the same law from another angle.',
+			spec: {
+				...primarySimulation.spec,
+				goal: 'Observe how a second interaction compares force and acceleration.'
+			}
+		};
+
+		render(InteractiveLabLayout, {
+			props: {
+				section: {
+					...physicsSection,
+					simulations: [primarySimulation, secondSimulation]
+				}
+			}
+		});
+
+		expect(screen.getAllByRole('button', { name: /Expand simulation/i })).toHaveLength(2);
+	});
+
+	it('still renders a legacy singular simulation once', () => {
+		render(InteractiveLabLayout, {
+			props: {
+				section: {
+					...physicsSection,
+					simulations: undefined,
+					simulation: primarySimulation
+				}
+			}
+		});
+
+		expect(screen.getAllByRole('button', { name: /Expand simulation/i })).toHaveLength(1);
 	});
 
 	it('adds descriptive aria-labels to refresher and glossary triggers', () => {
@@ -255,24 +311,26 @@ describe('Lectio component harmonization', () => {
 					physicsSection.diagram_series!.diagrams[1]
 				]
 			},
-			simulation: {
-				...physicsSection.simulation!,
-				explanation: repeatWords('simulation', 61),
-				spec: {
-					...physicsSection.simulation!.spec,
-					goal: repeatWords('goal', 41),
-					dimensions: {
-						...physicsSection.simulation!.spec.dimensions,
-						height: 0
+			simulations: [
+				{
+					...primarySimulation,
+					explanation: repeatWords('simulation', 61),
+					spec: {
+						...primarySimulation.spec,
+						goal: repeatWords('goal', 41),
+						dimensions: {
+							...primarySimulation.spec.dimensions,
+							height: 0
+						}
+					},
+					fallback_diagram: {
+						...physicsSection.diagram!,
+						caption: repeatWords('fallback', 61),
+						alt_text: repeatWords('fallbackalt', 81),
+						callouts: oversizedCallouts
 					}
-				},
-				fallback_diagram: {
-					...physicsSection.diagram!,
-					caption: repeatWords('fallback', 61),
-					alt_text: repeatWords('fallbackalt', 81),
-					callouts: oversizedCallouts
 				}
-			},
+			],
 			what_next: {
 				...physicsSection.what_next,
 				next: repeatWords('next', 16),
@@ -342,7 +400,61 @@ describe('Lectio component harmonization', () => {
 
 	it('includes SimulationBlock in the field map (bug fix verification)', () => {
 		const map = getComponentFieldMap();
-		expect(map['simulation-block']).toBe('simulation');
+		expect(map['simulation-block']).toBe('simulations');
+	});
+
+	it('validates every simulation in the plural array and still supports the legacy singular field', () => {
+		const simulationWarnings = validateSection({
+			...physicsSection,
+			simulations: [
+				{
+					...primarySimulation,
+					spec: {
+						...primarySimulation.spec,
+						goal: repeatWords('goal', 41)
+					}
+				},
+				{
+					...primarySimulation,
+					spec: {
+						...primarySimulation.spec,
+						goal: repeatWords('goal', 41)
+					}
+				}
+			]
+		});
+
+		expect(
+			simulationWarnings.filter((warning) => warning === '[Lectio/SimulationBlock] goal exceeds 40 words')
+		).toHaveLength(2);
+
+		const legacyWarnings = validateSection({
+			...physicsSection,
+			simulations: undefined,
+			simulation: {
+				...primarySimulation,
+				spec: {
+					...primarySimulation.spec,
+					goal: repeatWords('goal', 41)
+				}
+			}
+		});
+
+		expect(legacyWarnings).toContain('[Lectio/SimulationBlock] goal exceeds 40 words');
+	});
+
+	it('accepts image-backed diagrams without requiring SVG content', () => {
+		const warnings = validateSection({
+			...physicsSection,
+			diagram: {
+				caption: 'Image diagram',
+				alt_text: 'Raster-backed diagram',
+				image_url: 'https://example.com/diagram.png'
+			}
+		});
+
+		expect(warnings).not.toContain('[Lectio/DiagramBlock] requires svg_content or image_url');
+		expect(warnings).not.toContain('[Lectio/DiagramBlock] callouts require svg_content');
 	});
 
 	it('renders GuidedConceptPath and EnrichedLearningPath without breaking key content', () => {

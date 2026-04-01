@@ -1,5 +1,6 @@
 import { getComponentById, getComponentFieldMap } from './registry';
 import { getEmptyContent } from './content-factories';
+import { getSectionSimulations } from './section-content';
 import { validateSection } from './validate';
 import type { GradeBand, PitfallContent, SectionContent, WorkedExampleContent } from './types';
 
@@ -95,11 +96,13 @@ const BLOCK_FIELD_ORDER: (keyof SectionContent)[] = [
 	'diagram',
 	'diagram_compare',
 	'diagram_series',
+	'video_embed',
+	'image_block',
 	'timeline',
 	'worked_example',
 	'worked_examples',
 	'process',
-	'simulation',
+	'simulations',
 	'pitfall',
 	'pitfalls',
 	'practice',
@@ -139,6 +142,12 @@ function extractBlocksFromSection(section: SectionContent): Array<{ componentId:
 		if (field === 'pitfalls') {
 			for (const p of section.pitfalls ?? []) {
 				out.push({ componentId: 'pitfall-alert', content: p });
+			}
+			continue;
+		}
+		if (field === 'simulations') {
+			for (const simulation of getSectionSimulations(section)) {
+				out.push({ componentId: 'simulation-block', content: simulation });
 			}
 			continue;
 		}
@@ -249,6 +258,14 @@ function applyBlockToSection(
 			if (!section.worked_examples) section.worked_examples = [];
 			section.worked_examples.push(w);
 		}
+		return;
+	}
+
+	if (componentId === 'simulation-block') {
+		if (!section.simulations) section.simulations = [];
+		section.simulations.push(
+			deepClone(content) as unknown as NonNullable<SectionContent['simulations']>[number]
+		);
 		return;
 	}
 

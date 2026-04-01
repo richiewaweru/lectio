@@ -565,6 +565,43 @@
     ],
     "print_fallback": "All diagrams in sequence with step labels"
   },
+  "video-embed": {
+    "id": "video-embed",
+    "name": "VideoEmbed",
+    "purpose": "Embeds a video with caption and print fallback",
+    "teacher_label": "Video",
+    "teacher_description": "Embed a YouTube or Vimeo video with a caption.",
+    "cognitive_job": "Engage through multimedia",
+    "section_field": "video_embed",
+    "group": 1,
+    "status": "stable",
+    "capacity": {
+      "captionMaxWords": 40
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "QR code or thumbnail based on setting"
+  },
+  "image-block": {
+    "id": "image-block",
+    "name": "ImageBlock",
+    "purpose": "Uploaded raster image with caption and layout options",
+    "teacher_label": "Image",
+    "teacher_description": "Photo, screenshot, or illustration from an uploaded image.",
+    "cognitive_job": "Illustrate with photos or screenshots",
+    "section_field": "image_block",
+    "group": 6,
+    "status": "stable",
+    "capacity": {
+      "captionMaxWords": 40,
+      "altMaxWords": 80
+    },
+    "behaviour_modes": [
+      "static"
+    ],
+    "print_fallback": "Static image from embedded data"
+  },
   "timeline-block": {
     "id": "timeline-block",
     "name": "TimelineBlock",
@@ -594,11 +631,11 @@
     "teacher_label": "Interactive Simulation",
     "teacher_description": "Manipulable widget where learners discover by experimenting.",
     "cognitive_job": "Manipulate and discover",
-    "section_field": "simulation",
+    "section_field": "simulations",
     "group": 7,
     "status": "beta",
     "capacity": {
-      "onePerSection": "true"
+      "countGuidance": "template-defined"
     },
     "behaviour_modes": [
       "static"

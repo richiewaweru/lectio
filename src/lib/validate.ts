@@ -6,10 +6,13 @@ import type {
 	DiagramCompareContent,
 	DiagramContent,
 	DiagramSeriesContent,
+	ImageBlockContent,
 	SectionContent,
 	SimulationContent,
-	TimelineContent
+	TimelineContent,
+	VideoEmbedContent
 } from './types';
+import { getSectionSimulations } from './section-content';
 
 function words(text: string): number {
 	return text.trim().split(/\s+/).filter(Boolean).length;
@@ -87,10 +90,15 @@ function validateTimeline(content: TimelineContent, warnings: string[]) {
 }
 
 function validateDiagram(content: DiagramContent, location: string, warnings: string[]) {
+	const hasSvg = Boolean(content.svg_content?.trim());
+	const hasImage = Boolean(content.image_url?.trim());
+	if (!hasSvg && !hasImage) warnings.push(warn(location, 'requires svg_content or image_url'));
 	if (words(content.caption) > 60) warnings.push(warn(location, 'caption exceeds 60 words'));
 	if (words(content.alt_text) > 80) warnings.push(warn(location, 'alt_text exceeds 80 words'));
 	if (content.callouts && content.callouts.length > 6)
 		warnings.push(warn(location, 'callouts max 6'));
+	if (content.callouts?.length && !hasSvg)
+		warnings.push(warn(location, 'callouts require svg_content'));
 }
 
 function validateDiagramCompare(content: DiagramCompareContent, warnings: string[]) {
@@ -111,6 +119,20 @@ function validateDiagramSeries(content: DiagramSeriesContent, warnings: string[]
 		if (words(diagram.caption) > 40)
 			warnings.push(warn('DiagramSeries', `diagram ${index + 1} caption exceeds 40 words`));
 	});
+}
+
+function validateVideoEmbed(content: VideoEmbedContent, warnings: string[]) {
+	if (!content.media_id?.trim()) warnings.push(warn('VideoEmbed', 'media_id is empty'));
+	if (content.caption && words(content.caption) > 40)
+		warnings.push(warn('VideoEmbed', 'caption exceeds 40 words'));
+}
+
+function validateImageBlock(content: ImageBlockContent, warnings: string[]) {
+	if (!content.media_id?.trim()) warnings.push(warn('ImageBlock', 'media_id is empty'));
+	if (!content.alt_text?.trim()) warnings.push(warn('ImageBlock', 'alt_text is empty (add for accessibility)'));
+	if (words(content.alt_text) > 80) warnings.push(warn('ImageBlock', 'alt_text exceeds 80 words'));
+	if (content.caption && words(content.caption) > 40)
+		warnings.push(warn('ImageBlock', 'caption exceeds 40 words'));
 }
 
 function validateSimulation(content: SimulationContent, warnings: string[]) {
@@ -323,9 +345,17 @@ export function validateSection(section: SectionContent): string[] {
 		validateDiagramSeries(section.diagram_series, w);
 	}
 
-	if (section.simulation) {
-		validateSimulation(section.simulation, w);
+	if (section.video_embed) {
+		validateVideoEmbed(section.video_embed, w);
 	}
+
+	if (section.image_block) {
+		validateImageBlock(section.image_block, w);
+	}
+
+	getSectionSimulations(section).forEach((simulation) => {
+		validateSimulation(simulation, w);
+	});
 
 	return w;
 }

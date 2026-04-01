@@ -92,7 +92,7 @@ Everything is exported from a single entry point: `import { ... } from 'lectio'`
 | Diagrams | `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `TimelineBlock` |
 | Simulation | `SimulationBlock` |
 
-Each component accepts a typed `content` prop (e.g. `HookHeroContent`, `QuizContent`). All content types are nested inside the root `SectionContent` interface.
+Each component accepts a typed `content` prop (e.g. `HookHeroContent`, `QuizContent`). All content types are nested inside the root `SectionContent` interface, including `simulations?: SimulationContent[]` for multiple interactions in one section. `DiagramContent` also supports either inline `svg_content` or a generated `image_url`.
 
 ### Registry
 

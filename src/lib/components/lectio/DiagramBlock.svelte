@@ -15,6 +15,9 @@
 	let { content }: { content: DiagramContent } = $props();
 
 	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
+	const hasImage = $derived(Boolean(content.image_url?.trim()));
+	const hasSvg = $derived(Boolean(content.svg_content?.trim()));
+	const showCallouts = $derived(Boolean(!hasImage && hasSvg && content.callouts?.length));
 
 	function getMarkerPosition(callout: DiagramCallout) {
 		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
@@ -42,10 +45,18 @@
 			<DialogTrigger>
 				<div class="group relative cursor-pointer" role="img" aria-label={content.alt_text}>
 					<div class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full">
-						{@html content.svg_content}
+						{#if hasImage}
+							<img src={content.image_url} alt="" class="h-auto w-full" />
+						{:else if hasSvg}
+							{@html content.svg_content}
+						{:else}
+							<div class="flex min-h-48 items-center justify-center p-6 text-sm text-muted-foreground">
+								Diagram source unavailable.
+							</div>
+						{/if}
 					</div>
 
-					{#if content.callouts?.length}
+					{#if showCallouts}
 						{#each content.callouts as callout, index}
 							{@const markerPosition = getMarkerPosition(callout)}
 							<div
@@ -112,7 +123,15 @@
 							role="img"
 							aria-label={content.alt_text}
 						>
-							{@html content.svg_content}
+							{#if hasImage}
+								<img src={content.image_url} alt="" class="h-auto w-full" />
+							{:else if hasSvg}
+								{@html content.svg_content}
+							{:else}
+								<div class="flex min-h-64 items-center justify-center p-6 text-sm text-muted-foreground">
+									Diagram source unavailable.
+								</div>
+							{/if}
 						</div>
 						<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
 					</div>
@@ -120,7 +139,7 @@
 			</DialogPortal>
 		</Dialog>
 
-		{#if content.callouts?.length}
+		{#if showCallouts}
 			<p class="text-xs leading-5 text-muted-foreground">
 				Tap a numbered point to see the labeled detail for that part of the diagram.
 			</p>

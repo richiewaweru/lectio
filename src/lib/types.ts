@@ -395,7 +395,8 @@ export interface DiagramCallout {
 }
 
 export interface DiagramContent {
-	svg_content: string;
+	svg_content?: string;
+	image_url?: string;
 	caption: string; // max 60 words
 	zoom_label?: string; // max 8 words
 	alt_text: string; // accessibility — max 80 words
@@ -484,6 +485,26 @@ export interface SimulationContent {
 }
 
 // ─────────────────────────────────────────────
+// RICH MEDIA (document.media by id)
+// ─────────────────────────────────────────────
+
+export interface VideoEmbedContent {
+	media_id: string;
+	caption?: string; // max 40 words
+	start_time?: number; // seconds
+	end_time?: number; // seconds
+	print_fallback: 'thumbnail' | 'qr-link' | 'hide';
+}
+
+export interface ImageBlockContent {
+	media_id: string;
+	caption?: string; // max 40 words
+	alt_text: string; // required for accessibility, max 80 words
+	width?: 'full' | 'half' | 'third';
+	alignment?: 'left' | 'center' | 'right';
+}
+
+// ─────────────────────────────────────────────
 // THE FULL SECTION OBJECT
 // ─────────────────────────────────────────────
 
@@ -508,6 +529,8 @@ export interface SectionContent {
 	diagram?: DiagramContent;
 	diagram_compare?: DiagramCompareContent;
 	diagram_series?: DiagramSeriesContent;
+	video_embed?: VideoEmbedContent;
+	image_block?: ImageBlockContent;
 	comparison_grid?: ComparisonGridContent;
 	timeline?: TimelineContent;
 	insight_strip?: InsightStripContent;
@@ -516,7 +539,8 @@ export interface SectionContent {
 	quiz?: QuizContent;
 	reflection?: ReflectionContent;
 	glossary?: GlossaryContent;
-	simulation?: SimulationContent;
+	simulations?: SimulationContent[]; // preferred multi-interaction field
+	simulation?: SimulationContent; // legacy single-interaction fallback
 	interview?: InterviewContent;
 
 	// New harmonisation components

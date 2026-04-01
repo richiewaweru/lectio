@@ -8,6 +8,7 @@
 
 import { basePresetMap } from '$lib/presets/base-presets';
 import { getComponentById, getComponentFieldMap } from '$lib/registry';
+import { getSectionSimulations } from '$lib/section-content';
 import type {
 	TemplateContract,
 	TemplateDefinition,
@@ -23,6 +24,9 @@ const componentFieldMap = getComponentFieldMap();
 function hasPreviewField(section: SectionContent, componentId: string): boolean {
 	const field = componentFieldMap[componentId];
 	if (!field) return false;
+	if (field === 'simulations') {
+		return getSectionSimulations(section).length > 0;
+	}
 	return Boolean(section[field]);
 }
 

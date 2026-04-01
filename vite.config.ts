@@ -16,6 +16,7 @@ export default defineConfig({
 		environment: 'jsdom',
 		globals: true,
 		setupFiles: ['src/test/setup.ts'],
+		exclude: ['.claude/**', 'node_modules/**', 'dist/**', '.svelte-kit/**'],
 		alias: {
 			'lucide-svelte': fileURLToPath(new URL('./src/test/lucide-stub.ts', import.meta.url))
 		}

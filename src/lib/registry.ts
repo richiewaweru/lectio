@@ -510,6 +510,38 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		status: 'stable'
 	},
 
+	VideoEmbed: {
+		id: 'video-embed',
+		...teacherFor('video-embed'),
+		sectionField: 'video_embed',
+		name: 'VideoEmbed',
+		group: 1,
+		purpose: 'Embeds a video with caption and print fallback',
+		cognitiveJob: 'Engage through multimedia',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'iframe',
+		capacity: { captionMaxWords: 40 },
+		printFallback: 'QR code or thumbnail based on setting',
+		status: 'stable'
+	},
+
+	ImageBlock: {
+		id: 'image-block',
+		...teacherFor('image-block'),
+		sectionField: 'image_block',
+		name: 'ImageBlock',
+		group: 6,
+		purpose: 'Uploaded raster image with caption and layout options',
+		cognitiveJob: 'Illustrate with photos or screenshots',
+		subjects: ['universal'],
+		behaviourModes: ['static'],
+		shadcnPrimitive: 'Card + img',
+		capacity: { captionMaxWords: 40, altMaxWords: 80 },
+		printFallback: 'Static image from embedded data',
+		status: 'stable'
+	},
+
 	TimelineBlock: {
 		id: 'timeline-block',
 		...teacherFor('timeline-block'),
@@ -531,7 +563,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 	SimulationBlock: {
 		id: 'simulation-block',
 		...teacherFor('simulation-block'),
-		sectionField: 'simulation',
+		sectionField: 'simulations',
 		name: 'SimulationBlock',
 		group: 7,
 		purpose: 'Manipulate a variable and discover the concept through observation',
@@ -539,7 +571,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		subjects: ['mathematics', 'physics', 'chemistry', 'statistics'],
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'iframe sandbox',
-		capacity: { onePerSection: 'true' },
+		capacity: { countGuidance: 'template-defined' },
 		printFallback: 'Static diagram at midstate',
 		status: 'beta'
 	}

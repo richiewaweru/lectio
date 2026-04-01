@@ -17,7 +17,7 @@ The component registry is now self-describing. Each `ComponentMeta` entry declar
 
 ## Bug Fix
 
-`SimulationBlock` was missing from the old hardcoded `componentFieldMap`. It is now automatically included via `sectionField: 'simulation'` on the registry entry.
+`SimulationBlock` was missing from the old hardcoded `componentFieldMap`. It is now automatically included via the registry entry, which currently maps to `sectionField: 'simulations'` while Lectio keeps temporary legacy read support for singular `simulation`.
 
 ## Cross-Repo Status
 
