@@ -157,6 +157,26 @@ The export now writes:
 
 Whenever template contracts, presets, or registry metadata change, rerun both `npm run package` and `npm run export-contracts` before publishing.
 
+## Print Mode
+
+Lectio provides a context-driven print system. Consuming applications call `providePrintMode` once at the page root; all 15 interactive components automatically switch to their static print fallbacks.
+
+```svelte
+<script lang="ts">
+  import { providePrintMode } from 'lectio';
+
+  // Your app decides when print mode is active
+  const isPrint = $derived($page.url.searchParams.get('print') === 'true');
+  providePrintMode(() => isPrint);
+</script>
+```
+
+Six shared print utility components are exported: `RuledLines`, `Checkboxes`, `ExpandedSteps`, `SideBySide`, `VerticalList`, `AnswerMarker`.
+
+The `/components` showcase has a **Print preview mode** toggle in the page header — use this to inspect all 15 fallbacks without opening a browser print dialog.
+
+Full reference (consumer quickstart, per-component tables, contributor guide): [`docs/reference/print-mode.md`](print-mode.md).
+
 ## Copy Or Fork Checklist
 
 If you want to reuse a component or template outside this repo, copy these pieces together:
@@ -171,6 +191,7 @@ If you want to reuse a component or template outside this repo, copy these piece
 
 ## Important Current Notes
 
+- **Print mode** shipped in this release. 15 interactive components have static print fallbacks driven by `providePrintMode` (Svelte context). Six print utility components (`RuledLines`, `Checkboxes`, `ExpandedSteps`, `SideBySide`, `VerticalList`, `AnswerMarker`) are exported from the main entry.
 - **7 new stable components** shipped in the 2026-03-27 harmonisation: `CalloutBlock`, `SummaryBlock`, `SectionDivider`, `KeyFact`, `StudentTextbox`, `ShortAnswerQuestion`, `FillInTheBlank`. Each has a corresponding `SectionContent` field and registry entry.
 - **TemplateContract no longer uses** `lessonFlow`, `requiredComponents`, or `optionalComponents`. The current shape uses `always_present` (required), `available_components` (optional), `component_budget` (lesson-level caps), `max_per_section` (per-section caps), `signal_affinity`, and `section_role_defaults`.
 - **7 templates were renamed** for clarity: figure-first→visual-led, focus-flow→low-load, guided-concept-compact→concept-compact, diagram-led-lesson→diagram-led, distinction-grid→classification, process-trainer→procedure, timeline-narrative→timeline.
