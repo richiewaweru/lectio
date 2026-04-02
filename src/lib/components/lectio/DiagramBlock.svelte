@@ -30,6 +30,7 @@
 	}
 </script>
 
+<div class="diagram-block-root">
 <Card class="border-primary/10 bg-white/88 p-6">
 	<div class="space-y-4">
 		<div class="flex flex-wrap items-center gap-3">
@@ -60,7 +61,7 @@
 						{#each content.callouts as callout, index}
 							{@const markerPosition = getMarkerPosition(callout)}
 							<div
-								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)]"
+								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)] diagram-block-dot"
 								style="left: {callout.x}%; top: {callout.y}%;"
 							></div>
 							<Popover>
@@ -69,7 +70,7 @@
 										<button
 											{...props}
 											type="button"
-											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04]"
+											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04] diagram-block-callout-btn"
 											style="left: {markerPosition.left}; top: {markerPosition.top};"
 											aria-label={callout.label}
 											onpointerdown={(event) => event.stopPropagation()}
@@ -103,7 +104,7 @@
 						{/each}
 					{/if}
 
-					<div class="absolute right-3 top-3 rounded-full bg-white/82 p-1.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100">
+					<div class="absolute right-3 top-3 rounded-full bg-white/82 p-1.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100 diagram-block-zoom">
 						<ZoomIn class="h-4 w-4 text-muted-foreground" />
 					</div>
 				</div>
@@ -148,3 +149,19 @@
 		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
 	</div>
 </Card>
+</div>
+
+<style>
+	@media print {
+		.diagram-block-root {
+			page-break-inside: avoid;
+		}
+
+		/* Hide the zoom button overlay and callout interactive buttons */
+		.diagram-block-zoom,
+		.diagram-block-callout-btn,
+		.diagram-block-dot {
+			display: none !important;
+		}
+	}
+</style>

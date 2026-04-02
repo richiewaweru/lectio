@@ -13,6 +13,11 @@
 		},
 		"./theme.css": {
 			"default": "./dist/theme.css"
+		},
+		"./print": {
+			"types": "./dist/print/index.d.ts",
+			"svelte": "./dist/print/index.js",
+			"default": "./dist/print/index.js"
 		}
 	},
 	"files": [
