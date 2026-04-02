@@ -1,0 +1,35 @@
+name: Build Check
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build package
+        run: npm run package
+        
+      - name: Export contracts
+        run: npm run export-contracts
+        
+      - name: Verify outputs
+        run: |
+          test -d dist || (echo "❌ dist/ not found" && exit 1)
+          test -d contracts || (echo "❌ contracts/ not found" && exit 1)
+          echo "✅ Build verification passed"

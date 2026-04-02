@@ -9,3 +9,10 @@ dist/
 *.pdf
 .DS_Store
 Thumbs.db
+
+# npm & build
+npm-debug.log*
+*.tsbuildinfo
+
+# Ensure contracts are version controlled for publish
+!contracts/

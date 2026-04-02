@@ -2,6 +2,29 @@
 
 Educational component library built on SvelteKit + Svelte 5 + TypeScript + Tailwind CSS v4. Renders structured lesson content into reusable teaching components and registry-driven lesson templates.
 
+## Installation
+
+```bash
+npm install @richiewaweru/lectio
+```
+
+## Usage
+
+```typescript
+import type { SectionContent } from '@richiewaweru/lectio/contracts';
+import { HookHero } from '@richiewaweru/lectio';
+```
+
+## Contract Stability
+
+This package follows semantic versioning with contract guarantees:
+
+- **PATCH** (0.1.x): Bug fixes, no contract changes
+- **MINOR** (0.x.0): New components/templates, backward-compatible contract additions
+- **MAJOR** (x.0.0): Breaking contract changes (types.ts structure changes)
+
+During `0.x` phase, minor versions may introduce larger changes. Lock to exact versions in production.
+
 ## Related Docs
 
 - `docs/reference/component-guide.md` — public library surface, runtime wrappers, and template inventory
