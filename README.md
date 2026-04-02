@@ -7,6 +7,7 @@ Educational component library built on SvelteKit + Svelte 5 + TypeScript + Tailw
 - `docs/reference/component-guide.md` — public library surface, runtime wrappers, and template inventory
 - `docs/reference/registry-field-map.md` — contract export pipeline, JSON outputs, and extension workflow
 - `docs/reference/lesson-document.md` — `LessonDocument` interchange, conversion helpers, edit schemas, builder utilities
+- `docs/reference/print-mode.md` — print rendering, `providePrintMode`, utility components, contributor patterns
 
 ## Using Lectio as a Local Library
 
@@ -201,6 +202,27 @@ Five built-in colour presets: Blue Classroom, Warm Paper, Calm Green, High Contr
 import { cn } from 'lectio'; // clsx + tailwind-merge
 ```
 
+### Print Mode
+
+Lectio components render static print fallbacks when a consuming app signals print mode via context. No prop drilling required.
+
+```svelte
+<script lang="ts">
+  import { providePrintMode } from 'lectio';
+  import { page } from '$app/stores';
+
+  // Activate when ?print=true is in the URL
+  const isPrint = $derived($page.url.searchParams.get('print') === 'true');
+  providePrintMode(() => isPrint);
+</script>
+
+<!-- All Lectio components below automatically switch to print fallbacks -->
+```
+
+Six print utility components are also exported: `RuledLines`, `Checkboxes`, `ExpandedSteps`, `SideBySide`, `VerticalList`, `AnswerMarker`. These can be used in custom print layouts outside Lectio components.
+
+See [`docs/reference/print-mode.md`](docs/reference/print-mode.md) for the full API, per-component behaviour, contributor patterns, and the answer-key control props.
+
 ## Export Contracts (Pipeline Bridge)
 
 The `export-contracts` script exports template, component, and preset metadata as JSON for external pipelines (e.g. Python AI agents) that need to know about Lectio's structure without importing TypeScript.
@@ -255,7 +277,9 @@ src/lib/
 ├── template-types.ts           # Template type interfaces
 ├── template-validation.ts      # Template contract validation
 ├── presets/base-presets.ts      # Colour preset definitions
-├── components/lectio/          # 30 educational components
+├── print/                      # Print utility components (RuledLines, Checkboxes, …)
+├── utils/printContext.ts       # providePrintMode / usePrintMode context helpers
+├── components/lectio/          # 30 educational components (15 with print fallbacks)
 ├── components/ui/              # shadcn-svelte primitives (internal)
 └── templates/                  # Template layout files (internal)
 ```

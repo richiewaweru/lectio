@@ -5,6 +5,7 @@
 	import { timelinePreview } from '$lib/templates/timeline/preview';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
+	import { providePrintMode } from '$lib/utils/printContext';
 	import {
 		SectionHeader,
 		HookHero,
@@ -39,6 +40,9 @@
 	} from '$lib/components/lectio';
 
 	const components = getStableComponents();
+
+	let printPreviewMode = $state(false);
+	providePrintMode(() => printPreviewMode);
 
 	const previews: Record<string, { content: any; extra?: any }> = {
 		'section-header': { content: physicsSection.header },
@@ -97,6 +101,18 @@
 				Each preview is driven by the shared registry and feature-rich dummy content so
 				potential users can see what each component can carry, not just the simplest case.
 			</p>
+
+			<label class="print-toggle-label">
+				<input
+					type="checkbox"
+					class="print-toggle-checkbox"
+					bind:checked={printPreviewMode}
+					id="print-preview-toggle"
+				/>
+				<span class="print-toggle-text">
+					{#if printPreviewMode}📄 Print preview mode ON{:else}🖥️ Print preview mode OFF{/if}
+				</span>
+			</label>
 		</div>
 	</header>
 
@@ -241,3 +257,35 @@
 		{/each}
 	</div>
 </div>
+
+<style>
+	.print-toggle-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		cursor: pointer;
+		padding: 0.5rem 1rem;
+		border-radius: 0.75rem;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		background: rgba(255, 255, 255, 0.12);
+		transition: background 0.15s;
+		user-select: none;
+	}
+
+	.print-toggle-label:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.print-toggle-checkbox {
+		width: 1rem;
+		height: 1rem;
+		accent-color: white;
+		cursor: pointer;
+	}
+
+	.print-toggle-text {
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: white;
+	}
+</style>
