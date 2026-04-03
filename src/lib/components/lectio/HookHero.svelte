@@ -2,6 +2,7 @@
 	import type { HookHeroContent } from '$lib/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { BarChart3, CircleHelp, Quote, Sparkles } from 'lucide-svelte';
+	import { sanitizeSvg } from '$lib/utils/sanitize';
 
 	let { content }: { content: HookHeroContent } = $props();
 
@@ -118,7 +119,7 @@
 							<div
 								class="aspect-[5/4] max-h-[260px] w-full [&_svg]:h-full [&_svg]:w-full [&_svg]:object-contain"
 							>
-								{@html content.svg_content}
+								{@html sanitizeSvg(content.svg_content)}
 							</div>
 						{:else if content.image}
 							<img

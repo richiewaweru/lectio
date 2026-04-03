@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-04-02
+
+### Security
+- **HIGH** — Fixed XSS in `ExplanationBlock.svelte`: added `escapeHtml()` to sanitize AI-generated body text before `{@html}` rendering
+- **MEDIUM** — Sanitized all SVG `{@html}` calls in `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `HookHero`, and `SimulationBlock` using DOMPurify (SVG profile)
+
+### Changed
+- Moved `lectio-harmonisation-spec.md` and `LECTIO_COMPLETE_BUILD.md` from root to `docs/project/`
+- Removed duplicate `AGENTS.md` stub at root (identical to `CLAUDE.md`)
+- Created `.env.example` placeholder
+
+### Added
+- `src/lib/utils/sanitize.ts` — shared `sanitizeSvg()` utility using DOMPurify
+
 ## [0.1.0] - 2026-04-02
 
 ### Added

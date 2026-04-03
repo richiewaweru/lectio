@@ -4,6 +4,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import SideBySide from '$lib/print/SideBySide.svelte';
+	import { sanitizeSvg } from '$lib/utils/sanitize';
 
 	let { content }: { content: DiagramCompareContent } = $props();
 
@@ -33,12 +34,12 @@
 		<SideBySide leftLabel={content.before_label} rightLabel={content.after_label}>
 			{#snippet left()}
 				<div role="img" aria-label="{content.before_label} diagram" class="diagram-compare-print-svg">
-					{@html content.before_svg}
+					{@html sanitizeSvg(content.before_svg)}
 				</div>
 			{/snippet}
 			{#snippet right()}
 				<div role="img" aria-label="{content.after_label} diagram" class="diagram-compare-print-svg">
-					{@html content.after_svg}
+					{@html sanitizeSvg(content.after_svg)}
 				</div>
 			{/snippet}
 		</SideBySide>
@@ -83,14 +84,14 @@
 				aria-label={content.alt_text}
 			>
 				<div class="compare-layer compare-layer-after w-full">
-					{@html content.after_svg}
+					{@html sanitizeSvg(content.after_svg)}
 				</div>
 
 				<div
 					class="compare-layer compare-layer-before absolute inset-0"
 					style="clip-path: inset(0 0 0 {stagePosition}%);"
 				>
-					{@html content.before_svg}
+					{@html sanitizeSvg(content.before_svg)}
 				</div>
 
 				{#if seamVisible}

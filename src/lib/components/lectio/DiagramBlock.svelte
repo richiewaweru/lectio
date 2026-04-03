@@ -11,6 +11,7 @@
 		DialogOverlay
 	} from '$lib/components/ui/dialog';
 	import { ZoomIn } from 'lucide-svelte';
+	import { sanitizeSvg } from '$lib/utils/sanitize';
 
 	let { content }: { content: DiagramContent } = $props();
 
@@ -49,7 +50,7 @@
 						{#if hasImage}
 							<img src={content.image_url} alt="" class="h-auto w-full" />
 						{:else if hasSvg}
-							{@html content.svg_content}
+							{@html sanitizeSvg(content.svg_content)}
 						{:else}
 							<div class="flex min-h-48 items-center justify-center p-6 text-sm text-muted-foreground">
 								Diagram source unavailable.
@@ -127,7 +128,7 @@
 							{#if hasImage}
 								<img src={content.image_url} alt="" class="h-auto w-full" />
 							{:else if hasSvg}
-								{@html content.svg_content}
+								{@html sanitizeSvg(content.svg_content)}
 							{:else}
 								<div class="flex min-h-64 items-center justify-center p-6 text-sm text-muted-foreground">
 									Diagram source unavailable.
