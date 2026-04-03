@@ -433,7 +433,8 @@ const schemasById: Record<string, EditSchema> = {
 	'diagram-block': {
 		component_id: 'diagram-block',
 		fields: [
-			{ field: 'svg_content', label: 'SVG', input: 'svg', required: true },
+			{ field: 'svg_content', label: 'SVG', input: 'svg', required: false },
+			{ field: 'image_url', label: 'Image URL', input: 'text', required: false },
 			{ field: 'caption', label: 'Caption', input: 'textarea', required: true, maxWords: 60 },
 			{ field: 'alt_text', label: 'Alt text', input: 'textarea', required: true, maxWords: 80 }
 		]

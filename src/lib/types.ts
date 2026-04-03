@@ -396,7 +396,7 @@ export interface DiagramCallout {
 
 export interface DiagramContent {
 	svg_content?: string;
-	image_url?: string;
+	image_url?: string; // raster image — renders as plain <figure>, no zoom or callouts
 	caption: string; // max 60 words
 	zoom_label?: string; // max 8 words
 	alt_text: string; // accessibility — max 80 words

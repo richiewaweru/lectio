@@ -148,22 +148,29 @@ describe('Lectio component harmonization', () => {
 		expect(centeredDialog?.className).toContain('overflow-y-auto');
 	});
 
-	it('renders image-backed diagrams without SVG callouts and still supports zoom', async () => {
+	it('renders image-backed diagrams as a plain figure without a zoom dialog', async () => {
 		const imageDiagram = {
 			caption: 'A raster-backed diagram.',
 			alt_text: 'Raster diagram fallback',
 			image_url: 'https://example.com/diagram.png',
-			callouts: physicsSection.diagram!.callouts
+			svg_content: ''
 		};
-		const { container } = render(DiagramBlock, {
-			props: { content: imageDiagram }
-		});
+		const { container } = render(DiagramBlock, { props: { content: imageDiagram } });
 
-		expect(container.querySelectorAll('img')).toHaveLength(1);
-		expect(screen.queryByText(/Tap a numbered point to see the labeled detail/i)).not.toBeInTheDocument();
+		// Image rendered inside a <figure>
+		const img = container.querySelector('figure img');
+		expect(img).toBeInTheDocument();
+		expect(img?.getAttribute('alt')).toBe(imageDiagram.alt_text);
+		expect(img?.getAttribute('src')).toBe(imageDiagram.image_url);
 
-		await fireEvent.click(screen.getByRole('img', { name: imageDiagram.alt_text }));
-		expect(container.querySelectorAll('img').length).toBeGreaterThanOrEqual(1);
+		// Caption in <figcaption>
+		expect(container.querySelector('figcaption')).toHaveTextContent(imageDiagram.caption);
+
+		// No Dialog opened
+		expect(container.querySelector('[role="dialog"]')).not.toBeInTheDocument();
+
+		// No callout guidance text
+		expect(screen.queryByText(/Tap a numbered point/i)).not.toBeInTheDocument();
 	});
 
 	it('evaluates quiz answers immediately and resets with Try again', async () => {
