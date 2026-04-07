@@ -162,6 +162,42 @@ describe('Lectio component harmonization', () => {
 		expect(screen.queryByText('Move the slider to begin revealing what changes in the after state.')).not.toBeInTheDocument();
 	});
 
+	it('renders image-backed diagram compare layers while keeping the slider behaviour intact', async () => {
+		const { container } = render(DiagramCompare, {
+			props: {
+				content: {
+					...physicsSection.diagram_compare!,
+					before_svg: '',
+					after_svg: '',
+					before_image_url: 'https://example.com/before.png',
+					after_image_url: 'https://example.com/after.png'
+				}
+			}
+		});
+
+		const compareImages = Array.from(
+			container.querySelectorAll<HTMLImageElement>('img.compare-layer-image')
+		).map((image) => image.getAttribute('src'));
+		expect(compareImages).toEqual([
+			'https://example.com/after.png',
+			'https://example.com/before.png'
+		]);
+
+		const slider = screen.getByLabelText('Reveal the after state');
+		await fireEvent.input(slider, { target: { value: '50' } });
+
+		expect(screen.getByText('Mass is still 5 kg.')).toBeInTheDocument();
+	});
+
+	it('falls back to SVG-backed diagram compare rendering when no image pair is present', () => {
+		const { container } = render(DiagramCompare, {
+			props: { content: physicsSection.diagram_compare! }
+		});
+
+		expect(container.querySelectorAll('img.compare-layer-image')).toHaveLength(0);
+		expect(container.querySelectorAll('svg')).not.toHaveLength(0);
+	});
+
 	it('renders labeled diagram callout buttons with guidance text', () => {
 		const { container } = render(DiagramBlock, {
 			props: { content: physicsSection.diagram! }
@@ -562,6 +598,36 @@ describe('Lectio component harmonization', () => {
 
 		expect(warnings).not.toContain('[Lectio/DiagramSeries] diagram 1 requires svg_content or image_url');
 		expect(warnings).toContain('[Lectio/DiagramSeries] diagram 2 requires svg_content or image_url');
+	});
+
+	it('accepts image-backed diagram compare pairs and warns when neither a full svg pair nor image pair exists', () => {
+		const validWarnings = validateSection({
+			...physicsSection,
+			diagram_compare: {
+				...physicsSection.diagram_compare!,
+				before_svg: '',
+				after_svg: '',
+				before_image_url: 'https://example.com/before.png',
+				after_image_url: 'https://example.com/after.png'
+			}
+		});
+		const invalidWarnings = validateSection({
+			...physicsSection,
+			diagram_compare: {
+				...physicsSection.diagram_compare!,
+				before_svg: '',
+				after_svg: '',
+				before_image_url: 'https://example.com/before.png',
+				after_image_url: ''
+			}
+		});
+
+		expect(validWarnings).not.toContain(
+			'[Lectio/DiagramCompare] requires a full before/after svg pair or a full before/after image pair'
+		);
+		expect(invalidWarnings).toContain(
+			'[Lectio/DiagramCompare] requires a full before/after svg pair or a full before/after image pair'
+		);
 	});
 
 	it('renders GuidedConceptPath and EnrichedLearningPath without breaking key content', () => {

@@ -407,8 +407,10 @@ export interface DiagramContent {
 // ──
 
 export interface DiagramCompareContent {
-	before_svg: string;
-	after_svg: string;
+	before_svg?: string;
+	after_svg?: string;
+	before_image_url?: string;
+	after_image_url?: string;
 	before_label: string; // max 6 words
 	after_label: string; // max 6 words
 	before_details?: string[]; // bullet points describing the before state
