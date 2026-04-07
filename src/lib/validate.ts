@@ -102,6 +102,16 @@ function validateDiagram(content: DiagramContent, location: string, warnings: st
 }
 
 function validateDiagramCompare(content: DiagramCompareContent, warnings: string[]) {
+	const hasSvgPair = Boolean(content.before_svg?.trim()) && Boolean(content.after_svg?.trim());
+	const hasImagePair =
+		Boolean(content.before_image_url?.trim()) && Boolean(content.after_image_url?.trim());
+	if (!hasSvgPair && !hasImagePair)
+		warnings.push(
+			warn(
+				'DiagramCompare',
+				'requires a full before/after svg pair or a full before/after image pair'
+			)
+		);
 	if (words(content.before_label) > 6)
 		warnings.push(warn('DiagramCompare', 'before_label exceeds 6 words'));
 	if (words(content.after_label) > 6)
