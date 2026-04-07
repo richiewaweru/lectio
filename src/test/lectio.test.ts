@@ -73,6 +73,60 @@ describe('Lectio component harmonization', () => {
 		).toBeInTheDocument();
 	});
 
+	it('renders image-backed diagram series steps without requiring SVG markup', () => {
+		const imageSeries = {
+			title: 'Image-backed steps',
+			diagrams: [
+				{
+					step_label: 'Observation',
+					caption: 'A raster step for the series.',
+					image_url: 'https://example.com/series-step-1.png'
+				}
+			]
+		};
+		const { container } = render(DiagramSeries, {
+			props: { content: imageSeries }
+		});
+
+		const img = container.querySelector('img');
+		expect(img).toBeInTheDocument();
+		expect(img?.getAttribute('src')).toBe('https://example.com/series-step-1.png');
+		expect(img?.getAttribute('alt')).toBe('A raster step for the series.');
+		expect(container.querySelector('svg')).not.toBeInTheDocument();
+	});
+
+	it('keeps mixed image and SVG series steps in sync while navigating', async () => {
+		render(DiagramSeries, {
+			props: {
+				content: {
+					title: 'Mixed steps',
+					diagrams: [
+						{
+							step_label: 'Photo step',
+							caption: 'The first step uses a generated image.',
+							image_url: 'https://example.com/series-step-1.png'
+						},
+						{
+							step_label: 'SVG step',
+							caption: 'The second step falls back to inline SVG.',
+							svg_content:
+								'<svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg"><text x="10" y="35">Series SVG</text></svg>'
+						}
+					]
+				}
+			}
+		});
+
+		expect(screen.getByRole('img', { name: 'The first step uses a generated image.' })).toBeInTheDocument();
+		expect(screen.queryByText('Series SVG')).not.toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+		expect(screen.getByText('Step 2 of 2')).toBeInTheDocument();
+		expect(screen.getByText('Series SVG')).toBeInTheDocument();
+		expect(screen.queryByRole('img', { name: 'The first step uses a generated image.' })).not.toBeInTheDocument();
+	});
+
 	it('recovers when the diagrams array shrinks after the current step is selected', async () => {
 		const { rerender } = render(DiagramSeries, {
 			props: { content: physicsSection.diagram_series! }
@@ -171,6 +225,29 @@ describe('Lectio component harmonization', () => {
 
 		// No callout guidance text
 		expect(screen.queryByText(/Tap a numbered point/i)).not.toBeInTheDocument();
+	});
+
+	it('renders hook-image content when no inline SVG is supplied', () => {
+		const { container } = render(HookHero, {
+			props: {
+				content: {
+					headline: 'A real-world visual arrives first',
+					body: 'This hook should render with the generated image path only.',
+					anchor: 'connect the idea to a concrete scene',
+					image: {
+						url: '/images/hook-realism.png',
+						alt: 'A concrete realism hook'
+					}
+				}
+			}
+		});
+
+		const img = container.querySelector('img');
+		expect(img).toBeInTheDocument();
+		expect(img?.getAttribute('src')).toBe('/images/hook-realism.png');
+		expect(img?.getAttribute('alt')).toBe('A concrete realism hook');
+		expect(container.querySelector('svg')).not.toBeInTheDocument();
+		expect(screen.getByText('Visual intuition')).toBeInTheDocument();
 	});
 
 	it('evaluates quiz answers immediately and resets with Try again', async () => {
@@ -462,6 +539,29 @@ describe('Lectio component harmonization', () => {
 
 		expect(warnings).not.toContain('[Lectio/DiagramBlock] requires svg_content or image_url');
 		expect(warnings).not.toContain('[Lectio/DiagramBlock] callouts require svg_content');
+	});
+
+	it('accepts image-backed diagram series steps and warns when a step has no visual', () => {
+		const warnings = validateSection({
+			...physicsSection,
+			diagram_series: {
+				title: 'Series checks',
+				diagrams: [
+					{
+						step_label: 'Image step',
+						caption: 'A valid raster-backed step.',
+						image_url: 'https://example.com/series-step-1.png'
+					},
+					{
+						step_label: 'Missing visual',
+						caption: 'This step is missing both svg and image.'
+					}
+				]
+			}
+		});
+
+		expect(warnings).not.toContain('[Lectio/DiagramSeries] diagram 1 requires svg_content or image_url');
+		expect(warnings).toContain('[Lectio/DiagramSeries] diagram 2 requires svg_content or image_url');
 	});
 
 	it('renders GuidedConceptPath and EnrichedLearningPath without breaking key content', () => {
