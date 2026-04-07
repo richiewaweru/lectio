@@ -419,13 +419,16 @@ export interface DiagramCompareContent {
 
 // ──
 
+export interface DiagramSeriesStep {
+	step_label: string; // max 8 words
+	caption: string; // max 40 words
+	svg_content?: string;
+	image_url?: string;
+}
+
 export interface DiagramSeriesContent {
 	title: string; // max 10 words
-	diagrams: Array<{
-		svg_content: string;
-		step_label: string; // max 8 words
-		caption: string; // max 40 words
-	}>; // max 4 diagrams
+	diagrams: DiagramSeriesStep[]; // max 4 diagrams
 }
 
 export interface TimelineEvent {
