@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { term, definition }: { term: string; definition: string } = $props();
 </script>
@@ -16,7 +17,7 @@
 	<PopoverContent class="glass-panel w-56 rounded-[1.1rem] p-3 text-foreground">
 		<div class="relative z-10">
 			<div class="mb-1 text-xs font-semibold text-purple-700">{term}</div>
-			<p class="text-xs leading-relaxed text-foreground/88">{definition}</p>
+			<p class="text-xs leading-relaxed text-foreground/88">{@html renderInlineMarkdown(definition)}</p>
 		</div>
 	</PopoverContent>
 </Popover>

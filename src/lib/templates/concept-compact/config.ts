@@ -29,6 +29,7 @@ export const conceptCompactContract: TemplateContract = {
 		'explanation-block',
 		'what-next-bridge'
 	],
+	contextually_present: [],
 	available_components: [
 		'definition-card',
 		'worked-example-card',

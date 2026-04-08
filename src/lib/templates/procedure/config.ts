@@ -22,7 +22,8 @@ export const procedureContract: TemplateContract = {
 	learnerFit: ['general', 'scaffolded'],
 	subjects: ['mathematics', 'chemistry', 'physics'],
 	interactionLevel: 'light',
-	always_present: ['section-header', 'process-steps', 'what-next-bridge'],
+	always_present: ['section-header', 'what-next-bridge'],
+	contextually_present: ['process-steps'],
 	available_components: [
 		'hook-hero',
 		'explanation-block',

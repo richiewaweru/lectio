@@ -5,6 +5,7 @@
 	import { CircleCheck, CircleX, RotateCcw } from 'lucide-svelte';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import AnswerMarker from '$lib/print/AnswerMarker.svelte';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { content, showAnswersInPrint = true }: { content: QuizContent; showAnswersInPrint?: boolean } = $props();
 
@@ -30,12 +31,12 @@
 
 {#if printMode}
 	<div class="quiz-print">
-		<div class="quiz-print-question">{content.question}</div>
+		<div class="quiz-print-question">{@html renderInlineMarkdown(content.question)}</div>
 		<div class="quiz-print-options">
 			{#each content.options as option, idx}
 				<div class="quiz-print-option">
 					<span class="quiz-print-letter">{String.fromCharCode(65 + idx)}.</span>
-					<span class="quiz-print-text">{option.text}</span>
+					<span class="quiz-print-text">{@html renderInlineMarkdown(option.text)}</span>
 					<AnswerMarker isCorrect={option.correct} showAnswers={showAnswersInPrint} />
 				</div>
 			{/each}
@@ -45,7 +46,7 @@
 			{#if correctOption?.explanation}
 				<div class="quiz-print-explanation">
 					<strong>Explanation:</strong>
-					<span>{correctOption.explanation}</span>
+					<span>{@html renderInlineMarkdown(correctOption.explanation)}</span>
 				</div>
 			{/if}
 		{/if}
@@ -56,7 +57,7 @@
 		<div class="space-y-2">
 			<p class="eyebrow text-emerald-600">Quiz</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">Quick concept check</h3>
-			<p class="text-base leading-7 text-foreground/84">{content.question}</p>
+			<p class="text-base leading-7 text-foreground/84">{@html renderInlineMarkdown(content.question)}</p>
 		</div>
 
 		<div class="space-y-2">
@@ -91,9 +92,11 @@
 						{/if}
 
 						<div class="space-y-2">
-							<p class="text-sm font-semibold text-foreground/88">{option.text}</p>
+							<p class="text-sm font-semibold text-foreground/88">{@html renderInlineMarkdown(option.text)}</p>
 							{#if submitted && content.show_explanations !== false}
-								<p class="text-sm leading-6 text-muted-foreground">{option.explanation}</p>
+								<p class="text-sm leading-6 text-muted-foreground">
+									{@html renderInlineMarkdown(option.explanation)}
+								</p>
 							{/if}
 						</div>
 					</div>

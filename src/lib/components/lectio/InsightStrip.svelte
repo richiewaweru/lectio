@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { InsightStripContent } from '$lib/types';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { content }: { content: InsightStripContent } = $props();
 </script>
@@ -21,11 +22,11 @@
 					</p>
 				</div>
 
-				<p class="text-2xl leading-tight font-serif">{cell.value}</p>
+				<p class="text-2xl leading-tight font-serif">{@html renderInlineMarkdown(cell.value)}</p>
 
 				<div class="md:text-right">
 					{#if cell.note}
-						<p class="text-sm leading-6 text-muted-foreground">{cell.note}</p>
+						<p class="text-sm leading-6 text-muted-foreground">{@html renderInlineMarkdown(cell.note)}</p>
 					{:else}
 						<p class="text-sm leading-6 text-muted-foreground/75">Key comparison point</p>
 					{/if}

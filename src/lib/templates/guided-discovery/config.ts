@@ -23,6 +23,7 @@ export const guidedDiscoveryContract: TemplateContract = {
 	subjects: ['mathematics', 'physics', 'biology', 'chemistry'],
 	interactionLevel: 'high',
 	always_present: ['section-header', 'hook-hero', 'explanation-block', 'what-next-bridge'],
+	contextually_present: [],
 	available_components: [
 		'simulation-block',
 		'definition-card',

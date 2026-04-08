@@ -1,38 +1,113 @@
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+import DOMPurify from 'dompurify';
+import katex from 'katex';
+import { marked } from 'marked';
+
+const INLINE_MATH_REGEX = /(?<!\\|\$)\$([^\n$]+?)\$(?!\$)/g;
+const DISPLAY_MATH_REGEX = /\$\$([\s\S]+?)\$\$/g;
+
+const KATEX_SVG_TAGS = [
+	'svg',
+	'g',
+	'path',
+	'line',
+	'rect',
+	'circle',
+	'ellipse',
+	'polygon',
+	'polyline',
+	'defs',
+	'use',
+	'marker',
+	'title',
+	'desc',
+	'clipPath'
+];
+
+const KATEX_ATTRS = [
+	'xmlns',
+	'width',
+	'height',
+	'viewBox',
+	'x',
+	'y',
+	'x1',
+	'x2',
+	'y1',
+	'y2',
+	'd',
+	'transform',
+	'fill',
+	'fill-rule',
+	'stroke',
+	'stroke-width',
+	'stroke-linecap',
+	'stroke-linejoin',
+	'stroke-dasharray',
+	'stroke-dashoffset',
+	'opacity',
+	'points',
+	'r',
+	'rx',
+	'ry',
+	'cx',
+	'cy',
+	'preserveAspectRatio',
+	'focusable',
+	'aria-hidden',
+	'role',
+	'class',
+	'style'
+];
+
+function escapeHtml(text: string): string {
+	return text
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
 }
 
-/**
- * Inline markdown → HTML.
- * Covers **bold**, *italic*, `code`.
- * Safe for {@html} — input is LLM-generated structured content, not arbitrary user HTML.
- */
+function renderMath(expr: string, displayMode: boolean): string {
+	try {
+		return katex.renderToString(expr.trim(), {
+			displayMode,
+			throwOnError: true,
+			trust: false
+		});
+	} catch {
+		const escaped = escapeHtml(expr.trim());
+		return displayMode
+			? `<div class="math-error">$$${escaped}$$</div>`
+			: `<span class="math-error">$${escaped}$</span>`;
+	}
+}
+
+function preprocessMath(text: string): string {
+	return text
+		.replace(DISPLAY_MATH_REGEX, (_match, expr: string) => renderMath(expr, true))
+		.replace(INLINE_MATH_REGEX, (_match, expr: string) => renderMath(expr, false));
+}
+
+function sanitizeHtml(html: string): string {
+	return DOMPurify.sanitize(html, {
+		USE_PROFILES: { html: true, svg: true, svgFilters: true },
+		ADD_TAGS: KATEX_SVG_TAGS,
+		ADD_ATTR: KATEX_ATTRS,
+		ALLOW_DATA_ATTR: false
+	});
+}
+
 export function renderInlineMarkdown(text: string): string {
-  if (!text) return '';
-  return escapeHtml(text)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/__(.+?)__/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/_(.+?)_/g, '<em>$1</em>')
-    .replace(/`(.+?)`/g, '<code class="rounded bg-muted px-1 text-[0.85em]">$1</code>');
+	if (!text) return '';
+	const parsed = marked.parseInline(preprocessMath(text), { gfm: true });
+	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
 
-/**
- * Block markdown → HTML.
- * Extends inline with paragraph breaks and HR.
- * Use only for ExplanationBlock.body — the one field that legitimately spans multiple paragraphs.
- */
 export function renderBlockMarkdown(text: string): string {
-  if (!text) return '';
-  const withInline = renderInlineMarkdown(text);
-  return withInline
-    .replace(/^---$/gm, '<hr class="my-4 border-border/40" />')
-    .replace(/\n\n+/g, '</p><p class="mt-4 text-base leading-7 text-foreground/84">');
+	if (!text) return '';
+	const parsed = marked.parse(preprocessMath(text), { gfm: true, breaks: true });
+	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
 
 /**

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SummaryBlockContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { content }: { content: SummaryBlockContent } = $props();
 </script>
@@ -11,12 +12,12 @@
 	</h3>
 	<ul class="mt-3 list-disc list-inside space-y-1.5 text-sm leading-relaxed">
 		{#each content.items as item}
-			<li>{item.text}</li>
+			<li>{@html renderInlineMarkdown(item.text)}</li>
 		{/each}
 	</ul>
 	{#if content.closing}
 		<p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-			{content.closing}
+			{@html renderInlineMarkdown(content.closing)}
 		</p>
 	{/if}
 </Card>

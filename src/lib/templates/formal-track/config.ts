@@ -27,6 +27,7 @@ export const formalTrackContract: TemplateContract = {
 		'explanation-block',
 		'what-next-bridge'
 	],
+	contextually_present: [],
 	available_components: [
 		'hook-hero',
 		'definition-card',

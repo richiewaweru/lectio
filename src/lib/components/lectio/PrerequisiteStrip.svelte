@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PrerequisiteContent } from '$lib/types';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { content }: { content: PrerequisiteContent } = $props();
 </script>
@@ -29,7 +30,7 @@
 					<PopoverContent class="glass-panel w-64 rounded-[1.1rem] p-3 text-xs leading-relaxed text-muted-foreground">
 						<div class="relative z-10">
 							<div class="mb-1 font-semibold text-foreground">{item.concept}</div>
-							{item.refresher}
+							{@html renderInlineMarkdown(item.refresher)}
 						</div>
 					</PopoverContent>
 				</Popover>
