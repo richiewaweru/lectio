@@ -12,6 +12,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { Button } from '$lib/components/ui/button';
+	import { renderBlockMarkdown } from '$lib/markdown';
 
 	type PracticeStackMode = 'accordion' | 'flat-list';
 	type SelfAssessment = 'matched' | 'review';
@@ -58,12 +59,12 @@
 				{#if problem.context}
 					<p class="practice-print-context">{problem.context}</p>
 				{/if}
-				<p class="practice-print-question">{problem.question}</p>
+				<div class="practice-print-question lectio-rich">{@html renderBlockMarkdown(problem.question)}</div>
 				{#if problem.hints?.length}
 					<div class="practice-print-hints">
 						<p class="practice-print-hints-label"><strong>Hints:</strong></p>
 						{#each problem.hints as hint}
-							<p class="practice-print-hint">• {hint.text}</p>
+							<div class="practice-print-hint lectio-rich">{@html renderBlockMarkdown(hint.text)}</div>
 						{/each}
 					</div>
 				{/if}
@@ -72,8 +73,10 @@
 				{/if}
 				{#if problem.solution && content.solutions_available}
 					<div class="practice-print-solution">
-						<p><strong>Solution:</strong> {problem.solution.approach}</p>
-						<p class="practice-print-answer"><strong>Answer:</strong> {problem.solution.answer}</p>
+						<div class="lectio-rich"><strong>Solution:</strong> {@html renderBlockMarkdown(problem.solution.approach)}</div>
+						<div class="practice-print-answer lectio-rich">
+							<strong>Answer:</strong> {@html renderBlockMarkdown(problem.solution.answer)}
+						</div>
 					</div>
 				{/if}
 			</div>
@@ -107,7 +110,7 @@
 						<p class="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60">
 							Hint {hint.level} of {problem.hints.length}
 						</p>
-						<p>{hint.text}</p>
+						<div class="lectio-rich">{@html renderBlockMarkdown(hint.text)}</div>
 					</div>
 				{/each}
 
@@ -132,7 +135,7 @@
 					</CollapsibleTrigger>
 					<CollapsibleContent>
 						<div class="mt-2 rounded-xl bg-emerald-50 p-3 text-sm font-medium leading-relaxed text-emerald-800">
-							{problem.solution.answer}
+							<div class="lectio-rich">{@html renderBlockMarkdown(problem.solution.answer)}</div>
 						</div>
 
 						<Collapsible class="mt-2">
@@ -146,9 +149,9 @@
 									<p class="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60">
 										Approach
 									</p>
-									<p>{problem.solution.approach}</p>
+									<div class="lectio-rich">{@html renderBlockMarkdown(problem.solution.approach)}</div>
 									{#if problem.solution.worked}
-										<p class="mt-3">{problem.solution.worked}</p>
+										<div class="lectio-rich mt-3">{@html renderBlockMarkdown(problem.solution.worked)}</div>
 									{/if}
 								</div>
 							</CollapsibleContent>
@@ -203,7 +206,9 @@
 									{#if problem.context}
 										<div class="mb-1 text-xs italic text-muted-foreground">{problem.context}</div>
 									{/if}
-									<span class="text-sm leading-relaxed">{problem.question}</span>
+									<div class="lectio-rich text-sm leading-relaxed">
+										{@html renderBlockMarkdown(problem.question)}
+									</div>
 								</div>
 							</div>
 						</AccordionTrigger>
@@ -225,7 +230,9 @@
 								{#if problem.context}
 									<div class="mb-1 text-xs italic text-muted-foreground">{problem.context}</div>
 								{/if}
-								<p class="text-sm leading-relaxed">{problem.question}</p>
+								<div class="lectio-rich text-sm leading-relaxed">
+									{@html renderBlockMarkdown(problem.question)}
+								</div>
 							</div>
 						</div>
 

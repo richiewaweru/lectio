@@ -20,6 +20,7 @@ export const lowLoadContract: TemplateContract = {
 	subjects: ['mathematics', 'science', 'english'],
 	interactionLevel: 'light',
 	always_present: ['section-header', 'explanation-block', 'what-next-bridge'],
+	contextually_present: [],
 	available_components: ['hook-hero', 'definition-card', 'callout-block', 'student-textbox', 'summary-block', 'short-answer', 'section-divider', 'key-fact', 'pitfall-alert'],
 	component_budget: {},
 	max_per_section: { 'quiz-check': 1, 'practice-stack': 1, 'definition-card': 1, 'callout-block': 3 },

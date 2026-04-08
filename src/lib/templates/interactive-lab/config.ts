@@ -22,7 +22,8 @@ export const interactiveLabContract: TemplateContract = {
 	learnerFit: ['visual', 'general', 'scaffolded'],
 	subjects: ['mathematics', 'physics', 'chemistry', 'statistics'],
 	interactionLevel: 'high',
-	always_present: ['section-header', 'simulation-block', 'what-next-bridge'],
+	always_present: ['section-header', 'what-next-bridge'],
+	contextually_present: ['simulation-block'],
 	available_components: [
 		'hook-hero',
 		'explanation-block',

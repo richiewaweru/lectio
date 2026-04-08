@@ -4,6 +4,7 @@
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import Checkboxes from '$lib/print/Checkboxes.svelte';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let {
 		content,
@@ -54,7 +55,7 @@
 						<div class="process-print-step-number">{step.number}</div>
 						<div class="process-print-step-content">
 							<div class="process-print-action">{step.action}</div>
-							<div class="process-print-detail">{step.detail}</div>
+							<div class="process-print-detail">{@html renderInlineMarkdown(step.detail)}</div>
 							{#if step.warning}
 								<div class="process-print-warning">⚠ {step.warning}</div>
 							{/if}
@@ -71,7 +72,7 @@
 			<p class="eyebrow text-emerald-700">Process</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">{content.title}</h3>
 			{#if content.intro}
-				<p class="text-sm leading-6 text-muted-foreground">{content.intro}</p>
+				<p class="text-sm leading-6 text-muted-foreground">{@html renderInlineMarkdown(content.intro)}</p>
 			{/if}
 		</div>
 
@@ -85,7 +86,7 @@
 						<p class="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
 							{step.action}
 						</p>
-						<p class="text-base leading-7 text-foreground/84">{step.detail}</p>
+						<p class="text-base leading-7 text-foreground/84">{@html renderInlineMarkdown(step.detail)}</p>
 						{#if step.input || step.output}
 							<p class="text-xs uppercase tracking-[0.16em] text-muted-foreground">
 								{formatInputOutput(step)}

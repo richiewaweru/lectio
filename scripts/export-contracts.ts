@@ -76,6 +76,7 @@ for (const contract of contracts) {
 		subjects: contract.subjects,
 		interaction_level: contract.interactionLevel,
 		always_present: contract.always_present,
+		contextually_present: contract.contextually_present ?? [],
 		available_components: contract.available_components,
 		component_budget: contract.component_budget,
 		max_per_section: contract.max_per_section,

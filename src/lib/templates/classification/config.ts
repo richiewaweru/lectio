@@ -21,6 +21,7 @@ export const classificationContract: TemplateContract = {
 	subjects: ['civics', 'biology', 'history'],
 	interactionLevel: 'light',
 	always_present: ['section-header', 'what-next-bridge'],
+	contextually_present: [],
 	available_components: ['hook-hero', 'comparison-grid', 'explanation-block', 'definition-family', 'insight-strip', 'practice-stack', 'pitfall-alert', 'callout-block', 'student-textbox', 'summary-block', 'short-answer', 'fill-in-blank', 'section-divider'],
 	component_budget: { 'comparison-grid': 1 },
 	max_per_section: { 'practice-stack': 1, 'quiz-check': 1 },

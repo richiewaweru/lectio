@@ -1,4 +1,5 @@
 @import 'katex/dist/katex.min.css';
+@import './markdown.css';
 @source "./components/lectio";
 @source "./components/ui";
 @source "./templates";

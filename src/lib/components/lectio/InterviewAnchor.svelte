@@ -2,6 +2,7 @@
 	import type { InterviewContent } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
 	import { MessageCircle } from 'lucide-svelte';
+	import { renderBlockMarkdown } from '$lib/markdown';
 
 	let { content }: { content: InterviewContent } = $props();
 </script>
@@ -12,14 +13,16 @@
 		<div class="space-y-3">
 			<div class="space-y-2">
 				<p class="eyebrow text-orange-600">Explain it</p>
-				<p class="text-sm leading-7 text-foreground">{content.prompt}</p>
+				<div class="lectio-rich text-sm leading-7 text-foreground">{@html renderBlockMarkdown(content.prompt)}</div>
 				<p class="text-xs italic text-muted-foreground">Audience: {content.audience}</p>
 			</div>
 
 			{#if content.follow_up}
 				<div class="border-t border-orange-200 pt-3">
 					<p class="text-xs font-medium text-orange-600">Follow-up</p>
-					<p class="mt-1 text-sm leading-relaxed text-foreground/80">{content.follow_up}</p>
+					<div class="lectio-rich mt-1 text-sm leading-relaxed text-foreground/80">
+						{@html renderBlockMarkdown(content.follow_up)}
+					</div>
 				</div>
 			{/if}
 		</div>

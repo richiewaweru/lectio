@@ -23,6 +23,7 @@ export const visualLedContract: TemplateContract = {
 		'section-header',
 		'what-next-bridge'
 	],
+	contextually_present: [],
 	available_components: [
 		'hook-hero',
 		'diagram-block',

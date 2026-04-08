@@ -23,7 +23,8 @@ export const timelineContract: TemplateContract = {
 	learnerFit: ['narrative', 'general'],
 	subjects: ['history', 'science', 'english'],
 	interactionLevel: 'medium',
-	always_present: ['section-header', 'timeline-block', 'what-next-bridge'],
+	always_present: ['section-header', 'what-next-bridge'],
+	contextually_present: ['timeline-block'],
 	available_components: [
 		'hook-hero',
 		'explanation-block',

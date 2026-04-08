@@ -4,6 +4,7 @@
 	import { Brain } from 'lucide-svelte';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import RuledLines from '$lib/print/RuledLines.svelte';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let { content }: { content: ReflectionContent } = $props();
 
@@ -23,7 +24,7 @@
 
 {#if printMode}
 	<div class="reflection-print">
-		<p class="reflection-print-prompt">{content.prompt}</p>
+		<p class="reflection-print-prompt">{@html renderInlineMarkdown(content.prompt)}</p>
 		{#if content.type === 'sentence-stem' && content.sentence_stem}
 			<p class="reflection-print-stem">{content.sentence_stem} ________________</p>
 		{/if}
@@ -36,7 +37,7 @@
 		<div class="flex-1 space-y-3">
 			<div class="space-y-2">
 				<p class="eyebrow text-indigo-600">{typeLabels[content.type] ?? 'Reflect'}</p>
-				<p class="text-sm leading-7 text-foreground">{content.prompt}</p>
+				<p class="text-sm leading-7 text-foreground">{@html renderInlineMarkdown(content.prompt)}</p>
 			</div>
 
 			{#if content.type === 'sentence-stem' && content.sentence_stem}

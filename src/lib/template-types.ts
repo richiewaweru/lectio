@@ -79,6 +79,7 @@ export interface TemplateContract {
 
   // ── Component contract ─────────────────────────────────────────────────────
   always_present: string[];
+  contextually_present?: string[];
   available_components: string[];
   component_budget: Partial<Record<string, number>>;
   max_per_section: Partial<Record<string, number>>;

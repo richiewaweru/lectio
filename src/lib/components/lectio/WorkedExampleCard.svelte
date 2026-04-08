@@ -2,7 +2,7 @@
 	import type { WorkedExampleContent, WorkedStep } from '$lib/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderBlockMarkdown, renderInlineMarkdown } from '$lib/markdown';
 	import ExpandedSteps from '$lib/print/ExpandedSteps.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
@@ -53,7 +53,9 @@
 			<p class="text-sm font-semibold uppercase tracking-[0.18em] text-violet-700">
 				{step.label}
 			</p>
-			<p class="text-base leading-7 text-foreground/85">{@html renderInlineMarkdown(step.content)}</p>
+			<div class="lectio-rich text-base leading-7 text-foreground/85">
+				{@html renderBlockMarkdown(step.content)}
+			</div>
 			{#if step.formula}
 				<div class="rounded-[1rem] bg-white/85 p-3 text-primary">
 					<MathFormula formula={step.formula} displayMode />

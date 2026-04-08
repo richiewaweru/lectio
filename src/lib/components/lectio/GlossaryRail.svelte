@@ -4,6 +4,7 @@
 	import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '$lib/components/ui/collapsible';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { cn } from '$lib/utils';
+	import { renderInlineMarkdown } from '$lib/markdown';
 
 	let {
 		content,
@@ -18,7 +19,9 @@
 		{#each content.terms as term}
 			<li class="rounded-[1.25rem] border border-white/12 bg-white/[0.12] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
 				<div class="text-sm font-semibold text-primary-foreground">{term.term}</div>
-				<div class="text-xs leading-relaxed text-primary-foreground/94">{term.definition}</div>
+				<div class="text-xs leading-relaxed text-primary-foreground/94">
+					{@html renderInlineMarkdown(term.definition)}
+				</div>
 				{#if term.used_in}
 					<div class="mt-1 text-xs text-primary-foreground/84">Used in: {term.used_in}</div>
 				{/if}
@@ -47,7 +50,9 @@
 						<p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground">
 							{term.term}
 						</p>
-						<p class="mt-1 text-sm leading-6 text-primary-foreground/84">{term.definition}</p>
+						<p class="mt-1 text-sm leading-6 text-primary-foreground/84">
+							{@html renderInlineMarkdown(term.definition)}
+						</p>
 					</div>
 				{/each}
 			</div>
