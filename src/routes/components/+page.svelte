@@ -78,7 +78,7 @@
 		'diagram-block': { content: physicsSection.diagram },
 		'diagram-compare': { content: physicsSection.diagram_compare },
 		'diagram-series': { content: physicsSection.diagram_series },
-		'simulation-block': { content: physicsSection.simulations?.[0] },
+		'simulation-block': { content: physicsSection.simulation },
 		'timeline-block': { content: timelinePreview.section.timeline }
 	};
 

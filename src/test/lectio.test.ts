@@ -19,7 +19,7 @@ import { validateSection } from '$lib/validate';
 
 const repeatWords = (word: string, count: number) =>
 	Array.from({ length: count }, () => word).join(' ');
-const primarySimulation = physicsSection.simulations![0];
+const primarySimulation = physicsSection.simulation!;
 
 describe('Lectio component harmonization', () => {
 	it('renders inline hook SVG ahead of image fallback when both are present', () => {
@@ -312,36 +312,10 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText('static_diagram')).toBeInTheDocument();
 	});
 
-	it('renders multiple simulations in high-interaction templates', () => {
-		const secondSimulation = {
-			...primarySimulation,
-			explanation: 'A second simulation reinforces the same law from another angle.',
-			spec: {
-				...primarySimulation.spec,
-				goal: 'Observe how a second interaction compares force and acceleration.'
-			}
-		};
-
+	it('renders at most one SimulationBlock in InteractiveLabLayout', () => {
 		render(InteractiveLabLayout, {
 			props: {
-				section: {
-					...physicsSection,
-					simulations: [primarySimulation, secondSimulation]
-				}
-			}
-		});
-
-		expect(screen.getAllByRole('button', { name: /Expand simulation/i })).toHaveLength(2);
-	});
-
-	it('still renders a legacy singular simulation once', () => {
-		render(InteractiveLabLayout, {
-			props: {
-				section: {
-					...physicsSection,
-					simulations: undefined,
-					simulation: primarySimulation
-				}
+				section: physicsSection
 			}
 		});
 
@@ -431,26 +405,24 @@ describe('Lectio component harmonization', () => {
 					physicsSection.diagram_series!.diagrams[1]
 				]
 			},
-			simulations: [
-				{
-					...primarySimulation,
-					explanation: repeatWords('simulation', 61),
-					spec: {
-						...primarySimulation.spec,
-						goal: repeatWords('goal', 41),
-						dimensions: {
-							...primarySimulation.spec.dimensions,
-							height: 0
-						}
-					},
-					fallback_diagram: {
-						...physicsSection.diagram!,
-						caption: repeatWords('fallback', 61),
-						alt_text: repeatWords('fallbackalt', 81),
-						callouts: oversizedCallouts
+			simulation: {
+				...primarySimulation,
+				explanation: repeatWords('simulation', 61),
+				spec: {
+					...primarySimulation.spec,
+					goal: repeatWords('goal', 41),
+					dimensions: {
+						...primarySimulation.spec.dimensions,
+						height: 0
 					}
+				},
+				fallback_diagram: {
+					...physicsSection.diagram!,
+					caption: repeatWords('fallback', 61),
+					alt_text: repeatWords('fallbackalt', 81),
+					callouts: oversizedCallouts
 				}
-			],
+			},
 			what_next: {
 				...physicsSection.what_next,
 				next: repeatWords('next', 16),
@@ -520,37 +492,12 @@ describe('Lectio component harmonization', () => {
 
 	it('includes SimulationBlock in the field map (bug fix verification)', () => {
 		const map = getComponentFieldMap();
-		expect(map['simulation-block']).toBe('simulations');
+		expect(map['simulation-block']).toBe('simulation');
 	});
 
-	it('validates every simulation in the plural array and still supports the legacy singular field', () => {
+	it('validates the singular simulation field', () => {
 		const simulationWarnings = validateSection({
 			...physicsSection,
-			simulations: [
-				{
-					...primarySimulation,
-					spec: {
-						...primarySimulation.spec,
-						goal: repeatWords('goal', 41)
-					}
-				},
-				{
-					...primarySimulation,
-					spec: {
-						...primarySimulation.spec,
-						goal: repeatWords('goal', 41)
-					}
-				}
-			]
-		});
-
-		expect(
-			simulationWarnings.filter((warning) => warning === '[Lectio/SimulationBlock] goal exceeds 40 words')
-		).toHaveLength(2);
-
-		const legacyWarnings = validateSection({
-			...physicsSection,
-			simulations: undefined,
 			simulation: {
 				...primarySimulation,
 				spec: {
@@ -560,7 +507,7 @@ describe('Lectio component harmonization', () => {
 			}
 		});
 
-		expect(legacyWarnings).toContain('[Lectio/SimulationBlock] goal exceeds 40 words');
+		expect(simulationWarnings).toContain('[Lectio/SimulationBlock] goal exceeds 40 words');
 	});
 
 	it('accepts image-backed diagrams without requiring SVG content', () => {

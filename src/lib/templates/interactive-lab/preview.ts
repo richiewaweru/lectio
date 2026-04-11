@@ -31,8 +31,7 @@ const labPhysicsSection: SectionContent = {
 		anchor: 'the relationship between force, mass, and acceleration',
 	},
 
-	simulations: [
-		{
+	simulation: {
 		explanation:
 			'Drag the sliders to change net force and mass. Watch how acceleration responds in real time.',
 		html_content: `<!DOCTYPE html>
@@ -125,8 +124,7 @@ update();
 			alt_text:
 				'Free body diagram showing a 5 kg block with force arrows for applied force and friction.',
 		},
-		}
-	],
+	},
 
 	explanation: {
 		body: "What you just saw is Newton's Second Law in action. The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. Written as F = ma, this equation links three quantities: force (Newtons), mass (kilograms), and acceleration (metres per second squared). When you doubled the force in the simulation, acceleration doubled. When you doubled the mass, acceleration halved. This is exactly what the equation predicts — and what you discovered by experimenting first.",
