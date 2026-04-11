@@ -46,19 +46,10 @@ describe('LessonDocument conversion', () => {
 		expect(result.errors.some((e) => e.includes('missing-block'))).toBe(true);
 	});
 
-	it('preserves repeated simulation blocks through document round-trips', () => {
-		const secondSimulation = {
-			...physicsSection.simulations![0],
-			explanation: 'A second interaction that extends the same concept.',
-			spec: {
-				...physicsSection.simulations![0].spec,
-				goal: 'Compare how a second interaction reinforces Newtons Second Law.'
-			}
-		};
+	it('emits at most one simulation-block per section from singular simulation', () => {
 		const section = {
 			...physicsSection,
-			section_id: 'phys-02-multi',
-			simulations: [physicsSection.simulations![0], secondSimulation]
+			section_id: 'phys-sim-single'
 		};
 
 		const doc = fromSectionContents([section], {
@@ -70,28 +61,47 @@ describe('LessonDocument conversion', () => {
 			(block) => block.component_id === 'simulation-block'
 		);
 
-		expect(simulationBlocks).toHaveLength(2);
+		expect(simulationBlocks).toHaveLength(1);
 
 		const back = toSectionContents(doc)[0];
-		expect(back.simulations).toEqual(section.simulations);
+		expect(back.simulation).toEqual(section.simulation);
 	});
 
-	it('reads legacy singular simulation content and rebuilds the plural shape', () => {
-		const legacySection = {
+	it('keeps only the first simulation-block when a document lists duplicates', () => {
+		const secondSimulation = {
+			...physicsSection.simulation!,
+			explanation: 'A second interaction that should be ignored on load.'
+		};
+		const section = {
 			...physicsSection,
-			section_id: 'phys-02-legacy',
-			simulations: undefined,
-			simulation: physicsSection.simulations![0]
+			section_id: 'phys-dup-blocks'
 		};
 
-		const doc = fromSectionContents([legacySection], {
-			title: legacySection.header.title,
-			subject: legacySection.header.subject,
+		const doc = fromSectionContents([section], {
+			title: section.header.title,
+			subject: section.header.subject,
 			preset_id: 'blue-classroom'
 		});
-		const back = toSectionContents(doc)[0];
 
-		expect(back.simulations).toEqual([physicsSection.simulations![0]]);
-		expect(back.simulation).toBeUndefined();
+		const blockIds = doc.sections[0].block_ids;
+		const firstSimIdx = blockIds.findIndex((id) => doc.blocks[id].component_id === 'simulation-block');
+		expect(firstSimIdx).toBeGreaterThanOrEqual(0);
+
+		const templateBlock = doc.blocks[blockIds[firstSimIdx]];
+		const dupId = 'dup-simulation-block-test-id';
+		doc.blocks[dupId] = {
+			...templateBlock,
+			id: dupId,
+			content: structuredClone(secondSimulation) as Record<string, unknown>,
+			position: templateBlock.position + 0.5
+		};
+		blockIds.splice(firstSimIdx + 1, 0, dupId);
+
+		const validated = validateDocument(doc);
+		expect(validated.warnings.some((w) => w.includes('only the first is loaded'))).toBe(true);
+
+		const back = toSectionContents(doc)[0];
+		expect(back.simulation).toEqual(section.simulation);
+		expect(back.simulation?.explanation).not.toEqual(secondSimulation.explanation);
 	});
 });

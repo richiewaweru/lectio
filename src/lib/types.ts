@@ -544,8 +544,7 @@ export interface SectionContent {
 	quiz?: QuizContent;
 	reflection?: ReflectionContent;
 	glossary?: GlossaryContent;
-	simulations?: SimulationContent[]; // preferred multi-interaction field
-	simulation?: SimulationContent; // legacy single-interaction fallback
+	simulation?: SimulationContent;
 	interview?: InterviewContent;
 
 	// New harmonisation components

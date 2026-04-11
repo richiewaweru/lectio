@@ -584,8 +584,7 @@ export const physicsSection: SectionContent = {
 		space: 4,
 	},
 
-	simulations: [
-		{
+	simulation: {
 		explanation:
 			'Drag the force slider to see how acceleration changes for a fixed mass. A simple, direct test of F = ma.',
 		html_content: `<!DOCTYPE html>
@@ -644,8 +643,7 @@ fs.addEventListener('input',upd);upd();
 			alt_text:
 				'Fallback diagram showing a 5 kilogram block with applied force and friction arrows.'
 		}
-		}
-	],
+	},
 
 	callout: {
 		variant: 'exam-tip',

@@ -88,8 +88,7 @@ const discoveryMathSection: SectionContent = {
 		related_terms: ['Independent Events', 'Conditional Probability', 'Sample Space'],
 	},
 
-	simulations: [
-		{
+	simulation: {
 		explanation:
 			'Build your own probability tree by choosing events. Watch the compound probabilities calculate as branches grow.',
 		html_content: `<!DOCTYPE html>
@@ -227,8 +226,7 @@ draw();
 			alt_text:
 				'Tree diagram branching from Start into Heads and Tails, each further branching into Heads and Tails, with final probabilities of one quarter each.',
 		},
-		}
-	],
+	},
 
 	worked_example: {
 		title: 'Two dice: probability of doubles',

@@ -12,7 +12,6 @@ import type {
 	TimelineContent,
 	VideoEmbedContent
 } from './types';
-import { getSectionSimulations } from './section-content';
 
 function words(text: string): number {
 	return text.trim().split(/\s+/).filter(Boolean).length;
@@ -369,9 +368,9 @@ export function validateSection(section: SectionContent): string[] {
 		validateImageBlock(section.image_block, w);
 	}
 
-	getSectionSimulations(section).forEach((simulation) => {
-		validateSimulation(simulation, w);
-	});
+	if (section.simulation) {
+		validateSimulation(section.simulation, w);
+	}
 
 	return w;
 }

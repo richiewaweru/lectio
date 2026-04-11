@@ -102,7 +102,7 @@ The `component-field-map.json` file maps component IDs to their `SectionContent`
   "hook-hero": "hook",
   "explanation-block": "explanation",
   "practice-stack": "practice",
-  "simulation-block": "simulations"
+  "simulation-block": "simulation"
 }
 ```
 
