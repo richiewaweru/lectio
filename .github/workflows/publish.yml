@@ -36,6 +36,8 @@ jobs:
         
       - name: Export contracts
         run: npm run export-contracts
+        env:
+          LECTIO_CONTRACTS_DIR: contracts
         
       - name: Verify build outputs
         run: |
