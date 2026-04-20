@@ -16,3 +16,4 @@ npm-debug.log*
 
 # Ensure contracts are version controlled for publish
 !contracts/
+.env.example
