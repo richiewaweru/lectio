@@ -462,23 +462,27 @@ export type SimulationType =
 	| 'molecule_viewer'
 	| 'timeline_scrubber';
 
+export interface InteractionContext {
+	learner_level: string;
+	template_id: string;
+	color_mode: 'light' | 'dark';
+	accent_color: string;
+	surface_color: string;
+	font_mono: string;
+}
+
+export interface InteractionDimensions {
+	width: string; // e.g. "100%"
+	height: number; // px
+	resizable: boolean;
+}
+
 export interface InteractionSpec {
 	type: SimulationType;
 	goal: string; // max 40 words
 	anchor_content: Record<string, unknown>;
-	context: {
-		learner_level: string;
-		template_id: string;
-		color_mode: 'light' | 'dark';
-		accent_color: string;
-		surface_color: string;
-		font_mono: string;
-	};
-	dimensions: {
-		width: string; // e.g. "100%"
-		height: number; // px
-		resizable: boolean;
-	};
+	context: InteractionContext;
+	dimensions: InteractionDimensions;
 	print_translation: 'static_midstate' | 'static_diagram' | 'hide';
 }
 
