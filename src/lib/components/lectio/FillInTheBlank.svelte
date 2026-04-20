@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { FillInBlankContent } from '$lib/types';
+	import type { FillInBlankContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { usePrintMode } from '$lib/utils/printContext';

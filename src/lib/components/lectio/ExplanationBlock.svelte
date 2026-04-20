@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { ExplanationContent } from '$lib/types';
+	import type { ExplanationContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
-	import { renderBlockMarkdown } from '$lib/markdown';
+	import { renderBlockMarkdown } from '$lib/utils/markdown';
 	import { BookOpen, Lightbulb, Info, TriangleAlert, GraduationCap } from 'lucide-svelte';
 
 	const calloutConfig = {

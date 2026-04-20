@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { MediaReference } from '$lib/document';
-	import type { ImageBlockContent } from '$lib/types';
+	import type { MediaReference } from '$lib/teacher/document';
+	import type { ImageBlockContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 
 	let {

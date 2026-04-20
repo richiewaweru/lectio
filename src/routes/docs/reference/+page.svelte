@@ -42,8 +42,8 @@
 
 <h2>TypeScript sources of truth</h2>
 <ul>
-	<li><code>src/lib/types.ts</code> — <code>SectionContent</code> and content interfaces.</li>
-	<li><code>src/lib/registry.ts</code> — Component metadata.</li>
-	<li><code>src/lib/template-registry.ts</code> — Template contracts and <code>render</code> components.</li>
+	<li><code>src/lib/schema/types.ts</code> — <code>SectionContent</code> and content interfaces.</li>
+	<li><code>src/lib/schema/registry.ts</code> — Component metadata.</li>
+	<li><code>src/lib/templates/registry.ts</code> — Template contracts and <code>render</code> components.</li>
 	<li><code>src/lib/index.ts</code> — Public exports.</li>
 </ul>

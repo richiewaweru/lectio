@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SectionDividerContent } from '$lib/types';
+	import type { SectionDividerContent } from '$lib/schema/types';
 	import { Separator } from '$lib/components/ui/separator';
 
 	let { content }: { content: SectionDividerContent } = $props();

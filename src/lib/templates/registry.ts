@@ -1,5 +1,5 @@
-import type { TemplateDefinition, TemplateFilters } from '$lib/template-types';
-import { validateTemplateDefinition } from '$lib/template-validation';
+import type { TemplateDefinition, TemplateFilters } from '$lib/templates/types';
+import { validateTemplateDefinition } from '$lib/templates/validation';
 
 import { classificationContract } from '$lib/templates/classification/config';
 import ClassificationLayout from '$lib/templates/classification/layout.svelte';

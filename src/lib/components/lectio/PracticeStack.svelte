@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PracticeContent } from '$lib/types';
+	import type { PracticeContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import RuledLines from '$lib/print/RuledLines.svelte';
@@ -12,7 +12,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { Button } from '$lib/components/ui/button';
-	import { renderBlockMarkdown } from '$lib/markdown';
+	import { renderBlockMarkdown } from '$lib/utils/markdown';
 
 	type PracticeStackMode = 'accordion' | 'flat-list';
 	type SelfAssessment = 'matched' | 'review';

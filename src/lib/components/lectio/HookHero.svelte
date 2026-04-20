@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { HookHeroContent } from '$lib/types';
+	import type { HookHeroContent } from '$lib/schema/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { BarChart3, CircleHelp, Quote, Sparkles } from 'lucide-svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: HookHeroContent } = $props();
 

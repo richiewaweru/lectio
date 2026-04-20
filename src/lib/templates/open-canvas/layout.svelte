@@ -30,7 +30,7 @@
 		SimulationBlock,
 		WhatNextBridge
 	} from '$lib/components/lectio';
-	import type { SectionContent } from '$lib/types';
+	import type { SectionContent } from '$lib/schema/types';
 
 	let { section }: { section: SectionContent } = $props();
 </script>

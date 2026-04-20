@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-import { getTemplateById } from '$lib/template-registry';
+import { getTemplateById } from '$lib/templates/registry';
 
 export function load({ params }: { params: { templateId: string } }) {
 	if (!getTemplateById(params.templateId)) {

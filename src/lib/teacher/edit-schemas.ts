@@ -1,4 +1,4 @@
-import { getComponentById, getComponentFieldMap } from './registry';
+import { getComponentById, getComponentFieldMap } from '../schema/registry';
 
 export type FieldInputType =
 	| 'text'

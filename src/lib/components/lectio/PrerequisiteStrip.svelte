@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { PrerequisiteContent } from '$lib/types';
+	import type { PrerequisiteContent } from '$lib/schema/types';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: PrerequisiteContent } = $props();
 </script>

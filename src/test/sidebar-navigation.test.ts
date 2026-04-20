@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/svelte';
 import { describe, expect, it } from 'vitest';
 
-import { getStableComponents } from '$lib/registry';
+import { getStableComponents } from '$lib/schema/registry';
 import AppSidebar from '$lib/navigation/AppSidebar.svelte';
 import { getSidebarNavigation } from '$lib/navigation/sidebar-navigation';
-import { templateRegistry } from '$lib/template-registry';
+import { templateRegistry } from '$lib/templates/registry';
 
 describe('sidebar navigation', () => {
 	it('derives component and template links from the live registries in order', () => {

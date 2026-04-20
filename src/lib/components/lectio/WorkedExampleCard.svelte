@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { WorkedExampleContent, WorkedStep } from '$lib/types';
+	import type { WorkedExampleContent, WorkedStep } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
-	import { renderBlockMarkdown, renderInlineMarkdown } from '$lib/markdown';
+	import { renderBlockMarkdown, renderInlineMarkdown } from '$lib/utils/markdown';
 	import ExpandedSteps from '$lib/print/ExpandedSteps.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';

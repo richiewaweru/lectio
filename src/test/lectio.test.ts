@@ -13,9 +13,9 @@ import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
 import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
-import { calculusSection, physicsSection } from '$lib/dummy-content';
-import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/registry';
-import { validateSection } from '$lib/validate';
+import { calculusSection, physicsSection } from '$lib/dev/dummy-content';
+import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/schema/registry';
+import { validateSection } from '$lib/schema/validate';
 
 const repeatWords = (word: string, count: number) =>
 	Array.from({ length: count }, () => word).join(' ');

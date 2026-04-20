@@ -1,4 +1,4 @@
-import type { TemplatePreview } from '$lib/template-types';
+import type { TemplatePreview } from '$lib/templates/types';
 
 export const openCanvasPreview: TemplatePreview = {
 	section: {

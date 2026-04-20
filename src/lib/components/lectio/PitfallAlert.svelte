@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { PitfallContent } from '$lib/types';
+	import type { PitfallContent } from '$lib/schema/types';
 	import { Alert, AlertTitle, AlertDescription } from '$lib/components/ui/alert';
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { TriangleAlert } from 'lucide-svelte';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: PitfallContent } = $props();
 

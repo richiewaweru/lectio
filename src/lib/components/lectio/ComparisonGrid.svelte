@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ComparisonGridContent } from '$lib/types';
+	import type { ComparisonGridContent } from '$lib/schema/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
 

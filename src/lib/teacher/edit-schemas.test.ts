@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { getEditSchema } from './edit-schemas';
-import { getComponentFieldMap } from './registry';
+import { getComponentFieldMap } from '../schema/registry';
 
 describe('edit-schemas', () => {
 	it('returns a schema for every component with a section field', () => {

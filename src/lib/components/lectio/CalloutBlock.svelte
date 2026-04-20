@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CalloutBlockContent } from '$lib/types';
+	import type { CalloutBlockContent } from '$lib/schema/types';
 	import { Alert, AlertTitle, AlertDescription } from '$lib/components/ui/alert';
 	import { Info, Lightbulb, TriangleAlert, GraduationCap, BookOpen } from 'lucide-svelte';
 

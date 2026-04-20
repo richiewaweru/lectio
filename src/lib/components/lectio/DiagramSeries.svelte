@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DiagramSeriesContent } from '$lib/types';
+	import type { DiagramSeriesContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';

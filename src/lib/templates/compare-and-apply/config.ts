@@ -1,4 +1,4 @@
-import type { TemplateContract } from '$lib/template-types';
+import type { TemplateContract } from '$lib/templates/types';
 
 import { compareAndApplyPresetIds } from './presets';
 

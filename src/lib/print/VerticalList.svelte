@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TimelineEvent } from '$lib/types';
+	import type { TimelineEvent } from '$lib/schema/types';
 
 	let {
 		events,

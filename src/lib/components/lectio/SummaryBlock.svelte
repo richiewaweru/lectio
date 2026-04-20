@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { SummaryBlockContent } from '$lib/types';
+	import type { SummaryBlockContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: SummaryBlockContent } = $props();
 </script>

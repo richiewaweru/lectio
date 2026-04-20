@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { SectionContent } from '$lib/types';
-	import { validateSection, warnIfInvalid } from '$lib/validate';
+	import type { SectionContent } from '$lib/schema/types';
+	import { validateSection, warnIfInvalid } from '$lib/schema/validate';
 	import {
 		SectionHeader,
 		PrerequisiteStrip,

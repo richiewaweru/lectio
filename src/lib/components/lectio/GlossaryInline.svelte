@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { term, definition }: { term: string; definition: string } = $props();
 </script>

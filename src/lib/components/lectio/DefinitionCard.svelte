@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { DefinitionContent } from '$lib/types';
+	import type { DefinitionContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
 	import { ChevronRight } from 'lucide-svelte';
 	import MathFormula from './MathFormula.svelte';
-	import { renderInlineMarkdown, looksLikeLatex } from '$lib/markdown';
+	import { renderInlineMarkdown, looksLikeLatex } from '$lib/utils/markdown';
 
 	let { content }: { content: DefinitionContent } = $props();
 	let showFormal = $state(false);

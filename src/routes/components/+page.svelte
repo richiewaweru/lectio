@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getStableComponents } from '$lib/registry';
-	import { calculusSection, physicsSection } from '$lib/dummy-content';
+	import { getStableComponents } from '$lib/schema/registry';
+	import { calculusSection, physicsSection } from '$lib/dev/dummy-content';
 	import { compareAndApplyPreview } from '$lib/templates/compare-and-apply/preview';
 	import { timelinePreview } from '$lib/templates/timeline/preview';
 	import { Card } from '$lib/components/ui/card';

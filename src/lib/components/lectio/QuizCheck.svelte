@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { QuizContent } from '$lib/types';
+	import type { QuizContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { CircleCheck, CircleX, RotateCcw } from 'lucide-svelte';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import AnswerMarker from '$lib/print/AnswerMarker.svelte';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content, showAnswersInPrint = true }: { content: QuizContent; showAnswersInPrint?: boolean } = $props();
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { ProcessContent } from '$lib/types';
+	import type { ProcessContent } from '$lib/schema/types';
 	import { Button } from '$lib/components/ui/button';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import Checkboxes from '$lib/print/Checkboxes.svelte';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let {
 		content,

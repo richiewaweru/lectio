@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { InsightStripContent } from '$lib/types';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import type { InsightStripContent } from '$lib/schema/types';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: InsightStripContent } = $props();
 </script>

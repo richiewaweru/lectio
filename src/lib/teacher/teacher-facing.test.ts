@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { componentRegistry } from './registry';
+import { componentRegistry } from '../schema/registry';
 import { teacherFor } from './teacher-facing';
 
 describe('teacher-facing metadata', () => {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
-	import { getTemplateById } from '$lib/template-registry';
+	import { getTemplateById } from '$lib/templates/registry';
 	import TemplateContractPanel from '$lib/templates/TemplateContractPanel.svelte';
 	import TemplateContractDrawer from '$lib/templates/TemplateContractDrawer.svelte';
 	import TemplatePreviewSurface from '$lib/templates/TemplatePreviewSurface.svelte';
