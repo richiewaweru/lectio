@@ -27,6 +27,8 @@ export interface ComponentMeta {
 	shadcnPrimitive: string;
 	capacity: Record<string, number | string>;
 	printFallback: string;
+	/** Guidance for external generators producing this component's section field content */
+	generationHint?: string;
 	status: 'stable' | 'beta' | 'planned';
 	group: 1 | 2 | 3 | 4 | 5 | 6 | 7;
 	/**
@@ -576,6 +578,22 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		status: 'beta'
 	}
 };
+
+function defaultGenerationHint(component: ComponentMeta): string {
+	const field = component.sectionField ?? 'section';
+	return `Generate ${field} content that ${component.purpose.toLowerCase()}. Prioritize ${component.cognitiveJob.toLowerCase()} with concise, learner-ready wording.`;
+}
+
+for (const component of Object.values(componentRegistry)) {
+	if (component.sectionField === null) continue;
+	const hint = component.generationHint?.trim();
+	component.generationHint = hint && hint.length > 0 ? hint : defaultGenerationHint(component);
+	if (!component.generationHint?.trim()) {
+		throw new Error(
+			`[Lectio] Missing generationHint for mapped component "${component.id}" (${component.sectionField}).`
+		);
+	}
+}
 
 // Helper - components ready to use (not planned)
 export function getStableComponents(): ComponentMeta[] {

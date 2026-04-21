@@ -2,7 +2,7 @@
  * scripts/export-contracts.ts
  *
  * Exports everything the Python pipeline needs to know about
- * Lectio's templates and components into agents/contracts/.
+ * Lectio's templates and components into contracts/.
  *
  * Run this whenever templates, components, or presets change:
  *   npm run export-contracts
@@ -10,6 +10,7 @@
  *
  * Output files:
  *   {out}/{template-id}.json       - one per template
+ *   {out}/section-content-schema.json - full SectionContent JSON schema
  *   {out}/component-field-map.json - component to SectionContent field
  *   {out}/component-registry.json  - full component metadata
  *   {out}/preset-registry.json     - preset palette and style metadata
@@ -20,6 +21,7 @@
 
 import { mkdirSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
+import { createGenerator } from 'ts-json-schema-generator';
 import { componentRegistry, getComponentFieldMap } from '../src/lib/schema/registry';
 import { basePresets } from '../src/lib/presets/base-presets';
 
@@ -42,7 +44,7 @@ import { visualLedContract } from '../src/lib/templates/visual-led/config';
 const outArgIndex = process.argv.indexOf('--out');
 const outFromArg = outArgIndex !== -1 ? process.argv[outArgIndex + 1] : null;
 const outFromEnv = process.env.LECTIO_CONTRACTS_DIR ?? null;
-const OUT = resolve(outFromArg ?? outFromEnv ?? 'agents/contracts');
+const OUT = resolve(outFromArg ?? outFromEnv ?? 'contracts');
 mkdirSync(OUT, { recursive: true });
 
 const contracts = [
@@ -60,6 +62,15 @@ const contracts = [
 	timelineContract,
 	visualLedContract
 ];
+
+const sectionSchema = createGenerator({
+	path: resolve('src/lib/schema/types.ts'),
+	tsconfig: resolve('tsconfig.json'),
+	type: 'SectionContent',
+	additionalProperties: false
+}).createSchema('SectionContent');
+
+writeFileSync(`${OUT}/section-content-schema.json`, JSON.stringify(sectionSchema, null, 2));
 
 for (const contract of contracts) {
 	const summary = {
@@ -117,7 +128,8 @@ const registryExport = Object.fromEntries(
 			status: component.status,
 			capacity: component.capacity,
 			behaviour_modes: component.behaviourModes,
-			print_fallback: component.printFallback
+			print_fallback: component.printFallback,
+			generation_hint: component.generationHint ?? null
 		}
 	])
 );
@@ -146,6 +158,7 @@ const componentCount = Object.keys(registryExport).length;
 const presetCount = Object.keys(presetExport).length;
 
 console.log(`Exported ${templateCount} template contracts`);
+console.log('Exported SectionContent schema');
 console.log(`Exported component field map (${fieldCount} components with section fields)`);
 console.log(`Exported full component registry (${componentCount} total components)`);
 console.log(`Exported preset registry (${presetCount} presets)`);

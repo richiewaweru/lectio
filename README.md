@@ -11,7 +11,7 @@ npm install @richiewaweru/lectio
 ## Usage
 
 ```typescript
-import type { SectionContent } from '@richiewaweru/lectio/contracts';
+import type { SectionContent } from '@richiewaweru/lectio';
 import { HookHero } from '@richiewaweru/lectio';
 ```
 
@@ -251,16 +251,18 @@ See [`docs/reference/print-mode.md`](docs/reference/print-mode.md) for the full 
 The `export-contracts` script exports template, component, and preset metadata as JSON for external pipelines (e.g. Python AI agents) that need to know about Lectio's structure without importing TypeScript.
 
 ```bash
-npm run export-contracts                           # Default: agents/contracts/
+npm run export-contracts                           # Default: contracts/ + generated/python/
 npm run export-contracts -- --out /path/to/output   # Custom output directory
 LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts  # Via env var
 ```
 
 Output files:
 - `{template-id}.json` (x13) — template contract: `always_present`, `available_components`, `component_budget`, `max_per_section`, `signal_affinity`, `section_role_defaults`, generation guidance, and `allowed_presets`
+- `section-content-schema.json` — full JSON schema for `SectionContent`
 - `component-field-map.json` — maps component IDs to their `SectionContent` field names
-- `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, `teacher_label`, `teacher_description`, etc.)
+- `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, `teacher_label`, `teacher_description`, `generation_hint`, etc.)
 - `preset-registry.json` — visual preset palette, typography, density, and surface style
+- `generated/python/section_content.py` — official Pydantic v2 adapter generated from `section-content-schema.json`
 
 Run this whenever templates, components, or presets change. The pipeline reads these files — it never imports from `src/`.
 

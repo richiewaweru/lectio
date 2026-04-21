@@ -73,7 +73,7 @@ That updates the field map, template validation inputs, and exported JSON snapsh
 
 ## For Pipeline Consumers
 
-The pipeline should never import from `src/`. Instead, it should read exported JSON contracts from `agents/contracts/`.
+The pipeline should never import from `src/`. Instead, it should read exported contracts from `contracts/`.
 
 ### Generating Contracts
 
@@ -88,9 +88,11 @@ This produces four types of files:
 | File | Contents |
 |---|---|
 | `{template-id}.json` | Template contract (required/optional components, generation guidance, behaviours, `allowed_presets`) |
+| `section-content-schema.json` | Canonical JSON schema for `SectionContent` |
 | `component-field-map.json` | Component ID to `SectionContent` field mapping |
-| `component-registry.json` | Full component metadata (capacity limits, behaviour modes, status, `teacher_label`, `teacher_description`) |
+| `component-registry.json` | Full component metadata (capacity limits, behaviour modes, status, `teacher_label`, `teacher_description`, `generation_hint`) |
 | `preset-registry.json` | Preset palette, typography, density, and surface-style metadata |
+| `generated/python/section_content.py` | Official generated Pydantic v2 adapter |
 
 ### Using The Field Map
 
@@ -161,8 +163,9 @@ src/lib/schema/registry.ts          (single source of truth)
         |
         '--> scripts/export-contracts.ts      (exports to JSON, supports --out)
                   |
-                  '--> agents/contracts/       (pipeline reads these)
+                  '--> contracts/              (pipeline reads these)
                          |-- component-field-map.json
+                         |-- section-content-schema.json
                          |-- component-registry.json
                          |-- preset-registry.json
                          '-- {template-id}.json
@@ -176,7 +179,7 @@ src/lib/schema/registry.ts          (single source of truth)
 | `src/lib/teacher/teacher-facing.ts` | Strings merged into each registry entry |
 | `src/lib/teacher/document.ts` | `LessonDocument` conversion and validation |
 | `src/lib/templates/validation.ts` | Template validation that derives the field map from the registry |
-| `scripts/export-contracts.ts` | Exports contracts to `agents/contracts/` |
+| `scripts/export-contracts.ts` | Exports contracts to `contracts/` |
 | `src/lib/presets/base-presets.ts` | Source of truth for preset metadata exported to JSON |
 | `src/lib/schema/types.ts` | `SectionContent` interface |
 | `src/test/lectio.test.ts` | Tests for field map correctness |

@@ -141,7 +141,7 @@ Full reference: [lesson-document.md](lesson-document.md).
 
 ## Contract Snapshots
 
-External pipelines should read JSON from `agents/contracts/`, not import Typescript from `src/`.
+External pipelines should read contract artifacts from `contracts/`, not import Typescript from `src/`.
 
 ```bash
 npm run export-contracts
@@ -151,9 +151,11 @@ npm run export-contracts -- --out ../some-other-project/contracts
 The export now writes:
 
 - 13 `{template-id}.json` files
+- `section-content-schema.json`
 - `component-field-map.json`
 - `component-registry.json`
 - `preset-registry.json`
+- `generated/python/section_content.py`
 
 Whenever template contracts, presets, or registry metadata change, rerun both `npm run package` and `npm run export-contracts` before publishing.
 

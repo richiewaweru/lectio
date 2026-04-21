@@ -1,12 +1,12 @@
 <svelte:head>
-	<title>Contracts and pipelines — Lectio docs</title>
+	<title>Contracts and pipelines - Lectio docs</title>
 </svelte:head>
 
 <p class="eyebrow">Contracts and pipelines</p>
 <h1>JSON exports for agents and backends</h1>
 <p class="lead">
-	External pipelines (Python services, LLM agents, validators) should read exported JSON from this
-	repository — not import TypeScript from <code>src/</code>. The export script keeps templates,
+	External pipelines (Python services, LLM agents, validators) should read exported artifacts from this
+	repository - not import TypeScript from <code>src/</code>. The export script keeps templates,
 	components, presets, and field maps in sync with the registry.
 </p>
 
@@ -25,8 +25,12 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>{'{'}template-id{'}'}.json</code> (×13)</td>
+			<td><code>{'{'}template-id{'}'}.json</code> (x13)</td>
 			<td>Template contract: <code>always_present</code>, <code>available_components</code>, <code>component_budget</code>, <code>max_per_section</code>, <code>signal_affinity</code>, <code>section_role_defaults</code>, generation guidance, <code>allowed_presets</code></td>
+		</tr>
+		<tr>
+			<td><code>section-content-schema.json</code></td>
+			<td>Canonical JSON schema for <code>SectionContent</code></td>
 		</tr>
 		<tr>
 			<td><code>component-field-map.json</code></td>
@@ -34,11 +38,15 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 		</tr>
 		<tr>
 			<td><code>component-registry.json</code></td>
-			<td>Full metadata: capacity, behaviour modes, cognitive job, status</td>
+			<td>Full metadata: capacity, behaviour modes, cognitive job, status, and <code>generation_hint</code></td>
 		</tr>
 		<tr>
 			<td><code>preset-registry.json</code></td>
 			<td>Preset palette, typography, density, surface style</td>
+		</tr>
+		<tr>
+			<td><code>generated/python/section_content.py</code></td>
+			<td>Official Pydantic v2 adapter generated from the SectionContent schema</td>
 		</tr>
 	</tbody>
 </table>
@@ -47,7 +55,7 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 <p>
 	Each <code>ComponentMeta</code> entry declares <code>sectionField</code>. <code>getComponentFieldMap()</code>
 	derives the ID-to-field map for template validation and for export. Adding a component means
-	updating the registry and types, then re-exporting — no parallel hand-maintained tables.
+	updating the registry and types, then re-exporting - no parallel hand-maintained tables.
 </p>
 
 <h2>When to re-run</h2>
@@ -58,7 +66,7 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 
 <div class="doc-callout">
 	<p>
-		Authoritative deep dive (repo file): <code>docs/reference/registry-field-map.md</code> — same
+		Authoritative deep dive (repo file): <code>docs/reference/registry-field-map.md</code> - same
 		architecture as summarized here, with sample JSON and file pointers.
 	</p>
 </div>

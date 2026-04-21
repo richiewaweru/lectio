@@ -23,12 +23,14 @@
 			"svelte": "./dist/print/index.js",
 			"default": "./dist/print/index.js"
 		},
-		"./contracts": "./contracts/types.json",
+		"./contracts/*": "./contracts/*",
+		"./generated/*": "./generated/*",
 		"./components/*": "./dist/components/*.js"
 	},
 	"files": [
 		"dist",
 		"contracts",
+		"generated",
 		"README.md",
 		"CHANGELOG.md",
 		"!dist/**/*.test.*"
@@ -50,7 +52,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest run",
 		"package": "svelte-kit sync && svelte-package",
-		"export-contracts": "npx tsx scripts/export-contracts.ts",
+		"export-contracts": "tsx scripts/export-contracts.ts && tsx scripts/generate-python-types.ts",
 		"prepublishOnly": "npm run package && npm run export-contracts",
 		"version": "git add -A",
 		"postversion": "git push && git push --tags"
@@ -81,6 +83,7 @@
 		"tailwind-merge": "^3.5.0",
 		"tailwind-variants": "^3.2.2",
 		"tailwindcss": "^4.2.1",
+		"ts-json-schema-generator": "^2.4.0",
 		"tsx": "^4.19.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1",
