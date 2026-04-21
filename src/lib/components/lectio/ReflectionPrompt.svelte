@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { ReflectionContent } from '$lib/types';
+	import type { ReflectionContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Brain } from 'lucide-svelte';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import RuledLines from '$lib/print/RuledLines.svelte';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: ReflectionContent } = $props();
 

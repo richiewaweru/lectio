@@ -1,4 +1,4 @@
-import type { TemplatePresetDefinition } from "$lib/template-types";
+import type { TemplatePresetDefinition } from "$lib/templates/types";
 
 const sharedGuardrails = {
   headingScale: { min: 0.95, max: 1.1 },

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WorkedStep } from '$lib/types';
+	import type { WorkedStep } from '$lib/schema/types';
 
 	let {
 		steps,

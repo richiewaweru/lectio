@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { MediaReference } from '$lib/document';
-	import type { VideoEmbedContent } from '$lib/types';
+	import type { MediaReference } from '$lib/teacher/document';
+	import type { VideoEmbedContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 
 	let {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { StudentTextboxContent } from '$lib/types';
+	import type { StudentTextboxContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import RuledLines from '$lib/print/RuledLines.svelte';

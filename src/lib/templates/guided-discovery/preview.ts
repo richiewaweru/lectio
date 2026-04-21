@@ -1,5 +1,5 @@
-import type { TemplatePreview } from '$lib/template-types';
-import type { SectionContent } from '$lib/types';
+import type { TemplatePreview } from '$lib/templates/types';
+import type { SectionContent } from '$lib/schema/types';
 
 const probabilityTreeSvg = `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
   <!-- Root -->

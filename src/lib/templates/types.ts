@@ -1,6 +1,6 @@
 import type { Component } from "svelte";
 
-import type { BehaviourMode, SectionContent } from "$lib/types";
+import type { BehaviourMode, SectionContent } from "$lib/schema/types";
 
 export type TemplateFamily =
   | "guided-concept"

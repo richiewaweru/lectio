@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
-	import type { TemplateDefinition, TemplatePresetDefinition } from '$lib/template-types';
+	import type { TemplateDefinition, TemplatePresetDefinition } from '$lib/templates/types';
 
 	import LectioThemeSurface from './LectioThemeSurface.svelte';
 

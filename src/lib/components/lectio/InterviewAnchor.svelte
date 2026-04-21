@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { InterviewContent } from '$lib/types';
+	import type { InterviewContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { MessageCircle } from 'lucide-svelte';
-	import { renderBlockMarkdown } from '$lib/markdown';
+	import { renderBlockMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: InterviewContent } = $props();
 </script>

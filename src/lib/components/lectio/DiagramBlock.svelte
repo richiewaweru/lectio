@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DiagramContent } from '$lib/types';
+	import type { DiagramContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
 	import {

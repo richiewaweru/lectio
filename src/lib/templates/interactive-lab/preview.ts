@@ -1,5 +1,5 @@
-import type { TemplatePreview } from '$lib/template-types';
-import type { SectionContent } from '$lib/types';
+import type { TemplatePreview } from '$lib/templates/types';
+import type { SectionContent } from '$lib/schema/types';
 
 const forceArrowSvg = `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
   <rect x="140" y="60" width="120" height="80" rx="8" fill="hsl(213 37% 17% / 0.08)" stroke="hsl(213 37% 17% / 0.3)" stroke-width="2"/>

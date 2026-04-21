@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { componentRegistry } from '$lib/registry';
+import { componentRegistry } from '$lib/schema/registry';
 
 /**
  * Registry compliance test for print fallbacks.

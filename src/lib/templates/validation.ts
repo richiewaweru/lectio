@@ -7,13 +7,13 @@
 //   validateTemplateDefinition — both combined (the one you call)
 
 import { basePresetMap } from '$lib/presets/base-presets';
-import { getComponentById, getComponentFieldMap } from '$lib/registry';
+import { getComponentById, getComponentFieldMap } from '$lib/schema/registry';
 import type {
 	TemplateContract,
 	TemplateDefinition,
 	TemplateValidationResult
-} from '$lib/template-types';
-import type { SectionContent } from '$lib/types';
+} from '$lib/templates/types';
+import type { SectionContent } from '$lib/schema/types';
 
 // Derived from the registry — never hardcoded here.
 // When you add a new component with sectionField declared,

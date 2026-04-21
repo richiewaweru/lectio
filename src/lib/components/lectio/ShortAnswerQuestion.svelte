@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ShortAnswerContent } from '$lib/types';
+	import type { ShortAnswerContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { Badge } from '$lib/components/ui/badge';

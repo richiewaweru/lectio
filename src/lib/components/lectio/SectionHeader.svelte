@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SectionHeaderContent } from '$lib/types';
+	import type { SectionHeaderContent } from '$lib/schema/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
 

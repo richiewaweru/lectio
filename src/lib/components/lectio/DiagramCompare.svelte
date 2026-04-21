@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DiagramCompareContent } from '$lib/types';
+	import type { DiagramCompareContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { usePrintMode } from '$lib/utils/printContext';

@@ -1,5 +1,5 @@
-import { calculusSection } from '$lib/dummy-content';
-import type { TemplatePreview } from '$lib/template-types';
+import { calculusSection } from '$lib/dev/dummy-content';
+import type { TemplatePreview } from '$lib/templates/types';
 
 export const guidedConceptPathPreview: TemplatePreview = {
 	section: {

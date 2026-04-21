@@ -1,4 +1,4 @@
-import type { TemplatePreview } from '$lib/template-types';
+import type { TemplatePreview } from '$lib/templates/types';
 
 const photosynthesisSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" fill="none">
   <rect width="480" height="280" rx="28" fill="#F0FDF4"/>

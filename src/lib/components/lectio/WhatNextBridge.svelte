@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { WhatNextContent } from '$lib/types';
+	import type { WhatNextContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: WhatNextContent } = $props();
 </script>

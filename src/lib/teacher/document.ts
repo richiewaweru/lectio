@@ -1,7 +1,7 @@
-import { getComponentById, getComponentFieldMap } from './registry';
+import { getComponentById, getComponentFieldMap } from '../schema/registry';
 import { getEmptyContent } from './content-factories';
-import { validateSection } from './validate';
-import type { GradeBand, PitfallContent, SectionContent, WorkedExampleContent } from './types';
+import { validateSection } from '../schema/validate';
+import type { GradeBand, PitfallContent, SectionContent, WorkedExampleContent } from '../schema/types';
 
 /** Portable lesson document format version. Bump on breaking changes. */
 export type LessonDocumentVersion = 1;

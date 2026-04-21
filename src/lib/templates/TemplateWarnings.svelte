@@ -2,8 +2,8 @@
 	import { AlertTriangle } from 'lucide-svelte';
 
 	import { Card } from '$lib/components/ui/card';
-	import { validateSection } from '$lib/validate';
-	import type { SectionContent } from '$lib/types';
+	import { validateSection } from '$lib/schema/validate';
+	import type { SectionContent } from '$lib/schema/types';
 
 	let { section }: { section: SectionContent } = $props();
 

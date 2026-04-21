@@ -99,7 +99,7 @@ export type {
 	FillInBlankContent,
 	VideoEmbedContent,
 	ImageBlockContent
-} from './types';
+} from './schema/types';
 
 // ── Registry ────────────────────────────────────────
 export {
@@ -109,11 +109,11 @@ export {
 	getComponentsForSubject,
 	getComponentById,
 	getComponentFieldMap
-} from './registry';
-export type { ComponentMeta } from './registry';
+} from './schema/registry';
+export type { ComponentMeta } from './schema/registry';
 
 // ── Validation ──────────────────────────────────────
-export { validateSection, warnIfInvalid } from './validate';
+export { validateSection, warnIfInvalid } from './schema/validate';
 
 // ── Lesson document interchange + builder utilities ──
 export type {
@@ -124,13 +124,13 @@ export type {
 	MediaReference,
 	DocumentValidationResult,
 	FromSectionContentsMetadata
-} from './document';
-export { fromSectionContents, toSectionContents, validateDocument, getFieldComponentMap } from './document';
+} from './teacher/document';
+export { fromSectionContents, toSectionContents, validateDocument, getFieldComponentMap } from './teacher/document';
 
-export { getEmptyContent, getPreviewContent, assertFactoriesCoverRegistry } from './content-factories';
+export { getEmptyContent, getPreviewContent, assertFactoriesCoverRegistry } from './teacher/content-factories';
 
-export { getEditSchema } from './edit-schemas';
-export type { EditSchema, FieldSchema, FieldInputType } from './edit-schemas';
+export { getEditSchema } from './teacher/edit-schemas';
+export type { EditSchema, FieldSchema, FieldInputType } from './teacher/edit-schemas';
 
 // ── Template system ─────────────────────────────────
 export {
@@ -140,7 +140,7 @@ export {
 	filterTemplates,
 	getTemplateFamilies,
 	validateAllTemplates
-} from './template-registry';
+} from './templates/registry';
 export { default as LectioThemeSurface } from './templates/LectioThemeSurface.svelte';
 export { default as ResolvedTemplatePreviewSurface } from './templates/ResolvedTemplatePreviewSurface.svelte';
 export { default as TemplateRuntimeSurface } from './templates/TemplateRuntimeSurface.svelte';
@@ -160,12 +160,12 @@ export type {
 	SectionRole,
 	TemplateFilters,
 	TemplateValidationResult
-} from './template-types';
+} from './templates/types';
 export {
 	validateTemplateDefinition,
 	validateTemplateContract,
 	validateTemplatePreview
-} from './template-validation';
+} from './templates/validation';
 
 // ── Presets ─────────────────────────────────────────
 export { basePresets, basePresetMap } from './presets/base-presets';
@@ -174,7 +174,7 @@ export { basePresets, basePresetMap } from './presets/base-presets';
 export { cn } from './utils';
 
 // ── Markdown utilities ───────────────────────────────
-export { renderInlineMarkdown, renderBlockMarkdown, looksLikeLatex } from './markdown';
+export { renderInlineMarkdown, renderBlockMarkdown, looksLikeLatex } from './utils/markdown';
 
 // ── Print utilities ──────────────────────────────────
 export { default as RuledLines } from './print/RuledLines.svelte';

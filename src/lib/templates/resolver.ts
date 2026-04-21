@@ -1,8 +1,8 @@
 import { DEV } from 'esm-env';
 
 import { basePresetMap } from '$lib/presets/base-presets';
-import { getTemplateById } from '$lib/template-registry';
-import type { TemplateDefinition, TemplatePresetDefinition } from '$lib/template-types';
+import { getTemplateById } from '$lib/templates/registry';
+import type { TemplateDefinition, TemplatePresetDefinition } from '$lib/templates/types';
 
 export const DEFAULT_PRESET_ID = 'warm-paper';
 

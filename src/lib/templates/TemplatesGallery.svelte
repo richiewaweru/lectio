@@ -8,7 +8,7 @@
 		LessonIntent,
 		TemplateContract,
 		TemplateFamily
-	} from '$lib/template-types';
+	} from '$lib/templates/types';
 
 	const familyLabels: Record<TemplateFamily, string> = {
 		'guided-concept': 'Guided Concept',

@@ -1,4 +1,4 @@
-import type { TemplatePreview } from '$lib/template-types';
+import type { TemplatePreview } from '$lib/templates/types';
 
 const mitosisStep1 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 220" fill="none">
   <rect width="420" height="220" rx="26" fill="#F0FDF4"/>

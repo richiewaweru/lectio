@@ -10,7 +10,7 @@
 		DialogPortal,
 		DialogTitle,
 	} from '$lib/components/ui/dialog';
-	import type { TemplateContract, TemplatePresetDefinition } from '$lib/template-types';
+	import type { TemplateContract, TemplatePresetDefinition } from '$lib/templates/types';
 	import TemplateContractPanel from '$lib/templates/TemplateContractPanel.svelte';
 
 	const DESKTOP_MEDIA_QUERY = '(min-width: 768px)';

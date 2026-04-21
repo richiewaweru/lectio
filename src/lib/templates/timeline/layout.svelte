@@ -8,7 +8,7 @@
 		TimelineBlock,
 		WhatNextBridge
 	} from '$lib/components/lectio';
-	import type { SectionContent } from '$lib/types';
+	import type { SectionContent } from '$lib/schema/types';
 
 	import TemplateShell from '$lib/templates/TemplateShell.svelte';
 

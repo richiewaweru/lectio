@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
 import { assertFactoriesCoverRegistry, getEmptyContent } from './content-factories';
-import { getComponentFieldMap } from './registry';
-import { validateSection } from './validate';
+import { getComponentFieldMap } from '../schema/registry';
+import { validateSection } from '../schema/validate';
 
 describe('content-factories', () => {
 	it('covers every registry component that has a section field', () => {

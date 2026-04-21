@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import TemplateDetailView from '$lib/templates/TemplateDetailView.svelte';
 import TemplatePreviewSurface from '$lib/templates/TemplatePreviewSurface.svelte';
 import TemplateRuntimeSurface from '$lib/templates/TemplateRuntimeSurface.svelte';
-import { templateRegistryMap } from '$lib/template-registry';
+import { templateRegistryMap } from '$lib/templates/registry';
 
 const templateId = 'guided-concept-path';
 const definition = templateRegistryMap[templateId];

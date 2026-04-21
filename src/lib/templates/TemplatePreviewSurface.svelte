@@ -7,7 +7,7 @@
 		DEFAULT_PRESET_ID,
 		resolveTemplateDefinition,
 		resolveTemplatePreset
-	} from './runtime-resolver';
+} from './resolver';
 
 	let {
 		templateId,

@@ -1,5 +1,5 @@
-import { getStableComponents } from '$lib/registry';
-import { templateRegistry } from '$lib/template-registry';
+import { getStableComponents } from '$lib/schema/registry';
+import { templateRegistry } from '$lib/templates/registry';
 
 export interface SidebarNavigationItem {
 	href: string;

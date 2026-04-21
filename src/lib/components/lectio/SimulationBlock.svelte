@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SimulationContent } from '$lib/types';
+	import type { SimulationContent } from '$lib/schema/types';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card } from '$lib/components/ui/card';
 	import { X, ZoomIn, ZoomOut } from 'lucide-svelte';

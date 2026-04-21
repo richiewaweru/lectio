@@ -1,5 +1,5 @@
-import { getComponentFieldMap } from './registry';
-import type { GradeBand } from './types';
+import { getComponentFieldMap } from '../schema/registry';
+import type { GradeBand } from '../schema/types';
 
 const defaultGrade: GradeBand = 'secondary';
 

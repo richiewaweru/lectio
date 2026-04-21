@@ -1,4 +1,4 @@
-import type { SectionContent } from './types';
+import type { SectionContent } from '../schema/types';
 
 // ─────────────────────────────────────────────
 // CALCULUS SECTION — exercises original 8 components

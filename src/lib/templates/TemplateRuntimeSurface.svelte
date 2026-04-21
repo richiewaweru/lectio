@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Card } from '$lib/components/ui/card';
-	import type { SectionContent } from '$lib/types';
+	import type { SectionContent } from '$lib/schema/types';
 
 	import LectioThemeSurface from './LectioThemeSurface.svelte';
 	import {
 		DEFAULT_PRESET_ID,
 		resolveTemplateDefinition,
 		resolveTemplatePreset
-	} from './runtime-resolver';
+} from './resolver';
 
 	let {
 		templateId,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { KeyFactContent } from '$lib/types';
+	import type { KeyFactContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 
 	let { content }: { content: KeyFactContent } = $props();

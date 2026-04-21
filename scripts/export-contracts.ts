@@ -20,11 +20,11 @@
 
 import { mkdirSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { componentRegistry, getComponentFieldMap } from '../src/lib/registry';
+import { componentRegistry, getComponentFieldMap } from '../src/lib/schema/registry';
 import { basePresets } from '../src/lib/presets/base-presets';
 
 // Import contracts directly from config files to avoid pulling in
-// .svelte layout files through template-registry.ts.
+// .svelte layout files through templates/registry.ts.
 import { classificationContract } from '../src/lib/templates/classification/config';
 import { compareAndApplyContract } from '../src/lib/templates/compare-and-apply/config';
 import { conceptCompactContract } from '../src/lib/templates/concept-compact/config';

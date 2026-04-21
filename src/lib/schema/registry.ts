@@ -11,7 +11,7 @@
 // ─────────────────────────────────────────────────────
 
 import type { BehaviourMode, SectionContent } from './types';
-import { teacherFor } from './teacher-facing';
+import { teacherFor } from '../teacher/teacher-facing';
 
 export interface ComponentMeta {
 	id: string;
@@ -36,7 +36,7 @@ export interface ComponentMeta {
 	 * Example: GlossaryInline is used inline in prose — it is not a block.
 	 *
 	 * This is the single source of truth for the component-to-field mapping.
-	 * template-validation.ts and scripts/export-contracts.ts both derive
+	 * templates/validation.ts and scripts/export-contracts.ts both derive
 	 * their maps from this field via getComponentFieldMap().
 	 * Never hardcode this mapping anywhere else.
 	 */
@@ -604,7 +604,7 @@ export function getComponentById(componentId: string): ComponentMeta | undefined
  * Derive the component-id → SectionContent-field map from the registry.
  *
  * This is the authoritative mapping used by:
- *   - template-validation.ts  (preview field presence checks)
+ *   - templates/validation.ts  (preview field presence checks)
  *   - scripts/export-contracts.ts  (pipeline contract export)
  *
  * Components with sectionField: null are excluded — they have no

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { GlossaryContent } from '$lib/types';
+	import type { GlossaryContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '$lib/components/ui/collapsible';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { cn } from '$lib/utils';
-	import { renderInlineMarkdown } from '$lib/markdown';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let {
 		content,

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
-	import type { TemplateContract, TemplatePresetDefinition } from '$lib/template-types';
+	import type { TemplateContract, TemplatePresetDefinition } from '$lib/templates/types';
 
 	let {
 		contract,

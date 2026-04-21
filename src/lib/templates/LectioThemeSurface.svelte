@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	import type { TemplatePresetDefinition } from '$lib/template-types';
+	import type { TemplatePresetDefinition } from '$lib/templates/types';
 	import { cn } from '$lib/utils';
 
 	let {

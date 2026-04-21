@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DefinitionFamilyContent } from '$lib/types';
+	import type { DefinitionFamilyContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import {
 		Accordion,

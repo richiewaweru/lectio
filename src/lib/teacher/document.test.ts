@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { calculusSection, physicsSection } from './dummy-content';
+import { calculusSection, physicsSection } from '../dev/dummy-content';
 import { fromSectionContents, toSectionContents, validateDocument } from './document';
 
 describe('LessonDocument conversion', () => {
