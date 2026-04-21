@@ -1,185 +1,100 @@
 # Lectio
 
-Educational component library built on SvelteKit + Svelte 5 + TypeScript + Tailwind CSS v4. Renders structured lesson content into reusable teaching components and registry-driven lesson templates.
+Lectio is a Svelte 5 library for structured educational content and the canonical contract layer between AI generation systems, lesson editors, and rendered learning materials.
+
+It provides:
+
+- Typed lesson content contracts (`SectionContent` and nested types)
+- Reusable teaching components (registry-driven block library)
+- Registry-driven lesson templates (13 templates)
+- Exported JSON contracts for AI pipelines
+- Generated Python/Pydantic adapter for backend consumers
+- Published npm package: `lectio`
+
+## Who This Is For
+
+| You are building | What you need from Lectio |
+|---|---|
+| A SvelteKit app that renders lesson content | Components, template surfaces, `SectionContent` types, `theme.css` |
+| An AI pipeline that generates lesson sections | `contracts/` JSON artifacts, `component-registry.json`, generation hints |
+| A lesson editor or builder | Document utilities: `fromSectionContents`, `getEmptyContent`, `getEditSchema` |
+| A Python backend consuming lesson schema | `generated/python/section_content.py` Pydantic adapter |
+
+## Core Model
+
+Everything in Lectio flows from one root type: `SectionContent`.
+
+A `SectionContent` object holds data for a complete lesson section, and its fields map directly to components through the registry.
+
+```text
+section.hook        -> HookHero
+section.explanation -> ExplanationBlock
+section.diagram     -> DiagramBlock
+section.callout     -> CalloutBlock
+section.summary     -> SummaryBlock
+section.practice    -> PracticeStack
+```
+
+The full field-to-component mapping is exported as `contracts/component-field-map.json`.
 
 ## Installation
 
-```bash
-npm install @richiewaweru/lectio
-```
-
-## Usage
-
-```typescript
-import type { SectionContent } from '@richiewaweru/lectio';
-import { HookHero } from '@richiewaweru/lectio';
-```
-
-## Contract Stability
-
-This package follows semantic versioning with contract guarantees:
-
-- **PATCH** (0.1.x): Bug fixes, no contract changes
-- **MINOR** (0.x.0): New components/templates, backward-compatible contract additions
-- **MAJOR** (x.0.0): Breaking contract changes (types.ts structure changes)
-
-During `0.x` phase, minor versions may introduce larger changes. Lock to exact versions in production.
-
-## Related Docs
-
-- `docs/reference/component-guide.md` — public library surface, runtime wrappers, and template inventory
-- `docs/reference/registry-field-map.md` — contract export pipeline, JSON outputs, and extension workflow
-- `docs/reference/lesson-document.md` — `LessonDocument` interchange, conversion helpers, edit schemas, builder utilities
-- `docs/reference/print-mode.md` — print rendering, `providePrintMode`, utility components, contributor patterns
-
-## Using Lectio as a Local Library
-
-Lectio is packaged with `@sveltejs/package`. Another SvelteKit project can consume it via a local file reference.
-
-### 1. Build the library
+### For SvelteKit Apps
 
 ```bash
-cd lectio
-npm install
-npm run package
+npm install lectio
 ```
 
-This compiles `src/lib/` into `dist/` with `.svelte` files and TypeScript declarations.
-
-### 2. Add to your project
-
-In your consuming project's `package.json`:
-
-```json
-{
-  "dependencies": {
-    "lectio": "file:../lectio"
-  }
-}
-```
-
-Then install:
-
-```bash
-npm install
-```
-
-### 3. Install runtime dependencies
-
-Your project needs these alongside Lectio:
+### Peer Dependencies
 
 ```bash
 npm install katex lucide-svelte bits-ui clsx tailwind-merge
 npm install -D @tailwindcss/vite tailwindcss @types/katex
 ```
 
-### 4. Import and use
+### Theme
 
-```svelte
-<script lang="ts">
-  import { HookHero, SectionHeader, ExplanationBlock } from 'lectio';
-  import type { SectionContent } from 'lectio';
-  import { validateSection, warnIfInvalid } from 'lectio';
-
-  let { section }: { section: SectionContent } = $props();
-
-  warnIfInvalid(section);
-</script>
-
-<SectionHeader content={section.header} />
-<HookHero content={section.hook} />
-<ExplanationBlock content={section.explanation} />
-```
-
-Import the shared Lectio theme once in your app stylesheet so template shells, tokens, KaTeX styles, and preset-scoped visuals are available:
+Import once in your app CSS entrypoint:
 
 ```css
 @import 'tailwindcss';
 @import 'lectio/theme.css';
 ```
 
-After changing Lectio source, rebuild with `npm run package` for changes to appear in the consuming project.
+This loads design tokens, preset surfaces, KaTeX styles, and layout utilities.
 
-## Public API
+## Verify Setup
 
-Everything is exported from a single entry point: `import { ... } from 'lectio'`.
+If components render with typography, spacing, and color tokens applied, setup is complete.
 
-### Components (30)
-
-| Group | Components |
-|-------|-----------|
-| Foundation | `SectionHeader`, `HookHero`, `ExplanationBlock`, `PrerequisiteStrip`, `WhatNextBridge`, `InterviewAnchor`, `CalloutBlock`, `SummaryBlock`, `SectionDivider` |
-| Definition & Knowledge | `DefinitionCard`, `DefinitionFamily`, `GlossaryRail`, `GlossaryInline`, `InsightStrip`, `KeyFact`, `ComparisonGrid` |
-| Examples & Process | `WorkedExampleCard`, `ProcessSteps` |
-| Assessment & Practice | `PracticeStack`, `QuizCheck`, `ReflectionPrompt`, `StudentTextbox`, `ShortAnswerQuestion`, `FillInTheBlank` |
-| Alerts | `PitfallAlert` |
-| Diagrams | `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `TimelineBlock` |
-| Simulation | `SimulationBlock` |
-
-Each component accepts a typed `content` prop (e.g. `HookHeroContent`, `QuizContent`). All content types are nested inside the root `SectionContent` interface, including optional `simulation?: SimulationContent` for at most one interactive simulation per section. `DiagramContent` also supports either inline `svg_content` or a generated `image_url`.
-
-### Registry
-
-```ts
-import { componentRegistry, getStableComponents, getComponentById } from 'lectio';
-import type { ComponentMeta } from 'lectio';
-
-const allComponents = getStableComponents();
-const hook = getComponentById('hook-hero');
-// ComponentMeta includes teacherLabel + teacherDescription for builder UIs
-```
-
-### Lesson document interchange (generators & editors)
-
-Portable JSON for export/import between apps that both depend on Lectio only:
-
-```ts
-import {
-  fromSectionContents,
-  toSectionContents,
-  validateDocument,
-  getEmptyContent,
-  getEditSchema,
-  getFieldComponentMap,
-  type LessonDocument,
-  type SectionContent
-} from 'lectio';
-
-const doc: LessonDocument = fromSectionContents(sections, {
-  title: 'My lesson',
-  subject: 'Mathematics',
-  preset_id: 'blue-classroom',
-  source: 'generated',
-  source_generation_id: 'gen-123'
-});
-
-const back: SectionContent[] = toSectionContents(doc);
-const result = validateDocument(doc);
-```
-
-See `docs/reference/lesson-document.md` for the full API and design notes.
-
-### Templates (13)
-
-```ts
-import {
-  TemplatePreviewSurface,
-  TemplateRuntimeSurface
-} from 'lectio';
-import type { SectionContent } from 'lectio';
-
-const section: SectionContent = /* your section */;
-```
+### Minimal Component Render
 
 ```svelte
 <script lang="ts">
-  import { TemplatePreviewSurface, TemplateRuntimeSurface } from 'lectio';
-  import type { SectionContent } from 'lectio';
+  import { HookHero } from 'lectio';
+  import type { HookHeroContent } from 'lectio';
 
-  let { section }: { section: SectionContent } = $props();
+  const content: HookHeroContent = {
+    headline: 'Setup verified',
+    body: 'If this renders styled, Lectio is wired correctly.',
+    type: 'prose',
+    anchor: 'test'
+  };
 </script>
 
-<TemplatePreviewSurface templateId="guided-concept-path" presetId="blue-classroom" />
+<HookHero {content} />
+```
+
+### Render a Section Through a Template
+
+```svelte
+<script lang="ts">
+  import { TemplateRuntimeSurface } from 'lectio';
+  import type { SectionContent } from 'lectio';
+
+  export let section: SectionContent;
+</script>
+
 <TemplateRuntimeSurface
   templateId="guided-concept-path"
   presetId="blue-classroom"
@@ -187,134 +102,235 @@ const section: SectionContent = /* your section */;
 />
 ```
 
-Available templates: `guided-concept-path`, `visual-led`, `compare-and-apply`, `low-load`, `concept-compact`, `formal-track`, `diagram-led`, `classification`, `timeline`, `procedure`, `interactive-lab`, `guided-discovery`, `open-canvas`.
+## API Quick Reference
 
-For advanced or internal consumers, Lectio also exports the low-level runtime pieces:
+### Component Imports
 
 ```ts
+// Teaching
 import {
-  LectioThemeSurface,
-  ResolvedTemplatePreviewSurface,
-  templateRegistry,
-  templateRegistryMap,
-  getTemplateById,
-  filterTemplates
+  HookHero,
+  ExplanationBlock,
+  DefinitionCard,
+  DefinitionFamily,
+  CalloutBlock,
+  SummaryBlock,
+  InsightStrip,
+  KeyFact,
+  PitfallAlert
+} from 'lectio';
+
+// Practice
+import {
+  PracticeStack,
+  WorkedExampleCard,
+  QuizCheck,
+  ReflectionPrompt,
+  StudentTextbox,
+  ShortAnswerQuestion,
+  FillInTheBlank
+} from 'lectio';
+
+// Visual
+import {
+  DiagramBlock,
+  DiagramCompare,
+  DiagramSeries,
+  VideoEmbed,
+  ImageBlock
+} from 'lectio';
+
+// Structure
+import {
+  ProcessSteps,
+  ComparisonGrid,
+  TimelineBlock,
+  SectionHeader,
+  SectionDivider
+} from 'lectio';
+
+// Navigation + framing
+import {
+  PrerequisiteStrip,
+  WhatNextBridge,
+  GlossaryRail,
+  GlossaryInline,
+  InterviewAnchor,
+  SimulationBlock
 } from 'lectio';
 ```
 
-### Validation
+### Template Surfaces
+
+```ts
+import {
+  TemplateRuntimeSurface,
+  TemplatePreviewSurface,
+  LectioThemeSurface,
+  ResolvedTemplatePreviewSurface
+} from 'lectio';
+```
+
+### Core Types
+
+```ts
+import type {
+  SectionContent,
+  HookHeroContent,
+  ExplanationContent,
+  DefinitionContent,
+  CalloutBlockContent,
+  SummaryBlockContent,
+  DiagramContent,
+  PracticeContent,
+  WorkedExampleContent,
+  ComparisonGridContent,
+  TimelineContent,
+  QuizContent,
+  ReflectionContent,
+  KeyFactContent,
+  PitfallContent,
+  VideoEmbedContent,
+  ImageBlockContent,
+  StudentTextboxContent,
+  ShortAnswerContent,
+  FillInBlankContent,
+  SimulationContent,
+  WhatNextContent,
+  InterviewContent,
+  LessonDocument,
+  BlockInstance,
+  DocumentSection
+} from 'lectio';
+```
+
+### Validation + Registry
 
 ```ts
 import { validateSection, warnIfInvalid } from 'lectio';
-
-const warnings = validateSection(section); // string[]
-warnIfInvalid(section); // logs to console in browser
+import {
+  componentRegistry,
+  getComponentById,
+  getComponentFieldMap,
+  getStableComponents
+} from 'lectio';
+import type { ComponentMeta } from 'lectio';
 ```
 
-### Presets
+## For AI Pipelines
+
+Pipelines consume exported contract files. They should not import from Lectio source internals.
+
+After `npm install lectio`, these files are available under `node_modules/lectio/`:
+
+| File | What it contains |
+|---|---|
+| `contracts/section-content-schema.json` | Full JSON Schema for `SectionContent` and nested types |
+| `contracts/component-registry.json` | Component metadata, field mapping, capacity, generation hints |
+| `contracts/component-field-map.json` | Component IDs -> `SectionContent` field names |
+| `contracts/preset-registry.json` | Preset palette and style metadata |
+| `contracts/{template-id}.json` | Per-template requirements, budgets, signal affinity |
+| `generated/python/section_content.py` | Auto-generated Pydantic v2 models |
+
+### Generation Hints
+
+`component-registry.json` includes `generation_hint` for every mapped component. Use those hints when constructing generation prompts instead of inventing separate field guidance.
+
+## Python Adapter
+
+Use `generated/python/section_content.py` in your backend.
+
+Do not hand-edit it.
+
+When upgrading Lectio, replace this file from the new package version and run pipeline validation tests.
+
+```python
+# AUTO-GENERATED - DO NOT EDIT
+# Source: lectio src/lib/schema/types.ts
+# Generated from: contracts/section-content-schema.json
+# Run `npm run export-contracts` in the Lectio repo to regenerate.
+```
+
+## For Lesson Builders and Editors
+
+Use editor utilities instead of maintaining parallel content schema definitions.
 
 ```ts
-import { basePresets, basePresetMap } from 'lectio';
+import {
+  fromSectionContents,
+  toSectionContents,
+  validateDocument,
+  getFieldComponentMap
+} from 'lectio';
+
+import { getEmptyContent, getPreviewContent } from 'lectio';
+import { getEditSchema } from 'lectio';
+import type { EditSchema, FieldSchema, LessonDocument } from 'lectio';
 ```
 
-Five built-in colour presets: Blue Classroom, Warm Paper, Calm Green, High Contrast Focus, Minimal Light.
+Recommended generation flow:
 
-### Utility
-
-```ts
-import { cn } from 'lectio'; // clsx + tailwind-merge
+```text
+Template contract      -> required/optional components for section
+Component registry     -> mapped SectionContent field per component
+SectionContent schema  -> exact field shape
+Generation hint        -> quality target for that field
+Pipeline output        -> validate against schema before assembly
 ```
 
-### Print Mode
+## Versioning
 
-Lectio components render static print fallbacks when a consuming app signals print mode via context. No prop drilling required.
+Lectio follows semver:
 
-```svelte
-<script lang="ts">
-  import { providePrintMode } from 'lectio';
-  import { page } from '$app/stores';
+- `patch`: bugfix, no API/schema change
+- `minor`: new component/export, backward-compatible
+- `major`: breaking schema change, renamed field, removed component
 
-  // Activate when ?print=true is in the URL
-  const isPrint = $derived($page.url.searchParams.get('print') === 'true');
-  providePrintMode(() => isPrint);
-</script>
+For contract-sensitive consumers (AI pipelines, backend validators), pin exact versions:
 
-<!-- All Lectio components below automatically switch to print fallbacks -->
+```json
+{
+  "dependencies": {
+    "lectio": "0.2.4"
+  }
+}
 ```
 
-Six print utility components are also exported: `RuledLines`, `Checkboxes`, `ExpandedSteps`, `SideBySide`, `VerticalList`, `AnswerMarker`. These can be used in custom print layouts outside Lectio components.
+## Do / Don't
 
-See [`docs/reference/print-mode.md`](docs/reference/print-mode.md) for the full API, per-component behaviour, contributor patterns, and the answer-key control props.
+### Do
 
-## Export Contracts (Pipeline Bridge)
+- Import components and types from `lectio`
+- Use `contracts/` for backend and pipeline integration
+- Use `generated/python/section_content.py` as Python type source
+- Validate generated content against schema before rendering
+- Pin exact versions when pipeline shape compatibility matters
 
-The `export-contracts` script exports template, component, and preset metadata as JSON for external pipelines (e.g. Python AI agents) that need to know about Lectio's structure without importing TypeScript.
+### Don't
 
-```bash
-npm run export-contracts                           # Default: contracts/ + generated/python/
-npm run export-contracts -- --out /path/to/output   # Custom output directory
-LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts  # Via env var
-```
-
-Output files:
-- `{template-id}.json` (x13) — template contract: `always_present`, `available_components`, `component_budget`, `max_per_section`, `signal_affinity`, `section_role_defaults`, generation guidance, and `allowed_presets`
-- `section-content-schema.json` — full JSON schema for `SectionContent`
-- `component-field-map.json` — maps component IDs to their `SectionContent` field names
-- `component-registry.json` — full component metadata (capacity, behaviour modes, cognitive job, `teacher_label`, `teacher_description`, `generation_hint`, etc.)
-- `preset-registry.json` — visual preset palette, typography, density, and surface style
-- `generated/python/section_content.py` — official Pydantic v2 adapter generated from `section-content-schema.json`
-
-Run this whenever templates, components, or presets change. The pipeline reads these files — it never imports from `src/`.
+- Import from `lectio/src`
+- Hand-write parallel `SectionContent` definitions in consumer apps
+- Edit `generated/python/section_content.py` manually
+- Treat template contracts as a substitute for full field schema
 
 ## Development
 
 ```bash
-npm run dev          # Start dev server (showcase at localhost:5173)
-npm run check        # Svelte + TypeScript type checking
-npm run test         # Run Vitest test suite
-npm run build        # Production app build
-npm run package      # Library build (src/lib/ -> dist/)
+npm install
+npm run dev               # docs + component gallery at localhost:5173
+npm run check             # TypeScript + Svelte type check
+npm run test              # Vitest unit tests
+npm run package           # build dist/ for publishing
+npm run export-contracts  # regenerate contracts/ and generated/python/
 ```
 
-## Release Maintainer Notes
+Always run `npm run export-contracts` before tagging a release so JSON contracts and Python adapters stay in sync with source contracts.
 
-- Dependency installs in CI and release workflows are locked to `pnpm-lock.yaml` with `pnpm install --frozen-lockfile`.
-- `package-lock.json` is intentionally unsupported in this repo to prevent lockfile drift that can break Vercel deploys.
-- Tag releases in the active lane: `v0.2.x` (for example `v0.2.4`).
-- Publish workflow preflights npm and skips safely when a tagged version already exists, so reruns are no-op successes.
+## Releasing
 
-## Stack
-
-- SvelteKit 2 + Svelte 5 (runes)
-- TypeScript (strict)
-- Tailwind CSS v4
-- bits-ui (headless UI primitives)
-- KaTeX (math rendering)
-- Lucide (icons)
-- Vitest + Testing Library
-
-## Project Structure
-
-```
-src/lib/
-├── index.ts                    # Public package barrel exports (import from 'lectio')
-├── schema/                     # Core contracts + registry + section validation
-│   ├── types.ts
-│   ├── registry.ts
-│   └── validate.ts
-├── teacher/                    # Authoring/interchange helpers for generator/editor flows
-│   ├── document.ts
-│   ├── content-factories.ts
-│   ├── edit-schemas.ts
-│   └── teacher-facing.ts
-├── templates/                  # Registry-driven template system and runtime resolvers
-│   ├── registry.ts
-│   ├── types.ts
-│   ├── validation.ts
-│   └── resolver.ts
-├── components/                 # Lectio blocks + internal UI primitives
-├── presets/                    # Theme preset definitions
-├── print/                      # Print utility components
-├── utils/                      # Shared runtime utilities (print context + markdown helpers)
-└── dev/                        # Internal sample content and fixtures
+```bash
+# bump version in package.json first, then:
+git tag vX.Y.Z
+git push origin vX.Y.Z
+# GitHub Actions publishes to npm automatically
 ```
