@@ -8,7 +8,7 @@ This guide documents the current public library surface after the packaging, run
 - Public package entrypoint: `src/lib/index.ts`
 - Public stylesheet entrypoint: `src/lib/theme.css` via `import 'lectio/theme.css'`
 - Public teaching component count: 30
-- Public template count: 13 registry-backed templates in `src/lib/template-registry.ts`
+- Public template count: 13 registry-backed templates in `src/lib/templates/registry.ts`
 - Public runtime surfaces:
   - `TemplatePreviewSurface`
   - `TemplateRuntimeSurface`
@@ -76,10 +76,10 @@ This guide documents the current public library surface after the packaging, run
 
 The public template system is registry-driven.
 
-- Registry: `src/lib/template-registry.ts`
-- Shared contracts and selectors: `src/lib/template-types.ts`
-- Validation: `src/lib/template-validation.ts`
-- Runtime helpers: `src/lib/templates/runtime-resolver.ts`
+- Registry: `src/lib/templates/registry.ts`
+- Shared contracts and selectors: `src/lib/templates/types.ts`
+- Validation: `src/lib/templates/validation.ts`
+- Runtime helpers: `src/lib/templates/resolver.ts`
 - Consumer surfaces: `src/lib/templates/TemplatePreviewSurface.svelte` and `src/lib/templates/TemplateRuntimeSurface.svelte`
 - Gallery shell: `src/lib/templates/TemplatesGallery.svelte`
 - Detail shell: `src/lib/templates/TemplateDetailView.svelte`
@@ -183,9 +183,9 @@ If you want to reuse a component or template outside this repo, copy these piece
 
 1. The component or template from `src/lib/components/lectio/` or `src/lib/templates/`.
 2. Supporting UI primitives from `src/lib/components/ui/`.
-3. `src/lib/types.ts` for the content contracts.
-4. `src/lib/registry.ts` and `src/lib/template-registry.ts` if you want showcase and template metadata.
-5. `src/lib/validate.ts` and `src/lib/template-validation.ts` if you want the same validation behavior.
+3. `src/lib/schema/types.ts` for the content contracts.
+4. `src/lib/schema/registry.ts` and `src/lib/templates/registry.ts` if you want showcase and template metadata.
+5. `src/lib/schema/validate.ts` and `src/lib/templates/validation.ts` if you want the same validation behavior.
 6. `src/lib/theme.css` for shared tokens, utilities, animations, and preset styling.
 7. `src/lib/utils.ts` for class merging helpers.
 
@@ -198,3 +198,4 @@ If you want to reuse a component or template outside this repo, copy these piece
 - `SimulationBlock` is part of the public library and supports iframe-backed `html_content`, fallback diagrams, and an expanded modal view.
 - `TemplateDetailView` renders previews through `TemplatePreviewSurface`, so the showcase uses the same public preview path as consumers.
 - Legacy internal templates such as `GuidedConceptPath.svelte` and `EnrichedLearningPath.svelte` still exist for showcase and regression coverage, but the registry plus public surfaces are the source of truth for consumers.
+

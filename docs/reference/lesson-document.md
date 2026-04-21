@@ -26,7 +26,7 @@ Exported from `lectio` (see `src/lib/index.ts`):
 - `teacherLabel` — short palette label.
 - `teacherDescription` — one-sentence teacher copy.
 
-Source strings live in `src/lib/teacher-facing.ts` and are merged into each registry entry via `teacherFor(id)` in `src/lib/registry.ts`.
+Source strings live in `src/lib/teacher/teacher-facing.ts` and are merged into each registry entry via `teacherFor(id)` in `src/lib/schema/registry.ts`.
 
 ## Contract export
 
@@ -49,3 +49,4 @@ Source strings live in `src/lib/teacher-facing.ts` and are merged into each regi
 
 - [registry-field-map.md](registry-field-map.md) — `sectionField` and exported JSON.
 - [component-guide.md](component-guide.md) — public library surface.
+

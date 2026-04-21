@@ -17,7 +17,7 @@ Previously, the mapping from component IDs (for example `"practice-stack"`) to `
 Every component in the registry declares a `sectionField` property:
 
 ```typescript
-// src/lib/registry.ts
+// src/lib/schema/registry.ts
 
 export interface ComponentMeta {
   sectionField: keyof SectionContent | null;
@@ -61,8 +61,8 @@ See [lesson-document.md](lesson-document.md) for `fromSectionContents` / `toSect
 Four steps. Nothing else should need hand-maintained synchronization.
 
 1. Create the `.svelte` file in `src/lib/components/lectio/`.
-2. Register the component in `src/lib/registry.ts` with `sectionField` declared.
-3. Add the corresponding field to `SectionContent` in `src/lib/types.ts`.
+2. Register the component in `src/lib/schema/registry.ts` with `sectionField` declared.
+3. Add the corresponding field to `SectionContent` in `src/lib/schema/types.ts`.
 4. Rerun the contract export:
 
 ```bash
@@ -153,11 +153,11 @@ Template contract exports also include `allowed_presets`, so a consumer can reje
 ## Architecture Diagram
 
 ```text
-src/lib/registry.ts          (single source of truth)
+src/lib/schema/registry.ts          (single source of truth)
   ComponentMeta.sectionField
   getComponentFieldMap()
         |
-        |--> src/lib/template-validation.ts   (derives map at import time)
+        |--> src/lib/templates/validation.ts   (derives map at import time)
         |
         '--> scripts/export-contracts.ts      (exports to JSON, supports --out)
                   |
@@ -172,12 +172,13 @@ src/lib/registry.ts          (single source of truth)
 
 | File | Role |
 |---|---|
-| `src/lib/registry.ts` | Component registry with `sectionField`, teacher-facing fields, and `getComponentFieldMap()` |
-| `src/lib/teacher-facing.ts` | Strings merged into each registry entry |
-| `src/lib/document.ts` | `LessonDocument` conversion and validation |
-| `src/lib/template-validation.ts` | Template validation that derives the field map from the registry |
+| `src/lib/schema/registry.ts` | Component registry with `sectionField`, teacher-facing fields, and `getComponentFieldMap()` |
+| `src/lib/teacher/teacher-facing.ts` | Strings merged into each registry entry |
+| `src/lib/teacher/document.ts` | `LessonDocument` conversion and validation |
+| `src/lib/templates/validation.ts` | Template validation that derives the field map from the registry |
 | `scripts/export-contracts.ts` | Exports contracts to `agents/contracts/` |
 | `src/lib/presets/base-presets.ts` | Source of truth for preset metadata exported to JSON |
-| `src/lib/types.ts` | `SectionContent` interface |
+| `src/lib/schema/types.ts` | `SectionContent` interface |
 | `src/test/lectio.test.ts` | Tests for field map correctness |
 | `src/test/runtime-surface.test.ts` | Tests for public preview and runtime surfaces |
+

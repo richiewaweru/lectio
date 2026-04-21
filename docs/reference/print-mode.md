@@ -284,8 +284,9 @@ export function usePrintMode(): () => boolean { return getContext<() => boolean>
 npm run test
 ```
 
-When you add or change a component's print fallback, update both the implementation and the `printFallback` field in `src/lib/registry.ts`.
+When you add or change a component's print fallback, update both the implementation and the `printFallback` field in `src/lib/schema/registry.ts`.
 
 ### Showcase preview
 
 The `/components` showcase has a **Print preview mode** toggle in the page header. Toggle it to verify print fallbacks without opening a browser print dialog. The toggle calls `providePrintMode(() => printPreviewMode)` — the same API consumers use.
+

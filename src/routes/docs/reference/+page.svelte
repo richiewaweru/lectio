@@ -47,3 +47,16 @@
 	<li><code>src/lib/templates/registry.ts</code> — Template contracts and <code>render</code> components.</li>
 	<li><code>src/lib/index.ts</code> — Public exports.</li>
 </ul>
+
+<h2>Project directory arrangement</h2>
+<pre><code>src/lib/
+├── index.ts              # Public exports (package entry)
+├── schema/               # Core contracts, registry, validation
+├── teacher/              # Lesson document + builder authoring helpers
+├── templates/            # Template contracts, registry, runtime resolver
+├── components/           # Lectio blocks and internal UI primitives
+├── presets/              # Theme preset definitions
+├── print/                # Print utility components
+├── utils/                # Shared utilities (print context, markdown)
+└── dev/                  # Internal sample content and fixtures
+</code></pre>

@@ -288,21 +288,24 @@ npm run package      # Library build (src/lib/ -> dist/)
 
 ```
 src/lib/
-├── index.ts                    # Library entry point (barrel export)
-├── types.ts                    # All content type interfaces
-├── registry.ts                 # Component metadata registry
-├── teacher-facing.ts           # Teacher labels/descriptions for registry entries
-├── document.ts                 # LessonDocument types + from/to/validate conversion
-├── content-factories.ts        # getEmptyContent / getPreviewContent for blocks
-├── edit-schemas.ts             # getEditSchema for builder forms
-├── validate.ts                 # Content capacity validation
-├── template-registry.ts        # Template definitions + helpers
-├── template-types.ts           # Template type interfaces
-├── template-validation.ts      # Template contract validation
-├── presets/base-presets.ts      # Colour preset definitions
-├── print/                      # Print utility components (RuledLines, Checkboxes, …)
-├── utils/printContext.ts       # providePrintMode / usePrintMode context helpers
-├── components/lectio/          # 30 educational components (15 with print fallbacks)
-├── components/ui/              # shadcn-svelte primitives (internal)
-└── templates/                  # Template layout files (internal)
+├── index.ts                    # Public package barrel exports (import from 'lectio')
+├── schema/                     # Core contracts + registry + section validation
+│   ├── types.ts
+│   ├── registry.ts
+│   └── validate.ts
+├── teacher/                    # Authoring/interchange helpers for generator/editor flows
+│   ├── document.ts
+│   ├── content-factories.ts
+│   ├── edit-schemas.ts
+│   └── teacher-facing.ts
+├── templates/                  # Registry-driven template system and runtime resolvers
+│   ├── registry.ts
+│   ├── types.ts
+│   ├── validation.ts
+│   └── resolver.ts
+├── components/                 # Lectio blocks + internal UI primitives
+├── presets/                    # Theme preset definitions
+├── print/                      # Print utility components
+├── utils/                      # Shared runtime utilities (print context + markdown helpers)
+└── dev/                        # Internal sample content and fixtures
 ```
