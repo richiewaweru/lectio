@@ -276,6 +276,13 @@ npm run build        # Production app build
 npm run package      # Library build (src/lib/ -> dist/)
 ```
 
+## Release Maintainer Notes
+
+- Dependency installs in CI and release workflows are locked to `pnpm-lock.yaml` with `pnpm install --frozen-lockfile`.
+- `package-lock.json` is intentionally unsupported in this repo to prevent lockfile drift that can break Vercel deploys.
+- Tag releases in the active lane: `v0.2.x` (for example `v0.2.4`).
+- Publish workflow preflights npm and skips safely when a tagged version already exists, so reruns are no-op successes.
+
 ## Stack
 
 - SvelteKit 2 + Svelte 5 (runes)

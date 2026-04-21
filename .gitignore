@@ -12,6 +12,7 @@ Thumbs.db
 
 # npm & build
 npm-debug.log*
+package-lock.json
 *.tsbuildinfo
 
 # Ensure contracts are version controlled for publish
