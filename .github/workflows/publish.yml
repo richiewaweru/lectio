@@ -1,9 +1,9 @@
-name: Publish to GitHub Packages
+name: Publish to npm
 
 on:
   push:
     tags:
-      - 'v*.*.*'  # Trigger on semver tags like v0.1.0
+      - 'v*.*.*'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -11,25 +11,17 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-      packages: write
-      
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
           node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Configure npm for GitHub Packages
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.LECTIO_TOKEN }}" > .npmrc
-          echo "@richiewaweru:registry=https://npm.pkg.github.com" >> .npmrc
-          
       - name: Install dependencies
         run: npm ci
 
@@ -38,12 +30,12 @@ jobs:
 
       - name: Build package
         run: npm run package
-        
+
       - name: Export contracts
         run: npm run export-contracts
         env:
           LECTIO_CONTRACTS_DIR: contracts
-        
+
       - name: Verify build outputs
         run: |
           test -d dist || (echo "dist/ not found" && exit 1)
@@ -51,20 +43,20 @@ jobs:
           test -f dist/index.d.ts || (echo "dist/index.d.ts not found" && exit 1)
           test -d contracts || (echo "contracts/ not found" && exit 1)
           echo "Build verification passed"
-          
-      - name: Publish to GitHub Packages
+
+      - name: Publish to npm
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.LECTIO_TOKEN }}
-          
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: |
-            Published version ${{ github.ref_name }} to GitHub Packages
+            Published version ${{ github.ref_name }} to npm.
 
-            Install: `npm install @richiewaweru/lectio@${{ github.ref_name }}`
+            Install: `npm install lectio@${{ github.ref_name }}`
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

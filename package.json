@@ -1,5 +1,5 @@
 {
-	"name": "@richiewaweru/lectio",
+	"name": "lectio",
 	"description": "Component library for pedagogically-structured lesson content",
 	"author": "Richie Waweru",
 	"license": "UNLICENSED",
@@ -34,8 +34,8 @@
 		"!dist/**/*.test.*"
 	],
 	"publishConfig": {
-		"registry": "https://npm.pkg.github.com",
-		"access": "restricted"
+		"registry": "https://registry.npmjs.org",
+		"access": "public"
 	},
 	"repository": {
 		"type": "git",
