@@ -5,6 +5,7 @@
 	"license": "UNLICENSED",
 	"private": false,
 	"version": "0.1.1",
+	"packageManager": "pnpm@10.14.0",
 	"type": "module",
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
