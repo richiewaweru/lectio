@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7] - 2026-04-22
+
+### Changed
+- Hardened print output through stable `data-lectio-block` and `data-print-role` selector hooks across key components.
+- Consolidated print transformations in `theme.css` to flatten decorative UI, enforce print-safe block rendering, and improve section/diagram readability.
+- Updated `PracticeStack` print behavior so inline answers are hidden by default.
+
+### Added
+- Optional `PracticeStack` prop: `showInlineAnswersInPrint?: boolean` (default `false`) for explicit inline-answer print opt-in.
+- `data-schema-warning="true"` markers on warning card surfaces so schema warnings are suppressed in print output.
+- New print harness coverage in tests for `PracticeStack` print behavior and stable print hook presence.
+
+### Notes
+- No `SectionContent` schema or component-field mapping contract changes.
+- Downstream consumers should import `lectio/theme.css` and opt in to inline print answers only when needed.
+
 ## [0.2.6] - 2026-04-22
 
 ### Added

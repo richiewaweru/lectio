@@ -360,7 +360,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 			questionMaxWords: 100,
 			hintMaxWords: 60
 		},
-		printFallback: 'All visible, write-in lines rendered',
+		printFallback: 'All visible, write-in lines rendered; inline answers hidden by default',
 		status: 'stable'
 	},
 

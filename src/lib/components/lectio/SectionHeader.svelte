@@ -13,9 +13,9 @@
 	};
 </script>
 
-<Card class="border-primary/10 bg-primary text-primary-foreground">
+<Card class="border-primary/10 bg-primary text-primary-foreground" data-lectio-block="section-header">
 	<div class="rh-gap-component rh-pad-shell">
-		<div class="flex flex-wrap items-center gap-2">
+		<div class="flex flex-wrap items-center gap-2" data-print-role="section-header-meta">
 			{#if content.section_number}
 				<Badge class="bg-white/12 text-primary-foreground hover:bg-white/12">
 					{content.section_number}
@@ -54,7 +54,7 @@
 		{/if}
 
 		{#if content.level_pills?.length}
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-wrap gap-2" data-print-role="section-header-level-pills">
 				{#each content.level_pills as pill}
 					<Badge variant="outline" class={pillTone[pill.variant] ?? pillTone.all}>
 						{pill.label}

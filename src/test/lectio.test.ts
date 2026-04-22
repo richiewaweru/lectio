@@ -2,7 +2,14 @@ import { fireEvent, render, screen } from '@testing-library/svelte';
 import { describe, expect, it } from 'vitest';
 
 import HookHero from '$lib/components/lectio/HookHero.svelte';
+import SectionHeader from '$lib/components/lectio/SectionHeader.svelte';
+import ExplanationBlock from '$lib/components/lectio/ExplanationBlock.svelte';
+import DefinitionCard from '$lib/components/lectio/DefinitionCard.svelte';
 import DefinitionFamily from '$lib/components/lectio/DefinitionFamily.svelte';
+import PracticeStack from '$lib/components/lectio/PracticeStack.svelte';
+import WhatNextBridge from '$lib/components/lectio/WhatNextBridge.svelte';
+import PitfallAlert from '$lib/components/lectio/PitfallAlert.svelte';
+import GlossaryRail from '$lib/components/lectio/GlossaryRail.svelte';
 import DiagramBlock from '$lib/components/lectio/DiagramBlock.svelte';
 import DiagramSeries from '$lib/components/lectio/DiagramSeries.svelte';
 import DiagramCompare from '$lib/components/lectio/DiagramCompare.svelte';
@@ -12,7 +19,9 @@ import QuizCheck from '$lib/components/lectio/QuizCheck.svelte';
 import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
+import TemplateWarnings from '$lib/templates/TemplateWarnings.svelte';
 import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
+import PracticeStackPrintHarness from './PracticeStackPrintHarness.svelte';
 import { calculusSection, physicsSection } from '$lib/dev/dummy-content';
 import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/schema/registry';
 import { validateSection } from '$lib/schema/validate';
@@ -594,5 +603,89 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText("Newton's Second Law of Motion")).toBeInTheDocument();
 		expect(screen.getByText('Before we begin')).toBeInTheDocument();
 		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
+	});
+
+	it('adds stable data-lectio-block hooks to key print-targeted components', () => {
+		const sectionHeader = render(SectionHeader, { props: { content: physicsSection.header } });
+		expect(
+			sectionHeader.container.querySelector('[data-lectio-block="section-header"]')
+		).toBeInTheDocument();
+		sectionHeader.unmount();
+
+		const hookHero = render(HookHero, { props: { content: calculusSection.hook } });
+		expect(hookHero.container.querySelector('[data-lectio-block="hook"]')).toBeInTheDocument();
+		hookHero.unmount();
+
+		const explanation = render(ExplanationBlock, { props: { content: calculusSection.explanation } });
+		expect(
+			explanation.container.querySelector('[data-lectio-block="explanation"]')
+		).toBeInTheDocument();
+		explanation.unmount();
+
+		const definition = render(DefinitionCard, { props: { content: calculusSection.definition! } });
+		expect(definition.container.querySelector('[data-lectio-block="definition"]')).toBeInTheDocument();
+		definition.unmount();
+
+		const practice = render(PracticeStack, { props: { content: calculusSection.practice } });
+		expect(practice.container.querySelector('[data-lectio-block="practice"]')).toBeInTheDocument();
+		practice.unmount();
+
+		const whatNext = render(WhatNextBridge, { props: { content: calculusSection.what_next } });
+		expect(whatNext.container.querySelector('[data-lectio-block="what-next"]')).toBeInTheDocument();
+		whatNext.unmount();
+
+		const pitfall = render(PitfallAlert, { props: { content: calculusSection.pitfall! } });
+		expect(pitfall.container.querySelector('[data-lectio-block="pitfall"]')).toBeInTheDocument();
+		pitfall.unmount();
+
+		const glossary = render(GlossaryRail, { props: { content: calculusSection.glossary! } });
+		expect(glossary.container.querySelector('[data-lectio-block="glossary"]')).toBeInTheDocument();
+		glossary.unmount();
+
+		const diagram = render(DiagramBlock, { props: { content: physicsSection.diagram! } });
+		expect(diagram.container.querySelector('[data-lectio-block="diagram"]')).toBeInTheDocument();
+		diagram.unmount();
+	});
+
+	it('hides inline practice answers in print mode by default and supports explicit opt-in', () => {
+		const hiddenAnswers = render(PracticeStackPrintHarness, {
+			props: { content: physicsSection.practice }
+		});
+
+		expect(hiddenAnswers.container.querySelector('.practice-print')).toBeInTheDocument();
+		expect(screen.queryByText(/Solution:/)).not.toBeInTheDocument();
+		expect(screen.queryByText(/Answer:/)).not.toBeInTheDocument();
+		hiddenAnswers.unmount();
+
+		render(PracticeStackPrintHarness, {
+			props: { content: physicsSection.practice, showInlineAnswersInPrint: true }
+		});
+
+		expect(screen.getAllByText(/Solution:/).length).toBeGreaterThan(0);
+		expect(screen.getAllByText(/Answer:/).length).toBeGreaterThan(0);
+	});
+
+	it('marks schema warning cards with data-schema-warning across active and legacy templates', () => {
+		const invalidSection = {
+			...physicsSection,
+			what_next: {
+				...physicsSection.what_next,
+				next: repeatWords('next', 16)
+			}
+		};
+
+		const warningCard = render(TemplateWarnings, { props: { section: invalidSection } });
+		expect(
+			warningCard.container.querySelector('[data-schema-warning="true"]')
+		).toBeInTheDocument();
+		warningCard.unmount();
+
+		const guided = render(GuidedConceptPath, { props: { section: invalidSection } });
+		expect(guided.container.querySelector('[data-schema-warning="true"]')).toBeInTheDocument();
+		guided.unmount();
+
+		const enriched = render(EnrichedLearningPath, { props: { section: invalidSection } });
+		expect(enriched.container.querySelector('[data-schema-warning="true"]')).toBeInTheDocument();
+		enriched.unmount();
 	});
 });

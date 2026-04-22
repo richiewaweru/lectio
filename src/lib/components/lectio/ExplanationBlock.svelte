@@ -69,7 +69,7 @@
 	}
 </script>
 
-<Card class="border-primary/10 bg-white/88 rh-pad-card">
+<Card class="border-primary/10 bg-white/88 rh-pad-card" data-lectio-block="explanation">
 	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-blue-600">Explanation</p>
@@ -82,8 +82,12 @@
 			<div class="rh-gap-component-tight">
 				{#each content.callouts as callout}
 					{@const cfg = calloutConfig[callout.type]}
-					<div class="flex rh-gap-cluster rounded-xl border p-3 text-sm leading-6 {cfg.className}">
-						<cfg.icon class="mt-0.5 h-4 w-4 shrink-0" />
+					<div
+						class="flex rh-gap-cluster rounded-xl border p-3 text-sm leading-6 {cfg.className}"
+						data-print-role="explanation-callout"
+						data-callout-type={callout.type}
+					>
+						<cfg.icon class="mt-0.5 h-4 w-4 shrink-0" data-print-role="callout-icon" />
 						<div>
 							<span class="font-semibold">{cfg.label}:</span>
 							{callout.text}

@@ -17,10 +17,15 @@
 	type PracticeStackMode = 'accordion' | 'flat-list';
 	type SelfAssessment = 'matched' | 'review';
 
-	let {
+let {
 		content,
-		mode = 'accordion'
-	}: { content: PracticeContent; mode?: PracticeStackMode } = $props();
+		mode = 'accordion',
+		showInlineAnswersInPrint = false
+	}: {
+		content: PracticeContent;
+		mode?: PracticeStackMode;
+		showInlineAnswersInPrint?: boolean;
+	} = $props();
 
 	const difficultyConfig: Record<string, { label: string; className: string }> = {
 		warm: { label: 'Warm', className: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
@@ -48,7 +53,11 @@
 </script>
 
 {#if printMode}
-	<div class="practice-print">
+	<div
+		class="practice-print"
+		data-lectio-block="practice"
+		data-print-show-inline-answers={showInlineAnswersInPrint ? 'true' : 'false'}
+	>
 		<h4 class="practice-print-title">{content.label ?? 'Practice problems'}</h4>
 		{#each content.problems as problem, idx}
 			<div class="practice-print-problem">
@@ -69,11 +78,15 @@
 					</div>
 				{/if}
 				{#if problem.writein_lines && problem.writein_lines > 0}
-					<RuledLines lines={problem.writein_lines} label="Your answer:" />
+					<div data-print-role="answer-lines">
+						<RuledLines lines={problem.writein_lines} label="Your answer:" />
+					</div>
 				{/if}
-				{#if problem.solution && content.solutions_available}
-					<div class="practice-print-solution">
-						<div class="lectio-rich"><strong>Solution:</strong> {@html renderBlockMarkdown(problem.solution.approach)}</div>
+				{#if problem.solution && content.solutions_available && showInlineAnswersInPrint}
+					<div class="practice-print-solution" data-print-role="inline-answer">
+						<div class="lectio-rich">
+							<strong>Solution:</strong> {@html renderBlockMarkdown(problem.solution.approach)}
+						</div>
 						<div class="practice-print-answer lectio-rich">
 							<strong>Answer:</strong> {@html renderBlockMarkdown(problem.solution.answer)}
 						</div>
@@ -83,7 +96,7 @@
 		{/each}
 	</div>
 {:else}
-<Card class="border-primary/10 bg-white/88 rh-pad-card">
+<Card class="border-primary/10 bg-white/88 rh-pad-card" data-lectio-block="practice">
 	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-amber-600">{content.label ?? 'Practice problems'}</p>

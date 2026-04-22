@@ -291,14 +291,14 @@ For contract-sensitive consumers (AI pipelines, backend validators), pin exact v
 ```json
 {
   "dependencies": {
-    "lectio": "0.2.6"
+    "lectio": "0.2.7"
   }
 }
 ```
 
-## Upgrading to 0.2.6
+## Upgrading to 0.2.7
 
-`0.2.6` is a visual harmonisation release focused on spacing/radius rhythm consistency.
+`0.2.7` is a print hardening release focused on stable print selectors and print-safe component output.
 No TypeScript or schema contract changes are introduced.
 
 ### What to validate downstream
@@ -306,14 +306,23 @@ No TypeScript or schema contract changes are introduced.
 - Rebaseline UI screenshots/snapshots for component and template surfaces.
 - Validate key pages at mobile/tablet/desktop breakpoints.
 - Recheck print output for:
+  - `SectionHeader`
+  - `HookHero`
+  - `ExplanationBlock`
+  - `DefinitionCard`
   - `PracticeStack`
+  - `WhatNextBridge`
+  - `PitfallAlert`
+  - `GlossaryRail` / `GlossaryInline`
+  - `DiagramBlock`
   - `ShortAnswerQuestion`
   - `SimulationBlock`
   - `TimelineBlock`
   - `WorkedExampleCard`
   - `FillInTheBlank`
+- If your print workflow expects inline practice answers, explicitly set `showInlineAnswersInPrint={true}` on `PracticeStack`.
 - Review local CSS overrides that assumed previous hardcoded paddings/radii.
-- Ensure your app imports `lectio/theme.css`; without it, the new token classes/variables will not apply.
+- Ensure your app imports `lectio/theme.css`; without it, the print hardening rules and design tokens will not apply.
 
 ## Do / Don't
 

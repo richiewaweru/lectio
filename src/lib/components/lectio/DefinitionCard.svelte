@@ -11,7 +11,7 @@
 	let showFormal = $state(false);
 </script>
 
-<Card class="border-l-4 border-l-fuchsia-500 bg-fuchsia-50/65">
+<Card class="border-l-4 border-l-fuchsia-500 bg-fuchsia-50/65" data-lectio-block="definition">
 	<div class="rh-gap-component rh-pad-card">
 		<div class="space-y-2">
 			<p class="eyebrow text-fuchsia-600">Define</p>
@@ -35,6 +35,7 @@
 			size="sm"
 			onclick={() => (showFormal = !showFormal)}
 			class="w-fit px-0 text-fuchsia-700 hover:bg-transparent hover:text-fuchsia-800"
+			data-print-role="definition-toggle"
 		>
 			{showFormal ? 'Show plain language' : 'Show formal definition'}
 			<ChevronRight class="h-4 w-4 transition-transform {showFormal ? 'rotate-90' : ''}" />
@@ -45,7 +46,7 @@
 		{/if}
 
 		{#if content.notation}
-			<div class="rh-radius-card border border-fuchsia-200 bg-white/85 p-4">
+			<div class="rh-radius-card border border-fuchsia-200 bg-white/85 p-4" data-block-part="notation">
 				<p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-fuchsia-700/80">
 					Notation
 				</p>
@@ -75,9 +76,13 @@
 		{/if}
 
 		{#if content.related_terms?.length}
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-wrap gap-2" data-print-role="definition-related-terms">
 				{#each content.related_terms as term}
-					<Badge variant="outline" class="border-fuchsia-200 bg-white/80 text-fuchsia-700">
+					<Badge
+						variant="outline"
+						class="border-fuchsia-200 bg-white/80 text-fuchsia-700"
+						data-print-role="definition-related-term-pill"
+					>
 						{term}
 					</Badge>
 				{/each}

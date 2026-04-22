@@ -36,7 +36,7 @@
 {/snippet}
 
 {#if mode === 'inline-strip'}
-	<Card class={cn('bg-primary text-primary-foreground p-4', className)}>
+	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary">
 		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary strip</p>
@@ -59,7 +59,7 @@
 		</div>
 	</Card>
 {:else if mode === 'drawer'}
-	<Card class={cn('bg-primary text-primary-foreground p-4', className)}>
+	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary">
 		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary drawer</p>
@@ -87,12 +87,15 @@
 			'relative overflow-hidden rounded-[2rem] border border-primary/20 bg-primary text-primary-foreground shadow-[var(--shadow-warm)]',
 			className
 		)}
+		data-lectio-block="glossary"
 	>
 		<div
 			class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_52%)]"
+			data-print-role="glossary-decorative-overlay"
 		></div>
 		<div
 			class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[length:24px_24px] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.22),transparent_55%)]"
+			data-print-role="glossary-grid-overlay"
 		></div>
 
 		<div class="relative z-10 p-4">

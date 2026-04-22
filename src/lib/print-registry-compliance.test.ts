@@ -25,7 +25,7 @@ describe('Print Fallback Registry Compliance', () => {
 	it('high-priority interactive components have correct printFallback strings', () => {
 		const expected: Record<string, string> = {
 			'quiz-check': 'Question and options shown, correct answer marked',
-			'practice-stack': 'All visible, write-in lines rendered',
+			'practice-stack': 'All visible, write-in lines rendered; inline answers hidden by default',
 			'worked-example-card': 'All steps expanded',
 			'simulation-block': 'Static diagram at midstate',
 			'fill-in-blank': 'Passage with underlined blanks, word bank box below',

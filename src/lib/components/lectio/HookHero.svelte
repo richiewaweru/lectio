@@ -18,8 +18,14 @@
 	}
 </script>
 
-<section class="relative overflow-hidden rh-radius-outer bg-primary px-6 py-8 text-primary-foreground shadow-warm ">
-	<div class="absolute right-4 top-3 text-[7rem] font-black leading-none text-white/5 sm:text-[9rem]">
+<section
+	class="relative overflow-hidden rh-radius-outer bg-primary px-6 py-8 text-primary-foreground shadow-warm "
+	data-lectio-block="hook"
+>
+	<div
+		class="absolute right-4 top-3 text-[7rem] font-black leading-none text-white/5 sm:text-[9rem]"
+		data-print-role="hook-watermark"
+	>
 		?
 	</div>
 
@@ -29,11 +35,14 @@
 			: 'relative z-10 rh-gap-component'}
 	>
 		<div class="rh-gap-component">
-			<Badge class="w-fit bg-white/12 text-primary-foreground hover:bg-white/12">
+			<Badge class="w-fit bg-white/12 text-primary-foreground hover:bg-white/12" data-print-role="hook-pill">
 				Curiosity hook
 			</Badge>
 
-			<div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground/70">
+			<div
+				class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground/70"
+				data-print-role="hook-state-label"
+			>
 				<Sparkles class="h-4 w-4" />
 				Felt need
 			</div>
@@ -62,7 +71,7 @@
 			{/if}
 
 			{#if getHookType() === 'question' && content.question_options?.length}
-				<div class="rh-radius-card border border-white/12 bg-white/8 p-4">
+				<div class="rh-radius-card border border-white/12 bg-white/8 p-4" data-print-role="hook-tension">
 					<div class="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-primary-foreground/68">
 						<CircleHelp class="h-4 w-4" />
 						Hold the tension
@@ -98,7 +107,10 @@
 				</div>
 			{/if}
 
-			<p class="max-w-xl rounded-full border border-white/12 bg-white/8 px-4 py-2 text-sm text-primary-foreground/78">
+			<p
+				class="max-w-xl rounded-full border border-white/12 bg-white/8 px-4 py-2 text-sm text-primary-foreground/78"
+				data-print-role="hook-anchor"
+			>
 				Anchor: {content.anchor}
 			</p>
 		</div>

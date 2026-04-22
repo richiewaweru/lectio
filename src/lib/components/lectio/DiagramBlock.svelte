@@ -31,7 +31,7 @@
 	}
 </script>
 
-<div class="diagram-block-root">
+<div class="diagram-block-root" data-lectio-block="diagram">
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="rh-gap-component">
 		<div class="flex flex-wrap items-center rh-gap-cluster">
@@ -79,6 +79,7 @@
 							<div
 								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)] diagram-block-dot"
 								style="left: {callout.x}%; top: {callout.y}%;"
+								data-print-role="diagram-dot"
 							></div>
 							<Popover>
 								<PopoverTrigger>
@@ -89,6 +90,7 @@
 											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04] diagram-block-callout-btn"
 											style="left: {markerPosition.left}; top: {markerPosition.top};"
 											aria-label={callout.label}
+											data-print-role="diagram-callout-trigger"
 											onpointerdown={(event) => event.stopPropagation()}
 											onclick={(event) => event.stopPropagation()}
 										>
@@ -120,7 +122,10 @@
 						{/each}
 					{/if}
 
-					<div class="absolute right-3 top-3 rounded-full bg-white/82 p-1.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100 diagram-block-zoom">
+					<div
+						class="absolute right-3 top-3 rounded-full bg-white/82 p-1.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100 diagram-block-zoom"
+						data-print-role="diagram-zoom-trigger"
+					>
 						<ZoomIn class="h-4 w-4 text-muted-foreground" />
 					</div>
 				</div>

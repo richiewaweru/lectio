@@ -11,7 +11,7 @@
 	const isMinor = $derived(content.severity === 'minor');
 </script>
 
-<div class="pitfall-alert-root">
+<div class="pitfall-alert-root" data-lectio-block="pitfall">
 <Alert class={isMinor ? 'border-amber-200 bg-amber-50/60' : 'border-orange-200 bg-orange-50/80'}>
 	<TriangleAlert class="h-4 w-4 {isMinor ? 'text-amber-500' : 'text-orange-600'}" />
 	<AlertTitle class="{isMinor ? 'text-amber-700' : 'text-orange-700'} text-sm font-semibold">
@@ -32,6 +32,7 @@
 		<Collapsible class="mt-2">
 			<CollapsibleTrigger
 				class="inline-flex h-6 items-center justify-center rounded-xl px-2 text-xs font-medium text-orange-600 transition-colors hover:bg-accent hover:text-orange-700"
+				data-print-role="pitfall-nav-link"
 			>
 				{displayExamples.length === 1 ? 'See example' : `See examples (${displayExamples.length})`} ->
 			</CollapsibleTrigger>
@@ -59,4 +60,3 @@
 		}
 	}
 </style>
-

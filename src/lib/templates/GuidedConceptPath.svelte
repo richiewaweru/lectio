@@ -31,7 +31,7 @@
 			<SectionHeader content={section.header} />
 
 			{#if warnings.length > 0}
-				<Card class="border-amber-300 bg-amber-50/92 p-4">
+				<Card class="border-amber-300 bg-amber-50/92 p-4" data-schema-warning="true">
 					<div class="flex rh-gap-cluster">
 						<AlertTriangle class="mt-1 h-5 w-5 shrink-0 text-amber-700" />
 						<div>
