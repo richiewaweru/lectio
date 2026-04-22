@@ -39,13 +39,13 @@
 </script>
 
 <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-	<div class="lesson-shell p-6 sm:p-8">
-		<div class="relative z-10 space-y-6">
+	<div class="lesson-shell rh-pad-shell">
+		<div class="relative z-10 rh-gap-section">
 			<SectionHeader content={section.header} />
 
 			{#if warnings.length > 0}
 				<Card class="border-amber-300 bg-amber-50/92 p-4">
-					<div class="flex gap-3">
+					<div class="flex rh-gap-cluster">
 						<AlertTriangle class="mt-1 h-5 w-5 shrink-0 text-amber-700" />
 						<div>
 							<p class="font-semibold text-amber-900">Schema capacity warnings</p>
@@ -67,7 +67,7 @@
 			<ExplanationBlock content={section.explanation} />
 
 			{#if inlineTerm}
-				<div class="rounded-[1.35rem] border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
+				<div class="rh-radius-card border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
 					Inline term preview:
 					<GlossaryInline term={inlineTerm.term} definition={inlineTerm.definition} />
 					can sit inside narrative text without pulling the learner away from the main
@@ -121,7 +121,7 @@
 			{/if}
 
 			{#if section.pitfalls}
-				<div class="space-y-4">
+				<div class="rh-gap-component">
 					{#each section.pitfalls as pitfall}
 						<PitfallAlert content={pitfall} />
 					{/each}

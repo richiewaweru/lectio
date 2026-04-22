@@ -69,8 +69,8 @@
 	});
 </script>
 
-<Card class="border-primary/10 bg-white/88 p-4 sm:p-6">
-	<div class="space-y-3">
+<Card class="border-primary/10 bg-white/88 rh-pad-card">
+	<div class="rh-gap-component-tight">
 		<p class="eyebrow">Video</p>
 
 		{#if isVideo && ref}
@@ -105,7 +105,7 @@
 					{#if qrDataUrl}
 						<img src={qrDataUrl} alt="QR code linking to video" class="h-36 w-36" />
 					{:else}
-						<p class="text-sm text-muted-foreground">Generating QR…</p>
+						<p class="text-sm text-muted-foreground">Generating QRÃ¢â‚¬Â¦</p>
 					{/if}
 					<p class="break-all text-xs text-muted-foreground">{qrTarget}</p>
 					{#if content.caption?.trim()}

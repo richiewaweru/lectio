@@ -76,7 +76,7 @@
 		{/if}
 	</div>
 {:else}
-	<Card class="border-primary/10 bg-white/88 p-6">
+	<Card class="border-primary/10 bg-white/88 rh-pad-card">
 		<div class="space-y-5">
 			<div class="space-y-2">
 				<p class="eyebrow text-accent">Compare</p>
@@ -84,7 +84,7 @@
 			</div>
 
 			<div class="rounded-2xl border bg-gradient-to-b from-white/98 to-secondary/40 p-4 sm:p-5">
-				<div class="mb-3 flex items-center justify-between gap-3">
+				<div class="mb-3 flex items-center justify-between rh-gap-cluster">
 					<Badge
 						variant="outline"
 						class={beforeActive
@@ -189,7 +189,7 @@
 			</div>
 
 			{#if beforeDetails.length > 0 || afterDetails.length > 0}
-				<div class="grid gap-3 lg:grid-cols-2">
+				<div class="grid rh-gap-cluster lg:grid-cols-2">
 					{#if beforeDetails.length > 0}
 						<div
 							class="rounded-xl border p-4 transition-all {beforeActive

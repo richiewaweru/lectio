@@ -54,7 +54,28 @@
 	--border: hsl(38, 20%, 88%);
 	--input: hsl(38, 20%, 88%);
 	--ring: hsl(24, 95%, 53%);
-	--radius: 1rem;
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--rh-pad-card: var(--space-6);
+	--rh-pad-card-tight: var(--space-5);
+	--rh-pad-shell: var(--space-8);
+	--rh-gap-component: var(--space-4);
+	--rh-gap-component-tight: var(--space-3);
+	--rh-gap-section: var(--space-6);
+	--rh-gap-cluster: var(--space-4);
+	--rh-radius-outer: 1.75rem;
+	--rh-radius-card: 1.25rem;
+	--rh-radius-inner: 0.75rem;
+	--radius: var(--rh-radius-card);
+	--rh-eyebrow-size: 0.75rem;
+	--rh-eyebrow-weight: 600;
+	--rh-eyebrow-tracking: 0.22em;
 	--font-sans: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
 	--font-serif: 'Fraunces', ui-serif, Georgia, serif;
 }
@@ -372,7 +393,7 @@
 	.lesson-shell {
 		position: relative;
 		overflow: hidden;
-		border-radius: 2rem;
+		border-radius: var(--rh-radius-outer);
 		border: 1px solid rgba(255, 255, 255, 0.5);
 		background: rgba(255, 255, 255, 0.85);
 		box-shadow: 0 24px 80px rgba(27, 38, 59, 0.14);
@@ -419,26 +440,82 @@
 		margin-inline: auto;
 		width: 100%;
 		max-width: 80rem;
-		padding: 2.5rem 1rem;
+		padding: var(--space-10) var(--space-4);
+	}
+
+	.rh-pad-card {
+		padding: var(--rh-pad-card);
+	}
+
+	.rh-pad-card-tight {
+		padding: var(--rh-pad-card-tight);
+	}
+
+	.rh-pad-shell {
+		padding: var(--rh-pad-shell);
+	}
+
+	.rh-gap-component > * + * {
+		margin-top: var(--rh-gap-component);
+	}
+
+	.rh-gap-component-tight > * + * {
+		margin-top: var(--rh-gap-component-tight);
+	}
+
+	.rh-gap-section > * + * {
+		margin-top: var(--rh-gap-section);
+	}
+
+	.rh-gap-cluster {
+		gap: var(--rh-gap-cluster);
+	}
+
+	.rh-radius-outer {
+		border-radius: var(--rh-radius-outer);
+	}
+
+	.rh-radius-card {
+		border-radius: var(--rh-radius-card);
+	}
+
+	.rh-radius-inner {
+		border-radius: var(--rh-radius-inner);
 	}
 
 	.eyebrow {
 		color: var(--accent);
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.28em;
+		font-size: var(--rh-eyebrow-size);
+		font-weight: var(--rh-eyebrow-weight);
+		letter-spacing: var(--rh-eyebrow-tracking);
 		text-transform: uppercase;
+	}
+}
+
+@media (max-width: 639px) {
+	:root {
+		--rh-pad-card: var(--space-5);
+		--rh-pad-card-tight: var(--space-4);
+		--rh-pad-shell: var(--space-6);
+	}
+}
+
+@media print {
+	:root {
+		--rh-pad-card: var(--space-4);
+		--rh-pad-card-tight: var(--space-3);
+		--rh-gap-section: var(--space-5);
 	}
 }
 
 @media (min-width: 640px) {
 	.page-frame {
-		padding-inline: 1.5rem;
+		padding-inline: var(--space-6);
 	}
 }
 
 @media (min-width: 1024px) {
 	.page-frame {
-		padding-inline: 2rem;
+		padding-inline: var(--space-8);
 	}
 }

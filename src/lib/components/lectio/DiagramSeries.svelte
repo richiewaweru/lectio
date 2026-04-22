@@ -48,10 +48,10 @@ const progressPercent = $derived(
 					<img
 						src={diagram.image_url}
 						alt={diagram.caption}
-						class="w-full overflow-hidden rounded-[1.25rem] border border-border/70 bg-white object-contain"
+						class="w-full overflow-hidden rh-radius-card border border-border/70 bg-white object-contain"
 					/>
 				{:else if hasSvg(diagram)}
-					<div class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
+					<div class="overflow-hidden rh-radius-card border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
 						{@html sanitizeSvg(diagram.svg_content ?? '')}
 					</div>
 				{/if}
@@ -60,7 +60,7 @@ const progressPercent = $derived(
 		{/each}
 	</div>
 {:else}
-<Card class="border-primary/10 bg-white/88 p-6">
+<Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="space-y-5">
 		<div class="space-y-2">
 			<p class="eyebrow">Series</p>
@@ -68,8 +68,8 @@ const progressPercent = $derived(
 		</div>
 
 		{#if activeDiagram}
-			<div class="space-y-3 rounded-[1.2rem] border border-border/70 bg-white/78 p-4">
-				<div class="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+			<div class="rh-gap-component-tight rounded-[1.2rem] border border-border/70 bg-white/78 p-4">
+				<div class="flex items-center justify-between rh-gap-cluster text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
 					<span>Step {current + 1} of {content.diagrams.length}</span>
 					<span>{activeDiagram.step_label}</span>
 				</div>
@@ -102,7 +102,7 @@ const progressPercent = $derived(
 					></div>
 				</div>
 
-				<div class="flex flex-wrap items-center justify-between gap-3">
+				<div class="flex flex-wrap items-center justify-between rh-gap-cluster">
 					<Button
 						size="sm"
 						variant="outline"
@@ -142,10 +142,10 @@ const progressPercent = $derived(
 				<img
 					src={activeDiagram.image_url}
 					alt={activeDiagram.caption}
-					class="w-full overflow-hidden rounded-[1.25rem] border border-border/70 bg-white object-contain"
+					class="w-full overflow-hidden rh-radius-card border border-border/70 bg-white object-contain"
 				/>
 			{:else if hasSvg(activeDiagram)}
-				<div class="overflow-hidden rounded-[1.25rem] border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
+				<div class="overflow-hidden rh-radius-card border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
 					{@html sanitizeSvg(activeDiagram.svg_content ?? '')}
 				</div>
 			{/if}
@@ -169,7 +169,7 @@ const progressPercent = $derived(
 
 	.diagram-series-print-item {
 		page-break-inside: avoid;
-		margin-bottom: 2rem;
+		margin-bottom: var(--rh-gap-section);
 	}
 
 	.diagram-series-print-label {
@@ -179,7 +179,7 @@ const progressPercent = $derived(
 	}
 
 	.diagram-series-print-step {
-		font-size: 0.75rem;
+		font-size: var(--rh-eyebrow-size);
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
 		color: #6b7280;

@@ -16,7 +16,7 @@
 		<RuledLines {lines} label={content.prompt} />
 	</div>
 {:else}
-<Card class="border-border/60 p-5 sm:p-6">
+<Card class="border-border/60 rh-pad-card">
 	{#if content.label}
 		<p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
 			{content.label}

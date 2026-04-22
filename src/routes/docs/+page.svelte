@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Documentation — Lectio</title>
+	<title>Documentation Ã¢â‚¬â€ Lectio</title>
 </svelte:head>
 
 <p class="eyebrow">Documentation</p>
@@ -17,9 +17,9 @@
 
 <div class="not-prose mt-10 grid gap-6 sm:grid-cols-2">
 	{#each groups as group}
-		<section class="rounded-[1.35rem] border border-border/70 bg-white/75 p-5 shadow-sm">
+		<section class="rh-radius-card border border-border/70 bg-white/75 p-5 shadow-sm">
 			<p class="eyebrow text-xs">{group.eyebrow}</p>
-			<ul class="mt-4 space-y-3">
+			<ul class="mt-4 rh-gap-component-tight">
 				{#each group.items as item}
 					<li>
 						<a
@@ -41,5 +41,5 @@
 	<a href="/components">Components</a>
 	and
 	<a href="/templates">Templates</a>
-	— this section focuses on consumption, patterns, and contracts.
+	Ã¢â‚¬â€ this section focuses on consumption, patterns, and contracts.
 </p>

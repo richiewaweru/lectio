@@ -5,7 +5,7 @@
 	let { content }: { content: KeyFactContent } = $props();
 </script>
 
-<Card class="border-primary/15 bg-primary/4 p-5 sm:p-6">
+<Card class="border-primary/15 bg-primary/4 rh-pad-card">
 	<p class="text-2xl font-semibold leading-tight font-serif text-foreground">
 		{content.fact}
 	</p>

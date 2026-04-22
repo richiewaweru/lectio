@@ -74,14 +74,14 @@
 {/snippet}
 
 {#snippet methodPreview(example: WorkedExampleContent)}
-	<div class="space-y-4 rounded-[1.25rem] bg-white/85 p-4">
+	<div class="rh-gap-component rh-radius-card bg-white/85 p-4">
 		{#if example.method_label}
 			<Badge variant="outline" class="border-violet-200 text-violet-700">
 				{example.method_label}
 			</Badge>
 		{/if}
 		<p class="text-sm leading-6 text-muted-foreground">{@html renderInlineMarkdown(example.setup)}</p>
-		<div class="space-y-4">
+		<div class="rh-gap-component">
 			{#each example.steps as step, index}
 				{@render stepBlock(step, index)}
 			{/each}
@@ -103,9 +103,9 @@
 	</div>
 {:else}
 <Card class="border-l-4 border-l-violet-500 bg-violet-50/45">
-	<div class="space-y-5 p-6">
-		<div class="space-y-3">
-			<div class="flex flex-wrap items-center gap-3">
+	<div class="space-y-5 rh-pad-card">
+		<div class="rh-gap-component-tight">
+			<div class="flex flex-wrap items-center rh-gap-cluster">
 				<p class="eyebrow text-violet-600">Example</p>
 				{#if content.method_label}
 					<Badge variant="outline" class="border-violet-200 text-violet-700">
@@ -118,25 +118,25 @@
 		</div>
 
 		{#if mode === 'accordion'}
-			<Accordion type="single" class="space-y-3">
+			<Accordion type="single" class="rh-gap-component-tight">
 				{#each content.steps as step, index}
 					<AccordionItem value={`step-${index}`} class="bg-white/70">
 						<AccordionTrigger>
-							<span class="flex items-center gap-3">
+							<span class="flex items-center rh-gap-cluster">
 								<span class="flex h-7 w-7 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-violet-700">
 									{index + 1}
 								</span>
 								{step.label}
 							</span>
 						</AccordionTrigger>
-						<AccordionContent class="space-y-3">
+						<AccordionContent class="rh-gap-component-tight">
 							{@render stepBlock(step, index)}
 						</AccordionContent>
 					</AccordionItem>
 				{/each}
 			</Accordion>
 		{:else}
-			<div class="space-y-4">
+			<div class="rh-gap-component">
 				{#each visibleSteps as step, index}
 					<div class="animate-step-reveal">
 						{@render stepBlock(step, index)}
@@ -151,12 +151,12 @@
 			</Button>
 		{/if}
 
-		<div class="rounded-[1.25rem] bg-white/85 p-4 text-sm font-semibold leading-7 text-primary">
+		<div class="rh-radius-card bg-white/85 p-4 text-sm font-semibold leading-7 text-primary">
 			{@html renderInlineMarkdown(content.conclusion)}
 		</div>
 
 		{#if isComplete && content.answer}
-			<div class="rounded-[1.25rem] bg-violet-100 p-4 text-sm leading-7 text-violet-950">
+			<div class="rh-radius-card bg-violet-100 p-4 text-sm leading-7 text-violet-950">
 				<span class="mr-2 font-semibold uppercase tracking-[0.18em] text-violet-700">Answer:</span>
 				{content.answer}
 			</div>
@@ -182,7 +182,7 @@
 				>
 					Other approaches
 				</CollapsibleTrigger>
-				<CollapsibleContent class="rounded-[1.25rem] bg-white/80 p-4 text-sm leading-6 text-foreground/82">
+				<CollapsibleContent class="rh-radius-card bg-white/80 p-4 text-sm leading-6 text-foreground/82">
 					<ul class="list-disc space-y-2 pl-5">
 						{#each content.alternatives as alternative}
 							<li>{alternative}</li>
@@ -209,7 +209,7 @@
 	}
 
 	.worked-example-print-conclusion {
-		padding: 0.75rem 1rem;
+		padding: var(--rh-pad-card-tight) var(--rh-pad-card);
 		border: 1px solid #e5e7eb;
 		margin-top: 0.5rem;
 		font-weight: 600;

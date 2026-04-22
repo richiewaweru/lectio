@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.6] - 2026-04-22
+
+### Added
+- New spacing and rhythm token contract in `theme.css`, including `--space-*` and `--rh-*` variables.
+- Semantic rhythm utility classes in `theme.css` (`rh-pad-*`, `rh-gap-*`, `rh-radius-*`) for consistent component and template layout.
+
+### Changed
+- Full sizing and spacing harmonisation sweep across Lectio components, templates, and routes.
+- Replaced hardcoded layout paddings, section gaps, and large radius values with shared token-driven classes.
+- Updated `.eyebrow` to consume tokenized typography values.
+- Harmonised key print-mode spacing in practice, short-answer, simulation, timeline, worked-example, fill-in-blank, quiz, and diagram-series surfaces.
+
+### Notes
+- This is a presentation-level visual reset release; TypeScript/public schema interfaces are unchanged.
+
 ## [0.1.1] - 2026-04-02
 
 ### Security

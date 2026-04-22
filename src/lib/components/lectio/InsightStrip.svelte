@@ -5,14 +5,14 @@
 	let { content }: { content: InsightStripContent } = $props();
 </script>
 
-<section class="space-y-3">
+<section class="rh-gap-component-tight">
 	{#each content.cells as cell, index}
 		<div
-			class="rounded-[1.35rem] border p-5 shadow-sm transition-colors {cell.highlight
+			class="rh-radius-card border p-5 shadow-sm transition-colors {cell.highlight
 				? 'border-violet-200 bg-violet-50 text-violet-950'
 				: 'border-border/70 bg-white/82 text-foreground'}"
 		>
-			<div class="grid gap-3 md:grid-cols-[minmax(0,140px)_minmax(0,1fr)_minmax(0,220px)] md:items-center">
+			<div class="grid rh-gap-cluster md:grid-cols-[minmax(0,140px)_minmax(0,1fr)_minmax(0,220px)] md:items-center">
 				<div>
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
 						{index + 1 < 10 ? `0${index + 1}` : index + 1}

@@ -130,9 +130,9 @@
 {/snippet}
 
 <div class="space-y-8">
-	<div class="lesson-shell p-6 sm:p-8">
+	<div class="lesson-shell rh-pad-shell">
 		<div class="relative z-10 space-y-5">
-			<div class="space-y-3">
+			<div class="rh-gap-component-tight">
 				<p class="eyebrow">Template gallery</p>
 				<h1 class="text-4xl text-primary font-serif sm:text-5xl">
 					Six teaching families. Filter to find your match.
@@ -143,7 +143,7 @@
 				</p>
 			</div>
 
-			<div class="space-y-3">
+			<div class="rh-gap-component-tight">
 				{@render filterRow(
 					'Intent',
 					Object.keys(intentLabels) as LessonIntent[],
@@ -186,8 +186,8 @@
 	{/if}
 
 	{#each visibleFamilies as group}
-		<section class="space-y-4">
-			<div class="flex flex-wrap items-end justify-between gap-3">
+		<section class="rh-gap-component">
+			<div class="flex flex-wrap items-end justify-between rh-gap-cluster">
 				<div class="space-y-1">
 					<p class="eyebrow">{familyLabels[group.family]}</p>
 					<h2 class="text-3xl text-primary font-serif">
@@ -201,8 +201,8 @@
 
 			<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
 				{#each group.items as template}
-					<Card class="border-white/60 bg-white/82 p-6">
-						<div class="space-y-4">
+					<Card class="border-white/60 bg-white/82 rh-pad-card">
+						<div class="rh-gap-component">
 							<div class="flex flex-wrap gap-2">
 								<Badge class="bg-primary/10 text-primary hover:bg-primary/10">
 									{familyLabels[template.family]}

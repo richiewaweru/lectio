@@ -36,7 +36,7 @@
 		{/if}
 	</div>
 {:else}
-<Card class="border-border/60 p-5 sm:p-6">
+<Card class="border-border/60 rh-pad-card">
 	{#if content.instruction}
 		<p class="text-sm font-medium leading-relaxed">{content.instruction}</p>
 	{/if}
@@ -95,7 +95,7 @@
 	}
 
 	.fill-blank-print-word-bank {
-		padding: 1rem;
+		padding: var(--rh-pad-card-tight);
 		border: 2px solid #e5e7eb;
 		background: #f9fafb;
 	}

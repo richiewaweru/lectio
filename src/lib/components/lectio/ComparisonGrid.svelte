@@ -11,7 +11,7 @@
 </script>
 
 <div class="comparison-grid-root">
-<Card class="border-cyan-200 bg-cyan-50/45 p-6">
+<Card class="border-cyan-200 bg-cyan-50/45 rh-pad-card">
 	<div class="space-y-5">
 		<div class="space-y-2">
 			<p class="eyebrow text-cyan-700">Comparison</p>
@@ -21,10 +21,10 @@
 			{/if}
 		</div>
 
-		<div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-4">
+		<div class="grid rh-gap-cluster lg:grid-cols-2 xl:grid-cols-4">
 			{#each content.columns as column}
 				<div
-					class={`rounded-[1.25rem] border bg-white/82 p-4 ${
+					class={`rh-radius-card border bg-white/82 p-4 ${
 						column.highlight
 							? 'border-cyan-300 shadow-[0_12px_30px_rgba(8,145,178,0.12)]'
 							: 'border-cyan-100'
@@ -48,7 +48,7 @@
 			{/each}
 		</div>
 
-		<div class="comparison-grid-table-wrapper overflow-x-auto rounded-[1.25rem] border border-cyan-100 bg-white/88">
+		<div class="comparison-grid-table-wrapper overflow-x-auto rh-radius-card border border-cyan-100 bg-white/88">
 			<div class="comparison-grid-table min-w-[48rem]">
 				<div class="grid items-stretch border-b border-cyan-100 bg-cyan-50/80" style={gridTemplate}>
 					<div class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">

@@ -35,7 +35,7 @@
 	let { section }: { section: SectionContent } = $props();
 </script>
 
-<article class="mx-auto max-w-3xl space-y-6 px-4 py-8">
+<article class="mx-auto max-w-3xl rh-gap-section px-4 py-8">
 	<SectionHeader content={section.header} />
 
 	{#if section.hook}

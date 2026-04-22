@@ -31,10 +31,10 @@
 		<RuledLines lines={content.space && content.space > 0 ? content.space : 4} />
 	</div>
 {:else}
-<Card class="border-l-4 border-l-indigo-400 bg-indigo-50/50 p-6">
-	<div class="flex gap-3">
+<Card class="border-l-4 border-l-indigo-400 bg-indigo-50/50 rh-pad-card">
+	<div class="flex rh-gap-cluster">
 		<Brain class="mt-0.5 h-5 w-5 shrink-0 text-indigo-500" />
-		<div class="flex-1 space-y-3">
+		<div class="flex-1 rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-indigo-600">{typeLabels[content.type] ?? 'Reflect'}</p>
 				<p class="text-sm leading-7 text-foreground">{@html renderInlineMarkdown(content.prompt)}</p>
@@ -58,7 +58,7 @@
 			{/if}
 
 			{#if content.space && content.space > 0}
-				<div class="print-only mt-3 space-y-3">
+				<div class="print-only mt-3 rh-gap-component-tight">
 					{#each Array.from({ length: content.space }) as _}
 						<div class="h-8 border-b border-indigo-200"></div>
 					{/each}

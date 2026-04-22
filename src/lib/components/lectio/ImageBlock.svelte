@@ -39,8 +39,8 @@
 	);
 </script>
 
-<Card class="border-primary/10 bg-white/88 p-4 sm:p-6">
-	<div class="space-y-3">
+<Card class="border-primary/10 bg-white/88 rh-pad-card">
+	<div class="rh-gap-component-tight">
 		<p class="eyebrow">Image</p>
 
 		{#if isImage && ref}

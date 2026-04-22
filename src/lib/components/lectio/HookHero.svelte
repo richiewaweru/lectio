@@ -18,7 +18,7 @@
 	}
 </script>
 
-<section class="relative overflow-hidden rounded-[1.75rem] bg-primary px-6 py-8 text-primary-foreground shadow-warm sm:px-8">
+<section class="relative overflow-hidden rh-radius-outer bg-primary px-6 py-8 text-primary-foreground shadow-warm ">
 	<div class="absolute right-4 top-3 text-[7rem] font-black leading-none text-white/5 sm:text-[9rem]">
 		?
 	</div>
@@ -26,9 +26,9 @@
 	<div
 		class={showVisual()
 			? 'relative z-10 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(250px,300px)]'
-			: 'relative z-10 space-y-4'}
+			: 'relative z-10 rh-gap-component'}
 	>
-		<div class="space-y-4">
+		<div class="rh-gap-component">
 			<Badge class="w-fit bg-white/12 text-primary-foreground hover:bg-white/12">
 				Curiosity hook
 			</Badge>
@@ -43,7 +43,7 @@
 			</h2>
 
 			{#if getHookType() === 'quote'}
-				<div class="space-y-3 rounded-[1.35rem] border border-white/12 bg-white/8 p-4">
+				<div class="rh-gap-component-tight rh-radius-card border border-white/12 bg-white/8 p-4">
 					<div class="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-primary-foreground/68">
 						<Quote class="h-4 w-4" />
 						Quoted hook
@@ -62,7 +62,7 @@
 			{/if}
 
 			{#if getHookType() === 'question' && content.question_options?.length}
-				<div class="rounded-[1.35rem] border border-white/12 bg-white/8 p-4">
+				<div class="rh-radius-card border border-white/12 bg-white/8 p-4">
 					<div class="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-primary-foreground/68">
 						<CircleHelp class="h-4 w-4" />
 						Hold the tension
@@ -80,8 +80,8 @@
 			{/if}
 
 			{#if getHookType() === 'data-point' && content.data_point}
-				<div class="grid gap-3 rounded-[1.35rem] border border-white/12 bg-white/8 p-4 sm:grid-cols-[auto_1fr] sm:items-center">
-					<div class="flex items-center gap-3 text-primary-foreground">
+				<div class="grid rh-gap-cluster rh-radius-card border border-white/12 bg-white/8 p-4 sm:grid-cols-[auto_1fr] sm:items-center">
+					<div class="flex items-center rh-gap-cluster text-primary-foreground">
 						<BarChart3 class="h-5 w-5" />
 						<span class="text-3xl font-serif">{content.data_point.value}</span>
 					</div>
@@ -106,7 +106,7 @@
 		{#if showVisual()}
 			<div class="glass-panel rounded-[1.5rem] p-3 text-primary">
 				<div class="relative z-10">
-					<div class="mb-3 flex items-center justify-between gap-3">
+					<div class="mb-3 flex items-center justify-between rh-gap-cluster">
 						<p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/65">
 							Visual intuition
 						</p>
@@ -115,7 +115,7 @@
 						</span>
 					</div>
 
-					<div class="overflow-hidden rounded-[1.25rem] bg-white/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+					<div class="overflow-hidden rh-radius-card bg-white/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
 						{#if content.svg_content}
 							<div
 								class="aspect-[5/4] max-h-[260px] w-full [&_svg]:h-full [&_svg]:w-full [&_svg]:object-contain"

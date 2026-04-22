@@ -12,7 +12,7 @@
 
 {#if warnings.length}
 	<Card class="border-amber-300 bg-amber-50/90">
-		<div class="flex gap-3 p-4">
+		<div class="flex rh-gap-cluster p-4">
 			<AlertTriangle class="mt-1 h-5 w-5 text-amber-700" />
 			<div>
 				<p class="font-semibold text-amber-900">Schema capacity warnings</p>

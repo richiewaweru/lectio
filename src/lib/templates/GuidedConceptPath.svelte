@@ -26,13 +26,13 @@
 </script>
 
 <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-	<div class="lesson-shell p-6 sm:p-8">
-		<div class="relative z-10 space-y-6">
+	<div class="lesson-shell rh-pad-shell">
+		<div class="relative z-10 rh-gap-section">
 			<SectionHeader content={section.header} />
 
 			{#if warnings.length > 0}
 				<Card class="border-amber-300 bg-amber-50/92 p-4">
-					<div class="flex gap-3">
+					<div class="flex rh-gap-cluster">
 						<AlertTriangle class="mt-1 h-5 w-5 shrink-0 text-amber-700" />
 						<div>
 							<p class="font-semibold text-amber-900">Schema capacity warnings</p>

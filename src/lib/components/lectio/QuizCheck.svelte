@@ -52,8 +52,8 @@
 		{/if}
 	</div>
 {:else}
-<Card class="border-primary/10 bg-white/85 p-6">
-	<div class="space-y-4">
+<Card class="border-primary/10 bg-white/85 rh-pad-card">
+	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-emerald-600">Quiz</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">Quick concept check</h3>
@@ -78,7 +78,7 @@
 					onclick={() => select(i)}
 					disabled={submitted}
 				>
-					<div class="flex items-start gap-3">
+					<div class="flex items-start rh-gap-cluster">
 						{#if showResult}
 							{#if option.correct}
 								<CircleCheck class="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
@@ -138,7 +138,7 @@
 	.quiz-print {
 		page-break-inside: avoid;
 		margin: 1rem 0;
-		padding: 1rem;
+		padding: var(--rh-pad-card);
 		border: 2px solid #e5e7eb;
 	}
 
@@ -169,7 +169,7 @@
 
 	.quiz-print-explanation {
 		border-top: 1px solid #d1d5db;
-		padding-top: 0.75rem;
+		padding-top: var(--rh-pad-card-tight);
 		margin-top: 0.75rem;
 		font-size: 0.875rem;
 	}

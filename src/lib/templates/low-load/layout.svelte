@@ -22,7 +22,7 @@
 	<HookHero content={section.hook} />
 	<ExplanationBlock content={section.explanation} />
 	{#if inlineTerm}
-		<div class="rounded-[1.25rem] border border-border/70 bg-white/88 p-4 text-sm leading-7 text-foreground/84">
+		<div class="rh-radius-card border border-border/70 bg-white/88 p-4 text-sm leading-7 text-foreground/84">
 			Focus cue: if you forget the term
 			<GlossaryInline term={inlineTerm.term} definition={inlineTerm.definition} />
 			, open it in place and keep reading.

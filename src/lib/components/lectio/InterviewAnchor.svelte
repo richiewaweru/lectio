@@ -7,10 +7,10 @@
 	let { content }: { content: InterviewContent } = $props();
 </script>
 
-<Card class="border-l-4 border-l-orange-400 bg-orange-50/50 p-6">
-	<div class="flex gap-3">
+<Card class="border-l-4 border-l-orange-400 bg-orange-50/50 rh-pad-card">
+	<div class="flex rh-gap-cluster">
 		<MessageCircle class="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
-		<div class="space-y-3">
+		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-orange-600">Explain it</p>
 				<div class="lectio-rich text-sm leading-7 text-foreground">{@html renderBlockMarkdown(content.prompt)}</div>

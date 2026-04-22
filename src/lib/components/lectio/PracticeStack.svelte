@@ -83,8 +83,8 @@
 		{/each}
 	</div>
 {:else}
-<Card class="border-primary/10 bg-white/88 p-6">
-	<div class="space-y-4">
+<Card class="border-primary/10 bg-white/88 rh-pad-card">
+	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-amber-600">{content.label ?? 'Practice problems'}</p>
 			<p class="text-sm leading-6 text-muted-foreground">
@@ -104,7 +104,7 @@
 				</div>
 			{/if}
 
-			<div class="space-y-3">
+			<div class="rh-gap-component-tight">
 				{#each problem.hints.slice(0, shown) as hint}
 					<div class="rounded-xl bg-muted/55 p-3 text-sm leading-relaxed text-muted-foreground">
 						<p class="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60">
@@ -186,7 +186,7 @@
 			{/if}
 
 			{#if problem.writein_lines && problem.writein_lines > 0}
-				<div class="space-y-3 rounded-xl border border-dashed border-border/80 bg-background/70 p-4">
+				<div class="rh-gap-component-tight rounded-xl border border-dashed border-border/80 bg-background/70 p-4">
 					{#each Array.from({ length: problem.writein_lines }) as _}
 						<div class="h-6 border-b border-border/70"></div>
 					{/each}
@@ -200,7 +200,7 @@
 					{@const diff = difficultyConfig[problem.difficulty] ?? difficultyConfig.medium}
 					<AccordionItem value={`problem-${i}`} class="rounded-xl border bg-card px-4">
 						<AccordionTrigger class="py-4 hover:no-underline">
-							<div class="flex items-start gap-3 text-left">
+							<div class="flex items-start rh-gap-cluster text-left">
 								<Badge variant="outline" class={diff.className}>{diff.label}</Badge>
 								<div>
 									{#if problem.context}
@@ -213,18 +213,18 @@
 							</div>
 						</AccordionTrigger>
 
-						<AccordionContent class="space-y-4 pb-4">
+						<AccordionContent class="rh-gap-component pb-4">
 							{@render problemBody(problem, i)}
 						</AccordionContent>
 					</AccordionItem>
 				{/each}
 			</Accordion>
 		{:else}
-			<div class="space-y-4">
+			<div class="rh-gap-component">
 				{#each content.problems as problem, i}
 					{@const diff = difficultyConfig[problem.difficulty] ?? difficultyConfig.medium}
 					<div class="rounded-xl border bg-card p-4">
-						<div class="mb-4 flex items-start gap-3">
+						<div class="mb-4 flex items-start rh-gap-cluster">
 							<Badge variant="outline" class={diff.className}>{diff.label}</Badge>
 							<div>
 								{#if problem.context}
@@ -236,7 +236,7 @@
 							</div>
 						</div>
 
-						<div class="space-y-4">
+						<div class="rh-gap-component">
 							{@render problemBody(problem, i)}
 						</div>
 					</div>
@@ -260,8 +260,8 @@
 
 	.practice-print-problem {
 		page-break-inside: avoid;
-		margin-bottom: 2rem;
-		padding: 1rem;
+		margin-bottom: var(--rh-gap-section);
+		padding: var(--rh-pad-card);
 		border: 1px solid #e5e7eb;
 	}
 
@@ -295,7 +295,7 @@
 
 	.practice-print-hints {
 		background: #f9fafb;
-		padding: 0.75rem;
+		padding: var(--rh-pad-card-tight);
 		margin: 1rem 0;
 		border-left: 3px solid #d1d5db;
 	}
@@ -311,7 +311,7 @@
 
 	.practice-print-solution {
 		border-top: 1px solid #d1d5db;
-		padding-top: 0.75rem;
+		padding-top: var(--rh-pad-card-tight);
 		margin-top: 1rem;
 	}
 

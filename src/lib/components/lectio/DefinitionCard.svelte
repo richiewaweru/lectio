@@ -12,7 +12,7 @@
 </script>
 
 <Card class="border-l-4 border-l-fuchsia-500 bg-fuchsia-50/65">
-	<div class="space-y-4 p-6">
+	<div class="rh-gap-component rh-pad-card">
 		<div class="space-y-2">
 			<p class="eyebrow text-fuchsia-600">Define</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">{content.term}</h3>
@@ -24,7 +24,7 @@
 			</p>
 
 			{#if content.symbol}
-				<div class="rounded-[1.25rem] border border-fuchsia-200 bg-white/88 px-4 py-3 text-center text-3xl font-semibold text-fuchsia-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+				<div class="rh-radius-card border border-fuchsia-200 bg-white/88 px-4 py-3 text-center text-3xl font-semibold text-fuchsia-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
 					{content.symbol}
 				</div>
 			{/if}
@@ -45,7 +45,7 @@
 		{/if}
 
 		{#if content.notation}
-			<div class="rounded-[1.25rem] border border-fuchsia-200 bg-white/85 p-4">
+			<div class="rh-radius-card border border-fuchsia-200 bg-white/85 p-4">
 				<p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-fuchsia-700/80">
 					Notation
 				</p>

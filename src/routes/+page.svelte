@@ -1,9 +1,9 @@
 <div class="page-frame">
 	<div class="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
-		<section class="lesson-shell p-8 sm:p-10">
-			<div class="relative z-10 space-y-6">
+		<section class="lesson-shell rh-pad-shell">
+			<div class="relative z-10 rh-gap-section">
 				<p class="eyebrow">Lectio</p>
-				<div class="space-y-4">
+				<div class="rh-gap-component">
 					<h1 class="max-w-3xl text-4xl font-semibold tracking-tight font-serif text-primary sm:text-5xl">
 						Build lessons from teaching moves, not disconnected widgets.
 					</h1>
@@ -14,7 +14,7 @@
 					</p>
 				</div>
 
-				<div class="flex flex-wrap gap-3">
+				<div class="flex flex-wrap rh-gap-cluster">
 					<a
 						href="/docs"
 						class="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
@@ -37,7 +37,7 @@
 			</div>
 		</section>
 
-		<aside class="glass-panel rounded-[1.75rem] p-6">
+		<aside class="glass-panel rh-radius-outer rh-pad-card">
 			<div class="relative z-10 space-y-5">
 				<div>
 					<p class="eyebrow">Architecture</p>
@@ -45,8 +45,8 @@
 						Content schema to rendered lesson
 					</h2>
 				</div>
-				<div class="space-y-3">
-					<div class="rounded-[1.35rem] border border-white/60 bg-white/78 p-4">
+				<div class="rh-gap-component-tight">
+					<div class="rh-radius-card border border-white/60 bg-white/78 p-4">
 						<p class="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
 							1. Schema
 						</p>
@@ -54,7 +54,7 @@
 							Typed instructional content that encodes learning intent.
 						</p>
 					</div>
-					<div class="rounded-[1.35rem] border border-white/60 bg-white/78 p-4">
+					<div class="rh-radius-card border border-white/60 bg-white/78 p-4">
 						<p class="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
 							2. Components
 						</p>
@@ -62,7 +62,7 @@
 							Hook, explain, define, practice, compare, reflect, and more.
 						</p>
 					</div>
-					<div class="rounded-[1.35rem] border border-white/60 bg-white/78 p-4">
+					<div class="rh-radius-card border border-white/60 bg-white/78 p-4">
 						<p class="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
 							3. Templates
 						</p>

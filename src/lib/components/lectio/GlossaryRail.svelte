@@ -15,9 +15,9 @@
 </script>
 
 {#snippet glossaryTerms()}
-	<ul class="space-y-3">
+	<ul class="rh-gap-component-tight">
 		{#each content.terms as term}
-			<li class="rounded-[1.25rem] border border-white/12 bg-white/[0.12] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+			<li class="rh-radius-card border border-white/12 bg-white/[0.12] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
 				<div class="text-sm font-semibold text-primary-foreground">{term.term}</div>
 				<div class="text-xs leading-relaxed text-primary-foreground/94">
 					{@html renderInlineMarkdown(term.definition)}
@@ -37,14 +37,14 @@
 
 {#if mode === 'inline-strip'}
 	<Card class={cn('bg-primary text-primary-foreground p-4', className)}>
-		<div class="space-y-3">
+		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary strip</p>
 				<p class="text-sm leading-6 text-primary-foreground/90">
 					Key terms stay in the main flow instead of competing from the side.
 				</p>
 			</div>
-			<div class="flex flex-wrap gap-3">
+			<div class="flex flex-wrap rh-gap-cluster">
 				{#each content.terms as term}
 					<div class="min-w-[11rem] rounded-[1.1rem] border border-white/10 bg-white/8 px-4 py-3">
 						<p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground">
@@ -60,7 +60,7 @@
 	</Card>
 {:else if mode === 'drawer'}
 	<Card class={cn('bg-primary text-primary-foreground p-4', className)}>
-		<div class="space-y-3">
+		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary drawer</p>
 				<p class="text-sm leading-6 text-primary-foreground/90">

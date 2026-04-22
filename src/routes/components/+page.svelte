@@ -91,8 +91,8 @@
 </script>
 
 <div class="page-frame space-y-8">
-	<header class="lesson-shell p-8 sm:p-10">
-		<div class="relative z-10 space-y-4">
+	<header class="lesson-shell rh-pad-shell">
+		<div class="relative z-10 rh-gap-component">
 			<p class="eyebrow">Component showcase</p>
 			<h1 class="max-w-4xl text-4xl font-semibold tracking-tight font-serif text-primary sm:text-5xl">
 				Educational components shown in their strongest instructional state.
@@ -110,7 +110,7 @@
 					id="print-preview-toggle"
 				/>
 				<span class="print-toggle-text">
-					{#if printPreviewMode}📄 Print preview mode ON{:else}🖥️ Print preview mode OFF{/if}
+					{#if printPreviewMode}Ã°Å¸â€œâ€ž Print preview mode ON{:else}Ã°Å¸â€“Â¥Ã¯Â¸Â Print preview mode OFF{/if}
 				</span>
 			</label>
 		</div>
@@ -121,7 +121,7 @@
 			{@const preview = previews[comp.id]}
 			<section id={comp.id} class="scroll-mt-8">
 				<div class="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-					<Card class="bg-primary p-6 text-primary-foreground">
+					<Card class="bg-primary rh-pad-card text-primary-foreground">
 						<div class="flex flex-wrap gap-2 mb-4">
 							<Badge class="bg-white/12 text-primary-foreground hover:bg-white/12">
 								Group {comp.group}
@@ -137,7 +137,7 @@
 						<h2 class="text-2xl font-semibold font-serif">{comp.name}</h2>
 						<p class="mt-2 text-sm leading-6 text-primary-foreground/74">{comp.purpose}</p>
 
-						<div class="mt-5 space-y-4 text-sm">
+						<div class="mt-5 rh-gap-component text-sm">
 							<div>
 								<p class="font-semibold">Behaviour modes</p>
 								<p class="mt-1 text-primary-foreground/68">{comp.behaviourModes.join(', ')}</p>
@@ -154,7 +154,7 @@
 								<p class="font-semibold">Capacity</p>
 								<dl class="mt-2 space-y-1">
 									{#each Object.entries(comp.capacity) as [key, value]}
-										<div class="flex justify-between gap-3 text-xs">
+										<div class="flex justify-between rh-gap-cluster text-xs">
 											<dt class="text-primary-foreground/58">{formatCapacityKey(key)}</dt>
 											<dd class="text-right font-medium text-primary-foreground/90">{value}</dd>
 										</div>
@@ -164,9 +164,9 @@
 						</div>
 					</Card>
 
-					<div class="lesson-shell min-h-[220px] p-5 sm:p-6">
+					<div class="lesson-shell min-h-[220px] rh-pad-card">
 						<div class="relative z-10">
-							<div class="mb-4 flex items-center justify-between gap-3">
+							<div class="mb-4 flex items-center justify-between rh-gap-cluster">
 								<div>
 									<p class="eyebrow">Live preview</p>
 									<p class="mt-2 text-sm leading-6 text-muted-foreground">
@@ -201,7 +201,7 @@
 								{:else if comp.id === 'glossary-rail'}
 									<GlossaryRail content={preview.content} />
 								{:else if comp.id === 'glossary-inline'}
-									<div class="rounded-[1.35rem] border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
+									<div class="rh-radius-card border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
 										Inline term preview:
 										<GlossaryInline
 											term={preview.content.term}
@@ -246,7 +246,7 @@
 									<TimelineBlock content={preview.content} />
 								{/if}
 							{:else}
-								<div class="rounded-xl border bg-muted/30 p-6 text-center text-sm italic text-muted-foreground">
+								<div class="rounded-xl border bg-muted/30 rh-pad-card text-center text-sm italic text-muted-foreground">
 									Preview not available for this component.
 								</div>
 							{/if}

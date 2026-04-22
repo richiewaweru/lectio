@@ -114,7 +114,7 @@
 			<DialogOverlay class="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-sm" />
 			<DialogContent
 				preventScroll={false}
-				class="glass-panel fixed inset-y-0 left-0 z-50 h-full w-[min(92vw,32rem)] overflow-y-auto rounded-none rounded-r-[1.75rem] p-6 sm:w-[min(80vw,36rem)]"
+				class="glass-panel fixed inset-y-0 left-0 z-50 h-full w-[min(92vw,32rem)] overflow-y-auto rounded-none rounded-r-[1.75rem] rh-pad-card sm:w-[min(80vw,36rem)]"
 			>
 				<DialogTitle class="sr-only">Template contract drawer</DialogTitle>
 				<DialogDescription class="sr-only">

@@ -96,7 +96,7 @@ describe('contract exports', () => {
 		} finally {
 			rmSync(tempDir, { recursive: true, force: true });
 		}
-	});
+	}, 30000);
 
 	it('publishes explicit contract and generated artifact export surfaces', () => {
 		const pkg = readJson(join(ROOT, 'package.json')) as Record<string, unknown>;

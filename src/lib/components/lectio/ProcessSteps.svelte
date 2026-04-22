@@ -57,7 +57,7 @@
 							<div class="process-print-action">{step.action}</div>
 							<div class="process-print-detail">{@html renderInlineMarkdown(step.detail)}</div>
 							{#if step.warning}
-								<div class="process-print-warning">⚠ {step.warning}</div>
+								<div class="process-print-warning">Ã¢Å¡Â  {step.warning}</div>
 							{/if}
 						</div>
 					</div>
@@ -66,8 +66,8 @@
 		</div>
 	</div>
 {:else}
-<Card class="border-emerald-200 bg-emerald-50/45 p-6">
-	<div class="space-y-4">
+<Card class="border-emerald-200 bg-emerald-50/45 rh-pad-card">
+	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-emerald-700">Process</p>
 			<h3 class="text-2xl font-semibold font-serif text-primary">{content.title}</h3>
@@ -77,7 +77,7 @@
 		</div>
 
 		{#each renderedSteps as step}
-			<div class="rounded-[1.25rem] border border-emerald-100 bg-white/82 p-4">
+			<div class="rh-radius-card border border-emerald-100 bg-white/82 p-4">
 				<div class="flex items-start gap-4">
 					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
 						{step.number}

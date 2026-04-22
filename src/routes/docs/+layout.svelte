@@ -6,7 +6,7 @@
 
 <div class="page-frame">
 	<DocsMobileNav />
-	<div class="lesson-shell p-6 sm:p-8 lg:p-10">
+	<div class="lesson-shell rh-pad-shell lg:p-10">
 		<div class="relative z-10 doc-prose">
 			{@render children()}
 		</div>

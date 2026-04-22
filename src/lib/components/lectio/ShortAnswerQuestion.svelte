@@ -24,8 +24,8 @@
 		<RuledLines {lines} label="Answer:" />
 	</div>
 {:else}
-<Card class="border-border/60 p-5 sm:p-6">
-	<div class="flex items-start justify-between gap-3">
+<Card class="border-border/60 rh-pad-card">
+	<div class="flex items-start justify-between rh-gap-cluster">
 		<p class="text-sm font-medium leading-relaxed">{content.question}</p>
 		{#if content.marks}
 			<Badge variant="outline" class="shrink-0">{content.marks} {content.marks === 1 ? 'mark' : 'marks'}</Badge>
@@ -60,7 +60,7 @@
 	.short-answer-print {
 		page-break-inside: avoid;
 		margin: 1rem 0;
-		padding: 1rem;
+		padding: var(--rh-pad-card);
 		border: 1px solid #e5e7eb;
 	}
 

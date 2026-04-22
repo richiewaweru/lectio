@@ -14,7 +14,7 @@
 </script>
 
 <Card class="border-primary/10 bg-primary text-primary-foreground">
-	<div class="space-y-4 p-6 sm:p-8">
+	<div class="rh-gap-component rh-pad-shell">
 		<div class="flex flex-wrap items-center gap-2">
 			{#if content.section_number}
 				<Badge class="bg-white/12 text-primary-foreground hover:bg-white/12">

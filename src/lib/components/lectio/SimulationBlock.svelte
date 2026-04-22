@@ -68,10 +68,10 @@
 		</div>
 	{/if}
 {:else}
-<Card class="border-primary/10 bg-white/88 p-6">
-	<div class="space-y-4">
-		<div class="space-y-3">
-			<div class="flex flex-wrap items-center gap-3">
+<Card class="border-primary/10 bg-white/88 rh-pad-card">
+	<div class="rh-gap-component">
+		<div class="rh-gap-component-tight">
+			<div class="flex flex-wrap items-center rh-gap-cluster">
 				<p class="eyebrow">Simulation</p>
 				<Badge variant="outline">{typeLabel}</Badge>
 				{#if !hasLiveContent}
@@ -103,13 +103,13 @@
 					srcdoc={content.html_content}
 					sandbox="allow-scripts"
 					title={content.spec.goal}
-					class="w-full rounded-[1.25rem] border border-border/60 bg-white"
+					class="w-full rh-radius-card border border-border/60 bg-white"
 					style="height: {content.spec.dimensions.height}px;"
 				></iframe>
 			</div>
 		{:else if content.fallback_diagram}
 			<!-- Fallback diagram when no live content -->
-			<div class="space-y-3 rounded-[1.25rem] border border-border/70 bg-background/75 p-4">
+			<div class="rh-gap-component-tight rh-radius-card border border-border/70 bg-background/75 p-4">
 				<p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
 					Fallback diagram
 				</p>
@@ -127,7 +127,7 @@
 		{:else}
 			<!-- Scaffold placeholder -->
 			<div
-				class="flex items-center justify-center rounded-[1.25rem] border border-dashed border-border/80 bg-secondary/35 p-6 text-center text-sm leading-6 text-muted-foreground"
+				class="flex items-center justify-center rh-radius-card border border-dashed border-border/80 bg-secondary/35 rh-pad-card text-center text-sm leading-6 text-muted-foreground"
 				style="min-height: {content.spec.dimensions.height}px;"
 			>
 				Interactive experience will mount here when the interaction pipeline is connected.
@@ -135,7 +135,7 @@
 		{/if}
 
 		<!-- Metadata panel -->
-		<div class="grid gap-3 rounded-[1.25rem] bg-white/82 p-4 text-sm leading-6 text-foreground/82 md:grid-cols-2">
+		<div class="grid rh-gap-cluster rh-radius-card bg-white/82 p-4 text-sm leading-6 text-foreground/82 md:grid-cols-2">
 			<div>
 				<p class="font-semibold text-primary">Type</p>
 				<p>{typeLabel}</p>
@@ -160,13 +160,13 @@
 <!-- Expanded overlay -->
 {#if expanded && hasLiveContent && !printMode}
 	<div
-		class="fixed inset-0 z-50 grid place-items-center p-6 bg-black/40 backdrop-blur-sm"
+		class="fixed inset-0 z-50 grid place-items-center rh-pad-card bg-black/40 backdrop-blur-sm"
 		role="presentation"
 		onclick={handleBackdropClick}
 	>
 		<div class="relative w-full max-w-5xl rounded-[1.5rem] bg-white shadow-2xl overflow-hidden">
 			<div class="flex items-center justify-between border-b border-border/40 px-5 py-3">
-				<div class="flex items-center gap-3">
+				<div class="flex items-center rh-gap-cluster">
 					<p class="text-sm font-semibold text-primary">Simulation</p>
 					<Badge variant="outline">{typeLabel}</Badge>
 				</div>
@@ -226,7 +226,7 @@
 	}
 
 	.simulation-type-label {
-		font-size: 0.75rem;
+		font-size: var(--rh-eyebrow-size);
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.16em;
@@ -235,7 +235,7 @@
 	}
 
 	.simulation-print-note {
-		padding: 1rem;
+		padding: var(--rh-pad-card);
 		border: 1px solid #d1d5db;
 		margin: 1rem 0;
 		page-break-inside: avoid;

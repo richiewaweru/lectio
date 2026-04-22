@@ -16,7 +16,7 @@
 
 {#if definition}
 	<div class="page-frame space-y-8">
-		<header class="lesson-shell p-8 sm:p-10">
+		<header class="lesson-shell rh-pad-shell">
 			<div class="relative z-10 space-y-5">
 				<div class="flex flex-wrap items-center gap-2">
 					<Badge class="bg-primary/10 text-primary hover:bg-primary/10">
@@ -25,7 +25,7 @@
 					<Badge variant="outline">{definition.contract.interactionLevel}</Badge>
 					<Badge variant="outline">{definition.contract.intent}</Badge>
 				</div>
-				<div class="space-y-3">
+				<div class="rh-gap-component-tight">
 					<p class="eyebrow">Template detail</p>
 					<h1 class="text-4xl text-primary font-serif sm:text-5xl">
 						{definition.contract.name}
@@ -34,7 +34,7 @@
 						{definition.contract.tagline}
 					</p>
 				</div>
-				<div class="flex flex-wrap gap-3">
+				<div class="flex flex-wrap rh-gap-cluster">
 					<a
 						href="/templates"
 						class="inline-flex items-center rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
@@ -59,7 +59,7 @@
 
 		<div
 			class={cn(
-				'space-y-6',
+				'rh-gap-section',
 				isDesktopContractLayout &&
 					desktopContractOpen &&
 					'md:grid md:grid-cols-[22rem_minmax(0,1fr)] md:items-start md:gap-6 md:space-y-0 lg:grid-cols-[24rem_minmax(0,1fr)]'
@@ -71,7 +71,7 @@
 					aria-label="Template contract"
 					class="md:sticky md:top-6 md:max-h-[calc(100vh-1.5rem)] md:overflow-y-auto"
 				>
-					<div class="rounded-[1.75rem] border border-white/60 bg-white/82 p-6 shadow-[0_12px_36px_rgba(15,23,42,0.08)]">
+					<div class="rh-radius-outer border border-white/60 bg-white/82 rh-pad-card shadow-[0_12px_36px_rgba(15,23,42,0.08)]">
 						<TemplateContractPanel
 							contract={definition.contract}
 							presets={definition.presets}
@@ -80,7 +80,7 @@
 				</aside>
 			{/if}
 
-			<section class="space-y-4 md:min-w-0">
+			<section class="rh-gap-component md:min-w-0">
 				<TemplatePreviewSurface
 					templateId={templateId}
 					presetId={definition.presets[0]?.id}

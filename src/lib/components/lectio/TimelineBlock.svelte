@@ -29,7 +29,7 @@
 		{/if}
 	</div>
 {:else}
-<Card class="border-rose-200 bg-rose-50/45 p-6">
+<Card class="border-rose-200 bg-rose-50/45 rh-pad-card">
 	<div class="space-y-5">
 		<div class="space-y-2">
 			<p class="eyebrow text-rose-700">Timeline</p>
@@ -59,7 +59,7 @@
 
 		{#if mode === 'timeline-scrubber'}
 			{#if activeEvent}
-				<div class="rounded-[1.25rem] border border-rose-300 bg-white/85 p-4 shadow-[0_12px_30px_rgba(244,63,94,0.12)]">
+				<div class="rh-radius-card border border-rose-300 bg-white/85 p-4 shadow-[0_12px_30px_rgba(244,63,94,0.12)]">
 					<div class="flex flex-wrap items-center gap-2">
 						<Badge variant="outline" class="border-rose-200 text-rose-700">
 							{activeEvent.year}
@@ -107,9 +107,9 @@
 				</Button>
 			</div>
 		{:else}
-			<div class="space-y-4">
+			<div class="rh-gap-component">
 				{#each content.events as event}
-					<div class="rounded-[1.25rem] border border-rose-100 bg-white/85 p-4">
+					<div class="rh-radius-card border border-rose-100 bg-white/85 p-4">
 						<div class="flex flex-wrap items-center gap-2">
 							<Badge variant="outline" class="border-rose-200 text-rose-700">
 								{event.year}
@@ -154,7 +154,7 @@
 
 	.timeline-print-takeaway {
 		margin-top: 1.5rem;
-		padding: 1rem;
+		padding: var(--rh-pad-card);
 		border-left: 3px solid #374151;
 		font-size: 0.875rem;
 	}

@@ -291,10 +291,29 @@ For contract-sensitive consumers (AI pipelines, backend validators), pin exact v
 ```json
 {
   "dependencies": {
-    "lectio": "0.2.4"
+    "lectio": "0.2.6"
   }
 }
 ```
+
+## Upgrading to 0.2.6
+
+`0.2.6` is a visual harmonisation release focused on spacing/radius rhythm consistency.
+No TypeScript or schema contract changes are introduced.
+
+### What to validate downstream
+
+- Rebaseline UI screenshots/snapshots for component and template surfaces.
+- Validate key pages at mobile/tablet/desktop breakpoints.
+- Recheck print output for:
+  - `PracticeStack`
+  - `ShortAnswerQuestion`
+  - `SimulationBlock`
+  - `TimelineBlock`
+  - `WorkedExampleCard`
+  - `FillInTheBlank`
+- Review local CSS overrides that assumed previous hardcoded paddings/radii.
+- Ensure your app imports `lectio/theme.css`; without it, the new token classes/variables will not apply.
 
 ## Do / Don't
 
@@ -329,8 +348,9 @@ Always run `npm run export-contracts` before tagging a release so JSON contracts
 ## Releasing
 
 ```bash
-# bump version in package.json first, then:
+# version is derived from the git tag in CI (publish lane currently 0.2.x):
 git tag vX.Y.Z
+git push origin master
 git push origin vX.Y.Z
 # GitHub Actions publishes to npm automatically
 ```

@@ -1,11 +1,11 @@
 <svelte:head>
-	<title>Multi-section app example — Lectio docs</title>
+	<title>Multi-section app example Ã¢â‚¬â€ Lectio docs</title>
 </svelte:head>
 
 <p class="eyebrow">Integration</p>
 <h1>Multi-section documents (Textbook Agent pattern)</h1>
 <p class="lead">
-	The Textbook Agent SvelteKit app consumes Lectio as a library: it resolves the document’s template
+	The Textbook Agent SvelteKit app consumes Lectio as a library: it resolves the documentÃ¢â‚¬â„¢s template
 	and preset, wraps the page in <code>LectioThemeSurface</code>, and renders each section with the
 	registry layout component (<code>template.render</code>), including skeleton states while sections
 	stream in.
@@ -31,8 +31,8 @@ const preset = $derived(basePresetMap[document.preset_id] ?? null);`}</code></pr
 </p>
 <pre><code>{`{#if template}
   <LectioThemeSurface {preset}>
-    <div class="page-frame space-y-6">
-      <header class="lesson-shell p-6 sm:p-8">
+    <div class="page-frame rh-gap-section">
+      <header class="lesson-shell rh-pad-shell">
         <!-- document title, context, template name -->
       </header>
 
