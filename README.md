@@ -291,7 +291,7 @@ For contract-sensitive consumers (AI pipelines, backend validators), pin exact v
 ```json
 {
   "dependencies": {
-    "lectio": "0.2.7"
+    "lectio": "0.3.0"
   }
 }
 ```
@@ -357,7 +357,7 @@ Always run `npm run export-contracts` before tagging a release so JSON contracts
 ## Releasing
 
 ```bash
-# version is derived from the git tag in CI (publish lane currently 0.2.x):
+# version is derived from the git tag in CI (publish lane currently 0.3.x):
 git tag vX.Y.Z
 git push origin master
 git push origin vX.Y.Z
