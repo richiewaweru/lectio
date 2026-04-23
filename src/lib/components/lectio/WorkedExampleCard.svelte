@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WorkedExampleContent, WorkedStep } from '$lib/schema/types';
+	import type { DiagramContent, WorkedExampleContent, WorkedStep } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import { renderBlockMarkdown, renderInlineMarkdown } from '$lib/utils/markdown';
@@ -14,6 +14,7 @@
 		AccordionContent
 	} from '$lib/components/ui/accordion';
 	import MathFormula from './MathFormula.svelte';
+	import { sanitizeSvg } from '$lib/utils/sanitize';
 
 	let {
 		content,
@@ -43,6 +44,32 @@
 		revealed = Math.min(content.steps.length, revealed + 1);
 	}
 </script>
+
+{#snippet inlineDiagram(diagram: DiagramContent)}
+	<figure class="worked-example-inline-diagram" data-lectio-inline-diagram>
+		<div
+			class="worked-example-inline-diagram-frame"
+			role={diagram.image_url ? undefined : 'img'}
+			aria-label={diagram.image_url ? undefined : diagram.alt_text}
+		>
+			{#if diagram.image_url}
+				<img
+					src={diagram.image_url}
+					alt={diagram.alt_text}
+					class="worked-example-inline-diagram-media"
+					loading="lazy"
+				/>
+			{:else if diagram.svg_content}
+				<div class="worked-example-inline-diagram-media">
+					{@html sanitizeSvg(diagram.svg_content)}
+				</div>
+			{:else}
+				<div class="worked-example-inline-diagram-empty">Diagram source unavailable.</div>
+			{/if}
+		</div>
+		<figcaption class="worked-example-inline-diagram-caption">{diagram.caption}</figcaption>
+	</figure>
+{/snippet}
 
 {#snippet stepBlock(step: WorkedStep, index: number)}
 	<div class="flex gap-4">
@@ -95,6 +122,9 @@
 {#if printMode}
 	<div class="worked-example-print">
 		<p class="worked-example-print-setup">{@html renderInlineMarkdown(content.setup)}</p>
+		{#if content.diagram}
+			{@render inlineDiagram(content.diagram)}
+		{/if}
 		<ExpandedSteps steps={content.steps} title={content.title} />
 		<p class="worked-example-print-conclusion">{@html renderInlineMarkdown(content.conclusion)}</p>
 		{#if content.answer}
@@ -104,10 +134,10 @@
 {:else}
 <Card class="border-l-4 border-l-violet-500 bg-violet-50/45">
 	<div class="space-y-5 rh-pad-card">
-		<div class="rh-gap-component-tight">
-			<div class="flex flex-wrap items-center rh-gap-cluster">
-				<p class="eyebrow text-violet-600">Example</p>
-				{#if content.method_label}
+			<div class="rh-gap-component-tight">
+				<div class="flex flex-wrap items-center rh-gap-cluster">
+					<p class="eyebrow text-violet-600">Example</p>
+					{#if content.method_label}
 					<Badge variant="outline" class="border-violet-200 text-violet-700">
 						{content.method_label}
 					</Badge>
@@ -115,6 +145,9 @@
 			</div>
 			<h3 class="text-2xl font-semibold font-serif text-primary">{content.title}</h3>
 			<p class="text-sm leading-6 text-muted-foreground">{@html renderInlineMarkdown(content.setup)}</p>
+			{#if content.diagram}
+				{@render inlineDiagram(content.diagram)}
+			{/if}
 		</div>
 
 		{#if mode === 'accordion'}
@@ -219,5 +252,66 @@
 	.worked-example-print-answer {
 		margin-top: 0.75rem;
 		font-size: 0.875rem;
+	}
+
+	.worked-example-inline-diagram {
+		margin: 0.75rem 0;
+		page-break-inside: avoid;
+	}
+
+	.worked-example-inline-diagram-frame {
+		overflow: hidden;
+		border: 1px solid hsl(var(--border) / 0.7);
+		border-radius: 1rem;
+		background: white;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+	}
+
+	.worked-example-inline-diagram-media {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+
+	.worked-example-inline-diagram-frame :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.worked-example-inline-diagram-caption {
+		margin-top: 0.45rem;
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: hsl(var(--muted-foreground));
+	}
+
+	.worked-example-inline-diagram-empty {
+		display: flex;
+		min-height: 7rem;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		font-size: 0.875rem;
+		color: hsl(var(--muted-foreground));
+	}
+
+	@media print {
+		.worked-example-inline-diagram {
+			margin: 0.5rem 0;
+		}
+
+		.worked-example-inline-diagram-frame {
+			max-height: 150px;
+		}
+
+		.worked-example-inline-diagram-media {
+			max-height: 150px;
+		}
+
+		.worked-example-inline-diagram-frame :global(svg) {
+			max-height: 150px;
+		}
 	}
 </style>

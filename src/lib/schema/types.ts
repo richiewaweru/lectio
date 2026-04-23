@@ -560,3 +560,11 @@ export interface SectionContent {
 	divider?: SectionDividerContent;
 	key_fact?: KeyFactContent;
 }
+
+export interface PracticeProblem {
+	diagram?: DiagramContent;
+}
+
+export interface WorkedExampleContent {
+	diagram?: DiagramContent;
+}

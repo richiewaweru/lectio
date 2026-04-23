@@ -7,6 +7,7 @@ import ExplanationBlock from '$lib/components/lectio/ExplanationBlock.svelte';
 import DefinitionCard from '$lib/components/lectio/DefinitionCard.svelte';
 import DefinitionFamily from '$lib/components/lectio/DefinitionFamily.svelte';
 import PracticeStack from '$lib/components/lectio/PracticeStack.svelte';
+import WorkedExampleCard from '$lib/components/lectio/WorkedExampleCard.svelte';
 import WhatNextBridge from '$lib/components/lectio/WhatNextBridge.svelte';
 import PitfallAlert from '$lib/components/lectio/PitfallAlert.svelte';
 import GlossaryRail from '$lib/components/lectio/GlossaryRail.svelte';
@@ -22,6 +23,7 @@ import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
 import TemplateWarnings from '$lib/templates/TemplateWarnings.svelte';
 import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
 import PracticeStackPrintHarness from './PracticeStackPrintHarness.svelte';
+import WorkedExampleCardPrintHarness from './WorkedExampleCardPrintHarness.svelte';
 import { calculusSection, physicsSection } from '$lib/dev/dummy-content';
 import { componentRegistry, getComponentFieldMap, getStableComponents } from '$lib/schema/registry';
 import { validateSection } from '$lib/schema/validate';
@@ -663,6 +665,48 @@ describe('Lectio component harmonization', () => {
 
 		expect(screen.getAllByText(/Solution:/).length).toBeGreaterThan(0);
 		expect(screen.getAllByText(/Answer:/).length).toBeGreaterThan(0);
+	});
+
+	it('renders inline practice diagrams when present and keeps the absent case clean', () => {
+		const withDiagram = render(PracticeStack, {
+			props: { content: calculusSection.practice }
+		});
+
+		expect(withDiagram.container.querySelectorAll('[data-lectio-inline-diagram]')).toHaveLength(1);
+		expect(screen.getByText('A simple motion trace that helps compare the changing average speed across intervals.')).toBeInTheDocument();
+		withDiagram.unmount();
+
+		const withoutDiagram = render(PracticeStack, {
+			props: { content: physicsSection.practice }
+		});
+
+		expect(withoutDiagram.container.querySelector('[data-lectio-inline-diagram]')).not.toBeInTheDocument();
+		withoutDiagram.unmount();
+	});
+
+	it('renders inline worked-example diagrams in normal and print modes', () => {
+		const normal = render(WorkedExampleCard, {
+			props: { content: calculusSection.worked_example! }
+		});
+
+		expect(normal.container.querySelectorAll('[data-lectio-inline-diagram]')).toHaveLength(1);
+		expect(screen.getByText('A simple motion trace showing a ball moving through three time points as the average speed changes.')).toBeInTheDocument();
+		normal.unmount();
+
+		const printMode = render(WorkedExampleCardPrintHarness, {
+			props: { content: calculusSection.worked_example! }
+		});
+
+		expect(printMode.container.querySelectorAll('[data-lectio-inline-diagram]')).toHaveLength(1);
+		expect(printMode.container.querySelector('.worked-example-inline-diagram-frame')).toBeInTheDocument();
+		printMode.unmount();
+
+		const absent = render(WorkedExampleCard, {
+			props: { content: physicsSection.worked_example! }
+		});
+
+		expect(absent.container.querySelector('[data-lectio-inline-diagram]')).not.toBeInTheDocument();
+		absent.unmount();
 	});
 
 	it('marks schema warning cards with data-schema-warning across active and legacy templates', () => {

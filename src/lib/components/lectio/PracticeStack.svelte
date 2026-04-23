@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PracticeContent } from '$lib/schema/types';
+	import type { DiagramContent, PracticeContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import RuledLines from '$lib/print/RuledLines.svelte';
@@ -13,6 +13,7 @@
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { Button } from '$lib/components/ui/button';
 	import { renderBlockMarkdown } from '$lib/utils/markdown';
+	import { sanitizeSvg } from '$lib/utils/sanitize';
 
 	type PracticeStackMode = 'accordion' | 'flat-list';
 	type SelfAssessment = 'matched' | 'review';
@@ -52,6 +53,32 @@ let {
 	}
 </script>
 
+{#snippet inlineDiagram(diagram: DiagramContent)}
+	<figure class="practice-inline-diagram" data-lectio-inline-diagram>
+		<div
+			class="practice-inline-diagram-frame"
+			role={diagram.image_url ? undefined : 'img'}
+			aria-label={diagram.image_url ? undefined : diagram.alt_text}
+		>
+			{#if diagram.image_url}
+				<img
+					src={diagram.image_url}
+					alt={diagram.alt_text}
+					class="practice-inline-diagram-media"
+					loading="lazy"
+				/>
+			{:else if diagram.svg_content}
+				<div class="practice-inline-diagram-media">
+					{@html sanitizeSvg(diagram.svg_content)}
+				</div>
+			{:else}
+				<div class="practice-inline-diagram-empty">Diagram source unavailable.</div>
+			{/if}
+		</div>
+		<figcaption class="practice-inline-diagram-caption">{diagram.caption}</figcaption>
+	</figure>
+{/snippet}
+
 {#if printMode}
 	<div
 		class="practice-print"
@@ -67,6 +94,9 @@ let {
 				</div>
 				{#if problem.context}
 					<p class="practice-print-context">{problem.context}</p>
+				{/if}
+				{#if problem.diagram}
+					{@render inlineDiagram(problem.diagram)}
 				{/if}
 				<div class="practice-print-question lectio-rich">{@html renderBlockMarkdown(problem.question)}</div>
 				{#if problem.hints?.length}
@@ -115,6 +145,10 @@ let {
 				<div class="rounded-xl bg-muted/45 p-3 text-sm leading-6 text-muted-foreground">
 					Context: {problem.context}
 				</div>
+			{/if}
+
+			{#if problem.diagram}
+				{@render inlineDiagram(problem.diagram)}
 			{/if}
 
 			<div class="rh-gap-component-tight">
@@ -261,6 +295,66 @@ let {
 {/if}
 
 <style>
+	.practice-inline-diagram {
+		margin: 0.75rem 0;
+		page-break-inside: avoid;
+	}
+
+	.practice-inline-diagram-frame {
+		overflow: hidden;
+		border: 1px solid hsl(var(--border) / 0.7);
+		border-radius: 1rem;
+		background: white;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+	}
+
+	.practice-inline-diagram-media {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+
+	.practice-inline-diagram-frame :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.practice-inline-diagram-caption {
+		margin-top: 0.45rem;
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: hsl(var(--muted-foreground));
+	}
+
+	.practice-inline-diagram-empty {
+		display: flex;
+		min-height: 7rem;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		font-size: 0.875rem;
+		color: hsl(var(--muted-foreground));
+	}
+
+	@media print {
+		.practice-inline-diagram {
+			margin: 0.5rem 0;
+		}
+
+		.practice-inline-diagram-frame {
+			max-height: 150px;
+		}
+
+		.practice-inline-diagram-media {
+			max-height: 150px;
+		}
+
+		.practice-inline-diagram-frame :global(svg) {
+			max-height: 150px;
+		}
+	}
 	.practice-print {
 		margin: 1rem 0;
 	}

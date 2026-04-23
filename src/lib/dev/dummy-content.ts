@@ -1,5 +1,21 @@
 import type { SectionContent } from '../schema/types';
 
+const instantSpeedDiagramSvg = `<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+  <rect x="28" y="28" width="304" height="164" rx="14" fill="hsl(213 37% 17% / 0.04)" stroke="hsl(213 37% 17% / 0.18)" stroke-width="2"/>
+  <line x1="56" y1="166" x2="304" y2="166" stroke="hsl(213 37% 17% / 0.35)" stroke-width="2"/>
+  <line x1="72" y1="150" x2="72" y2="174" stroke="hsl(213 37% 17% / 0.22)" stroke-width="2"/>
+  <line x1="168" y1="150" x2="168" y2="174" stroke="hsl(213 37% 17% / 0.22)" stroke-width="2"/>
+  <line x1="264" y1="150" x2="264" y2="174" stroke="hsl(213 37% 17% / 0.22)" stroke-width="2"/>
+  <circle cx="72" cy="108" r="12" fill="hsl(24 95% 53%)"/>
+  <circle cx="168" cy="78" r="12" fill="hsl(24 95% 53% / 0.72)"/>
+  <circle cx="264" cy="58" r="12" fill="hsl(24 95% 53% / 0.5)"/>
+  <path d="M72 108 C112 100, 132 88, 168 78 S236 62, 264 58" fill="none" stroke="hsl(24 95% 53%)" stroke-width="3"/>
+  <text x="54" y="191" font-size="12" fill="hsl(213 37% 17% / 0.7)">t = 1</text>
+  <text x="146" y="191" font-size="12" fill="hsl(213 37% 17% / 0.7)">t = 2</text>
+  <text x="242" y="191" font-size="12" fill="hsl(213 37% 17% / 0.7)">t = 3</text>
+  <text x="116" y="50" font-size="13" fill="hsl(213 37% 17%)">Average speed changes over time</text>
+</svg>`;
+
 // ─────────────────────────────────────────────
 // CALCULUS SECTION — exercises original 8 components
 // ─────────────────────────────────────────────
@@ -69,6 +85,11 @@ export const calculusSection: SectionContent = {
 	},
 
 	worked_example: {
+		diagram: {
+			svg_content: instantSpeedDiagramSvg,
+			caption: 'A simple motion trace showing a ball moving through three time points as the average speed changes.',
+			alt_text: 'A motion trace with points at t equals 1, 2, and 3 showing a ball moving along a curved path as average speed changes over time.',
+		},
 		title: 'Finding instantaneous speed from a position function',
 		setup: "A ball dropped from a 100-foot building has height h(t) = 100 − 16t² at time t seconds. What is the ball's speed at exactly t = 2?",
 		steps: [
@@ -119,6 +140,11 @@ export const calculusSection: SectionContent = {
 		problems: [
 			{
 				difficulty: 'warm',
+				diagram: {
+					svg_content: instantSpeedDiagramSvg,
+					caption: 'A simple motion trace that helps compare the changing average speed across intervals.',
+					alt_text: 'A motion trace with three marked times showing how average speed changes across intervals.',
+				},
 				question:
 					"A car is at mile marker 10 at 1 PM, mile marker 35 at 2 PM, and mile marker 80 at 4 PM. What is the car's average speed from 1–2 PM? From 2–4 PM? Why can't these averages tell you the car's speed at exactly 3 PM?",
 				hints: [
