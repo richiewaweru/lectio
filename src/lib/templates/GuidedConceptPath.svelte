@@ -25,7 +25,7 @@
 	});
 </script>
 
-<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+<div class={`grid gap-6 ${section.glossary ? 'xl:grid-cols-[minmax(0,1fr)_320px]' : ''}`}>
 	<div class="lesson-shell rh-pad-shell">
 		<div class="relative z-10 rh-gap-section">
 			<SectionHeader content={section.header} />

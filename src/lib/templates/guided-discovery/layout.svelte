@@ -42,7 +42,7 @@
 	{/if}
 
 	<!-- Main column + optional sticky glossary sidebar -->
-	<div class="grid gap-6 lg:grid-cols-[1fr_280px]">
+	<div class={`grid gap-6 ${section.glossary ? 'lg:grid-cols-[1fr_280px]' : ''}`}>
 		<div class="flex flex-col gap-6">
 			<ExplanationBlock content={section.explanation} />
 

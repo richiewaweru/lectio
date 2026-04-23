@@ -8,6 +8,9 @@ import { templateRegistryMap } from '$lib/templates/registry';
 
 const templateId = 'guided-concept-path';
 const definition = templateRegistryMap[templateId];
+const guidedDiscoveryTemplateId = 'guided-discovery';
+const guidedDiscoveryDefinition = templateRegistryMap[guidedDiscoveryTemplateId];
+const guidedDiscoveryPresetId = guidedDiscoveryDefinition.presets[0].id;
 const fallbackPresetId =
 	definition.presets.find((preset) => preset.id === 'warm-paper')?.id ?? definition.presets[0].id;
 
@@ -52,6 +55,60 @@ describe('runtime surfaces', () => {
 			screen.getByText(definition.preview.section.header?.title ?? definition.contract.name)
 		).toBeInTheDocument();
 		expect(document.querySelector('[data-lectio-preset="blue-classroom"]')).toBeInTheDocument();
+	});
+
+	it('does not reserve guided-concept-path glossary columns when glossary is missing', () => {
+		const { container } = render(TemplateRuntimeSurface, {
+			props: {
+				templateId,
+				presetId: 'blue-classroom',
+				section: {
+					...definition.preview.section,
+					glossary: undefined
+				}
+			}
+		});
+
+		expect(container.innerHTML).not.toContain('lg:grid-cols-[1fr_280px]');
+	});
+
+	it('reserves guided-concept-path glossary columns when glossary exists', () => {
+		const { container } = render(TemplateRuntimeSurface, {
+			props: {
+				templateId,
+				presetId: 'blue-classroom',
+				section: definition.preview.section
+			}
+		});
+
+		expect(container.innerHTML).toContain('lg:grid-cols-[1fr_280px]');
+	});
+
+	it('does not reserve guided-discovery glossary columns when glossary is missing', () => {
+		const { container } = render(TemplateRuntimeSurface, {
+			props: {
+				templateId: guidedDiscoveryTemplateId,
+				presetId: guidedDiscoveryPresetId,
+				section: {
+					...guidedDiscoveryDefinition.preview.section,
+					glossary: undefined
+				}
+			}
+		});
+
+		expect(container.innerHTML).not.toContain('lg:grid-cols-[1fr_280px]');
+	});
+
+	it('reserves guided-discovery glossary columns when glossary exists', () => {
+		const { container } = render(TemplateRuntimeSurface, {
+			props: {
+				templateId: guidedDiscoveryTemplateId,
+				presetId: guidedDiscoveryPresetId,
+				section: guidedDiscoveryDefinition.preview.section
+			}
+		});
+
+		expect(container.innerHTML).toContain('lg:grid-cols-[1fr_280px]');
 	});
 
 	it('falls back to the default preset when presetId is invalid', () => {

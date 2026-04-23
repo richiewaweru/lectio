@@ -607,6 +607,32 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
 	});
 
+	it('does not reserve GuidedConceptPath sidebar columns when glossary is missing', () => {
+		const { container } = render(GuidedConceptPath, {
+			props: {
+				section: {
+					...calculusSection,
+					glossary: undefined
+				}
+			}
+		});
+
+		expect(container.innerHTML).not.toContain('xl:grid-cols-[minmax(0,1fr)_320px]');
+	});
+
+	it('does not reserve EnrichedLearningPath sidebar columns when glossary is missing', () => {
+		const { container } = render(EnrichedLearningPath, {
+			props: {
+				section: {
+					...physicsSection,
+					glossary: undefined
+				}
+			}
+		});
+
+		expect(container.innerHTML).not.toContain('xl:grid-cols-[minmax(0,1fr)_320px]');
+	});
+
 	it('adds stable data-lectio-block hooks to key print-targeted components', () => {
 		const sectionHeader = render(SectionHeader, { props: { content: physicsSection.header } });
 		expect(
