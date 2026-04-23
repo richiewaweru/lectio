@@ -61,7 +61,7 @@
 		<Dialog>
 			<DialogTrigger>
 				<div class="group relative cursor-pointer" role="img" aria-label={content.alt_text}>
-					<div class="overflow-hidden rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full">
+					<div class="overflow-x-auto rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full">
 						{#if hasImage}
 							<img src={content.image_url} alt="" class="h-auto w-full" />
 						{:else if hasSvg}
@@ -141,7 +141,7 @@
 							{content.zoom_label ?? 'Diagram detail'}
 						</DialogTitle>
 						<div
-							class="overflow-hidden rh-radius-card border border-border/70 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:w-full"
+							class="overflow-x-auto rh-radius-card border border-border/70 bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full"
 							role="img"
 							aria-label={content.alt_text}
 						>
@@ -179,11 +179,33 @@
 			page-break-inside: avoid;
 		}
 
-		/* Hide the zoom button overlay and callout interactive buttons */
+		/* Hide interactive affordances */
 		.diagram-block-zoom,
 		.diagram-block-callout-btn,
 		.diagram-block-dot {
 			display: none !important;
+		}
+
+		.diagram-block-root :global(svg) {
+			display: block;
+			width: 80%;
+			height: auto;
+			margin: 0 auto;
+		}
+
+		.diagram-block-root .overflow-hidden,
+		.diagram-block-root .overflow-x-auto {
+			overflow: visible !important;
+		}
+
+		.lectio-diagram-image {
+			width: 100%;
+			height: auto;
+			object-fit: contain;
+		}
+
+		.lectio-diagram-caption {
+			text-align: center;
 		}
 	}
 

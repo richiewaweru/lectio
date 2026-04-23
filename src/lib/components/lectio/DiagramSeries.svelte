@@ -35,29 +35,30 @@ const progressPercent = $derived(
 </script>
 
 {#if printMode}
-	<!-- Print: All diagrams shown sequentially -->
 	<div class="diagram-series-print-root">
 		<p class="diagram-series-print-title">{content.title}</p>
-		{#each content.diagrams as diagram, index}
-			<div class="diagram-series-print-item">
-				<p class="diagram-series-print-label">
-					<span class="diagram-series-print-step">Step {index + 1}</span>
-					{diagram.step_label}
-				</p>
-				{#if hasImage(diagram)}
-					<img
-						src={diagram.image_url}
-						alt={diagram.caption}
-						class="w-full overflow-hidden rh-radius-card border border-border/70 bg-white object-contain"
-					/>
-				{:else if hasSvg(diagram)}
-					<div class="overflow-hidden rh-radius-card border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
-						{@html sanitizeSvg(diagram.svg_content ?? '')}
-					</div>
-				{/if}
-				<p class="text-sm leading-6 text-muted-foreground">{diagram.caption}</p>
-			</div>
-		{/each}
+		<div class="diagram-series-print-grid" data-count={content.diagrams.length}>
+			{#each content.diagrams as diagram, index}
+				<figure class="diagram-series-print-item">
+					<figcaption class="diagram-series-print-label">
+						<span class="diagram-series-print-step">Step {index + 1}</span>
+						{diagram.step_label}
+					</figcaption>
+					{#if hasImage(diagram)}
+						<img
+							src={diagram.image_url}
+							alt={diagram.caption}
+							class="diagram-series-print-media"
+						/>
+					{:else if hasSvg(diagram)}
+						<div class="diagram-series-print-svg">
+							{@html sanitizeSvg(diagram.svg_content ?? '')}
+						</div>
+					{/if}
+					<p class="diagram-series-print-caption">{diagram.caption}</p>
+				</figure>
+			{/each}
+		</div>
 	</div>
 {:else}
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
@@ -145,7 +146,7 @@ const progressPercent = $derived(
 					class="w-full overflow-hidden rh-radius-card border border-border/70 bg-white object-contain"
 				/>
 			{:else if hasSvg(activeDiagram)}
-				<div class="overflow-hidden rh-radius-card border border-border/70 bg-white [&_svg]:h-auto [&_svg]:w-full">
+				<div class="overflow-x-auto rh-radius-card border border-border/70 bg-white [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full">
 					{@html sanitizeSvg(activeDiagram.svg_content ?? '')}
 				</div>
 			{/if}
@@ -158,24 +159,47 @@ const progressPercent = $derived(
 
 <style>
 	.diagram-series-print-root {
-		margin: 1rem 0;
+		margin: 0.75rem 0;
+		page-break-inside: avoid;
 	}
 
 	.diagram-series-print-title {
-		font-size: 1.125rem;
+		font-size: 1rem;
 		font-weight: 600;
-		margin-bottom: 1rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.diagram-series-print-grid {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.diagram-series-print-grid[data-count="1"] {
+		grid-template-columns: 1fr;
+	}
+
+	.diagram-series-print-grid[data-count="2"] {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.diagram-series-print-grid[data-count="3"] {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.diagram-series-print-grid[data-count="4"] {
+		grid-template-columns: 1fr 1fr;
 	}
 
 	.diagram-series-print-item {
 		page-break-inside: avoid;
-		margin-bottom: var(--rh-gap-section);
+		margin: 0;
 	}
 
 	.diagram-series-print-label {
-		font-size: 0.875rem;
+		font-size: 0.8rem;
 		font-weight: 600;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.4rem;
+		margin-top: 0;
 	}
 
 	.diagram-series-print-step {
@@ -183,6 +207,37 @@ const progressPercent = $derived(
 		text-transform: uppercase;
 		letter-spacing: 0.14em;
 		color: #6b7280;
-		margin-right: 0.5rem;
+		margin-right: 0.4rem;
+	}
+
+	.diagram-series-print-media {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+		border-radius: 0.5rem;
+		border: 1px solid rgba(148, 163, 184, 0.4);
+		background: white;
+	}
+
+	.diagram-series-print-svg {
+		overflow: visible;
+		border-radius: 0.5rem;
+		border: 1px solid rgba(148, 163, 184, 0.4);
+		background: white;
+		padding: 0.5rem;
+	}
+
+	.diagram-series-print-svg :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.diagram-series-print-caption {
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: hsl(var(--muted-foreground));
+		margin: 0.45rem 0 0;
 	}
 </style>
