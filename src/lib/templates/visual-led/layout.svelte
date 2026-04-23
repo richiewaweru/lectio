@@ -1,12 +1,18 @@
 <script lang="ts">
 	import {
+		CalloutBlock,
+		DefinitionCard,
 		DiagramBlock,
+		DiagramCompare,
+		DiagramSeries,
 		ExplanationBlock,
-		GlossaryRail,
 		HookHero,
-		PitfallAlert,
+		KeyFact,
 		PracticeStack,
-		ProcessSteps,
+		SectionDivider,
+		ShortAnswerQuestion,
+		StudentTextbox,
+		SummaryBlock,
 		WhatNextBridge
 	} from '$lib/components/lectio';
 	import type { SectionContent } from '$lib/schema/types';
@@ -16,23 +22,57 @@
 	let { section }: { section: SectionContent } = $props();
 </script>
 
+<!--
+  visual-led — the figure leads, prose follows.
+  Pedagogical arc: hook → visual anchor → explanation → support → practice → close.
+-->
 <TemplateShell {section} singleColumn>
 	<HookHero content={section.hook} />
+
+	{#if section.divider}
+		<SectionDivider content={section.divider} />
+	{/if}
+
+	{#if section.callout}
+		<CalloutBlock content={section.callout} />
+	{/if}
+
+	{#if section.key_fact}
+		<KeyFact content={section.key_fact} />
+	{/if}
+
+	<!-- Diagram family — visual anchor above the prose -->
+	{#if section.diagram_series}
+		<DiagramSeries content={section.diagram_series} />
+	{/if}
+
 	{#if section.diagram}
 		<DiagramBlock content={section.diagram} />
 	{/if}
-	<div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-		<ExplanationBlock content={section.explanation} />
-		{#if section.process}
-			<ProcessSteps content={section.process} mode="step-reveal" />
-		{/if}
-	</div>
-	{#if section.glossary}
-		<GlossaryRail content={section.glossary} mode="inline-strip" />
+
+	{#if section.diagram_compare}
+		<DiagramCompare content={section.diagram_compare} />
 	{/if}
-	{#if section.pitfall}
-		<PitfallAlert content={section.pitfall} />
+
+	<ExplanationBlock content={section.explanation} />
+
+	{#if section.definition}
+		<DefinitionCard content={section.definition} />
 	{/if}
+
 	<PracticeStack content={section.practice} mode="accordion" />
+
+	{#if section.short_answer}
+		<ShortAnswerQuestion content={section.short_answer} />
+	{/if}
+
+	{#if section.student_textbox}
+		<StudentTextbox content={section.student_textbox} />
+	{/if}
+
+	{#if section.summary}
+		<SummaryBlock content={section.summary} />
+	{/if}
+
 	<WhatNextBridge content={section.what_next} />
 </TemplateShell>

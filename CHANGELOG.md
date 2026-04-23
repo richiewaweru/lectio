@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.3.0] - 2026-04-23
+
+### Changed
+- Completed template layout completeness pass across 12 identified templates so declared contract components are mounted when section data is present.
+- Standardized conditional rendering across updated layouts while preserving each template's intentional structural groupings and pedagogical ordering.
+
+### Regenerated
+- Re-exported contract artifacts in `contracts/` and regenerated Python types in `generated/` via `npm run export-contracts`.
+
+### Notes
+- No new public TypeScript API surface was introduced.
+- Behavioral change is layout-level rendering completeness for contract-backed template fields.
+
 ## [0.2.7] - 2026-04-22
 
 ### Changed
@@ -41,8 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1] - 2026-04-02
 
 ### Security
-- **HIGH** — Fixed XSS in `ExplanationBlock.svelte`: added `escapeHtml()` to sanitize AI-generated body text before `{@html}` rendering
-- **MEDIUM** — Sanitized all SVG `{@html}` calls in `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `HookHero`, and `SimulationBlock` using DOMPurify (SVG profile)
+- **HIGH** â€” Fixed XSS in `ExplanationBlock.svelte`: added `escapeHtml()` to sanitize AI-generated body text before `{@html}` rendering
+- **MEDIUM** â€” Sanitized all SVG `{@html}` calls in `DiagramBlock`, `DiagramCompare`, `DiagramSeries`, `HookHero`, and `SimulationBlock` using DOMPurify (SVG profile)
 
 ### Changed
 - Moved `lectio-harmonisation-spec.md` and `LECTIO_COMPLETE_BUILD.md` from root to `docs/project/`
@@ -50,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created `.env.example` placeholder
 
 ### Added
-- `src/lib/utils/sanitize.ts` — shared `sanitizeSvg()` utility using DOMPurify
+- `src/lib/utils/sanitize.ts` â€” shared `sanitizeSvg()` utility using DOMPurify
 
 ## [0.1.0] - 2026-04-02
 

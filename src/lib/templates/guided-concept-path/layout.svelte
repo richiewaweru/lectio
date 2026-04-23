@@ -1,12 +1,20 @@
 <script lang="ts">
 	import {
+		CalloutBlock,
 		DefinitionCard,
 		DiagramBlock,
 		ExplanationBlock,
+		FillInTheBlank,
 		GlossaryRail,
 		HookHero,
+		KeyFact,
 		PitfallAlert,
 		PracticeStack,
+		ReflectionPrompt,
+		SectionDivider,
+		ShortAnswerQuestion,
+		StudentTextbox,
+		SummaryBlock,
 		WhatNextBridge,
 		WorkedExampleCard
 	} from '$lib/components/lectio';
@@ -17,27 +25,82 @@
 	let { section }: { section: SectionContent } = $props();
 </script>
 
+<!--
+  guided-concept-path — main reading column + optional sticky glossary rail.
+  Pedagogical arc: hook → knowledge anchors → explanation → example → practice → close.
+-->
 <TemplateShell {section}>
-	{#snippet sidebar()}
-		{#if section.glossary}
-			<GlossaryRail content={section.glossary} mode="sticky" />
-		{/if}
-	{/snippet}
-
 	<HookHero content={section.hook} />
-	<ExplanationBlock content={section.explanation} />
+
+	{#if section.divider}
+		<SectionDivider content={section.divider} />
+	{/if}
+
+	{#if section.callout}
+		<CalloutBlock content={section.callout} />
+	{/if}
+
+	{#if section.key_fact}
+		<KeyFact content={section.key_fact} />
+	{/if}
+
 	{#if section.definition}
 		<DefinitionCard content={section.definition} />
 	{/if}
+
 	{#if section.diagram}
 		<DiagramBlock content={section.diagram} />
 	{/if}
-	{#if section.worked_example}
-		<WorkedExampleCard content={section.worked_example} mode="step-reveal" />
+
+	<!-- Main column + glossary sidebar on desktop -->
+	<div class="grid gap-6 lg:grid-cols-[1fr_280px]">
+		<div class="flex flex-col gap-6">
+			<ExplanationBlock content={section.explanation} />
+
+			{#if section.worked_example}
+				<WorkedExampleCard content={section.worked_example} mode="step-reveal" />
+			{/if}
+
+			{#if section.pitfall}
+				<PitfallAlert content={section.pitfall} />
+			{/if}
+
+			<PracticeStack content={section.practice} mode="accordion" />
+
+			{#if section.fill_in_blank}
+				<FillInTheBlank content={section.fill_in_blank} />
+			{/if}
+
+			{#if section.short_answer}
+				<ShortAnswerQuestion content={section.short_answer} />
+			{/if}
+
+			{#if section.student_textbox}
+				<StudentTextbox content={section.student_textbox} />
+			{/if}
+
+			{#if section.reflection}
+				<ReflectionPrompt content={section.reflection} />
+			{/if}
+		</div>
+
+		{#if section.glossary}
+			<aside class="hidden lg:block">
+				<GlossaryRail content={section.glossary} mode="sticky" />
+			</aside>
+		{/if}
+	</div>
+
+	<!-- Glossary collapses to inline on mobile -->
+	{#if section.glossary}
+		<div class="lg:hidden">
+			<GlossaryRail content={section.glossary} mode="inline-strip" />
+		</div>
 	{/if}
-	{#if section.pitfall}
-		<PitfallAlert content={section.pitfall} />
+
+	{#if section.summary}
+		<SummaryBlock content={section.summary} />
 	{/if}
-	<PracticeStack content={section.practice} mode="accordion" />
+
 	<WhatNextBridge content={section.what_next} />
 </TemplateShell>
