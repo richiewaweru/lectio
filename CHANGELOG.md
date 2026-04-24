@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-04-24
+
+### Changed
+- Relaxed `SimulationType` from a fixed string union to plain `string` in the source schema so downstream generators and adapters accept new simulation identifiers without a package code change.
+
+### Regenerated
+- Re-exported contract artifacts in `contracts/` and regenerated Python types in `generated/` via `npm run export-contracts`.
+
 
 ## [0.3.0] - 2026-04-23
 
