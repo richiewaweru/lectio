@@ -248,6 +248,7 @@ export interface WorkedExampleContent {
 	alternative?: WorkedExampleContent; // optional second method to toggle
 	answer?: string; // backward compat — the final result
 	alternatives?: string[]; // backward compat — other approaches
+	diagram?: DiagramContent;
 }
 
 // ──
@@ -292,6 +293,7 @@ export interface PracticeProblem {
 	writein_lines?: number; // 0–8 for print
 	self_assess?: boolean; // learner marks own answer correct/incorrect
 	context?: string; // max 40 words — scenario framing
+	diagram?: DiagramContent;
 }
 
 export interface PracticeContent {
@@ -561,10 +563,3 @@ export interface SectionContent {
 	key_fact?: KeyFactContent;
 }
 
-export interface PracticeProblem {
-	diagram?: DiagramContent;
-}
-
-export interface WorkedExampleContent {
-	diagram?: DiagramContent;
-}

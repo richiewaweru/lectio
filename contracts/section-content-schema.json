@@ -383,6 +383,9 @@
         },
         "context": {
           "type": "string"
+        },
+        "diagram": {
+          "$ref": "#/definitions/DiagramContent"
         }
       },
       "required": [
@@ -441,6 +444,68 @@
       "required": [
         "approach",
         "answer"
+      ],
+      "additionalProperties": false
+    },
+    "DiagramContent": {
+      "type": "object",
+      "properties": {
+        "svg_content": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "zoom_label": {
+          "type": "string"
+        },
+        "alt_text": {
+          "type": "string"
+        },
+        "callouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DiagramCallout"
+          }
+        },
+        "figure_number": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "caption",
+        "alt_text"
+      ],
+      "additionalProperties": false
+    },
+    "DiagramCallout": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "label": {
+          "type": "string"
+        },
+        "explanation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "x",
+        "y",
+        "label",
+        "explanation"
       ],
       "additionalProperties": false
     },
@@ -597,6 +662,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "diagram": {
+          "$ref": "#/definitions/DiagramContent"
         }
       },
       "required": [
@@ -683,68 +751,6 @@
         "number",
         "action",
         "detail"
-      ],
-      "additionalProperties": false
-    },
-    "DiagramContent": {
-      "type": "object",
-      "properties": {
-        "svg_content": {
-          "type": "string"
-        },
-        "image_url": {
-          "type": "string"
-        },
-        "caption": {
-          "type": "string"
-        },
-        "zoom_label": {
-          "type": "string"
-        },
-        "alt_text": {
-          "type": "string"
-        },
-        "callouts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DiagramCallout"
-          }
-        },
-        "figure_number": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "caption",
-        "alt_text"
-      ],
-      "additionalProperties": false
-    },
-    "DiagramCallout": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "x": {
-          "type": "number"
-        },
-        "y": {
-          "type": "number"
-        },
-        "label": {
-          "type": "string"
-        },
-        "explanation": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "x",
-        "y",
-        "label",
-        "explanation"
       ],
       "additionalProperties": false
     },
