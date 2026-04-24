@@ -1324,15 +1324,7 @@
       "additionalProperties": false
     },
     "SimulationType": {
-      "type": "string",
-      "enum": [
-        "graph_slider",
-        "probability_tree",
-        "equation_reveal",
-        "geometry_explorer",
-        "molecule_viewer",
-        "timeline_scrubber"
-      ]
+      "type": "string"
     },
     "InteractionContext": {
       "type": "object",

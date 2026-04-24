@@ -456,13 +456,7 @@ export interface TimelineContent {
 // GROUP 7 — SIMULATION
 // ─────────────────────────────────────────────
 
-export type SimulationType =
-	| 'graph_slider'
-	| 'probability_tree'
-	| 'equation_reveal'
-	| 'geometry_explorer'
-	| 'molecule_viewer'
-	| 'timeline_scrubber';
+export type SimulationType = string;
 
 export interface InteractionContext {
 	learner_level: string;
@@ -562,4 +556,3 @@ export interface SectionContent {
 	divider?: SectionDividerContent;
 	key_fact?: KeyFactContent;
 }
-

@@ -67,6 +67,10 @@ describe('contract exports', () => {
 			const diagramProps = (diagramSchema.properties as JsonObject | undefined) ?? {};
 			expect(diagramProps.image_url).toBeTruthy();
 
+			const simulationTypeSchema = (defs.SimulationType as JsonObject | undefined) ?? {};
+			expect(simulationTypeSchema.type).toBe('string');
+			expect(simulationTypeSchema.enum).toBeUndefined();
+
 			const fieldMap = readJson(fieldMapPath);
 			for (const fieldName of Object.values(fieldMap)) {
 				expect(
@@ -93,6 +97,8 @@ describe('contract exports', () => {
 			expect(python).toContain('class SummaryBlockContent(BaseModel):');
 			expect(python).toContain('class DiagramContent(BaseModel):');
 			expect(python).toContain('class SectionContent(BaseModel):');
+			expect(python).toContain('SimulationType = str');
+			expect(python).not.toContain('SimulationType = Literal[');
 		} finally {
 			rmSync(tempDir, { recursive: true, force: true });
 		}
