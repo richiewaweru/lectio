@@ -239,6 +239,7 @@ export function validateSection(section: SectionContent): string[] {
 			if (words(s.content) > 80)
 				w.push(warn(`${label} step ${si + 1}`, 'content exceeds 80 words'));
 		});
+		if (ex.diagram) validateDiagram(ex.diagram, `${label}/diagram`, w);
 	});
 
 	// Process
@@ -272,6 +273,7 @@ export function validateSection(section: SectionContent): string[] {
 			if (words(h.text) > 60)
 				w.push(warn(`PracticeStack problem ${i + 1} hint ${hi + 1}`, 'hint exceeds 60 words'));
 		});
+		if (p.diagram) validateDiagram(p.diagram, `PracticeStack problem ${i + 1}/diagram`, w);
 	});
 
 	// Insight strip
