@@ -30,7 +30,9 @@
   Pedagogical arc: hook → knowledge anchors → explanation → example → practice → close.
 -->
 <TemplateShell {section}>
-	<HookHero content={section.hook} />
+	{#if section.hook}
+		<HookHero content={section.hook} />
+	{/if}
 
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
@@ -55,7 +57,9 @@
 	<!-- Main column + glossary sidebar on desktop -->
 	<div class={`grid gap-6 ${section.glossary ? 'lg:grid-cols-[1fr_280px]' : ''}`}>
 		<div class="flex flex-col gap-6">
-			<ExplanationBlock content={section.explanation} />
+			{#if section.explanation}
+				<ExplanationBlock content={section.explanation} />
+			{/if}
 
 			{#if section.worked_example}
 				<WorkedExampleCard content={section.worked_example} mode="step-reveal" />
@@ -65,7 +69,9 @@
 				<PitfallAlert content={section.pitfall} />
 			{/if}
 
-			<PracticeStack content={section.practice} mode="accordion" />
+			{#if section.practice}
+				<PracticeStack content={section.practice} mode="accordion" />
+			{/if}
 
 			{#if section.fill_in_blank}
 				<FillInTheBlank content={section.fill_in_blank} />
@@ -102,5 +108,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

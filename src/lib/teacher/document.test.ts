@@ -6,11 +6,11 @@ import { fromSectionContents, toSectionContents, validateDocument } from './docu
 describe('LessonDocument conversion', () => {
 	it('round-trips a rich section through fromSectionContents and toSectionContents', () => {
 		const doc = fromSectionContents([calculusSection], {
-			title: calculusSection.header.title,
-			subject: calculusSection.header.subject,
+			title: calculusSection.header!.title,
+			subject: calculusSection.header!.subject,
 			preset_id: 'blue-classroom',
 			source: 'template',
-			grade_band: calculusSection.header.grade_band
+			grade_band: calculusSection.header!.grade_band
 		});
 
 		expect(doc.version).toBe(1);
@@ -53,8 +53,8 @@ describe('LessonDocument conversion', () => {
 		};
 
 		const doc = fromSectionContents([section], {
-			title: section.header.title,
-			subject: section.header.subject,
+			title: section.header!.title,
+			subject: section.header!.subject,
 			preset_id: 'blue-classroom'
 		});
 		const simulationBlocks = Object.values(doc.blocks).filter(
@@ -78,8 +78,8 @@ describe('LessonDocument conversion', () => {
 		};
 
 		const doc = fromSectionContents([section], {
-			title: section.header.title,
-			subject: section.header.subject,
+			title: section.header!.title,
+			subject: section.header!.subject,
 			preset_id: 'blue-classroom'
 		});
 

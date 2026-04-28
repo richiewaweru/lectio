@@ -26,7 +26,9 @@
                    pitfall → practice → student response → close.
 -->
 <TemplateShell {section} singleColumn>
-	<HookHero content={section.hook} />
+	{#if section.hook}
+		<HookHero content={section.hook} />
+	{/if}
 
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
@@ -40,7 +42,9 @@
 		<DefinitionCard content={section.definition} />
 	{/if}
 
-	<ExplanationBlock content={section.explanation} />
+	{#if section.explanation}
+		<ExplanationBlock content={section.explanation} />
+	{/if}
 
 	{#if section.worked_example}
 		<WorkedExampleCard content={section.worked_example} mode="accordion" />
@@ -50,7 +54,9 @@
 		<PitfallAlert content={section.pitfall} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="accordion" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="accordion" />
+	{/if}
 
 	{#if section.short_answer}
 		<ShortAnswerQuestion content={section.short_answer} />
@@ -64,5 +70,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

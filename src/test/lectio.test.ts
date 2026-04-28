@@ -435,7 +435,7 @@ describe('Lectio component harmonization', () => {
 				}
 			},
 			what_next: {
-				...physicsSection.what_next,
+				...physicsSection.what_next!,
 				next: repeatWords('next', 16),
 				preview: repeatWords('preview', 31),
 				prerequisites: ['one', 'two', 'three', 'four', 'five']
@@ -634,17 +634,17 @@ describe('Lectio component harmonization', () => {
 	});
 
 	it('adds stable data-lectio-block hooks to key print-targeted components', () => {
-		const sectionHeader = render(SectionHeader, { props: { content: physicsSection.header } });
+		const sectionHeader = render(SectionHeader, { props: { content: physicsSection.header! } });
 		expect(
 			sectionHeader.container.querySelector('[data-lectio-block="section-header"]')
 		).toBeInTheDocument();
 		sectionHeader.unmount();
 
-		const hookHero = render(HookHero, { props: { content: calculusSection.hook } });
+		const hookHero = render(HookHero, { props: { content: calculusSection.hook! } });
 		expect(hookHero.container.querySelector('[data-lectio-block="hook"]')).toBeInTheDocument();
 		hookHero.unmount();
 
-		const explanation = render(ExplanationBlock, { props: { content: calculusSection.explanation } });
+		const explanation = render(ExplanationBlock, { props: { content: calculusSection.explanation! } });
 		expect(
 			explanation.container.querySelector('[data-lectio-block="explanation"]')
 		).toBeInTheDocument();
@@ -654,11 +654,11 @@ describe('Lectio component harmonization', () => {
 		expect(definition.container.querySelector('[data-lectio-block="definition"]')).toBeInTheDocument();
 		definition.unmount();
 
-		const practice = render(PracticeStack, { props: { content: calculusSection.practice } });
+		const practice = render(PracticeStack, { props: { content: calculusSection.practice! } });
 		expect(practice.container.querySelector('[data-lectio-block="practice"]')).toBeInTheDocument();
 		practice.unmount();
 
-		const whatNext = render(WhatNextBridge, { props: { content: calculusSection.what_next } });
+		const whatNext = render(WhatNextBridge, { props: { content: calculusSection.what_next! } });
 		expect(whatNext.container.querySelector('[data-lectio-block="what-next"]')).toBeInTheDocument();
 		whatNext.unmount();
 
@@ -677,7 +677,7 @@ describe('Lectio component harmonization', () => {
 
 	it('hides inline practice answers in print mode by default and supports explicit opt-in', () => {
 		const hiddenAnswers = render(PracticeStackPrintHarness, {
-			props: { content: physicsSection.practice }
+			props: { content: physicsSection.practice! }
 		});
 
 		expect(hiddenAnswers.container.querySelector('.practice-print')).toBeInTheDocument();
@@ -686,7 +686,7 @@ describe('Lectio component harmonization', () => {
 		hiddenAnswers.unmount();
 
 		render(PracticeStackPrintHarness, {
-			props: { content: physicsSection.practice, showInlineAnswersInPrint: true }
+			props: { content: physicsSection.practice!, showInlineAnswersInPrint: true }
 		});
 
 		expect(screen.getAllByText(/Solution:/).length).toBeGreaterThan(0);
@@ -695,7 +695,7 @@ describe('Lectio component harmonization', () => {
 
 	it('renders inline practice diagrams when present and keeps the absent case clean', () => {
 		const withDiagram = render(PracticeStack, {
-			props: { content: calculusSection.practice }
+			props: { content: calculusSection.practice! }
 		});
 
 		expect(withDiagram.container.querySelectorAll('[data-lectio-inline-diagram]')).toHaveLength(1);
@@ -703,7 +703,7 @@ describe('Lectio component harmonization', () => {
 		withDiagram.unmount();
 
 		const withoutDiagram = render(PracticeStack, {
-			props: { content: physicsSection.practice }
+			props: { content: physicsSection.practice! }
 		});
 
 		expect(withoutDiagram.container.querySelector('[data-lectio-inline-diagram]')).not.toBeInTheDocument();
@@ -739,7 +739,7 @@ describe('Lectio component harmonization', () => {
 		const invalidSection = {
 			...physicsSection,
 			what_next: {
-				...physicsSection.what_next,
+				...physicsSection.what_next!,
 				next: repeatWords('next', 16)
 			}
 		};

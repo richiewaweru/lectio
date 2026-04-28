@@ -517,12 +517,12 @@ export interface SectionContent {
 	section_id: string;
 	template_id: string;
 
-	// Required
-	header: SectionHeaderContent;
-	hook: HookHeroContent;
-	explanation: ExplanationContent;
-	practice: PracticeContent;
-	what_next: WhatNextContent;
+	// Foundation fields (optional in v2 partial sections)
+	header?: SectionHeaderContent;
+	hook?: HookHeroContent;
+	explanation?: ExplanationContent;
+	practice?: PracticeContent;
+	what_next?: WhatNextContent;
 
 	// Optional — present based on content needs
 	prerequisites?: PrerequisiteContent;

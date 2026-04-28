@@ -27,7 +27,9 @@
   Pedagogical arc: hook → visual anchor → explanation → support → practice → close.
 -->
 <TemplateShell {section} singleColumn>
-	<HookHero content={section.hook} />
+	{#if section.hook}
+		<HookHero content={section.hook} />
+	{/if}
 
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
@@ -54,13 +56,17 @@
 		<DiagramCompare content={section.diagram_compare} />
 	{/if}
 
-	<ExplanationBlock content={section.explanation} />
+	{#if section.explanation}
+		<ExplanationBlock content={section.explanation} />
+	{/if}
 
 	{#if section.definition}
 		<DefinitionCard content={section.definition} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="accordion" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="accordion" />
+	{/if}
 
 	{#if section.short_answer}
 		<ShortAnswerQuestion content={section.short_answer} />
@@ -74,5 +80,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

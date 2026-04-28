@@ -61,7 +61,9 @@
 		<PitfallAlert content={section.pitfall} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="flat-list" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="flat-list" />
+	{/if}
 
 	{#if section.fill_in_blank}
 		<FillInTheBlank content={section.fill_in_blank} />
@@ -79,5 +81,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

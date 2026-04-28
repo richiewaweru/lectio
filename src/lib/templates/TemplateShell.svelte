@@ -25,7 +25,9 @@
 {#if singleColumn || !sidebar}
 	<div class="lesson-shell rh-pad-shell">
 		<div class={cn('relative z-10 rh-gap-section', contentClassName)}>
-			<SectionHeader content={section.header} />
+			{#if section.header}
+				<SectionHeader content={section.header} />
+			{/if}
 			<TemplateWarnings {section} />
 			{@render children()}
 		</div>
@@ -34,7 +36,9 @@
 	<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
 		<div class="lesson-shell rh-pad-shell">
 			<div class={cn('relative z-10 rh-gap-section', contentClassName)}>
-				<SectionHeader content={section.header} />
+				{#if section.header}
+					<SectionHeader content={section.header} />
+				{/if}
 				<TemplateWarnings {section} />
 				{@render children()}
 			</div>

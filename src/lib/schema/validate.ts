@@ -164,37 +164,43 @@ export function validateSection(section: SectionContent): string[] {
 	const w: string[] = [];
 
 	// Header
-	if (words(section.header.title) > 12)
-		w.push(warn('SectionHeader', 'title exceeds 12 words'));
-	if (section.header.objectives) {
-		for (const obj of section.header.objectives) {
-			if (words(obj) > 30) {
-				w.push(warn('SectionHeader', 'an objective exceeds 30 words'));
-				break;
+	if (section.header) {
+		if (words(section.header.title) > 12)
+			w.push(warn('SectionHeader', 'title exceeds 12 words'));
+		if (section.header.objectives) {
+			for (const obj of section.header.objectives) {
+				if (words(obj) > 30) {
+					w.push(warn('SectionHeader', 'an objective exceeds 30 words'));
+					break;
+				}
 			}
 		}
 	}
 
 	// Hook
-	if (words(section.hook.headline) > 12)
-		w.push(warn('HookHero', 'headline exceeds 12 words'));
-	if (words(section.hook.body) > 80)
-		w.push(warn('HookHero', 'body exceeds 80 words'));
-	if (section.hook.question_options && section.hook.question_options.length > 3)
-		w.push(warn('HookHero', 'question_options max 3'));
+	if (section.hook) {
+		if (words(section.hook.headline) > 12)
+			w.push(warn('HookHero', 'headline exceeds 12 words'));
+		if (words(section.hook.body) > 80)
+			w.push(warn('HookHero', 'body exceeds 80 words'));
+		if (section.hook.question_options && section.hook.question_options.length > 3)
+			w.push(warn('HookHero', 'question_options max 3'));
+	}
 
 	// Explanation
-	if (words(section.explanation.body) > 350)
-		w.push(warn('ExplanationBlock', 'body exceeds 350 words'));
-	if (section.explanation.emphasis.length > 3)
-		w.push(warn('ExplanationBlock', 'emphasis max 3 items'));
-	if (section.explanation.callouts) {
-		if (section.explanation.callouts.length > 3)
-			w.push(warn('ExplanationBlock', 'callouts max 3'));
-		section.explanation.callouts.forEach((c, i) => {
-			if (words(c.text) > 60)
-				w.push(warn(`ExplanationBlock callout ${i + 1}`, 'text exceeds 60 words'));
-		});
+	if (section.explanation) {
+		if (words(section.explanation.body) > 350)
+			w.push(warn('ExplanationBlock', 'body exceeds 350 words'));
+		if (section.explanation.emphasis.length > 3)
+			w.push(warn('ExplanationBlock', 'emphasis max 3 items'));
+		if (section.explanation.callouts) {
+			if (section.explanation.callouts.length > 3)
+				w.push(warn('ExplanationBlock', 'callouts max 3'));
+			section.explanation.callouts.forEach((c, i) => {
+				if (words(c.text) > 60)
+					w.push(warn(`ExplanationBlock callout ${i + 1}`, 'text exceeds 60 words'));
+			});
+		}
 	}
 
 	// Prerequisites
@@ -260,21 +266,23 @@ export function validateSection(section: SectionContent): string[] {
 	});
 
 	// Practice
-	if (section.practice.problems.length < 2)
-		w.push(warn('PracticeStack', 'minimum 2 problems'));
-	if (section.practice.problems.length > 5)
-		w.push(warn('PracticeStack', 'maximum 5 problems'));
-	section.practice.problems.forEach((p, i) => {
-		if (words(p.question) > 100)
-			w.push(warn(`PracticeStack problem ${i + 1}`, 'question exceeds 100 words'));
-		if (p.hints.length > 3)
-			w.push(warn(`PracticeStack problem ${i + 1}`, 'hints max 3'));
-		p.hints.forEach((h, hi) => {
-			if (words(h.text) > 60)
-				w.push(warn(`PracticeStack problem ${i + 1} hint ${hi + 1}`, 'hint exceeds 60 words'));
+	if (section.practice) {
+		if (section.practice.problems.length < 2)
+			w.push(warn('PracticeStack', 'minimum 2 problems'));
+		if (section.practice.problems.length > 5)
+			w.push(warn('PracticeStack', 'maximum 5 problems'));
+		section.practice.problems.forEach((p, i) => {
+			if (words(p.question) > 100)
+				w.push(warn(`PracticeStack problem ${i + 1}`, 'question exceeds 100 words'));
+			if (p.hints.length > 3)
+				w.push(warn(`PracticeStack problem ${i + 1}`, 'hints max 3'));
+			p.hints.forEach((h, hi) => {
+				if (words(h.text) > 60)
+					w.push(warn(`PracticeStack problem ${i + 1} hint ${hi + 1}`, 'hint exceeds 60 words'));
+			});
+			if (p.diagram) validateDiagram(p.diagram, `PracticeStack problem ${i + 1}/diagram`, w);
 		});
-		if (p.diagram) validateDiagram(p.diagram, `PracticeStack problem ${i + 1}/diagram`, w);
-	});
+	}
 
 	// Insight strip
 	if (section.insight_strip) {
@@ -310,13 +318,15 @@ export function validateSection(section: SectionContent): string[] {
 	}
 
 	// What next
-	if (words(section.what_next.body) > 50)
-		w.push(warn('WhatNextBridge', 'body exceeds 50 words'));
-	if (words(section.what_next.next) > 15) w.push(warn('WhatNextBridge', 'next exceeds 15 words'));
-	if (section.what_next.preview && words(section.what_next.preview) > 30)
-		w.push(warn('WhatNextBridge', 'preview exceeds 30 words'));
-	if (section.what_next.prerequisites && section.what_next.prerequisites.length > 4)
-		w.push(warn('WhatNextBridge', 'prerequisites max 4'));
+	if (section.what_next) {
+		if (words(section.what_next.body) > 50)
+			w.push(warn('WhatNextBridge', 'body exceeds 50 words'));
+		if (words(section.what_next.next) > 15) w.push(warn('WhatNextBridge', 'next exceeds 15 words'));
+		if (section.what_next.preview && words(section.what_next.preview) > 30)
+			w.push(warn('WhatNextBridge', 'preview exceeds 30 words'));
+		if (section.what_next.prerequisites && section.what_next.prerequisites.length > 4)
+			w.push(warn('WhatNextBridge', 'prerequisites max 4'));
+	}
 
 	if (section.interview) {
 		if (words(section.interview.prompt) > 35)
