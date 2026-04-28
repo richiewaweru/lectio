@@ -27,7 +27,9 @@
 </script>
 
 <TemplateShell {section} singleColumn>
-	<HookHero content={section.hook} />
+	{#if section.hook}
+		<HookHero content={section.hook} />
+	{/if}
 
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
@@ -59,7 +61,9 @@
 	{/if}
 
 	<div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-		<ExplanationBlock content={section.explanation} />
+		{#if section.explanation}
+			<ExplanationBlock content={section.explanation} />
+		{/if}
 		{#if section.process}
 			<ProcessSteps content={section.process} mode="step-reveal" />
 		{/if}
@@ -81,7 +85,9 @@
 		<PitfallAlert content={section.pitfall} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="accordion" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="accordion" />
+	{/if}
 
 	{#if section.short_answer}
 		<ShortAnswerQuestion content={section.short_answer} />
@@ -95,5 +101,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

@@ -77,7 +77,7 @@ describe('new components', () => {
 describe('adapted behaviours', () => {
 	it('renders flat-list practice without requiring accordion expansion', async () => {
 		render(PracticeStack, {
-			props: { content: lowLoadPreview.section.practice, mode: 'flat-list' }
+			props: { content: lowLoadPreview.section.practice!, mode: 'flat-list' }
 		});
 
 		expect(screen.getByText(/A circle is split into 4 equal pieces/i)).toBeInTheDocument();

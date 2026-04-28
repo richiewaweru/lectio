@@ -41,7 +41,9 @@
 <div class={`grid gap-6 ${section.glossary ? 'xl:grid-cols-[minmax(0,1fr)_320px]' : ''}`}>
 	<div class="lesson-shell rh-pad-shell">
 		<div class="relative z-10 rh-gap-section">
-			<SectionHeader content={section.header} />
+			{#if section.header}
+				<SectionHeader content={section.header} />
+			{/if}
 
 			{#if warnings.length > 0}
 				<Card class="border-amber-300 bg-amber-50/92 p-4" data-schema-warning="true">
@@ -63,8 +65,12 @@
 				<PrerequisiteStrip content={section.prerequisites} />
 			{/if}
 
-			<HookHero content={section.hook} />
-			<ExplanationBlock content={section.explanation} />
+			{#if section.hook}
+				<HookHero content={section.hook} />
+			{/if}
+			{#if section.explanation}
+				<ExplanationBlock content={section.explanation} />
+			{/if}
 
 			{#if inlineTerm}
 				<div class="rh-radius-card border border-border/70 bg-white/82 p-4 text-sm leading-7 text-foreground/84">
@@ -132,7 +138,9 @@
 				<QuizCheck content={section.quiz} />
 			{/if}
 
-			<PracticeStack content={section.practice} />
+			{#if section.practice}
+				<PracticeStack content={section.practice} />
+			{/if}
 
 			{#if section.reflection}
 				<ReflectionPrompt content={section.reflection} />
@@ -146,7 +154,9 @@
 				<InterviewAnchor content={section.interview} />
 			{/if}
 
-			<WhatNextBridge content={section.what_next} />
+			{#if section.what_next}
+				<WhatNextBridge content={section.what_next} />
+			{/if}
 		</div>
 	</div>
 

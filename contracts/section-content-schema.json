@@ -119,12 +119,7 @@
       },
       "required": [
         "section_id",
-        "template_id",
-        "header",
-        "hook",
-        "explanation",
-        "practice",
-        "what_next"
+        "template_id"
       ],
       "additionalProperties": false
     },

@@ -191,7 +191,7 @@ export function fromSectionContents(
 			id: section.section_id,
 			template_id: section.template_id || metadata.template_id || 'unknown',
 			block_ids,
-			title: section.header.title,
+			title: section.header?.title ?? section.section_id,
 			position: sectionPosition++
 		});
 	}

@@ -46,7 +46,9 @@
 		<KeyFact content={section.key_fact} />
 	{/if}
 
-	<ExplanationBlock content={section.explanation} />
+	{#if section.explanation}
+		<ExplanationBlock content={section.explanation} />
+	{/if}
 
 	{#if section.worked_example}
 		<WorkedExampleCard content={section.worked_example} mode="static" />
@@ -56,7 +58,9 @@
 		<PitfallAlert content={section.pitfall} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="flat-list" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="flat-list" />
+	{/if}
 
 	{#if section.short_answer}
 		<ShortAnswerQuestion content={section.short_answer} />
@@ -66,5 +70,7 @@
 		<FillInTheBlank content={section.fill_in_blank} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

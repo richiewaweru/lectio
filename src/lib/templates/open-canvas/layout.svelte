@@ -36,7 +36,9 @@
 </script>
 
 <article class="mx-auto max-w-3xl rh-gap-section px-4 py-8">
-	<SectionHeader content={section.header} />
+	{#if section.header}
+		<SectionHeader content={section.header} />
+	{/if}
 
 	{#if section.hook}
 		<HookHero content={section.hook} />
@@ -146,5 +148,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </article>

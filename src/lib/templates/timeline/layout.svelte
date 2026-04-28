@@ -55,7 +55,9 @@
 		<PitfallAlert content={section.pitfall} />
 	{/if}
 
-	<PracticeStack content={section.practice} mode="accordion" />
+	{#if section.practice}
+		<PracticeStack content={section.practice} mode="accordion" />
+	{/if}
 
 	{#if section.short_answer}
 		<ShortAnswerQuestion content={section.short_answer} />
@@ -69,5 +71,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>

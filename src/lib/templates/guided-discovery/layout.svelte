@@ -31,7 +31,9 @@
                    practice → reflection → close.
 -->
 <TemplateShell {section}>
-	<HookHero content={section.hook} />
+	{#if section.hook}
+		<HookHero content={section.hook} />
+	{/if}
 
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
@@ -44,7 +46,9 @@
 	<!-- Main column + optional sticky glossary sidebar -->
 	<div class={`grid gap-6 ${section.glossary ? 'lg:grid-cols-[1fr_280px]' : ''}`}>
 		<div class="flex flex-col gap-6">
-			<ExplanationBlock content={section.explanation} />
+			{#if section.explanation}
+				<ExplanationBlock content={section.explanation} />
+			{/if}
 
 			{#if section.definition}
 				<DefinitionCard content={section.definition} />
@@ -67,7 +71,9 @@
 				<PitfallAlert content={section.pitfall} />
 			{/if}
 
-			<PracticeStack content={section.practice} mode="accordion" />
+			{#if section.practice}
+				<PracticeStack content={section.practice} mode="accordion" />
+			{/if}
 
 			{#if section.short_answer}
 				<ShortAnswerQuestion content={section.short_answer} />
@@ -100,5 +106,7 @@
 		<SummaryBlock content={section.summary} />
 	{/if}
 
-	<WhatNextBridge content={section.what_next} />
+	{#if section.what_next}
+		<WhatNextBridge content={section.what_next} />
+	{/if}
 </TemplateShell>
