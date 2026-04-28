@@ -20,6 +20,7 @@ import QuizCheck from '$lib/components/lectio/QuizCheck.svelte';
 import SimulationBlock from '$lib/components/lectio/SimulationBlock.svelte';
 import GuidedConceptPath from '$lib/templates/GuidedConceptPath.svelte';
 import EnrichedLearningPath from '$lib/templates/EnrichedLearningPath.svelte';
+import GuidedConceptPathLayout from '$lib/templates/guided-concept-path/layout.svelte';
 import TemplateWarnings from '$lib/templates/TemplateWarnings.svelte';
 import InteractiveLabLayout from '$lib/templates/interactive-lab/layout.svelte';
 import PracticeStackPrintHarness from './PracticeStackPrintHarness.svelte';
@@ -605,6 +606,65 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText("Newton's Second Law of Motion")).toBeInTheDocument();
 		expect(screen.getByText('Before we begin')).toBeInTheDocument();
 		expect(screen.getByText('Manipulate and discover')).toBeInTheDocument();
+	});
+
+	it('renders newly-enabled comparison-grid and timeline blocks in guided-concept-path layout', () => {
+		render(GuidedConceptPathLayout, {
+			props: {
+				section: {
+					...calculusSection,
+					comparison_grid: {
+						title: 'Average vs instant rate',
+						columns: [
+							{
+								id: 'avg',
+								title: 'Average rate',
+								summary: 'Change across an interval.'
+							},
+							{
+								id: 'inst',
+								title: 'Instant rate',
+								summary: 'Rate at one exact point.'
+							}
+						],
+						rows: [
+							{
+								criterion: 'When used',
+								values: ['Whole interval', 'Single instant']
+							}
+						]
+					},
+					timeline: {
+						title: 'Milestones',
+						events: [
+							{
+								id: 'e1',
+								year: '1637',
+								title: 'Analytic geometry',
+								summary: 'Coordinates link geometry and algebra.'
+							},
+							{
+								id: 'e2',
+								year: '1665',
+								title: 'Calculus methods',
+								summary: 'Methods for changing quantities emerge.'
+							},
+							{
+								id: 'e3',
+								year: '1820',
+								title: 'Rigorous limits',
+								summary: 'Formal definitions stabilise calculus.'
+							}
+						]
+					}
+				}
+			}
+		});
+
+		expect(screen.getByText('Average vs instant rate')).toBeInTheDocument();
+		expect(screen.getByText('When used')).toBeInTheDocument();
+		expect(screen.getByText('Milestones')).toBeInTheDocument();
+		expect(screen.getByText('Analytic geometry')).toBeInTheDocument();
 	});
 
 	it('does not reserve GuidedConceptPath sidebar columns when glossary is missing', () => {

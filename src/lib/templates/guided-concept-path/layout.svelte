@@ -1,20 +1,33 @@
 <script lang="ts">
 	import {
 		CalloutBlock,
+		ComparisonGrid,
 		DefinitionCard,
+		DefinitionFamily,
 		DiagramBlock,
+		DiagramCompare,
+		DiagramSeries,
 		ExplanationBlock,
 		FillInTheBlank,
 		GlossaryRail,
 		HookHero,
+		ImageBlock,
+		InsightStrip,
+		InterviewAnchor,
 		KeyFact,
 		PitfallAlert,
 		PracticeStack,
+		PrerequisiteStrip,
+		ProcessSteps,
+		QuizCheck,
 		ReflectionPrompt,
 		SectionDivider,
 		ShortAnswerQuestion,
+		SimulationBlock,
 		StudentTextbox,
 		SummaryBlock,
+		TimelineBlock,
+		VideoEmbed,
 		WhatNextBridge,
 		WorkedExampleCard
 	} from '$lib/components/lectio';
@@ -34,6 +47,14 @@
 		<HookHero content={section.hook} />
 	{/if}
 
+	{#if section.prerequisites}
+		<PrerequisiteStrip content={section.prerequisites} />
+	{/if}
+
+	{#if section.interview}
+		<InterviewAnchor content={section.interview} />
+	{/if}
+
 	{#if section.divider}
 		<SectionDivider content={section.divider} />
 	{/if}
@@ -50,8 +71,36 @@
 		<DefinitionCard content={section.definition} />
 	{/if}
 
+	{#if section.definition_family}
+		<DefinitionFamily content={section.definition_family} />
+	{/if}
+
 	{#if section.diagram}
 		<DiagramBlock content={section.diagram} />
+	{/if}
+
+	{#if section.diagram_compare}
+		<DiagramCompare content={section.diagram_compare} />
+	{/if}
+
+	{#if section.diagram_series}
+		<DiagramSeries content={section.diagram_series} />
+	{/if}
+
+	{#if section.timeline}
+		<TimelineBlock content={section.timeline} />
+	{/if}
+
+	{#if section.image_block}
+		<ImageBlock content={section.image_block} />
+	{/if}
+
+	{#if section.video_embed}
+		<VideoEmbed content={section.video_embed} />
+	{/if}
+
+	{#if section.simulation}
+		<SimulationBlock content={section.simulation} />
 	{/if}
 
 	<!-- Main column + glossary sidebar on desktop -->
@@ -61,8 +110,20 @@
 				<ExplanationBlock content={section.explanation} />
 			{/if}
 
+			{#if section.insight_strip}
+				<InsightStrip content={section.insight_strip} />
+			{/if}
+
+			{#if section.comparison_grid}
+				<ComparisonGrid content={section.comparison_grid} />
+			{/if}
+
 			{#if section.worked_example}
 				<WorkedExampleCard content={section.worked_example} mode="step-reveal" />
+			{/if}
+
+			{#if section.process}
+				<ProcessSteps content={section.process} mode="step-reveal" />
 			{/if}
 
 			{#if section.pitfall}
@@ -71,6 +132,10 @@
 
 			{#if section.practice}
 				<PracticeStack content={section.practice} mode="accordion" />
+			{/if}
+
+			{#if section.quiz}
+				<QuizCheck content={section.quiz} />
 			{/if}
 
 			{#if section.fill_in_blank}
