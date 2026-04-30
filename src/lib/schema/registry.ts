@@ -477,6 +477,8 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Card + Dialog',
 		capacity: { calloutsMax: 6, captionMaxWords: 60 },
 		printFallback: 'Static SVG 80% width centred',
+		generationHint:
+			'Write a caption that precisely describes the visual — name every labeled element, the relationship or structure being shown, and what the student should notice first. Use present tense. Max 60 words. A good caption works as a standalone description of the image: someone reading it knows exactly what is drawn without having read the section. Do not describe the topic in general terms — describe what is visible.',
 		status: 'stable'
 	},
 
@@ -493,6 +495,8 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Slider',
 		capacity: { captionMaxWords: 60 },
 		printFallback: 'Both diagrams shown side by side',
+		generationHint:
+			'Write a caption that precisely names what is being compared, what is visible in each state, and exactly what changes between them — name the specific element that transforms, not just that a change occurs. Use present tense. Max 60 words. The caption must describe both images as if the student cannot see the labels: name the before state, name the after state, name the difference.',
 		status: 'stable'
 	},
 
@@ -509,6 +513,8 @@ export const componentRegistry: Record<string, ComponentMeta> = {
 		shadcnPrimitive: 'Tabs or step nav',
 		capacity: { diagramsMax: 4 },
 		printFallback: 'All diagrams in sequence with step labels',
+		generationHint:
+			'Write a series title that describes the full progression shown across all steps, and a caption for each step that names the specific state of the diagram at that moment — what is drawn, what has changed from the previous step, and what the student should be able to see. Use present tense throughout. Each step caption must stand alone as a description of that frame: someone reading it knows exactly what that step shows. Max 60 words per caption. Do not repeat the step label as the caption.',
 		status: 'stable'
 	},
 
