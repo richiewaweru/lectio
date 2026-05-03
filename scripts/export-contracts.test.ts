@@ -47,10 +47,18 @@ describe('contract exports', () => {
 			const schemaPath = join(outDir, 'section-content-schema.json');
 			const fieldMapPath = join(outDir, 'component-field-map.json');
 			const registryPath = join(outDir, 'component-registry.json');
+			const manifestPath = join(outDir, 'manifest.json');
+			const componentSchemasPath = join(outDir, 'component-schemas.json');
+			const examplesPath = join(outDir, 'component-examples.json');
+			const printRulesPath = join(outDir, 'print-rules.json');
 
 			expect(existsSync(schemaPath)).toBe(true);
 			expect(existsSync(fieldMapPath)).toBe(true);
 			expect(existsSync(registryPath)).toBe(true);
+			expect(existsSync(manifestPath)).toBe(true);
+			expect(existsSync(componentSchemasPath)).toBe(true);
+			expect(existsSync(examplesPath)).toBe(true);
+			expect(existsSync(printRulesPath)).toBe(true);
 
 			const schema = readJson(schemaPath);
 			const defs = ((schema.$defs ?? schema.definitions ?? {}) as JsonObject) ?? {};
@@ -78,6 +86,21 @@ describe('contract exports', () => {
 					`Missing SectionContent property for mapped field "${String(fieldName)}"`
 				).toBeTruthy();
 			}
+
+			const manifest = readJson(manifestPath);
+			expect(manifest.version).toBe('3.0.0');
+			expect(typeof manifest.phases).toBe('object');
+			expect(manifest.phases['1']).toBeTruthy();
+
+			const componentSchemas = readJson(componentSchemasPath) as Record<string, JsonObject>;
+			expect(Object.keys(componentSchemas)).toHaveLength(Object.keys(fieldMap).length);
+
+			const componentExamples = readJson(examplesPath) as Record<string, unknown[]>;
+			expect(componentExamples['glossary-inline']?.length).toBeTruthy();
+
+			const printRules = readJson(printRulesPath) as JsonObject;
+			expect(printRules.components).toBeTruthy();
+			expect(printRules.templates).toBeTruthy();
 
 			const registry = readJson(registryPath) as Record<string, JsonObject>;
 			for (const [id, meta] of Object.entries(registry)) {
