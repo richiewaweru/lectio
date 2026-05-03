@@ -45,6 +45,22 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 			<td>Preset palette, typography, density, surface style</td>
 		</tr>
 		<tr>
+			<td><code>manifest.json</code></td>
+			<td>v3 agent-facing manifest: components grouped by pedagogical phase (<code>teacher_label</code> + technical metadata)</td>
+		</tr>
+		<tr>
+			<td><code>component-schemas.json</code></td>
+			<td>JSON schema fragments per component ID (derived from each <code>SectionContent</code> property)</td>
+		</tr>
+		<tr>
+			<td><code>component-examples.json</code></td>
+			<td>Example payloads validated against each component’s Lectio schema (used for tooling/tests)</td>
+		</tr>
+		<tr>
+			<td><code>print-rules.json</code></td>
+			<td>V3 print/layout hints per component plus template <code>print_rules</code> aggregation</td>
+		</tr>
+		<tr>
 			<td><code>generated/python/section_content.py</code></td>
 			<td>Official Pydantic v2 adapter generated from the SectionContent schema</td>
 		</tr>
@@ -53,9 +69,10 @@ LECTIO_CONTRACTS_DIR=/path/to/output npm run export-contracts</code></pre>
 
 <h2>Why the field map exists</h2>
 <p>
-	Each <code>ComponentMeta</code> entry declares <code>sectionField</code>. <code>getComponentFieldMap()</code>
+	Each component module declares <code>sectionField</code>; <code>getComponentFieldMap()</code>
 	derives the ID-to-field map for template validation and for export. Adding a component means
-	updating the registry and types, then re-exporting - no parallel hand-maintained tables.
+	extending component modules under <code>src/lib/lectio/components</code> and updating
+	<code>SectionContent</code> types, then re-exporting — no parallel hand-maintained maps.
 </p>
 
 <h2>When to re-run</h2>
