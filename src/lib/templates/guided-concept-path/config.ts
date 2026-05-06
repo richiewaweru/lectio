@@ -1,4 +1,5 @@
 import type { TemplateContract } from '$lib/templates/types';
+import { CONTENT_CONTRACT_COMPONENT_IDS } from '$lib/lectio/export-policy';
 
 import { guidedConceptPathPresetIds } from './presets';
 
@@ -22,45 +23,15 @@ export const guidedConceptPathContract: TemplateContract = {
 	learnerFit: ['general', 'scaffolded'],
 	subjects: ['mathematics', 'science', 'economics', 'english'],
 	interactionLevel: 'medium',
-	always_present: [
-		'section-header',
-		'hook-hero',
-		'explanation-block',
-		'what-next-bridge'
-	],
+	always_present: [],
 	contextually_present: [],
-	available_components: [
-		'hook-hero',
-		'prerequisite-strip',
-		'interview-anchor',
-		'callout-block',
-		'summary-block',
-		'section-divider',
-		'definition-card',
-		'definition-family',
-		'glossary-rail',
-		'insight-strip',
-		'key-fact',
-		'comparison-grid',
-		'worked-example-card',
-		'process-steps',
-		'practice-stack',
-		'quiz-check',
-		'reflection-prompt',
-		'student-textbox',
-		'short-answer',
-		'fill-in-blank',
-		'pitfall-alert',
-		'diagram-block',
-		'diagram-compare',
-		'diagram-series',
-		'timeline-block',
-		'simulation-block',
-		'video-embed',
-		'image-block'
-	],
-	component_budget: { 'diagram-block': 2 },
-	max_per_section: { 'worked-example-card': 1, 'practice-stack': 1, 'quiz-check': 1, 'reflection-prompt': 1 },
+	available_components: [...CONTENT_CONTRACT_COMPONENT_IDS],
+	component_budget: {
+		'diagram-block': 3,
+		'diagram-series': 2,
+		'simulation-block': 1
+	},
+	max_per_section: { 'practice-stack': 1, 'quiz-check': 1, 'reflection-prompt': 1 },
 	defaultBehaviours: {
 		'worked-example-card': 'step-reveal',
 		'practice-stack': 'accordion',

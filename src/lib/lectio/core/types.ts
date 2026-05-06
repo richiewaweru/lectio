@@ -1,6 +1,7 @@
 import type { ZodTypeAny } from 'zod';
 
 import type { BehaviourMode } from '$lib/schema/types';
+import type { LectioContentContract } from './content-contract';
 
 export type LectioPhase = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -62,6 +63,7 @@ export interface LectioContentModule {
 	metadata: LectioComponentPublicMetadata;
 	print: LectioPrintSpec;
 	examples: unknown[];
+	contentContract?: LectioContentContract;
 }
 
 /** Optional renderer — only bundled in UI builds */

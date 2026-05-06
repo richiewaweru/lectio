@@ -30,7 +30,7 @@ Source strings live in `src/lib/teacher/teacher-facing.ts` and are merged into e
 
 ## Contract export
 
-`npm run export-contracts` includes `teacher_label` and `teacher_description` on each object in `component-registry.json` so pipelines can surface the same strings without importing TypeScript.
+`npm run export-contracts` emits `contracts/lectio-content-contract.json`, which includes planner and component-card metadata for external pipelines without importing TypeScript.
 
 ## Design notes
 

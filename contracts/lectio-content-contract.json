@@ -1,0 +1,1586 @@
+{
+  "version": "1.0.0",
+  "source": "lectio",
+  "default_template_id": "guided-concept-path",
+  "formatting_policy": {
+    "default": "plain_text unless field contract says otherwise",
+    "inline_markdown": "Supports bold, italic, inline code, and inline math using $...$.",
+    "block_markdown": "Supports paragraphs, lists, bold, italic, and math using $...$ or $$...$$.",
+    "latex_raw": "Raw LaTeX only. Do not wrap in $...$ unless field contract says markdown math.",
+    "plain_phrase_list": "Plain phrases, no markdown. Usually used for matching and highlighting.",
+    "positioned_callouts": "Labels positioned using x/y percentages from 0 to 100."
+  },
+  "templates": {
+    "guided-concept-path": {
+      "id": "guided-concept-path",
+      "name": "Guided Concept Path",
+      "always_present": [],
+      "contextually_present": [],
+      "available_components": [
+        "section-header",
+        "hook-hero",
+        "explanation-block",
+        "prerequisite-strip",
+        "what-next-bridge",
+        "interview-anchor",
+        "callout-block",
+        "summary-block",
+        "section-divider",
+        "definition-card",
+        "definition-family",
+        "glossary-rail",
+        "insight-strip",
+        "key-fact",
+        "comparison-grid",
+        "worked-example-card",
+        "process-steps",
+        "practice-stack",
+        "quiz-check",
+        "reflection-prompt",
+        "student-textbox",
+        "short-answer",
+        "fill-in-blank",
+        "pitfall-alert",
+        "diagram-block",
+        "diagram-compare",
+        "diagram-series",
+        "timeline-block",
+        "simulation-block"
+      ],
+      "component_budget": {
+        "diagram-block": 3,
+        "diagram-series": 2,
+        "simulation-block": 1
+      },
+      "max_per_section": {
+        "practice-stack": 1,
+        "quiz-check": 1,
+        "reflection-prompt": 1
+      }
+    },
+    "open-canvas": {
+      "id": "open-canvas",
+      "name": "Open Canvas",
+      "always_present": [
+        "section-header",
+        "what-next-bridge"
+      ],
+      "contextually_present": [],
+      "available_components": [
+        "hook-hero",
+        "explanation-block",
+        "prerequisite-strip",
+        "interview-anchor",
+        "callout-block",
+        "summary-block",
+        "section-divider",
+        "definition-card",
+        "definition-family",
+        "glossary-rail",
+        "insight-strip",
+        "key-fact",
+        "worked-example-card",
+        "comparison-grid",
+        "process-steps",
+        "practice-stack",
+        "quiz-check",
+        "reflection-prompt",
+        "student-textbox",
+        "short-answer",
+        "fill-in-blank",
+        "pitfall-alert",
+        "diagram-block",
+        "diagram-compare",
+        "diagram-series",
+        "timeline-block",
+        "simulation-block"
+      ],
+      "component_budget": {
+        "simulation-block": 2,
+        "diagram-compare": 2,
+        "diagram-series": 2,
+        "comparison-grid": 2,
+        "timeline-block": 2
+      },
+      "max_per_section": {}
+    }
+  },
+  "planner_index": {
+    "component_ids": [
+      "section-header",
+      "hook-hero",
+      "explanation-block",
+      "prerequisite-strip",
+      "what-next-bridge",
+      "interview-anchor",
+      "callout-block",
+      "summary-block",
+      "section-divider",
+      "definition-card",
+      "definition-family",
+      "glossary-rail",
+      "insight-strip",
+      "key-fact",
+      "comparison-grid",
+      "worked-example-card",
+      "process-steps",
+      "practice-stack",
+      "quiz-check",
+      "reflection-prompt",
+      "student-textbox",
+      "short-answer",
+      "fill-in-blank",
+      "pitfall-alert",
+      "diagram-block",
+      "diagram-compare",
+      "diagram-series",
+      "timeline-block",
+      "simulation-block"
+    ],
+    "phase_map": {
+      "1": [
+        "section-header",
+        "hook-hero",
+        "explanation-block",
+        "prerequisite-strip",
+        "what-next-bridge",
+        "interview-anchor",
+        "callout-block",
+        "summary-block",
+        "section-divider"
+      ],
+      "2": [
+        "definition-card",
+        "definition-family",
+        "glossary-rail",
+        "insight-strip",
+        "key-fact",
+        "comparison-grid"
+      ],
+      "3": [
+        "worked-example-card",
+        "process-steps"
+      ],
+      "4": [
+        "practice-stack",
+        "quiz-check",
+        "reflection-prompt",
+        "student-textbox",
+        "short-answer",
+        "fill-in-blank"
+      ],
+      "5": [
+        "pitfall-alert"
+      ],
+      "6": [
+        "diagram-block",
+        "diagram-compare",
+        "diagram-series",
+        "timeline-block"
+      ],
+      "7": [
+        "simulation-block"
+      ]
+    }
+  },
+  "component_cards": {
+    "section-header": {
+      "component_id": "section-header",
+      "section_field": "header",
+      "role": "Opens a section with title, subject, objective, and level indicators",
+      "cognitive_job": "Orient the learner",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "titleMaxWords": 12,
+        "subtitleMaxWords": 20,
+        "objectiveMaxWords": 30
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/SectionHeaderContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Intro",
+          "subject": "Mathematics",
+          "grade_band": "secondary"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Full static header"
+      }
+    },
+    "hook-hero": {
+      "component_id": "hook-hero",
+      "section_field": "hook",
+      "role": "Creates felt need before explanation arrives",
+      "cognitive_job": "Create felt need",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "headlineMaxWords": 12,
+        "bodyMaxWords": 80
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/HookHeroContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "headline": "Why?",
+          "body": "Because.",
+          "anchor": "Need"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Pull quote block with left border"
+      }
+    },
+    "explanation-block": {
+      "component_id": "explanation-block",
+      "section_field": "explanation",
+      "role": "Sustained prose that builds a mental model",
+      "cognitive_job": "Build understanding",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "bodyMaxWords": 350,
+        "emphasisMax": 3
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/ExplanationContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "body": "Explain.",
+          "emphasis": []
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Static prose"
+      }
+    },
+    "prerequisite-strip": {
+      "component_id": "prerequisite-strip",
+      "section_field": "prerequisites",
+      "role": "Lists assumed knowledge with optional refresher pop-ups",
+      "cognitive_job": "Activate prior knowledge",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "itemsMax": 4
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/PrerequisiteContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "items": [
+            {
+              "concept": "Prior idea"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Inline list of prerequisites"
+      }
+    },
+    "what-next-bridge": {
+      "component_id": "what-next-bridge",
+      "section_field": "what_next",
+      "role": "Connects the section forward to what the concept enables",
+      "cognitive_job": "Connect forward",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "bodyMaxWords": 50,
+        "nextMaxWords": 15,
+        "previewMaxWords": 30
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/WhatNextContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "body": "Next unit builds on this.",
+          "next": "Quadratics",
+          "preview": "Preview."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Static, amber left rule"
+      }
+    },
+    "interview-anchor": {
+      "component_id": "interview-anchor",
+      "section_field": "interview",
+      "role": "Makes knowledge speakable - rehearse explaining the concept",
+      "cognitive_job": "Make knowledge speakable",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "promptMaxWords": 35,
+        "audienceMaxWords": 10,
+        "followUpMaxWords": 25
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/InterviewContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "prompt": "Explain to a peer.",
+          "audience": "Friend"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Static with write-in lines"
+      }
+    },
+    "callout-block": {
+      "component_id": "callout-block",
+      "section_field": "callout",
+      "role": "Standalone highlighted callout ΓÇö tip, warning, info, or exam note",
+      "cognitive_job": "Flag what matters",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "bodyMaxWords": 60,
+        "headingMaxWords": 6
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/CalloutBlockContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "variant": "tip",
+          "body": "Notice this."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Bordered callout box"
+      }
+    },
+    "summary-block": {
+      "component_id": "summary-block",
+      "section_field": "summary",
+      "role": "Lists what this section covered ΓÇö key takeaways as bullets",
+      "cognitive_job": "Consolidate and close",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "itemsMin": 2,
+        "itemsMax": 5,
+        "itemMaxWords": 25,
+        "closingMaxWords": 30
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/SummaryBlockContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "items": [
+            {
+              "text": "Idea one"
+            },
+            {
+              "text": "Idea two"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Bulleted list with border"
+      }
+    },
+    "section-divider": {
+      "component_id": "section-divider",
+      "section_field": "divider",
+      "role": "Named visual break between parts within a section",
+      "cognitive_job": "Signal a phase change",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "labelMaxWords": 4
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/SectionDividerContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "label": "Part B"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Horizontal rule with label"
+      }
+    },
+    "definition-card": {
+      "component_id": "definition-card",
+      "section_field": "definition",
+      "role": "Anchors a formal term with formal and plain versions",
+      "cognitive_job": "Anchor formal knowledge",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "formalMaxWords": 80,
+        "plainMaxWords": 60,
+        "relatedTermsMax": 3
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/DefinitionContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "term": "Term",
+          "formal": "Formal def.",
+          "plain": "Plain def."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Both versions shown"
+      }
+    },
+    "definition-family": {
+      "component_id": "definition-family",
+      "section_field": "definition_family",
+      "role": "Groups related terms that belong together conceptually",
+      "cognitive_job": "Distinguish related concepts",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "definitionsMax": 4,
+        "introMaxWords": 40
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/DefinitionFamilyContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "family_title": "Related",
+          "definitions": [
+            {
+              "term": "A",
+              "formal": "FA",
+              "plain": "PA"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "All definitions expanded"
+      }
+    },
+    "glossary-rail": {
+      "component_id": "glossary-rail",
+      "section_field": "glossary",
+      "role": "Vocabulary visible in peripheral field, updates by section",
+      "cognitive_job": "Retrieve meaning without losing place",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "termsMax": 8,
+        "termsWarning": 6,
+        "definitionMaxWords": 30
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/GlossaryContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "terms": [
+            {
+              "term": "Omega",
+              "definition": "A Greek letter commonly used as a variable."
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Inline vocabulary strip at section end"
+      }
+    },
+    "insight-strip": {
+      "component_id": "insight-strip",
+      "section_field": "insight_strip",
+      "role": "Side-by-side comparison of 2-3 related values or concepts",
+      "cognitive_job": "Compare values simultaneously",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "cellsMax": 3,
+        "cellsMin": 2,
+        "cellLinesMax": 2
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/InsightStripContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "cells": [
+            {
+              "label": "A",
+              "value": "1"
+            },
+            {
+              "label": "B",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Static table"
+      }
+    },
+    "key-fact": {
+      "component_id": "key-fact",
+      "section_field": "key_fact",
+      "role": "Visually prominent stat, formula, or date that anchors the section",
+      "cognitive_job": "Anchor a critical fact",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "factMaxWords": 20,
+        "contextMaxWords": 30
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/KeyFactContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "fact": "E = mc²"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Bold bordered fact box"
+      }
+    },
+    "comparison-grid": {
+      "component_id": "comparison-grid",
+      "section_field": "comparison_grid",
+      "role": "Holds multiple concepts in view so distinctions become structural",
+      "cognitive_job": "Compare and classify in parallel",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "columnsMin": 2,
+        "columnsMax": 4,
+        "rowsMax": 6,
+        "criterionMaxWords": 8,
+        "valueMaxWords": 20
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/ComparisonGridContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Compare",
+          "columns": [
+            {
+              "id": "c1",
+              "title": "A",
+              "summary": "SA"
+            }
+          ],
+          "rows": [
+            {
+              "criterion": "Speed",
+              "values": [
+                "Fast"
+              ],
+              "takeaway": ""
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Static comparison table"
+      }
+    },
+    "worked-example-card": {
+      "component_id": "worked-example-card",
+      "section_field": "worked_example",
+      "role": "Shows reasoning in action step by step, each step justified",
+      "cognitive_job": "Watch reasoning in action",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "stepsMax": 6,
+        "stepsWarning": 4,
+        "stepLabelMaxWords": 12,
+        "stepContentMaxWords": 80
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/WorkedExampleContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Demo",
+          "setup": "Problem setup.",
+          "steps": [
+            {
+              "label": "Step 1",
+              "content": "Do this."
+            }
+          ],
+          "conclusion": "Done."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "All steps expanded"
+      }
+    },
+    "process-steps": {
+      "component_id": "process-steps",
+      "section_field": "process",
+      "role": "A repeatable procedure where order is non-negotiable",
+      "cognitive_job": "Follow a procedure",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "stepsMax": 8,
+        "actionMaxWords": 15,
+        "detailMaxWords": 60
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/ProcessContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Method",
+          "steps": [
+            {
+              "number": 1,
+              "action": "Start",
+              "detail": "Details."
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "All steps visible, checkbox squares for print"
+      }
+    },
+    "practice-stack": {
+      "component_id": "practice-stack",
+      "section_field": "practice",
+      "role": "Problems at calibrated difficulty with progressive hints and optional solutions",
+      "cognitive_job": "Apply understanding under calibrated difficulty",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "problemsMin": 2,
+        "problemsMax": 5,
+        "hintsPerProblemMax": 3,
+        "questionMaxWords": 100,
+        "hintMaxWords": 60
+      },
+      "capabilities": {
+        "acceptsMedia": true,
+        "acceptsQuestions": true,
+        "producesAnswerKey": true,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/PracticeContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "problems": [
+            {
+              "difficulty": "warm",
+              "question": "Try this.",
+              "hints": [
+                {
+                  "level": 1,
+                  "text": "Hint one"
+                }
+              ]
+            },
+            {
+              "difficulty": "medium",
+              "question": "Try that.",
+              "hints": [
+                {
+                  "level": 1,
+                  "text": "Hint one"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "All visible, write-in lines rendered; inline answers hidden by default"
+      }
+    },
+    "quiz-check": {
+      "component_id": "quiz-check",
+      "section_field": "quiz",
+      "role": "Quick concept check with immediate feedback mid-section",
+      "cognitive_job": "Verify understanding immediately",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "optionsMin": 3,
+        "optionsMax": 4,
+        "questionMaxWords": 60,
+        "optionMaxWords": 20
+      },
+      "capabilities": {
+        "acceptsMedia": true,
+        "acceptsQuestions": true,
+        "producesAnswerKey": true,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/QuizContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "question": "Pick one.",
+          "options": [
+            {
+              "text": "A",
+              "correct": false,
+              "explanation": "No."
+            },
+            {
+              "text": "B",
+              "correct": true,
+              "explanation": "Yes."
+            },
+            {
+              "text": "C",
+              "correct": false,
+              "explanation": "No."
+            }
+          ],
+          "feedback_correct": "Nice.",
+          "feedback_incorrect": "Review."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Question and options shown, correct answer marked"
+      }
+    },
+    "reflection-prompt": {
+      "component_id": "reflection-prompt",
+      "section_field": "reflection",
+      "role": "Pauses forward motion and turns attention inward",
+      "cognitive_job": "Pause and consolidate",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "promptMaxWords": 40,
+        "spaceMax": 6
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": true,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/ReflectionContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "prompt": "Think briefly.",
+          "type": "open"
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Prompt with write-in lines"
+      }
+    },
+    "student-textbox": {
+      "component_id": "student-textbox",
+      "section_field": "student_textbox",
+      "role": "Simple write-in box for student responses ΓÇö no framing beyond a prompt",
+      "cognitive_job": "Record thinking",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "promptMaxWords": 40,
+        "linesMax": 10
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": true,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/StudentTextboxContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "prompt": "Write notes."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Lined write-in area"
+      }
+    },
+    "short-answer": {
+      "component_id": "short-answer",
+      "section_field": "short_answer",
+      "role": "Open question with write-in space and optional mark scheme",
+      "cognitive_job": "Recall and explain in own words",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "questionMaxWords": 60,
+        "linesMax": 10,
+        "marksMax": 10
+      },
+      "capabilities": {
+        "acceptsMedia": true,
+        "acceptsQuestions": true,
+        "producesAnswerKey": true,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/ShortAnswerContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "question": "Explain inertia in one paragraph."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Question with lined answer space, mark allocation shown"
+      }
+    },
+    "fill-in-blank": {
+      "component_id": "fill-in-blank",
+      "section_field": "fill_in_blank",
+      "role": "Cloze passage with student-completed blanks ΓÇö tests recall not recognition",
+      "cognitive_job": "Retrieve and complete",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "segmentsMax": 60,
+        "blanksMax": 10,
+        "wordBankMax": 15
+      },
+      "capabilities": {
+        "acceptsMedia": true,
+        "acceptsQuestions": true,
+        "producesAnswerKey": true,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/FillInBlankContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "segments": [
+            {
+              "text": "The answer is ",
+              "is_blank": false
+            },
+            {
+              "text": "",
+              "is_blank": true,
+              "answer": "x"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "allow",
+        "preferredWidth": "full",
+        "fallback": "Passage with underlined blanks, word bank box below"
+      }
+    },
+    "pitfall-alert": {
+      "component_id": "pitfall-alert",
+      "section_field": "pitfall",
+      "role": "Names a specific misconception before the learner makes it",
+      "cognitive_job": "Inoculate against error",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "misconceptionMaxWords": 20,
+        "correctionMaxWords": 80,
+        "exampleMaxWords": 40
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": false
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/PitfallContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "misconception": "Wrong idea",
+          "correction": "Right idea."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "Full static, amber left border"
+      }
+    },
+    "diagram-block": {
+      "component_id": "diagram-block",
+      "section_field": "diagram",
+      "role": "Makes spatial or relational structure visible",
+      "cognitive_job": "See the structure",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "calloutsMax": 6,
+        "captionMaxWords": 60
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": true
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/DiagramContent"
+      },
+      "field_contracts": {
+        "callouts": {
+          "format": "positioned_callouts",
+          "description": "Callout markers anchored to key points in the diagram.",
+          "renderBehavior": "Rendered as overlays on image_url with labels and connectors.",
+          "constraints": [
+            "Each callout.x must be between 0 and 100.",
+            "Each callout.y must be between 0 and 100."
+          ]
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "caption": "A labelled diagram for the lesson.",
+          "alt_text": "Diagram showing key parts referenced in the prose."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "Static SVG 80% width centred"
+      }
+    },
+    "diagram-compare": {
+      "component_id": "diagram-compare",
+      "section_field": "diagram_compare",
+      "role": "Before and after comparison with a drag slider",
+      "cognitive_job": "See transformation",
+      "subjects": [
+        "history",
+        "science",
+        "mathematics",
+        "geography"
+      ],
+      "capacity": {
+        "captionMaxWords": 60
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": true
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/DiagramCompareContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "before_label": "Before",
+          "after_label": "After",
+          "caption": "Compare both states.",
+          "alt_text": "Side-by-side diagram comparison."
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "Both diagrams shown side by side"
+      }
+    },
+    "diagram-series": {
+      "component_id": "diagram-series",
+      "section_field": "diagram_series",
+      "role": "A progression of diagrams that tells a sequence",
+      "cognitive_job": "Follow a visual progression",
+      "subjects": [
+        "universal"
+      ],
+      "capacity": {
+        "diagramsMax": 4
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": true
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/DiagramSeriesContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Steps",
+          "diagrams": [
+            {
+              "step_label": "1",
+              "caption": "First frame.",
+              "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1\" height=\"1\"/>"
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "All diagrams in sequence with step labels"
+      }
+    },
+    "timeline-block": {
+      "component_id": "timeline-block",
+      "section_field": "timeline",
+      "role": "Turns chronology into a readable instructional spine",
+      "cognitive_job": "Follow cause and sequence over time",
+      "subjects": [
+        "history",
+        "science",
+        "universal"
+      ],
+      "capacity": {
+        "eventsMin": 3,
+        "eventsMax": 8,
+        "titleMaxWords": 10,
+        "summaryMaxWords": 50
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": false,
+        "isMedia": true
+      },
+      "status": "stable",
+      "schema_summary": {
+        "$ref": "#/definitions/TimelineContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "title": "Timeline",
+          "events": [
+            {
+              "id": "e1",
+              "year": "1066",
+              "title": "Event",
+              "summary": "What happened."
+            }
+          ]
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "Vertical event list"
+      }
+    },
+    "simulation-block": {
+      "component_id": "simulation-block",
+      "section_field": "simulation",
+      "role": "Manipulate a variable and discover the concept through observation",
+      "cognitive_job": "Manipulate and discover",
+      "subjects": [
+        "mathematics",
+        "physics",
+        "chemistry",
+        "statistics"
+      ],
+      "capacity": {
+        "countGuidance": "template-defined"
+      },
+      "capabilities": {
+        "acceptsMedia": false,
+        "acceptsQuestions": false,
+        "producesAnswerKey": false,
+        "interactive": true,
+        "isMedia": true
+      },
+      "status": "beta",
+      "schema_summary": {
+        "$ref": "#/definitions/SimulationContent"
+      },
+      "field_contracts": {
+        "content": {
+          "format": "structured_object",
+          "description": "Schema-aligned content payload for this component."
+        }
+      },
+      "component_constraints": [],
+      "examples": [
+        {
+          "spec": {
+            "type": "sandbox",
+            "goal": "Explore the slider effect on the graph.",
+            "anchor_content": {},
+            "context": {
+              "learner_level": "secondary",
+              "template_id": "sandbox",
+              "color_mode": "light",
+              "accent_color": "#0f172a",
+              "surface_color": "#ffffff",
+              "font_mono": "ui-monospace"
+            },
+            "dimensions": {
+              "width": "100%",
+              "height": 420,
+              "resizable": true
+            },
+            "print_translation": "static_diagram"
+          }
+        }
+      ],
+      "print_behavior": {
+        "breakBehavior": "avoid",
+        "preferredWidth": "full",
+        "fallback": "Static diagram at midstate"
+      }
+    }
+  },
+  "excluded_components": {
+    "image-block": {
+      "component_id": "image-block",
+      "reason": "Editor-attached image content, not a generation-facing section block."
+    },
+    "video-embed": {
+      "component_id": "video-embed",
+      "reason": "Editor-attached video content, not a generation-facing section block."
+    },
+    "glossary-inline": {
+      "component_id": "glossary-inline",
+      "reason": "Inline helper content, not a standalone section block."
+    }
+  }
+}

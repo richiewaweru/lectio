@@ -150,12 +150,12 @@ npm run export-contracts -- --out ../some-other-project/contracts
 
 The export now writes:
 
-- 13 `{template-id}.json` files
 - `section-content-schema.json`
-- `component-field-map.json`
-- `component-registry.json`
-- `preset-registry.json`
+- `lectio-content-contract.json`
 - `generated/python/section_content.py`
+
+Legacy fragmented JSON exports were retired. Read `lectio-content-contract.json` as the primary contract surface.
+`diagram-block` contracts keep `callouts` as `positioned_callouts` and treat coordinates as `x/y` percentages (0-100) for image overlay rendering.
 
 Whenever template contracts, presets, or registry metadata change, rerun both `npm run package` and `npm run export-contracts` before publishing.
 

@@ -36,7 +36,7 @@ function resolveLocalRef(root: JsonObject, ref: string): JsonObject {
 }
 
 describe('contract exports', () => {
-	it('exports schema, generation hints, and python adapter from SectionContent artifacts', () => {
+	it('exports schema, unified content contract, and python adapter from SectionContent artifacts', () => {
 		const tempDir = mkdtempSync(join(tmpdir(), 'lectio-contracts-'));
 		const outDir = join(tempDir, 'contracts');
 		const pyOut = join(tempDir, 'generated', 'python', 'section_content.py');
@@ -45,20 +45,10 @@ describe('contract exports', () => {
 			runTsxScript('scripts/export-contracts.ts', ['--out', outDir]);
 
 			const schemaPath = join(outDir, 'section-content-schema.json');
-			const fieldMapPath = join(outDir, 'component-field-map.json');
-			const registryPath = join(outDir, 'component-registry.json');
-			const manifestPath = join(outDir, 'manifest.json');
-			const componentSchemasPath = join(outDir, 'component-schemas.json');
-			const examplesPath = join(outDir, 'component-examples.json');
-			const printRulesPath = join(outDir, 'print-rules.json');
+			const unifiedContractPath = join(outDir, 'lectio-content-contract.json');
 
 			expect(existsSync(schemaPath)).toBe(true);
-			expect(existsSync(fieldMapPath)).toBe(true);
-			expect(existsSync(registryPath)).toBe(true);
-			expect(existsSync(manifestPath)).toBe(true);
-			expect(existsSync(componentSchemasPath)).toBe(true);
-			expect(existsSync(examplesPath)).toBe(true);
-			expect(existsSync(printRulesPath)).toBe(true);
+			expect(existsSync(unifiedContractPath)).toBe(true);
 
 			const schema = readJson(schemaPath);
 			const defs = ((schema.$defs ?? schema.definitions ?? {}) as JsonObject) ?? {};
@@ -79,37 +69,25 @@ describe('contract exports', () => {
 			expect(simulationTypeSchema.type).toBe('string');
 			expect(simulationTypeSchema.enum).toBeUndefined();
 
-			const fieldMap = readJson(fieldMapPath);
-			for (const fieldName of Object.values(fieldMap)) {
-				expect(
-					(sectionProps as Record<string, unknown>)[String(fieldName)],
-					`Missing SectionContent property for mapped field "${String(fieldName)}"`
-				).toBeTruthy();
-			}
+			const unified = readJson(unifiedContractPath) as Record<string, JsonObject>;
+			expect(unified.version).toBe('1.0.0');
+			expect(unified.default_template_id).toBe('guided-concept-path');
+			expect(unified.formatting_policy).toBeTruthy();
+			expect(unified.templates).toBeTruthy();
+			expect(unified.planner_index).toBeTruthy();
 
-			const manifest = readJson(manifestPath);
-			expect(manifest.version).toBe('3.0.0');
-			expect(typeof manifest.phases).toBe('object');
-			expect(manifest.phases['1']).toBeTruthy();
+			const componentCards = (unified.component_cards ?? {}) as Record<string, JsonObject>;
+			expect(componentCards['diagram-block']).toBeTruthy();
+			expect(componentCards['glossary-inline']).toBeUndefined();
 
-			const componentSchemas = readJson(componentSchemasPath) as Record<string, JsonObject>;
-			expect(Object.keys(componentSchemas)).toHaveLength(Object.keys(fieldMap).length);
+			const diagramBlock = componentCards['diagram-block'] as Record<string, JsonObject>;
+			const fieldContracts = (diagramBlock.field_contracts ?? {}) as Record<string, JsonObject>;
+			expect(fieldContracts.callouts).toBeTruthy();
 
-			const componentExamples = readJson(examplesPath) as Record<string, unknown[]>;
-			expect(componentExamples['glossary-inline']?.length).toBeTruthy();
-
-			const printRules = readJson(printRulesPath) as JsonObject;
-			expect(printRules.components).toBeTruthy();
-			expect(printRules.templates).toBeTruthy();
-
-			const registry = readJson(registryPath) as Record<string, JsonObject>;
-			for (const [id, meta] of Object.entries(registry)) {
-				expect(Object.prototype.hasOwnProperty.call(meta, 'generation_hint')).toBe(true);
-				if (meta.section_field !== null) {
-					expect(typeof meta.generation_hint, `${id} generation_hint missing`).toBe('string');
-					expect(String(meta.generation_hint).trim().length, `${id} generation_hint empty`).toBeGreaterThan(0);
-				}
-			}
+			const excluded = (unified.excluded_components ?? {}) as Record<string, JsonObject>;
+			expect(excluded['image-block']).toBeTruthy();
+			expect(excluded['video-embed']).toBeTruthy();
+			expect(excluded['glossary-inline']).toBeTruthy();
 
 			runTsxScript('scripts/generate-python-types.ts', ['--schema', schemaPath, '--out', pyOut]);
 
@@ -134,7 +112,7 @@ describe('contract exports', () => {
 		expect(exportsMap['./generated/*']).toBe('./generated/*');
 
 		expect(existsSync(join(ROOT, 'contracts', 'section-content-schema.json'))).toBe(true);
-		expect(existsSync(join(ROOT, 'contracts', 'component-registry.json'))).toBe(true);
+		expect(existsSync(join(ROOT, 'contracts', 'lectio-content-contract.json'))).toBe(true);
 		expect(existsSync(join(ROOT, 'generated', 'python', 'section_content.py'))).toBe(true);
 	});
 });

@@ -83,92 +83,47 @@ npm run export-contracts -- --out ../some-other-project/contracts
 LECTIO_CONTRACTS_DIR=../some-other-project/contracts npm run export-contracts
 ```
 
-This produces four types of files:
+This produces the canonical contract artifacts:
 
 | File | Contents |
 |---|---|
-| `{template-id}.json` | Template contract (required/optional components, generation guidance, behaviours, `allowed_presets`) |
 | `section-content-schema.json` | Canonical JSON schema for `SectionContent` |
-| `component-field-map.json` | Component ID to `SectionContent` field mapping |
-| `component-registry.json` | Full component metadata (capacity limits, behaviour modes, status, `teacher_label`, `teacher_description`, `generation_hint`) |
-| `preset-registry.json` | Preset palette, typography, density, and surface-style metadata |
+| `lectio-content-contract.json` | Unified consumer contract: templates, planner index, component cards, field contracts, examples, and print behavior |
 | `generated/python/section_content.py` | Official generated Pydantic v2 adapter |
 
-### Using The Field Map
+### Using The Unified Contract
 
-The `component-field-map.json` file maps component IDs to their `SectionContent` fields:
-
-```json
-{
-  "section-header": "header",
-  "hook-hero": "hook",
-  "explanation-block": "explanation",
-  "practice-stack": "practice",
-  "simulation-block": "simulation"
-}
-```
-
-Use this to validate that generated sections include the correct fields for the template's required components without importing Lectio internals.
-
-### Using The Component Registry
-
-The `component-registry.json` file provides capacity limits and metadata for each component:
+`lectio-content-contract.json` centralizes all generation-facing metadata:
 
 ```json
 {
-  "practice-stack": {
-    "id": "practice-stack",
-    "name": "PracticeStack",
-    "teacher_label": "Practice Problems",
-    "teacher_description": "Problems at varied difficulty with progressive hints.",
-    "section_field": "practice",
-    "capacity": {
-      "problemsMin": 2,
-      "problemsMax": 5,
-      "hintsPerProblemMax": 3
-    },
-    "behaviour_modes": ["hint-toggle", "accordion", "progressive-hints", "flat-list"],
-    "status": "stable"
+  "component_cards": {
+    "practice-stack": {
+      "section_field": "practice",
+      "field_contracts": {},
+      "schema_summary": {}
+    }
+  },
+  "templates": {
+    "guided-concept-path": {
+      "available_components": ["practice-stack", "quiz-check"]
+    }
   }
 }
 ```
 
-### Using The Preset Registry
-
-The `preset-registry.json` file exposes the visual preset metadata that downstream generators may need when choosing or validating a theme:
-
-```json
-{
-  "blue-classroom": {
-    "id": "blue-classroom",
-    "name": "Blue Classroom",
-    "palette": "cool blue",
-    "typography": "scholarly",
-    "density": "comfortable",
-    "surface_style": "glass"
-  }
-}
-```
-
-Template contract exports also include `allowed_presets`, so a consumer can reject unsupported template and preset combinations before rendering.
+Use `component_cards[component_id]` for per-component details (`section_field`, schema fragment, examples, print behavior), and `templates[template_id]` for template constraints.
 
 ## Architecture Diagram
 
 ```text
-src/lib/schema/registry.ts          (single source of truth)
-  ComponentMeta.sectionField
-  getComponentFieldMap()
+src/lib/lectio/components/*         (component-owned schema/metadata/print/examples/contentContract)
         |
-        |--> src/lib/templates/validation.ts   (derives map at import time)
-        |
-        '--> scripts/export-contracts.ts      (exports to JSON, supports --out)
+        '--> scripts/export-contracts.ts       (exports to JSON, supports --out)
                   |
                   '--> contracts/              (pipeline reads these)
-                         |-- component-field-map.json
                          |-- section-content-schema.json
-                         |-- component-registry.json
-                         |-- preset-registry.json
-                         '-- {template-id}.json
+                         '-- lectio-content-contract.json
 ```
 
 ## Key Files

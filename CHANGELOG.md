@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Introduced first-class component-owned content contracts and a unified export surface at `contracts/lectio-content-contract.json`.
+- Updated `guided-concept-path` generation-facing contract to a flexible renderer model with no hard required blocks.
+- Expanded publish lane guard from `0.3.x` to `0.x` and aligned release install instructions to `lectio@latest`.
+
+### Removed
+- Retired fragmented contract exports: per-template JSON files, `component-field-map.json`, `component-registry.json`, `component-schemas.json`, `component-examples.json`, `manifest.json`, `print-rules.json`, and `preset-registry.json`.
+
+### Regenerated
+- Re-exported `contracts/section-content-schema.json`, `contracts/lectio-content-contract.json`, and `generated/python/section_content.py`.
+
 ## [0.3.3] - 2026-04-24
 
 ### Changed

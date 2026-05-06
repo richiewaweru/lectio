@@ -1,10 +1,11 @@
 import type { ZodIssue, ZodTypeAny } from 'zod';
 
+import { isContentContractEligible } from '$lib/lectio/export-policy';
 import type { LectioComponentModule } from './types';
 
 type ValidatableModule = Pick<
 	LectioComponentModule,
-	'schema' | 'metadata' | 'print' | 'examples'
+	'schema' | 'metadata' | 'print' | 'examples' | 'contentContract'
 >;
 
 const PHASES = new Set<number>([1, 2, 3, 4, 5, 6, 7]);
@@ -32,6 +33,28 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 
 	if (!(m.sectionField === null || typeof m.sectionField === 'string'))
 		issues.push({ path: 'metadata.sectionField', message: `${prefix} metadata.sectionField must be string|null` });
+
+	if (isContentContractEligible(module)) {
+		if (!module.contentContract) {
+			issues.push({
+				path: 'contentContract',
+				message: `${prefix} contentContract is required for generation-facing exports`
+			});
+		} else {
+			if (module.contentContract.componentId !== m.id) {
+				issues.push({
+					path: 'contentContract.componentId',
+					message: `${prefix} contentContract.componentId must match metadata.id`
+				});
+			}
+			if (module.contentContract.sectionField !== m.sectionField) {
+				issues.push({
+					path: 'contentContract.sectionField',
+					message: `${prefix} contentContract.sectionField must match metadata.sectionField`
+				});
+			}
+		}
+	}
 
 	for (const key of ['breakBehavior', 'preferredWidth', 'fallback'] as const) {
 		if (!(typeof module.print[key] === 'string' && module.print[key].trim().length > 0)) {

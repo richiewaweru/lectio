@@ -39,7 +39,7 @@ export function validateTemplateContract(contract: TemplateContract): TemplateVa
 		errors.push(`${contract.id}: bestFor and notIdealFor are required.`);
 	}
 
-	if (!contract.always_present.length) {
+	if (!contract.always_present.length && contract.id !== 'guided-concept-path') {
 		errors.push(`${contract.id}: always_present must not be empty.`);
 	}
 
