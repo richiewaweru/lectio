@@ -37,6 +37,20 @@ section.practice    -> PracticeStack
 
 The full generation-facing contract is exported as `contracts/lectio-content-contract.json`.
 
+## Adding a component (contributors)
+
+Author each block as a **component module** under `src/lib/lectio/components/<component-id>/`:
+
+- `schema.ts` — Zod schema for the block payload
+- `metadata.ts` — ids, `sectionField`, planner metadata
+- `print.ts` — print rules
+- `examples.ts` — validated examples
+- `content-contract.ts` — **field-level** render behavior for generators and tooling (not generic placeholders)
+- `module.ts` — exports `lectioModule`
+- `Component.svelte` — optional thin wrapper around `src/lib/components/lectio/<Name>.svelte`
+
+Register the module in `src/lib/lectio/registry/components.ts`, keep `SectionContent` + `content-zod` in sync, then run `pnpm run export-contracts`.
+
 ## Installation
 
 ### For SvelteKit Apps

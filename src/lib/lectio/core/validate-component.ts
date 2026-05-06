@@ -13,6 +13,7 @@ const PHASES = new Set<number>([1, 2, 3, 4, 5, 6, 7]);
 export interface LectioComponentValidationIssue {
 	readonly path: string;
 	readonly message: string;
+	readonly severity?: 'error' | 'warn';
 }
 
 export function validateLectioContentModule(module: ValidatableModule): LectioComponentValidationIssue[] {
@@ -38,20 +39,54 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 		if (!module.contentContract) {
 			issues.push({
 				path: 'contentContract',
-				message: `${prefix} contentContract is required for generation-facing exports`
+				message: `${prefix} contentContract is required for generation-facing exports`,
+				severity: 'error'
 			});
 		} else {
 			if (module.contentContract.componentId !== m.id) {
 				issues.push({
 					path: 'contentContract.componentId',
-					message: `${prefix} contentContract.componentId must match metadata.id`
+					message: `${prefix} contentContract.componentId must match metadata.id`,
+					severity: 'error'
 				});
 			}
 			if (module.contentContract.sectionField !== m.sectionField) {
 				issues.push({
 					path: 'contentContract.sectionField',
-					message: `${prefix} contentContract.sectionField must match metadata.sectionField`
+					message: `${prefix} contentContract.sectionField must match metadata.sectionField`,
+					severity: 'error'
 				});
+			}
+
+			const fieldContracts = module.contentContract.fieldContracts ?? {};
+			const fcKeys = Object.keys(fieldContracts);
+			const onlyGenericContentPlaceholder =
+				fcKeys.length === 1 &&
+				fcKeys[0] === 'content' &&
+				fieldContracts.content?.format === 'structured_object' &&
+				fieldContracts.content?.description?.includes('Schema-aligned content payload');
+
+			if (
+				(m.status === 'stable' || m.status === 'beta') &&
+				onlyGenericContentPlaceholder
+			) {
+				issues.push({
+					path: 'contentContract.fieldContracts',
+					message: `${prefix} contentContract uses a generic placeholder; replace with field-level behavior for stable exports`,
+					severity: 'warn'
+				});
+			}
+
+			if (m.id === 'diagram-block') {
+				const needed = ['image_url', 'caption', 'alt_text', 'callouts'];
+				const missing = needed.filter((key) => !fieldContracts[key]);
+				if (missing.length) {
+					issues.push({
+						path: 'contentContract.fieldContracts',
+						message: `${prefix} diagram-block contract should document: ${needed.join(', ')} (missing: ${missing.join(', ')})`,
+						severity: 'warn'
+					});
+				}
 			}
 		}
 	}

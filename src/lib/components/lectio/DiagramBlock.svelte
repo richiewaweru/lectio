@@ -18,7 +18,7 @@
 	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
 	const hasImage = $derived(!!content.image_url);
 	const hasSvg = $derived(!!content.svg_content);
-	const showCallouts = $derived(hasSvg && !!(content.callouts?.length));
+	const showCallouts = $derived(!!(content.callouts?.length) && (hasSvg || hasImage));
 
 	function getMarkerPosition(callout: DiagramCallout) {
 		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
@@ -45,18 +45,77 @@
 
 		{#if hasImage}
 			<figure class="lectio-diagram-figure">
-				<img
-					src={content.image_url}
-					alt={content.alt_text}
-					class="lectio-diagram-image"
-					loading="lazy"
-				/>
+				<div
+					class="relative overflow-hidden rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+					role="img"
+					aria-label={content.alt_text}
+				>
+					<img
+						src={content.image_url}
+						alt={content.alt_text}
+						class="lectio-diagram-image"
+						loading="lazy"
+					/>
+					{#if showCallouts}
+						{#each content.callouts as callout, index}
+							{@const markerPosition = getMarkerPosition(callout)}
+							<div
+								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)] diagram-block-dot"
+								style="left: {callout.x}%; top: {callout.y}%;"
+								data-print-role="diagram-dot"
+							></div>
+							<Popover>
+								<PopoverTrigger>
+									{#snippet child({ props })}
+										<button
+											{...props}
+											type="button"
+											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04] diagram-block-callout-btn"
+											style="left: {markerPosition.left}; top: {markerPosition.top};"
+											aria-label={callout.label}
+											data-print-role="diagram-callout-trigger"
+											onpointerdown={(event) => event.stopPropagation()}
+											onclick={(event) => event.stopPropagation()}
+										>
+											{index + 1}
+										</button>
+									{/snippet}
+								</PopoverTrigger>
+								<PopoverContent class="glass-panel w-64 rounded-[1.1rem] p-3 text-sm leading-6 text-foreground/82">
+									<div class="relative z-10 space-y-2">
+										<div class="flex items-start rh-gap-cluster">
+											<span
+												class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
+											>
+												{index + 1}
+											</span>
+											<div>
+												<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+													Diagram point
+												</p>
+												<p class="text-sm font-semibold text-foreground">{callout.label}</p>
+											</div>
+										</div>
+										<p class="text-sm leading-6 text-foreground/80">
+											{callout.explanation}
+										</p>
+									</div>
+								</PopoverContent>
+							</Popover>
+						{/each}
+					{/if}
+				</div>
 				{#if content.caption}
 					<figcaption class="lectio-diagram-caption">
 						{content.caption}
 					</figcaption>
 				{/if}
 			</figure>
+			{#if showCallouts}
+				<p class="text-xs leading-5 text-muted-foreground">
+					Tap a numbered point to see the labeled detail for that part of the diagram.
+				</p>
+			{/if}
 		{:else}
 		<Dialog>
 			<DialogTrigger>

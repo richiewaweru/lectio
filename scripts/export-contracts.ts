@@ -33,10 +33,16 @@ type JsonObject = Record<string, unknown>;
 
 const lectioModulesList = Array.from(lectioComponentModules);
 const validationIssues = validateAllLectioContentModules(lectioModulesList);
-if (validationIssues.length > 0) {
+const validationErrors = validationIssues.filter((issue) => issue.severity !== 'warn');
+const validationWarnings = validationIssues.filter((issue) => issue.severity === 'warn');
+for (const issue of validationWarnings) {
+	// eslint-disable-next-line no-console
+	console.warn(`[Lectio] Warning ${issue.path}: ${issue.message}`);
+}
+if (validationErrors.length > 0) {
 	// eslint-disable-next-line no-console
 	console.error('[Lectio] Component module validation failed:');
-	for (const issue of validationIssues) {
+	for (const issue of validationErrors) {
 		// eslint-disable-next-line no-console
 		console.error(`- ${issue.path}: ${issue.message}`);
 	}

@@ -58,18 +58,30 @@ See [lesson-document.md](lesson-document.md) for `fromSectionContents` / `toSect
 
 ## How To Add A New Component
 
-Four steps. Nothing else should need hand-maintained synchronization.
+### First-class module (current default)
 
-1. Create the `.svelte` file in `src/lib/components/lectio/`.
-2. Register the component in `src/lib/schema/registry.ts` with `sectionField` declared.
-3. Add the corresponding field to `SectionContent` in `src/lib/schema/types.ts`.
-4. Rerun the contract export:
+Each generation-facing block is authored as a small module folder under `src/lib/lectio/components/<component-id>/` and collected in `src/lib/lectio/registry/components.ts`:
 
-```bash
-npm run export-contracts
-```
+| File | Role |
+| --- | --- |
+| `schema.ts` | Zod schema for this block’s SectionContent slice |
+| `metadata.ts` | Public metadata (`id`, `sectionField`, planner fields) |
+| `print.ts` | Print/layout hints for this block |
+| `examples.ts` | Validated example payloads |
+| `content-contract.ts` | Field-level render/format behavior for consumers |
+| `module.ts` | Bundles the above into `lectioModule` |
+| `Component.svelte` | Optional; re-exports the runtime `.svelte` from `src/lib/components/lectio/` |
 
-That updates the field map, template validation inputs, and exported JSON snapshots together.
+Then:
+
+1. Add or extend the `SectionContent` field in `src/lib/schema/types.ts` and wire Zod in `src/lib/lectio/schemas/content-zod.ts` if needed.
+2. Register the module in `src/lib/lectio/registry/components.ts`.
+3. Ensure the runtime component exists under `src/lib/components/lectio/` and is wired from `Component.svelte` if used.
+4. Run `pnpm run export-contracts` to refresh `contracts/lectio-content-contract.json` and related outputs.
+
+### Legacy note
+
+Older docs described registering directly in `src/lib/schema/registry.ts`. New components should use the module pipeline above; `componentRegistry` is built from those modules for backwards compatibility.
 
 ## For Pipeline Consumers
 

@@ -5,9 +5,11 @@ export const contentContract = {
 	componentId: metadata.id,
 	sectionField: metadata.sectionField,
 	fieldContracts: {
-		content: {
-			format: 'structured_object',
-			description: 'Schema-aligned content payload for this component.'
+		label: {
+			format: 'plain_text',
+			description: 'Short divider label between sections.',
+			renderBehavior: 'Plain text.'
 		}
-	}
+	},
+	componentConstraints: ['Use a concise transition label, not a second heading.']
 } satisfies LectioContentContract;

@@ -14,7 +14,7 @@ Layer structure under `src/lib/`:
 | Validate | `validate.ts` | Capacity warning system — warns in dev console, never blocks |
 | Content | `dummy-content.ts` | Test content (calculus section) |
 | UI Primitives | `components/ui/` | shadcn-svelte wrappers around bits-ui |
-| Components | `lectio/components/` | Component-owned folders (`schema`, `metadata`, `print`, `examples`, `content-contract`, `module`) |
+| Components | `lectio/components/` | Component-owned folders: `schema.ts`, `metadata.ts`, `print.ts`, `examples.ts`, `content-contract.ts`, `module.ts`, optional `Component.svelte` |
 | Templates | `templates/` | Assembly strategies (GuidedConceptPath) |
 | Routes | `src/routes/` | Showcase pages (landing, components, templates) |
 
