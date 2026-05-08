@@ -1,6 +1,6 @@
 import { lectioComponentModules } from '$lib/lectio/registry/components';
+import { LECTIO_PHASES } from '$lib/lectio/core/phases';
 import {
-	CONTENT_CONTRACT_COMPONENT_IDS,
 	CONTENT_CONTRACT_EXCLUDED_COMPONENT_IDS,
 	CONTENT_CONTRACT_TEMPLATE_IDS,
 	isContentContractEligible
@@ -31,6 +31,7 @@ function toComponentCard(module: LectioContentModule, sectionProps: JsonObject):
 		subjects: module.metadata.subjects,
 		capacity: module.metadata.capacity,
 		capabilities: module.metadata.capabilities,
+		writer_excluded: module.metadata.capabilities.isMedia,
 		status: module.metadata.status,
 		schema_summary: sectionProps[sectionField] ?? null,
 		field_contracts: module.contentContract?.fieldContracts ?? {},
@@ -41,21 +42,43 @@ function toComponentCard(module: LectioContentModule, sectionProps: JsonObject):
 }
 
 function buildPlannerIndex(modules: readonly LectioContentModule[]): JsonObject {
-	const byPhase = modules.reduce<Record<string, string[]>>((acc, module) => {
-		const key = String(module.metadata.phase);
-		if (!acc[key]) acc[key] = [];
-		acc[key].push(module.metadata.id);
-		return acc;
-	}, {});
+	const exportableModules = modules.filter((module) => module.metadata.status !== 'planned');
+	const phaseMap: Record<string, { name: string; description: string; components: string[] }> = {};
+
+	for (const [phaseNumStr, phaseDef] of Object.entries(LECTIO_PHASES)) {
+		const phaseNum = Number(phaseNumStr);
+		const componentIds = exportableModules
+			.filter((module) => module.metadata.phase === phaseNum)
+			.map((module) => module.metadata.id);
+
+		if (componentIds.length === 0) continue;
+
+		phaseMap[phaseNumStr] = {
+			name: phaseDef.name,
+			description: phaseDef.description,
+			components: componentIds
+		};
+	}
 
 	return {
-		component_ids: CONTENT_CONTRACT_COMPONENT_IDS,
-		phase_map: byPhase
+		component_ids: exportableModules.map((module) => module.metadata.id),
+		phase_map: phaseMap
 	};
 }
 
 export function buildLectioContentContract(sectionProps: JsonObject): JsonObject {
-	const included = lectioComponentModules.filter((module) => isContentContractEligible(module));
+	const included: LectioContentModule[] = lectioComponentModules.filter((module) =>
+		isContentContractEligible(module)
+	);
+	for (const module of included) {
+		if (!module.contentContract) {
+			console.warn(
+				`[Lectio] No content-contract.ts for mapped component "${module.metadata.id}". ` +
+					'field_contracts will be empty in the exported card. ' +
+					'Add a content-contract.ts to this component folder.'
+			);
+		}
+	}
 	const cards = included.map((module) => toComponentCard(module, sectionProps));
 
 	return {

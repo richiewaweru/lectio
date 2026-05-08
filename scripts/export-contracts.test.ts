@@ -75,6 +75,12 @@ describe('contract exports', () => {
 			expect(unified.formatting_policy).toBeTruthy();
 			expect(unified.templates).toBeTruthy();
 			expect(unified.planner_index).toBeTruthy();
+			const plannerIndex = (unified.planner_index ?? {}) as Record<string, JsonObject>;
+			const phaseMap = (plannerIndex.phase_map ?? {}) as Record<string, JsonObject>;
+			const phaseOne = (phaseMap['1'] ?? {}) as Record<string, JsonObject>;
+			expect(phaseOne.name).toBe('Orient');
+			expect(typeof phaseOne.description).toBe('string');
+			expect(Array.isArray(phaseOne.components)).toBe(true);
 
 			const componentCards = (unified.component_cards ?? {}) as Record<string, JsonObject>;
 			expect(componentCards['diagram-block']).toBeTruthy();
@@ -83,6 +89,10 @@ describe('contract exports', () => {
 			const diagramBlock = componentCards['diagram-block'] as Record<string, JsonObject>;
 			const fieldContracts = (diagramBlock.field_contracts ?? {}) as Record<string, JsonObject>;
 			expect(fieldContracts.callouts).toBeTruthy();
+			expect(diagramBlock.writer_excluded).toBe(true);
+
+			const explanationBlock = componentCards['explanation-block'] as Record<string, JsonObject>;
+			expect(explanationBlock.writer_excluded).toBe(false);
 
 			const excluded = (unified.excluded_components ?? {}) as Record<string, JsonObject>;
 			expect(excluded['image-block']).toBeTruthy();

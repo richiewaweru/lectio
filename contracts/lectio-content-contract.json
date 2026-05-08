@@ -135,49 +135,77 @@
       "simulation-block"
     ],
     "phase_map": {
-      "1": [
-        "section-header",
-        "hook-hero",
-        "explanation-block",
-        "prerequisite-strip",
-        "what-next-bridge",
-        "interview-anchor",
-        "callout-block",
-        "summary-block",
-        "section-divider"
-      ],
-      "2": [
-        "definition-card",
-        "definition-family",
-        "glossary-rail",
-        "insight-strip",
-        "key-fact",
-        "comparison-grid"
-      ],
-      "3": [
-        "worked-example-card",
-        "process-steps"
-      ],
-      "4": [
-        "practice-stack",
-        "quiz-check",
-        "reflection-prompt",
-        "student-textbox",
-        "short-answer",
-        "fill-in-blank"
-      ],
-      "5": [
-        "pitfall-alert"
-      ],
-      "6": [
-        "diagram-block",
-        "diagram-compare",
-        "diagram-series",
-        "timeline-block"
-      ],
-      "7": [
-        "simulation-block"
-      ]
+      "1": {
+        "name": "Orient",
+        "description": "Set direction, context, purpose, or closure.",
+        "components": [
+          "section-header",
+          "hook-hero",
+          "explanation-block",
+          "prerequisite-strip",
+          "what-next-bridge",
+          "interview-anchor",
+          "callout-block",
+          "summary-block",
+          "section-divider"
+        ]
+      },
+      "2": {
+        "name": "Build Knowledge",
+        "description": "Define, compare, organize, or anchor key knowledge.",
+        "components": [
+          "definition-card",
+          "definition-family",
+          "glossary-rail",
+          "insight-strip",
+          "key-fact",
+          "comparison-grid"
+        ]
+      },
+      "3": {
+        "name": "Model",
+        "description": "Show a method, example, or process before independent work.",
+        "components": [
+          "worked-example-card",
+          "process-steps"
+        ]
+      },
+      "4": {
+        "name": "Practice and Check",
+        "description": "Let students answer, practise, retrieve, reflect, or show thinking.",
+        "components": [
+          "practice-stack",
+          "quiz-check",
+          "reflection-prompt",
+          "student-textbox",
+          "short-answer",
+          "fill-in-blank"
+        ]
+      },
+      "5": {
+        "name": "Address Mistakes",
+        "description": "Warn against misconceptions or correct common errors.",
+        "components": [
+          "pitfall-alert"
+        ]
+      },
+      "6": {
+        "name": "Visualize",
+        "description": "Make spatial, relational, chronological, or visual structure visible.",
+        "components": [
+          "diagram-block",
+          "diagram-compare",
+          "diagram-series",
+          "timeline-block"
+        ]
+      },
+      "7": {
+        "name": "Interact",
+        "description": "Let learners manipulate, observe, or explore a concept interactively.",
+        "components": [
+          "simulation-block"
+        ]
+      }
     }
   },
   "component_cards": {
@@ -201,6 +229,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/SectionHeaderContent"
@@ -276,6 +305,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/HookHeroContent"
@@ -369,6 +399,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/ExplanationContent"
@@ -430,6 +461,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/PrerequisiteContent"
@@ -489,6 +521,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/WhatNextContent"
@@ -551,6 +584,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/InterviewContent"
@@ -606,6 +640,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/CalloutBlockContent"
@@ -663,6 +698,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/SummaryBlockContent"
@@ -723,6 +759,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/SectionDividerContent"
@@ -768,6 +805,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/DefinitionContent"
@@ -853,6 +891,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/DefinitionFamilyContent"
@@ -915,6 +954,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/GlossaryContent"
@@ -985,6 +1025,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/InsightStripContent"
@@ -1053,6 +1094,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/KeyFactContent"
@@ -1110,6 +1152,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/ComparisonGridContent"
@@ -1221,6 +1264,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/WorkedExampleContent"
@@ -1318,6 +1362,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/ProcessContent"
@@ -1410,6 +1455,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/PracticeContent"
@@ -1515,6 +1561,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/QuizContent"
@@ -1608,6 +1655,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/ReflectionContent"
@@ -1682,6 +1730,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/StudentTextboxContent"
@@ -1737,6 +1786,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/ShortAnswerContent"
@@ -1797,6 +1847,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/FillInBlankContent"
@@ -1876,6 +1927,7 @@
         "interactive": false,
         "isMedia": false
       },
+      "writer_excluded": false,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/PitfallContent"
@@ -1946,6 +1998,7 @@
         "interactive": false,
         "isMedia": true
       },
+      "writer_excluded": true,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/DiagramContent"
@@ -2032,6 +2085,7 @@
         "interactive": false,
         "isMedia": true
       },
+      "writer_excluded": true,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/DiagramCompareContent"
@@ -2124,6 +2178,7 @@
         "interactive": false,
         "isMedia": true
       },
+      "writer_excluded": true,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/DiagramSeriesContent"
@@ -2200,6 +2255,7 @@
         "interactive": false,
         "isMedia": true
       },
+      "writer_excluded": true,
       "status": "stable",
       "schema_summary": {
         "$ref": "#/definitions/TimelineContent"
@@ -2300,6 +2356,7 @@
         "interactive": true,
         "isMedia": true
       },
+      "writer_excluded": true,
       "status": "beta",
       "schema_summary": {
         "$ref": "#/definitions/SimulationContent"
