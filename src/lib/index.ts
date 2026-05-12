@@ -11,6 +11,7 @@ export {
 	SectionDivider,
 	DefinitionCard,
 	DefinitionFamily,
+	RichText,
 	GlossaryRail,
 	GlossaryInline,
 	InsightStrip,

@@ -57,7 +57,7 @@
 					src={diagram.image_url}
 					alt={diagram.alt_text}
 					class="worked-example-inline-diagram-media"
-					loading="lazy"
+					loading={printMode ? 'eager' : 'lazy'}
 				/>
 			{:else if diagram.svg_content}
 				<div class="worked-example-inline-diagram-media">

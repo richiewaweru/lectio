@@ -13,6 +13,7 @@ export { default as SectionDivider } from './SectionDivider.svelte';
 // Group 2 — Definition & Knowledge
 export { default as DefinitionCard } from './DefinitionCard.svelte';
 export { default as DefinitionFamily } from './DefinitionFamily.svelte';
+export { default as RichText } from './RichText.svelte';
 export { default as GlossaryRail } from './GlossaryRail.svelte';
 export { default as GlossaryInline } from './GlossaryInline.svelte';
 export { default as InsightStrip } from './InsightStrip.svelte';

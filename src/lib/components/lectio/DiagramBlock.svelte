@@ -12,8 +12,13 @@
 	} from '$lib/components/ui/dialog';
 	import { ZoomIn } from 'lucide-svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
+	import { usePrintMode } from '$lib/utils/printContext';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: DiagramContent } = $props();
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 
 	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
 	const hasImage = $derived(!!content.image_url);
@@ -54,7 +59,7 @@
 						src={content.image_url}
 						alt={content.alt_text}
 						class="lectio-diagram-image"
-						loading="lazy"
+						loading={printMode ? 'eager' : 'lazy'}
 					/>
 					{#if showCallouts}
 						{#each content.callouts as callout, index}
@@ -107,11 +112,21 @@
 				</div>
 				{#if content.caption}
 					<figcaption class="lectio-diagram-caption">
-						{content.caption}
+						{@html renderInlineMarkdown(content.caption)}
 					</figcaption>
 				{/if}
 			</figure>
-			{#if showCallouts}
+			{#if printMode && showCallouts && content.callouts}
+				<ul class="diagram-print-callouts mt-2 list-none space-y-2 text-sm leading-6 text-foreground/85">
+					{#each content.callouts as callout, index}
+						<li>
+							<strong>{index + 1}. {callout.label}</strong>
+							<span class="text-foreground/80"> — {@html renderInlineMarkdown(callout.explanation)}</span>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+			{#if showCallouts && !printMode}
 				<p class="text-xs leading-5 text-muted-foreground">
 					Tap a numbered point to see the labeled detail for that part of the diagram.
 				</p>
@@ -122,7 +137,12 @@
 				<div class="group relative cursor-pointer" role="img" aria-label={content.alt_text}>
 					<div class="overflow-x-auto rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full">
 						{#if hasImage}
-							<img src={content.image_url} alt="" class="h-auto w-full" />
+							<img
+								src={content.image_url}
+								alt=""
+								class="h-auto w-full"
+								loading={printMode ? 'eager' : 'lazy'}
+							/>
 						{:else if hasSvg}
 							{@html sanitizeSvg(content.svg_content)}
 						{:else}
@@ -205,7 +225,12 @@
 							aria-label={content.alt_text}
 						>
 							{#if hasImage}
-								<img src={content.image_url} alt="" class="h-auto w-full" />
+								<img
+									src={content.image_url}
+									alt=""
+									class="h-auto w-full"
+									loading={printMode ? 'eager' : 'lazy'}
+								/>
 							{:else if hasSvg}
 								{@html sanitizeSvg(content.svg_content)}
 							{:else}
@@ -214,19 +239,33 @@
 								</div>
 							{/if}
 						</div>
-						<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+						<p class="text-sm leading-6 text-muted-foreground">
+							{@html renderInlineMarkdown(content.caption)}
+						</p>
 					</div>
 				</DialogContent>
 			</DialogPortal>
 		</Dialog>
 
-		{#if showCallouts}
+		{#if printMode && showCallouts && content.callouts}
+			<ul class="diagram-print-callouts mt-2 list-none space-y-2 text-sm leading-6 text-foreground/85">
+				{#each content.callouts as callout, index}
+					<li>
+						<strong>{index + 1}. {callout.label}</strong>
+						<span class="text-foreground/80"> — {@html renderInlineMarkdown(callout.explanation)}</span>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+		{#if showCallouts && !printMode}
 			<p class="text-xs leading-5 text-muted-foreground">
 				Tap a numbered point to see the labeled detail for that part of the diagram.
 			</p>
 		{/if}
 
-		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+		<p class="text-sm leading-6 text-muted-foreground">
+			{@html renderInlineMarkdown(content.caption)}
+		</p>
 		{/if}
 	</div>
 </Card>

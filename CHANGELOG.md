@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-05-10
+
+### Added
+- **`RichText` component** for inline markdown rendering in block copy.
+- **Print-mode diagram callouts:** static numbered list with explanations when printing (interactive popovers hidden).
+
+### Changed
+- **`DefinitionFamily`:** in print mode, renders all definitions expanded instead of accordion-only content.
+- **`DiagramBlock`:** captions and callout explanations use inline markdown; diagram images use `loading="eager"` when `printMode` is active.
+- **`KeyFact`:** fact and context render through `RichText`.
+- **`CalloutBlock`:** heading and body support inline markdown.
+- **`PitfallAlert`:** title supports inline markdown; examples are always visible in print (no collapsible); title uses an em dash before the misconception text.
+- **`PracticeStack` / `WorkedExampleCard`:** inline diagram images use eager loading in print mode.
+
 ## [0.4.1] - 2026-05-06
 
 ### Added

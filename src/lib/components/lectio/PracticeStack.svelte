@@ -65,7 +65,7 @@ let {
 					src={diagram.image_url}
 					alt={diagram.alt_text}
 					class="practice-inline-diagram-media"
-					loading="lazy"
+					loading={printMode ? 'eager' : 'lazy'}
 				/>
 			{:else if diagram.svg_content}
 				<div class="practice-inline-diagram-media">

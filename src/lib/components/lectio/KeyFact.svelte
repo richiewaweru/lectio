@@ -1,17 +1,18 @@
 <script lang="ts">
 	import type { KeyFactContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
+	import RichText from './RichText.svelte';
 
 	let { content }: { content: KeyFactContent } = $props();
 </script>
 
 <Card class="border-primary/15 bg-primary/4 rh-pad-card">
 	<p class="text-2xl font-semibold leading-tight font-serif text-foreground">
-		{content.fact}
+		<RichText text={content.fact} />
 	</p>
 	{#if content.context}
 		<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-			{content.context}
+			<RichText text={content.context} />
 		</p>
 	{/if}
 	{#if content.source}

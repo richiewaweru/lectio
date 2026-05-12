@@ -4,18 +4,22 @@
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '$lib/components/ui/collapsible';
 	import { TriangleAlert } from 'lucide-svelte';
 	import { renderInlineMarkdown } from '$lib/utils/markdown';
+	import { usePrintMode } from '$lib/utils/printContext';
 
 	let { content }: { content: PitfallContent } = $props();
 
 	const displayExamples = $derived(content.examples ?? (content.example ? [content.example] : []));
 	const isMinor = $derived(content.severity === 'minor');
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 </script>
 
 <div class="pitfall-alert-root" data-lectio-block="pitfall">
 <Alert class={isMinor ? 'border-amber-200 bg-amber-50/60' : 'border-orange-200 bg-orange-50/80'}>
 	<TriangleAlert class="h-4 w-4 {isMinor ? 'text-amber-500' : 'text-orange-600'}" />
 	<AlertTitle class="{isMinor ? 'text-amber-700' : 'text-orange-700'} text-sm font-semibold">
-		Common Pitfall - {content.misconception}
+		Common Pitfall — {@html renderInlineMarkdown(content.misconception)}
 	</AlertTitle>
 
 	{#if content.why}
@@ -29,23 +33,33 @@
 	</AlertDescription>
 
 	{#if displayExamples.length > 0}
-		<Collapsible class="mt-2">
-			<CollapsibleTrigger
-				class="inline-flex h-6 items-center justify-center rounded-xl px-2 text-xs font-medium text-orange-600 transition-colors hover:bg-accent hover:text-orange-700"
-				data-print-role="pitfall-nav-link"
-			>
-				{displayExamples.length === 1 ? 'See example' : `See examples (${displayExamples.length})`} ->
-			</CollapsibleTrigger>
-			<CollapsibleContent>
-				<div class="mt-2 space-y-2">
-					{#each displayExamples as example}
-						<div class="rounded-xl bg-white/70 p-2 text-xs italic text-muted-foreground">
-							{@html renderInlineMarkdown(example)}
-						</div>
-					{/each}
-				</div>
-			</CollapsibleContent>
-		</Collapsible>
+		{#if printMode}
+			<div class="mt-2 space-y-2">
+				{#each displayExamples as example}
+					<div class="rounded-xl bg-white/70 p-2 text-xs italic text-muted-foreground">
+						{@html renderInlineMarkdown(example)}
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<Collapsible class="mt-2">
+				<CollapsibleTrigger
+					class="inline-flex h-6 items-center justify-center rounded-xl px-2 text-xs font-medium text-orange-600 transition-colors hover:bg-accent hover:text-orange-700"
+					data-print-role="pitfall-nav-link"
+				>
+					{displayExamples.length === 1 ? 'See example' : `See examples (${displayExamples.length})`} ->
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<div class="mt-2 space-y-2">
+						{#each displayExamples as example}
+							<div class="rounded-xl bg-white/70 p-2 text-xs italic text-muted-foreground">
+								{@html renderInlineMarkdown(example)}
+							</div>
+						{/each}
+					</div>
+				</CollapsibleContent>
+			</Collapsible>
+		{/if}
 	{/if}
 </Alert>
 </div>
