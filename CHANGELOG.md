@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.4] - 2026-05-12
+
+### Added
+- **Print markdown coverage contract:** shared requirements map plus a test that fails if a known print utility skips required markdown rendering.
+
+### Changed
+- **`ExpandedSteps`:** print-mode worked-example steps now render block and inline markdown correctly and use the shared rich-text class for spacing.
+- **Markdown utilities:** `renderInlineMarkdown` and `renderBlockMarkdown` short-circuit when the input already contains HTML, preventing accidental double-processing across print surfaces.
+
 ## [0.4.3] - 2026-05-10
 
 ### Added

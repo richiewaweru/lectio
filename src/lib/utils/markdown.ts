@@ -4,6 +4,7 @@ import { marked } from 'marked';
 
 const INLINE_MATH_REGEX = /(?<!\\|\$)\$([^\n$]+?)\$(?!\$)/g;
 const DISPLAY_MATH_REGEX = /\$\$([\s\S]+?)\$\$/g;
+const HTML_TAG_PATTERN = /<[a-z][\s\S]*>/i;
 
 const KATEX_SVG_TAGS = [
 	'svg',
@@ -100,12 +101,14 @@ function sanitizeHtml(html: string): string {
 
 export function renderInlineMarkdown(text: string): string {
 	if (!text) return '';
+	if (HTML_TAG_PATTERN.test(text)) return text;
 	const parsed = marked.parseInline(preprocessMath(text), { gfm: true });
 	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
 
 export function renderBlockMarkdown(text: string): string {
 	if (!text) return '';
+	if (HTML_TAG_PATTERN.test(text)) return text;
 	const parsed = marked.parse(preprocessMath(text), { gfm: true, breaks: true });
 	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
