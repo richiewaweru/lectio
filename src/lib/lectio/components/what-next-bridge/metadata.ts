@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"bodyMaxWords":50,"nextMaxWords":15,"previewMaxWords":30},
 
+	teachingIntent: 'structure',
 	status: 'stable',
 	sectionField: 'what_next',
 	shadcnPrimitive: "Card"
 } satisfies LectioComponentPublicMetadata;
+

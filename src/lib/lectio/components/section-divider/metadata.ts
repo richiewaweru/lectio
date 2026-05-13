@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"labelMaxWords":4},
 
+	teachingIntent: 'structure',
 	status: 'stable',
 	sectionField: 'divider',
 	shadcnPrimitive: "Separator"
 } satisfies LectioComponentPublicMetadata;
+

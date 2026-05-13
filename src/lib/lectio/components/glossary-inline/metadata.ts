@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"definitionMaxWords":30},
 
+	teachingIntent: 'define',
 	status: 'stable',
 	sectionField: null,
 	shadcnPrimitive: "Popover"
 } satisfies LectioComponentPublicMetadata;
+

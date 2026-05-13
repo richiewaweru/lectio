@@ -1,5 +1,6 @@
 import type { ZodTypeAny } from 'zod';
 
+import type { TeachingIntent } from '$lib/schema/component-meta';
 import type { BehaviourMode } from '$lib/schema/types';
 import type { LectioContentContract } from './content-contract';
 
@@ -53,8 +54,11 @@ export interface LectioComponentPublicMetadata {
 	generationHint?: string;
 	shadcnPrimitive: string;
 
-	/** Registry object key (`SectionHeader`, `WorkedExampleCard`, …) — stable importer surface */
+	/** Registry object key (`SectionHeader`, `WorkedExampleCard`, etc.) - stable importer surface */
 	registryKey: string;
+
+	/** Shared vocabulary for builder palette grouping + planning alignment */
+	teachingIntent: TeachingIntent;
 }
 
 /** Contract + metadata bundle safe to import from Node exporters (no `.svelte`) */
@@ -66,7 +70,8 @@ export interface LectioContentModule {
 	contentContract?: LectioContentContract;
 }
 
-/** Optional renderer — only bundled in UI builds */
+/** Optional renderer - only bundled in UI builds */
 export interface LectioComponentModule extends LectioContentModule {
 	component?: unknown;
 }
+

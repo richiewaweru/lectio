@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"columnsMin":2,"columnsMax":4,"rowsMax":6,"criterionMaxWords":8,"valueMaxWords":20},
 
+	teachingIntent: 'engage',
 	status: 'stable',
 	sectionField: 'comparison_grid',
 	shadcnPrimitive: "CSS Grid + Card"
 } satisfies LectioComponentPublicMetadata;
+

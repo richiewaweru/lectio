@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":true,"isMedia":true},
 	capacity: {"countGuidance":"template-defined"},
 
+	teachingIntent: 'engage',
 	status: 'beta',
 	sectionField: 'simulation',
 	shadcnPrimitive: "iframe sandbox"
 } satisfies LectioComponentPublicMetadata;
+

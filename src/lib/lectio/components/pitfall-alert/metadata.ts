@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"misconceptionMaxWords":20,"correctionMaxWords":80,"exampleMaxWords":40},
 
+	teachingIntent: 'warn',
 	status: 'stable',
 	sectionField: 'pitfall',
 	shadcnPrimitive: "Alert + Collapsible"
 } satisfies LectioComponentPublicMetadata;
+

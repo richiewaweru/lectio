@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"cellsMax":3,"cellsMin":2,"cellLinesMax":2},
 
+	teachingIntent: 'explain',
 	status: 'stable',
 	sectionField: 'insight_strip',
 	shadcnPrimitive: "CSS Grid"
 } satisfies LectioComponentPublicMetadata;
+

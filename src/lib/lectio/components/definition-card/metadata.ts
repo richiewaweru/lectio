@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"formalMaxWords":80,"plainMaxWords":60,"relatedTermsMax":3},
 
+	teachingIntent: 'define',
 	status: 'stable',
 	sectionField: 'definition',
 	shadcnPrimitive: "Card + Collapsible"
 } satisfies LectioComponentPublicMetadata;
+
