@@ -13,7 +13,7 @@
 	{/if}
 
 	{#each events as event}
-		<div class="event">
+		<div class="event timeline-print-event" data-print-item="timeline-event">
 			<div class="event-marker">
 				<div class="year">{event.year}</div>
 				{#if event.era}

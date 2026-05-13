@@ -36,7 +36,7 @@
 	}
 </script>
 
-<div class="diagram-block-root" data-lectio-block="diagram">
+<div class="diagram-block-root" data-lectio-block="diagram" data-print-container="atomic" data-print-has-media="true">
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="rh-gap-component">
 		<div class="flex flex-wrap items-center rh-gap-cluster">

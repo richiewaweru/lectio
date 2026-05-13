@@ -14,7 +14,7 @@
 	{/if}
 
 	{#each steps as step, idx}
-		<div class="step">
+		<div class="step worked-step-print" data-print-item="worked-step">
 			<div class="step-number">{idx + 1}</div>
 			<div class="step-content">
 				<div class="step-label">{step.label}</div>

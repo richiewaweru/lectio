@@ -34,7 +34,7 @@
 </script>
 
 {#if printMode}
-	<div class="diagram-compare-print">
+	<div class="diagram-compare-print" data-print-container="atomic" data-print-has-media="true">
 		<SideBySide leftLabel={content.before_label} rightLabel={content.after_label}>
 			{#snippet left()}
 				{#if hasImagePair}

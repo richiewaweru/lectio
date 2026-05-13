@@ -5,7 +5,7 @@
 	let { content }: { content: InsightStripContent } = $props();
 </script>
 
-<section class="rh-gap-component-tight">
+<section class="rh-gap-component-tight" data-print-container="table" data-print-color-reset="true">
 	{#each content.cells as cell, index}
 		<div
 			class="rh-radius-card border p-5 shadow-sm transition-colors {cell.highlight

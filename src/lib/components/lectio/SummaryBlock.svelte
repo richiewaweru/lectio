@@ -6,7 +6,7 @@
 	let { content }: { content: SummaryBlockContent } = $props();
 </script>
 
-<Card class="border-primary/10 bg-muted/40 rh-pad-card">
+<Card class="border-primary/10 bg-muted/40 rh-pad-card" data-print-container="prose" data-print-color-reset="true">
 	<h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
 		{content.heading ?? 'In summary'}
 	</h3>

@@ -1,7 +1,9 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	"breakBehavior": "allow",
-	"preferredWidth": "full",
-	"fallback": "Lined write-in area"
+	breakBehavior: 'atomic',
+	preferredWidth: 'full',
+	hasMedia: false,
+	requiresColorReset: false,
+	fallback: 'Lined write-in area'
 } satisfies LectioPrintSpec;

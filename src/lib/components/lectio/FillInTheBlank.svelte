@@ -11,7 +11,7 @@
 </script>
 
 {#if printMode}
-	<div class="fill-blank-print">
+	<div class="fill-blank-print" data-print-container="atomic">
 		{#if content.instruction}
 			<p class="fill-blank-print-instruction">{content.instruction}</p>
 		{/if}
