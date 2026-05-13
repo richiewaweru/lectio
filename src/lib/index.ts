@@ -146,6 +146,7 @@ export { default as LectioThemeSurface } from './templates/LectioThemeSurface.sv
 export { default as ResolvedTemplatePreviewSurface } from './templates/ResolvedTemplatePreviewSurface.svelte';
 export { default as TemplateRuntimeSurface } from './templates/TemplateRuntimeSurface.svelte';
 export { default as TemplatePreviewSurface } from './templates/TemplatePreviewSurface.svelte';
+export { LectioBlockRuntimeSurface } from './runtime';
 export type {
 	TemplateContract,
 	TemplateDefinition,
