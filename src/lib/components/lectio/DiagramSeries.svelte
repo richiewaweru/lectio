@@ -35,13 +35,12 @@ const progressPercent = $derived(
 </script>
 
 {#if printMode}
-	<div class="diagram-series-print-root">
+	<div class="diagram-series-print-root" data-print-container="itemized" data-print-has-media="true">
 		<p class="diagram-series-print-title">{content.title}</p>
 		<div class="diagram-series-print-grid" data-count={content.diagrams.length}>
 			{#each content.diagrams as diagram, index}
-				<figure class="diagram-series-print-item">
+				<figure class="diagram-series-print-item" data-print-item="series-frame">
 					<figcaption class="diagram-series-print-label">
-						<span class="diagram-series-print-step">Step {index + 1}</span>
 						{diagram.step_label}
 					</figcaption>
 					{#if hasImage(diagram)}
@@ -160,7 +159,6 @@ const progressPercent = $derived(
 <style>
 	.diagram-series-print-root {
 		margin: 0.75rem 0;
-		page-break-inside: avoid;
 	}
 
 	.diagram-series-print-title {
@@ -186,6 +184,10 @@ const progressPercent = $derived(
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
+	.diagram-series-print-grid[data-count="5"] {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
 	.diagram-series-print-grid[data-count="4"] {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -200,14 +202,6 @@ const progressPercent = $derived(
 		font-weight: 600;
 		margin-bottom: 0.4rem;
 		margin-top: 0;
-	}
-
-	.diagram-series-print-step {
-		font-size: var(--rh-eyebrow-size);
-		text-transform: uppercase;
-		letter-spacing: 0.14em;
-		color: #6b7280;
-		margin-right: 0.4rem;
 	}
 
 	.diagram-series-print-media {

@@ -40,7 +40,7 @@
 </script>
 
 {#if printMode}
-	<div class="process-print">
+	<div class="process-print" data-print-container="itemized">
 		<h4 class="process-print-title">{content.title}</h4>
 		{#if content.intro}
 			<p class="process-print-intro">{content.intro}</p>
@@ -51,13 +51,13 @@
 			</div>
 			<div class="process-print-steps">
 				{#each content.steps as step}
-					<div class="process-print-step">
+					<div class="process-print-step" data-print-item="process-step">
 						<div class="process-print-step-number">{step.number}</div>
 						<div class="process-print-step-content">
 							<div class="process-print-action">{step.action}</div>
 							<div class="process-print-detail">{@html renderInlineMarkdown(step.detail)}</div>
 							{#if step.warning}
-								<div class="process-print-warning">Ã¢Å¡Â  {step.warning}</div>
+								<div class="process-print-warning">Warning: {step.warning}</div>
 							{/if}
 						</div>
 					</div>

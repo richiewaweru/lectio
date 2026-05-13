@@ -71,6 +71,10 @@ describe('contract exports', () => {
 
 			const unified = readJson(unifiedContractPath) as Record<string, JsonObject>;
 			expect(unified.version).toBe('1.0.0');
+			expect(unified.print_surface).toBeTruthy();
+			const printSurface = unified.print_surface as Record<string, unknown>;
+			expect(printSurface.usable_height_px).toBe(970);
+			expect(printSurface.usable_width_px).toBe(680);
 			expect(unified.default_template_id).toBe('guided-concept-path');
 			expect(unified.formatting_policy).toBeTruthy();
 			expect(unified.templates).toBeTruthy();
@@ -85,6 +89,33 @@ describe('contract exports', () => {
 			const componentCards = (unified.component_cards ?? {}) as Record<string, JsonObject>;
 			expect(componentCards['diagram-block']).toBeTruthy();
 			expect(componentCards['glossary-inline']).toBeUndefined();
+
+			const printKeys = new Set([
+				'breakBehavior',
+				'preferredWidth',
+				'hasMedia',
+				'requiresColorReset',
+				'fallback'
+			]);
+			for (const [id, card] of Object.entries(componentCards)) {
+				const print = (card as Record<string, JsonObject>).print as Record<string, unknown> | undefined;
+				const legacyPrint = (card as Record<string, JsonObject>).print_behavior as
+					| Record<string, unknown>
+					| undefined;
+				expect(print, `component ${id} missing print`).toBeTruthy();
+				expect(legacyPrint, `component ${id} missing print_behavior`).toBeTruthy();
+				for (const key of printKeys) {
+					if (key === 'hasMedia' || key === 'requiresColorReset') {
+						expect(typeof print![key], `component ${id} print.${key} boolean`).toBe('boolean');
+					} else {
+						expect(print![key], `component ${id} print.${key}`).toBeTruthy();
+					}
+				}
+				if (print!.breakBehavior === 'itemized') {
+					expect(typeof print!.itemSelector).toBe('string');
+				}
+				expect(print!.breakBehavior === legacyPrint!.breakBehavior).toBe(true);
+			}
 
 			const diagramBlock = componentCards['diagram-block'] as Record<string, JsonObject>;
 			const fieldContracts = (diagramBlock.field_contracts ?? {}) as Record<string, JsonObject>;

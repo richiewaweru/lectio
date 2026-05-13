@@ -6,6 +6,7 @@ import {
 	isContentContractEligible
 } from '$lib/lectio/export-policy';
 import type { LectioContentModule } from '$lib/lectio/core/types';
+import { LECTIO_PRINT_SURFACE } from '$lib/lectio/core/print-surface';
 import { guidedConceptPathContract } from '$lib/templates/guided-concept-path/config';
 import { openCanvasContract } from '$lib/templates/open-canvas/config';
 
@@ -37,6 +38,8 @@ function toComponentCard(module: LectioContentModule, sectionProps: JsonObject):
 		field_contracts: module.contentContract?.fieldContracts ?? {},
 		component_constraints: module.contentContract?.componentConstraints ?? [],
 		examples: module.examples,
+		/** Canonical print spec (same object as `print_behavior` for backward compatibility) */
+		print: module.print,
 		print_behavior: module.print
 	};
 }
@@ -84,6 +87,7 @@ export function buildLectioContentContract(sectionProps: JsonObject): JsonObject
 	return {
 		version: '1.0.0',
 		source: 'lectio',
+		print_surface: LECTIO_PRINT_SURFACE,
 		default_template_id: 'guided-concept-path',
 		formatting_policy: {
 			default: 'plain_text unless field contract says otherwise',

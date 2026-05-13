@@ -1,7 +1,9 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	"breakBehavior": "allow",
-	"preferredWidth": "full",
-	"fallback": "Static table"
+	breakBehavior: 'table',
+	preferredWidth: 'full',
+	hasMedia: false,
+	requiresColorReset: true,
+	fallback: 'Static table'
 } satisfies LectioPrintSpec;

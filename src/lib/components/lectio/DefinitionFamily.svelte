@@ -27,10 +27,14 @@
 		</div>
 
 		{#if printMode}
-			<div class="definition-family-print-list rh-gap-component-tight space-y-3">
+			<div
+				class="definition-family-print-list rh-gap-component-tight space-y-3"
+				data-print-container="itemized"
+			>
 				{#each content.definitions as definition}
 					<div
-						class="overflow-hidden rh-radius-card border border-fuchsia-200/70 bg-white/84 shadow-[0_14px_36px_rgba(15,23,42,0.08)]"
+						class="definition-family-print-item overflow-hidden rh-radius-card border border-fuchsia-200/70 bg-white/84 shadow-[0_14px_36px_rgba(15,23,42,0.08)]"
+						data-print-item="definition"
 					>
 						<div class="rh-radius-card bg-[linear-gradient(180deg,rgba(253,244,255,0.72),rgba(255,255,255,0.95))] p-1">
 							<DefinitionCard content={definition} />

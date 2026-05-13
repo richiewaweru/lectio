@@ -6,7 +6,7 @@
 	let { content }: { content: PrerequisiteContent } = $props();
 </script>
 
-<div class="rounded-[1.5rem] border border-teal-200 bg-teal-50/55 p-5">
+<div class="rounded-[1.5rem] border border-teal-200 bg-teal-50/55 p-5" data-print-container="atomic">
 	<div class="mb-3 space-y-2">
 		<p class="eyebrow text-teal-600">{content.label ?? 'Before we begin'}</p>
 		<p class="text-sm leading-6 text-muted-foreground">

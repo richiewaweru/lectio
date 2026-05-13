@@ -91,11 +91,57 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 		}
 	}
 
-	for (const key of ['breakBehavior', 'preferredWidth', 'fallback'] as const) {
-		if (!(typeof module.print[key] === 'string' && module.print[key].trim().length > 0)) {
+	const print = module.print;
+	const breakBehaviors = new Set(['atomic', 'itemized', 'table', 'prose']);
+	const preferredWidths = new Set(['full', 'half', 'third', 'content-fit', 'inline']);
+	const mediaConstraints = new Set(['constrain-height', 'constrain-width', 'fit-cell']);
+
+	if (!breakBehaviors.has(print.breakBehavior)) {
+		issues.push({
+			path: 'print.breakBehavior',
+			message: `${prefix} print.breakBehavior must be atomic|itemized|table|prose`
+		});
+	}
+
+	if (!preferredWidths.has(print.preferredWidth)) {
+		issues.push({
+			path: 'print.preferredWidth',
+			message: `${prefix} print.preferredWidth must be full|half|third|content-fit|inline`
+		});
+	}
+
+	if (!(typeof print.fallback === 'string' && print.fallback.trim().length > 0)) {
+		issues.push({ path: 'print.fallback', message: `${prefix} print.fallback missing` });
+	}
+
+	if (typeof print.hasMedia !== 'boolean') {
+		issues.push({ path: 'print.hasMedia', message: `${prefix} print.hasMedia must be boolean` });
+	}
+
+	if (typeof print.requiresColorReset !== 'boolean') {
+		issues.push({
+			path: 'print.requiresColorReset',
+			message: `${prefix} print.requiresColorReset must be boolean`
+		});
+	}
+
+	if (print.mediaConstraint !== undefined && !mediaConstraints.has(print.mediaConstraint)) {
+		issues.push({
+			path: 'print.mediaConstraint',
+			message: `${prefix} print.mediaConstraint must be constrain-height|constrain-width|fit-cell`
+		});
+	}
+
+	if (print.breakBehavior === 'itemized') {
+		if (!(typeof print.itemSelector === 'string' && print.itemSelector.trim().length > 0)) {
 			issues.push({
-				path: `print.${key}`,
-				message: `${prefix} print.${String(key)} missing`
+				path: 'print.itemSelector',
+				message: `${prefix} print.itemSelector is required when breakBehavior is itemized`
+			});
+		} else if (!print.itemSelector.trim().startsWith('.')) {
+			issues.push({
+				path: 'print.itemSelector',
+				message: `${prefix} print.itemSelector should be a class selector starting with '.'`
 			});
 		}
 	}
