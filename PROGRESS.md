@@ -6,7 +6,7 @@ Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned ed
 
 ## Current Phase
 
-- Phase 0b - Teaching intent + palette groups
+- Phase 0c - Version bump + publish prep
 - Repo: `C:\Projects\lectio`
 - Status: complete
 
@@ -93,3 +93,32 @@ Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned ed
 ## Next Phase Needs
 
 - Phase 0c: version bump + publish prep and frontend dependency alignment.
+
+---
+
+## Phase 0c Checklist
+
+- [x] Bump Lectio package version
+- [x] Keep phase scope tight (version + dependency alignment only)
+- [x] Validate frontend compatibility with updated Lectio package
+- [x] Run frontend validation: `npm run check && npm run build`
+- [x] Self-review change scope
+- [ ] Commit with convention-compliant message
+
+## Phase 0c Validation Evidence
+
+- Lectio version updated from `0.4.4` to `0.4.5` in `package.json`
+- Frontend dependency updated to `lectio: \"0.4.5\"`
+- Frontend local install for validation resolved `node_modules/lectio` at version `0.4.5`
+- Frontend `npm run check` passed
+- Frontend `npm run build` passed
+
+## Phase 0c What Was Done
+
+- Updated Lectio package version for release prep (`0.4.5`).
+- Aligned Textbook Agent frontend dependency target to `0.4.5`.
+- Verified compatibility by installing from local Lectio source and running frontend checks/build.
+
+## Next Phase Needs
+
+- Phase 1: move builder module into Textbook Agent frontend.
