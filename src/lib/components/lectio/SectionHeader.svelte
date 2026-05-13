@@ -13,7 +13,7 @@
 	};
 </script>
 
-<Card class="border-primary/10 bg-primary text-primary-foreground" data-lectio-block="section-header">
+<Card class="border-primary/10 bg-primary text-primary-foreground" data-lectio-block="section-header" data-print-container="atomic">
 	<div class="rh-gap-component rh-pad-shell">
 		<div class="flex flex-wrap items-center gap-2" data-print-role="section-header-meta">
 			{#if content.section_number}

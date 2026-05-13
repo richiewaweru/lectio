@@ -34,7 +34,7 @@
 	const Icon = $derived(icons[content.variant] ?? Info);
 </script>
 
-<Alert class={variantStyles[content.variant] ?? variantStyles.info}>
+<Alert class={variantStyles[content.variant] ?? variantStyles.info} data-print-container="atomic">
 	<Icon class="h-4 w-4 {variantIconColor[content.variant] ?? variantIconColor.info}" />
 	{#if content.heading}
 		<AlertTitle class="{variantTitleColor[content.variant] ?? variantTitleColor.info} text-sm font-semibold">

@@ -36,7 +36,7 @@
 {/snippet}
 
 {#if mode === 'inline-strip'}
-	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary">
+	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary" data-print-container="prose" data-print-color-reset="true">
 		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary strip</p>
@@ -59,7 +59,7 @@
 		</div>
 	</Card>
 {:else if mode === 'drawer'}
-	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary">
+	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary" data-print-container="prose" data-print-color-reset="true">
 		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
 				<p class="eyebrow text-primary-foreground">Glossary drawer</p>
@@ -88,6 +88,8 @@
 			className
 		)}
 		data-lectio-block="glossary"
+		data-print-container="prose"
+		data-print-color-reset="true"
 	>
 		<div
 			class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_52%)]"

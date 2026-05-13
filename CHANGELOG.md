@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.6] - 2026-05-13
+
+### Added
+- **`print-theme.css`:** dedicated `@media print` layer (tokens, legibility reset, `data-print-*` fragmentation, migrated block rules) imported from `theme.css`.
+- **`print_surface`:** exported on `lectio-content-contract.json` root for pipeline sizing (A4 assumptions).
+- **Contract `print` field:** each component card now includes `print` (mirrored as `print_behavior` for compatibility).
+
+### Changed
+- **`LectioPrintSpec`:** expanded with `PrintBreakBehavior` (`atomic` | `itemized` | `table` | `prose`), `hasMedia`, `requiresColorReset`, optional `itemSelector` / `mediaConstraint`.
+- **Print markup:** components emit `data-print-container`, `data-print-item`, `data-print-has-media`, and `data-print-color-reset` where applicable; DiagramSeries grid for 5 frames; WorkedExampleCard print shows alternatives; SimulationBlock uses explanation when no fallback diagram; VideoEmbed print text fallback; ComparisonGrid semantic `<table>` in print.
+
 ## [0.4.4] - 2026-05-12
 
 ### Added

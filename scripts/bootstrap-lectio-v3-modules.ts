@@ -70,23 +70,57 @@ function capsFor(id: string): LectioCapabilities {
 }
 
 function printFor(id: string, fallback: string) {
-	const avoid = new Set([
-		'worked-example-card',
-		'process-steps',
-		'diagram-block',
-		'diagram-compare',
-		'diagram-series',
-		'practice-stack',
-		'pitfall-alert',
-		'timeline-block',
-		'simulation-block'
-	]);
+	const itemized: Record<string, string> = {
+		'definition-family': '.definition-family-print-item',
+		'diagram-series': '.diagram-series-print-item',
+		'worked-example-card': '.worked-step-print',
+		'process-steps': '.process-print-step',
+		'practice-stack': '.practice-print-problem',
+		'timeline-block': '.timeline-print-event'
+	};
 
-	return {
-		breakBehavior: (avoid.has(id) ? 'avoid' : 'allow') as 'avoid' | 'allow',
+	const prose = new Set([
+		'explanation-block',
+		'hook-hero',
+		'summary-block',
+		'glossary-inline',
+		'glossary-rail',
+		'what-next-bridge'
+	]);
+	const table = new Set(['comparison-grid', 'insight-strip']);
+	const colorReset = new Set(['hook-hero', 'summary-block', 'glossary-rail', 'insight-strip']);
+
+	let breakBehavior: 'atomic' | 'itemized' | 'table' | 'prose' = 'atomic';
+	if (itemized[id]) breakBehavior = 'itemized';
+	else if (table.has(id)) breakBehavior = 'table';
+	else if (prose.has(id)) breakBehavior = 'prose';
+
+	const hasMedia = ['diagram-block', 'diagram-compare', 'diagram-series', 'image-block'].includes(id);
+	const mediaConstraint =
+		id === 'diagram-series'
+			? ('constrain-height' as const)
+			: hasMedia
+				? ('constrain-width' as const)
+				: undefined;
+
+	const base = {
+		breakBehavior,
 		preferredWidth: 'full' as const,
+		hasMedia,
+		...(mediaConstraint ? { mediaConstraint } : {}),
+		requiresColorReset: colorReset.has(id),
 		fallback
 	};
+
+	if (breakBehavior === 'itemized') {
+		return { ...base, itemSelector: itemized[id] };
+	}
+
+	if (id === 'glossary-inline') {
+		return { ...base, preferredWidth: 'content-fit' as const };
+	}
+
+	return base;
 }
 
 const EXAMPLES: Record<string, unknown[]> = {

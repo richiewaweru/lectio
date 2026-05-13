@@ -7,8 +7,12 @@ export type LectioPhase = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export type ComponentStatus = 'stable' | 'beta' | 'planned';
 
-export type BreakBehavior = 'allow' | 'avoid' | 'force-new-page';
-export type PreferredWidth = 'full' | 'half' | 'inline';
+/** Fragmentation / grouping contract for print layout and preflight */
+export type PrintBreakBehavior = 'atomic' | 'itemized' | 'table' | 'prose';
+
+export type PrintPreferredWidth = 'full' | 'half' | 'third' | 'content-fit' | 'inline';
+
+export type PrintMediaConstraint = 'constrain-height' | 'constrain-width' | 'fit-cell';
 
 export interface LectioCapabilities {
 	acceptsMedia: boolean;
@@ -19,8 +23,16 @@ export interface LectioCapabilities {
 }
 
 export interface LectioPrintSpec {
-	breakBehavior: BreakBehavior;
-	preferredWidth: PreferredWidth;
+	breakBehavior: PrintBreakBehavior;
+	/** CSS selector for itemized children (required when breakBehavior is itemized) */
+	itemSelector?: string;
+	preferredWidth: PrintPreferredWidth;
+	/** Optional max height hint (px) for preflight / tooling */
+	maxPrintHeight?: number;
+	hasMedia: boolean;
+	mediaConstraint?: PrintMediaConstraint;
+	/** When true, print theme applies aggressive color/background reset on this subtree */
+	requiresColorReset: boolean;
 	/** Mirrors legacy registry `printFallback` / pipeline `print_fallback` */
 	fallback: string;
 	notes?: string;

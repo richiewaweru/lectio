@@ -27,7 +27,7 @@ describe('Print Fallback Registry Compliance', () => {
 			'quiz-check': 'Question and options shown, correct answer marked',
 			'practice-stack': 'All visible, write-in lines rendered; inline answers hidden by default',
 			'worked-example-card': 'All steps expanded',
-			'simulation-block': 'Static diagram at midstate',
+			'simulation-block': 'Static diagram at midstate or explanation text',
 			'fill-in-blank': 'Passage with underlined blanks, word bank box below',
 			'diagram-compare': 'Both diagrams shown side by side',
 			'timeline-block': 'Vertical event list'
@@ -58,7 +58,7 @@ describe('Print Fallback Registry Compliance', () => {
 	it('low-priority CSS-only components have correct printFallback strings', () => {
 		const expected: Record<string, string> = {
 			'diagram-series': 'All diagrams in sequence with step labels',
-			'diagram-block': 'Static SVG 80% width centred',
+			'diagram-block': 'Static diagram centred, width constrained for print',
 			'pitfall-alert': 'Full static, amber left border',
 			'comparison-grid': 'Static comparison table'
 		};

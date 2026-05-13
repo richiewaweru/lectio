@@ -1,7 +1,10 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	"breakBehavior": "allow",
-	"preferredWidth": "full",
-	"fallback": "All definitions expanded"
+	breakBehavior: 'itemized',
+	itemSelector: '.definition-family-print-item',
+	preferredWidth: 'full',
+	hasMedia: false,
+	requiresColorReset: false,
+	fallback: 'All definitions expanded'
 } satisfies LectioPrintSpec;

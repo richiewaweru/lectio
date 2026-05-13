@@ -1,7 +1,9 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	"breakBehavior": "allow",
-	"preferredWidth": "full",
-	"fallback": "QR code or thumbnail based on setting"
+	breakBehavior: 'atomic',
+	preferredWidth: 'full',
+	hasMedia: false,
+	requiresColorReset: false,
+	fallback: 'Caption and title as text; digital playback noted'
 } satisfies LectioPrintSpec;
