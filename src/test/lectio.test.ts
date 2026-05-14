@@ -31,6 +31,8 @@ import { validateSection } from '$lib/schema/validate';
 
 const repeatWords = (word: string, count: number) =>
 	Array.from({ length: count }, () => word).join(' ');
+const tinyPng =
+	'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
 const primarySimulation = physicsSection.simulation!;
 
 describe('Lectio component harmonization', () => {
@@ -105,6 +107,34 @@ describe('Lectio component harmonization', () => {
 		expect(img?.getAttribute('src')).toBe('https://example.com/series-step-1.png');
 		expect(img?.getAttribute('alt')).toBe('A raster step for the series.');
 		expect(container.querySelector('svg')).not.toBeInTheDocument();
+	});
+
+	it('renders media-backed diagram series steps before URL fallbacks', () => {
+		const { container } = render(DiagramSeries, {
+			props: {
+				content: {
+					title: 'Uploaded steps',
+					diagrams: [
+						{
+							step_label: 'Upload',
+							caption: 'An uploaded media frame.',
+							media_id: 'series-media',
+							image_url: 'https://example.com/series-fallback.png'
+						}
+					]
+				},
+				media: {
+					'series-media': {
+						id: 'series-media',
+						type: 'image',
+						url: tinyPng,
+						mime_type: 'image/png'
+					}
+				}
+			}
+		});
+
+		expect(container.querySelector('img')?.getAttribute('src')).toBe(tinyPng);
 	});
 
 	it('keeps mixed image and SVG series steps in sync while navigating', async () => {
@@ -201,6 +231,41 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText('Mass is still 5 kg.')).toBeInTheDocument();
 	});
 
+	it('renders media-backed diagram compare layers before URL fallbacks', () => {
+		const { container } = render(DiagramCompare, {
+			props: {
+				content: {
+					...physicsSection.diagram_compare!,
+					before_svg: '',
+					after_svg: '',
+					before_media_id: 'before-media',
+					after_media_id: 'after-media',
+					before_image_url: 'https://example.com/before-fallback.png',
+					after_image_url: 'https://example.com/after-fallback.png'
+				},
+				media: {
+					'before-media': {
+						id: 'before-media',
+						type: 'image',
+						url: `${tinyPng}#before`,
+						mime_type: 'image/png'
+					},
+					'after-media': {
+						id: 'after-media',
+						type: 'image',
+						url: `${tinyPng}#after`,
+						mime_type: 'image/png'
+					}
+				}
+			}
+		});
+
+		const compareImages = Array.from(
+			container.querySelectorAll<HTMLImageElement>('img.compare-layer-image')
+		).map((image) => image.getAttribute('src'));
+		expect(compareImages).toEqual([`${tinyPng}#after`, `${tinyPng}#before`]);
+	});
+
 	it('falls back to SVG-backed diagram compare rendering when no image pair is present', () => {
 		const { container } = render(DiagramCompare, {
 			props: { content: physicsSection.diagram_compare! }
@@ -273,6 +338,35 @@ describe('Lectio component harmonization', () => {
 
 		// No callout guidance text
 		expect(screen.queryByText(/Tap a numbered point/i)).not.toBeInTheDocument();
+	});
+
+	it('renders uploaded media for diagram blocks before URL and SVG fallbacks', () => {
+		const { container } = render(DiagramBlock, {
+			props: {
+				content: {
+					caption: 'Uploaded diagram.',
+					alt_text: 'Uploaded diagram alt',
+					media_id: 'diagram-media',
+					image_url: 'https://example.com/fallback.png',
+					svg_content:
+						'<svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg"><text x="10" y="35">Fallback SVG</text></svg>',
+					width: 'half'
+				},
+				media: {
+					'diagram-media': {
+						id: 'diagram-media',
+						type: 'image',
+						url: tinyPng,
+						mime_type: 'image/png'
+					}
+				}
+			}
+		});
+
+		const img = container.querySelector('figure img');
+		expect(img?.getAttribute('src')).toBe(tinyPng);
+		expect(container.querySelector('figure')?.className).toContain('max-w-[50%]');
+		expect(screen.queryByText('Fallback SVG')).not.toBeInTheDocument();
 	});
 
 	it('renders hook-image content when no inline SVG is supplied', () => {
@@ -532,8 +626,46 @@ describe('Lectio component harmonization', () => {
 			}
 		});
 
-		expect(warnings).not.toContain('[Lectio/DiagramBlock] requires svg_content or image_url');
+		expect(warnings).not.toContain('[Lectio/DiagramBlock] requires media_id, svg_content, or image_url');
 		expect(warnings).not.toContain('[Lectio/DiagramBlock] callouts require svg_content');
+	});
+
+	it('accepts media-backed diagrams without requiring URL or SVG content', () => {
+		const warnings = validateSection({
+			...physicsSection,
+			diagram: {
+				caption: 'Media diagram',
+				alt_text: 'Uploaded diagram',
+				media_id: 'img-1'
+			},
+			diagram_compare: {
+				...physicsSection.diagram_compare!,
+				before_svg: '',
+				after_svg: '',
+				before_media_id: 'before-img',
+				after_media_id: 'after-img',
+				before_image_url: '',
+				after_image_url: ''
+			},
+			diagram_series: {
+				title: 'Media series',
+				diagrams: [
+					{
+						step_label: 'Upload',
+						caption: 'Uploaded frame.',
+						media_id: 'frame-img'
+					}
+				]
+			}
+		});
+
+		expect(warnings).not.toContain('[Lectio/DiagramBlock] requires media_id, svg_content, or image_url');
+		expect(warnings).not.toContain(
+			'[Lectio/DiagramCompare] requires a full before/after svg pair or a full before/after image pair'
+		);
+		expect(warnings).not.toContain(
+			'[Lectio/DiagramSeries] diagram 1 requires media_id, svg_content, or image_url'
+		);
 	});
 
 	it('accepts image-backed diagram series steps and warns when a step has no visual', () => {
@@ -555,8 +687,12 @@ describe('Lectio component harmonization', () => {
 			}
 		});
 
-		expect(warnings).not.toContain('[Lectio/DiagramSeries] diagram 1 requires svg_content or image_url');
-		expect(warnings).toContain('[Lectio/DiagramSeries] diagram 2 requires svg_content or image_url');
+		expect(warnings).not.toContain(
+			'[Lectio/DiagramSeries] diagram 1 requires media_id, svg_content, or image_url'
+		);
+		expect(warnings).toContain(
+			'[Lectio/DiagramSeries] diagram 2 requires media_id, svg_content, or image_url'
+		);
 	});
 
 	it('accepts image-backed diagram compare pairs and warns when neither a full svg pair nor image pair exists', () => {

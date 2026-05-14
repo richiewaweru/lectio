@@ -1,12 +1,19 @@
 <script lang="ts">
 	import type { DiagramCompareContent } from '$lib/schema/types';
+	import type { MediaReference } from '$lib/teacher/document';
 	import { Card } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import SideBySide from '$lib/print/SideBySide.svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
 
-	let { content }: { content: DiagramCompareContent } = $props();
+	let {
+		content,
+		media = {}
+	}: {
+		content: DiagramCompareContent;
+		media?: Record<string, MediaReference>;
+	} = $props();
 
 	const getPrintMode = usePrintMode();
 	const printMode = $derived(getPrintMode());
@@ -16,8 +23,16 @@
 
 	const beforeDetails = $derived(content.before_details ?? []);
 	const afterDetails = $derived(content.after_details ?? []);
+	const beforeMediaRef = $derived(content.before_media_id ? media[content.before_media_id] : undefined);
+	const afterMediaRef = $derived(content.after_media_id ? media[content.after_media_id] : undefined);
+	const beforeImageUrl = $derived(
+		beforeMediaRef?.type === 'image' && beforeMediaRef.url ? beforeMediaRef.url : content.before_image_url
+	);
+	const afterImageUrl = $derived(
+		afterMediaRef?.type === 'image' && afterMediaRef.url ? afterMediaRef.url : content.after_image_url
+	);
 	const hasImagePair = $derived(
-		Boolean(content.before_image_url?.trim()) && Boolean(content.after_image_url?.trim())
+		Boolean(beforeImageUrl?.trim()) && Boolean(afterImageUrl?.trim())
 	);
 	const hasSvgPair = $derived(Boolean(content.before_svg?.trim()) && Boolean(content.after_svg?.trim()));
 	const visibleAfterCount = $derived(
@@ -40,7 +55,7 @@
 				{#if hasImagePair}
 					<div class="diagram-compare-print-image">
 						<img
-							src={content.before_image_url}
+							src={beforeImageUrl}
 							alt={`${content.before_label} diagram`}
 							loading="eager"
 							decoding="async"
@@ -57,7 +72,7 @@
 				{#if hasImagePair}
 					<div class="diagram-compare-print-image">
 						<img
-							src={content.after_image_url}
+							src={afterImageUrl}
 							alt={`${content.after_label} diagram`}
 							loading="eager"
 							decoding="async"
@@ -114,7 +129,7 @@
 					{#if hasImagePair}
 						<div class="compare-layer compare-layer-after w-full">
 							<img
-								src={content.after_image_url}
+								src={afterImageUrl}
 								alt=""
 								aria-hidden="true"
 								loading="eager"
@@ -128,7 +143,7 @@
 							style="clip-path: inset(0 0 0 {stagePosition}%);"
 						>
 							<img
-								src={content.before_image_url}
+								src={beforeImageUrl}
 								alt=""
 								aria-hidden="true"
 								loading="eager"

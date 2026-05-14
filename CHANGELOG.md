@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.7] - 2026-05-14
+
+### Added
+- Builder edit schemas for comparison grids, definition families, and fill-in-the-blank word banks.
+- Media picker fields for diagram block, diagram compare, and diagram series content.
+
+### Changed
+- Comparison grid rendering accepts both legacy string cells and builder-edited object cells.
+- Diagram components resolve uploaded media references before falling back to image URLs or SVG content.
+- Validation accepts media-backed diagrams while preserving existing URL/SVG compatibility.
+
 ## [0.4.6] - 2026-05-13
 
 ### Added

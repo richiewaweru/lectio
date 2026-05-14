@@ -17,4 +17,45 @@ describe('edit-schemas', () => {
 	it('returns null for glossary-inline (no block field)', () => {
 		expect(getEditSchema('glossary-inline')).toBeNull();
 	});
+
+	it('exposes full table editing for comparison grids', () => {
+		const schema = getEditSchema('comparison-grid');
+		expect(schema?.fields.map((field) => field.field)).toEqual([
+			'title',
+			'intro',
+			'columns',
+			'rows',
+			'apply_prompt'
+		]);
+
+		const rows = schema?.fields.find((field) => field.field === 'rows');
+		expect(rows?.itemSchema?.find((field) => field.field === 'values')?.input).toBe('object-list');
+	});
+
+	it('exposes definition entries and fill-in-blank word bank fields', () => {
+		expect(getEditSchema('definition-family')?.fields.some((field) => field.field === 'definitions')).toBe(
+			true
+		);
+		expect(getEditSchema('fill-in-blank')?.fields.map((field) => field.field)).toEqual([
+			'instruction',
+			'segments',
+			'word_bank'
+		]);
+	});
+
+	it('exposes media picker fields for diagram editing', () => {
+		expect(getEditSchema('diagram-block')?.fields.map((field) => field.field)).toEqual(
+			expect.arrayContaining(['media_id', 'image_url', 'svg_content', 'width'])
+		);
+		expect(getEditSchema('diagram-compare')?.fields.map((field) => field.field)).toEqual(
+			expect.arrayContaining(['before_media_id', 'after_media_id', 'before_svg', 'after_svg'])
+		);
+
+		const seriesFrames = getEditSchema('diagram-series')?.fields.find(
+			(field) => field.field === 'diagrams'
+		);
+		expect(seriesFrames?.itemSchema?.map((field) => field.field)).toEqual(
+			expect.arrayContaining(['media_id', 'image_url', 'svg_content'])
+		);
+	});
 });

@@ -44,10 +44,33 @@ describe('content-factories', () => {
 
 	it('seeds diagram compare content with both svg and image fields for builder parity', () => {
 		expect(getEmptyContent('diagram-compare')).toMatchObject({
+			before_media_id: '',
+			after_media_id: '',
 			before_svg: '',
 			after_svg: '',
 			before_image_url: '',
 			after_image_url: ''
+		});
+	});
+
+	it('scaffolds editable table, definition family, and fill-in-blank content', () => {
+		expect(getEmptyContent('comparison-grid')).toMatchObject({
+			columns: [
+				{ id: 'col-1', title: 'Option A' },
+				{ id: 'col-2', title: 'Option B' }
+			],
+			rows: [{ values: [{ text: '' }, { text: '' }] }]
+		});
+		expect(getEmptyContent('definition-family')).toMatchObject({
+			definitions: [{ term: '', formal: '', plain: '' }]
+		});
+		expect(getEmptyContent('fill-in-blank')).toMatchObject({
+			instruction: 'Fill in each blank with the correct word.',
+			segments: [
+				{ text: 'The answer is ', is_blank: false },
+				{ text: '', is_blank: true, answer: '' }
+			],
+			word_bank: []
 		});
 	});
 });

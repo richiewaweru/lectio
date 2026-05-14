@@ -48,7 +48,8 @@ const factories: Record<string, () => Record<string, unknown>> = {
 	}),
 	'definition-family': () => ({
 		family_title: '',
-		definitions: [] as Record<string, unknown>[]
+		family_intro: '',
+		definitions: [{ term: '', formal: '', plain: '' }]
 	}),
 	'glossary-rail': () => ({
 		terms: [] as { term: string; definition: string }[]
@@ -64,8 +65,13 @@ const factories: Record<string, () => Record<string, unknown>> = {
 	}),
 	'comparison-grid': () => ({
 		title: '',
-		columns: [] as Record<string, unknown>[],
-		rows: [] as Record<string, unknown>[]
+		intro: '',
+		columns: [
+			{ id: 'col-1', title: 'Option A', summary: '' },
+			{ id: 'col-2', title: 'Option B', summary: '' }
+		],
+		rows: [{ criterion: '', values: [{ text: '' }, { text: '' }], takeaway: '' }],
+		apply_prompt: ''
 	}),
 	'worked-example-card': () => ({
 		title: '',
@@ -112,18 +118,28 @@ const factories: Record<string, () => Record<string, unknown>> = {
 		question: ''
 	}),
 	'fill-in-blank': () => ({
-		segments: [] as { text: string; is_blank: boolean; answer?: string }[]
+		instruction: 'Fill in each blank with the correct word.',
+		segments: [
+			{ text: 'The answer is ', is_blank: false },
+			{ text: '', is_blank: true, answer: '' }
+		] as { text: string; is_blank: boolean; answer?: string }[],
+		word_bank: [] as { word: string }[]
 	}),
 	'pitfall-alert': () => ({
 		misconception: '',
 		correction: ''
 	}),
 	'diagram-block': () => ({
+		media_id: '',
+		image_url: '',
 		svg_content: '',
 		caption: '',
-		alt_text: ''
+		alt_text: '',
+		width: 'full' as const
 	}),
 	'diagram-compare': () => ({
+		before_media_id: '',
+		after_media_id: '',
 		before_svg: '',
 		after_svg: '',
 		before_image_url: '',
@@ -135,7 +151,13 @@ const factories: Record<string, () => Record<string, unknown>> = {
 	}),
 	'diagram-series': () => ({
 		title: '',
-		diagrams: [] as { svg_content: string; step_label: string; caption: string }[]
+		diagrams: [] as {
+			media_id?: string;
+			image_url?: string;
+			svg_content?: string;
+			step_label: string;
+			caption: string;
+		}[]
 	}),
 	'video-embed': () => ({
 		media_id: '',

@@ -12,6 +12,10 @@
 
 	const getPrintMode = usePrintMode();
 	const printMode = $derived(getPrintMode());
+
+	function normalizeValues(values: Array<string | { text?: string }>): string[] {
+		return values.map((value) => (typeof value === 'string' ? value : value?.text ?? ''));
+	}
 </script>
 
 <div class="comparison-grid-root">
@@ -40,7 +44,7 @@
 									<span class="comparison-grid-print-takeaway">{row.takeaway}</span>
 								{/if}
 							</th>
-							{#each row.values as value}
+							{#each normalizeValues(row.values) as value}
 								<td class="comparison-grid-print-td">{value}</td>
 							{/each}
 						</tr>
@@ -115,7 +119,7 @@
 										</p>
 									{/if}
 								</div>
-								{#each row.values as value}
+								{#each normalizeValues(row.values) as value}
 									<div class="px-4 py-4 text-sm leading-6 text-foreground/82">{value}</div>
 								{/each}
 							</div>
