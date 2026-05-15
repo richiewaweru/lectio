@@ -42,6 +42,17 @@ describe('content-factories', () => {
 		}
 	});
 
+	it('seeds diagram block content with stable media and fallback fields', () => {
+		expect(getEmptyContent('diagram-block')).toMatchObject({
+			media_id: '',
+			image_url: '',
+			svg_content: '',
+			caption: '',
+			alt_text: '',
+			width: 'full'
+		});
+	});
+
 	it('seeds diagram compare content with both svg and image fields for builder parity', () => {
 		expect(getEmptyContent('diagram-compare')).toMatchObject({
 			before_media_id: '',
@@ -50,6 +61,21 @@ describe('content-factories', () => {
 			after_svg: '',
 			before_image_url: '',
 			after_image_url: ''
+		});
+	});
+
+	it('seeds diagram series with one starter frame and stable media fields', () => {
+		expect(getEmptyContent('diagram-series')).toMatchObject({
+			title: '',
+			diagrams: [
+				{
+					media_id: '',
+					image_url: '',
+					svg_content: '',
+					step_label: '',
+					caption: ''
+				}
+			]
 		});
 	});
 
