@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.9] - 2026-05-15
+
+### Changed
+- Snapshot release from master.
+
 ## [0.4.8] - 2026-05-15
 
 ### Added
@@ -160,3 +165,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 - First published version to GitHub Packages
 - Pre-1.0: contracts may change in minor versions
+
