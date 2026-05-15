@@ -69,7 +69,7 @@
 	}
 </script>
 
-<Card class="border-primary/10 bg-white/88 rh-pad-card" data-lectio-block="explanation">
+<Card class="border-primary/10 bg-white/88 rh-pad-card" data-lectio-block="explanation" data-print-container="prose">
 	<div class="rh-gap-component">
 		<div class="space-y-2">
 			<p class="eyebrow text-blue-600">Explanation</p>

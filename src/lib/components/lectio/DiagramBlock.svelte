@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DiagramContent } from '$lib/schema/types';
+	import type { MediaReference } from '$lib/teacher/document';
 	import { Card } from '$lib/components/ui/card';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
 	import {
@@ -15,15 +16,32 @@
 	import { usePrintMode } from '$lib/utils/printContext';
 	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
-	let { content }: { content: DiagramContent } = $props();
+	let {
+		content,
+		media = {}
+	}: {
+		content: DiagramContent;
+		media?: Record<string, MediaReference>;
+	} = $props();
 
 	const getPrintMode = usePrintMode();
 	const printMode = $derived(getPrintMode());
 
 	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
-	const hasImage = $derived(!!content.image_url);
+	const mediaRef = $derived(content.media_id ? media[content.media_id] : undefined);
+	const imageUrl = $derived(mediaRef?.type === 'image' && mediaRef.url ? mediaRef.url : content.image_url);
+	const hasImage = $derived(!!imageUrl);
 	const hasSvg = $derived(!!content.svg_content);
 	const showCallouts = $derived(!!(content.callouts?.length) && (hasSvg || hasImage));
+	const widthClass = $derived(
+		(
+			{
+				full: 'w-full max-w-full',
+				half: 'w-full max-w-[50%]',
+				third: 'w-full max-w-[33.333333%]'
+			} as const
+		)[content.width ?? 'full']
+	);
 
 	function getMarkerPosition(callout: DiagramCallout) {
 		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
@@ -36,7 +54,7 @@
 	}
 </script>
 
-<div class="diagram-block-root" data-lectio-block="diagram">
+<div class="diagram-block-root" data-lectio-block="diagram" data-print-container="atomic" data-print-has-media="true">
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="rh-gap-component">
 		<div class="flex flex-wrap items-center rh-gap-cluster">
@@ -49,14 +67,14 @@
 		</div>
 
 		{#if hasImage}
-			<figure class="lectio-diagram-figure">
+			<figure class="lectio-diagram-figure {widthClass} mx-auto">
 				<div
 					class="relative overflow-hidden rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
 					role="img"
 					aria-label={content.alt_text}
 				>
 					<img
-						src={content.image_url}
+						src={imageUrl}
 						alt={content.alt_text}
 						class="lectio-diagram-image"
 						loading={printMode ? 'eager' : 'lazy'}
@@ -138,7 +156,7 @@
 					<div class="overflow-x-auto rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full">
 						{#if hasImage}
 							<img
-								src={content.image_url}
+								src={imageUrl}
 								alt=""
 								class="h-auto w-full"
 								loading={printMode ? 'eager' : 'lazy'}
@@ -147,7 +165,7 @@
 							{@html sanitizeSvg(content.svg_content)}
 						{:else}
 							<div class="flex min-h-48 items-center justify-center rh-pad-card text-sm text-muted-foreground">
-								Diagram source unavailable.
+								No image provided.
 							</div>
 						{/if}
 					</div>
@@ -226,7 +244,7 @@
 						>
 							{#if hasImage}
 								<img
-									src={content.image_url}
+									src={imageUrl}
 									alt=""
 									class="h-auto w-full"
 									loading={printMode ? 'eager' : 'lazy'}
@@ -235,7 +253,7 @@
 								{@html sanitizeSvg(content.svg_content)}
 							{:else}
 								<div class="flex min-h-64 items-center justify-center rh-pad-card text-sm text-muted-foreground">
-									Diagram source unavailable.
+									No image provided.
 								</div>
 							{/if}
 						</div>

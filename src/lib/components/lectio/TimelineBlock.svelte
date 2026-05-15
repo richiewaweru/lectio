@@ -20,7 +20,7 @@
 </script>
 
 {#if printMode}
-	<div class="timeline-print">
+	<div class="timeline-print" data-print-container="itemized">
 		<VerticalList events={content.events} title={content.title} />
 		{#if content.closing_takeaway}
 			<div class="timeline-print-takeaway">

@@ -39,7 +39,11 @@
 	);
 </script>
 
-<Card class="border-primary/10 bg-white/88 rh-pad-card">
+<Card
+	class="border-primary/10 bg-white/88 rh-pad-card"
+	data-print-container="atomic"
+	data-print-has-media={isImage ? 'true' : 'false'}
+>
 	<div class="rh-gap-component-tight">
 		<p class="eyebrow">Image</p>
 

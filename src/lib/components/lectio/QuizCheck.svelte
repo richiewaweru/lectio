@@ -30,7 +30,7 @@
 </script>
 
 {#if printMode}
-	<div class="quiz-print">
+	<div class="quiz-print" data-print-container="atomic">
 		<div class="quiz-print-question">{@html renderInlineMarkdown(content.question)}</div>
 		<div class="quiz-print-options">
 			{#each content.options as option, idx}

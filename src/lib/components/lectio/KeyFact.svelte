@@ -6,7 +6,7 @@
 	let { content }: { content: KeyFactContent } = $props();
 </script>
 
-<Card class="border-primary/15 bg-primary/4 rh-pad-card">
+<Card class="border-primary/15 bg-primary/4 rh-pad-card" data-print-container="atomic">
 	<p class="text-2xl font-semibold leading-tight font-serif text-foreground">
 		<RichText text={content.fact} />
 	</p>
