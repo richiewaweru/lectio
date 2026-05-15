@@ -11,6 +11,7 @@ export {
 	SectionDivider,
 	DefinitionCard,
 	DefinitionFamily,
+	RichText,
 	GlossaryRail,
 	GlossaryInline,
 	InsightStrip,
@@ -106,11 +107,13 @@ export {
 	componentRegistry,
 	getStableComponents,
 	getComponentsByGroup,
+	getComponentsByIntent,
 	getComponentsForSubject,
 	getComponentById,
-	getComponentFieldMap
+	getComponentFieldMap,
+	PALETTE_GROUPS
 } from './schema/registry';
-export type { ComponentMeta } from './schema/registry';
+export type { ComponentMeta, PaletteGroup, TeachingIntent } from './schema/registry';
 
 // ── Validation ──────────────────────────────────────
 export { validateSection, warnIfInvalid } from './schema/validate';
@@ -145,6 +148,7 @@ export { default as LectioThemeSurface } from './templates/LectioThemeSurface.sv
 export { default as ResolvedTemplatePreviewSurface } from './templates/ResolvedTemplatePreviewSurface.svelte';
 export { default as TemplateRuntimeSurface } from './templates/TemplateRuntimeSurface.svelte';
 export { default as TemplatePreviewSurface } from './templates/TemplatePreviewSurface.svelte';
+export { LectioBlockRuntimeSurface } from './runtime';
 export type {
 	TemplateContract,
 	TemplateDefinition,

@@ -28,10 +28,7 @@ export const openCanvasContract: TemplateContract = {
 	],
 	interactionLevel: 'medium',
 
-	always_present: [
-		'section-header',
-		'what-next-bridge'
-	],
+	always_present: [],
 	contextually_present: [],
 
 	available_components: [

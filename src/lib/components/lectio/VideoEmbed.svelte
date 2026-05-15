@@ -2,6 +2,7 @@
 	import type { MediaReference } from '$lib/teacher/document';
 	import type { VideoEmbedContent } from '$lib/schema/types';
 	import { Card } from '$lib/components/ui/card';
+	import { usePrintMode } from '$lib/utils/printContext';
 
 	let {
 		content,
@@ -13,6 +14,9 @@
 
 	const ref = $derived(content.media_id ? media[content.media_id] : undefined);
 	const isVideo = $derived(ref?.type === 'video' && ref.url);
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 
 	function publicWatchUrl(embedUrl: string): string {
 		const yt = embedUrl.match(/youtube\.com\/embed\/([^?&/]+)/);
@@ -67,8 +71,24 @@
 			cancelled = true;
 		};
 	});
+
+	const printTitle = $derived(
+		content.caption?.trim() || (isVideo && ref ? 'Embedded video' : 'Video')
+	);
 </script>
 
+{#if printMode}
+	<div class="video-embed-print rh-gap-component-tight" data-print-container="atomic">
+		<p class="eyebrow">Video</p>
+		{#if isVideo && ref}
+			<p class="text-base font-semibold leading-snug">{printTitle}</p>
+			<p class="text-sm leading-6">Watch online: {publicWatchUrl(ref.url)}</p>
+		{:else}
+			<p class="text-sm leading-6">Video is not available for this block in print.</p>
+		{/if}
+		<p class="text-xs leading-5 text-muted-foreground">Full playback is available in the digital version.</p>
+	</div>
+{:else}
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="rh-gap-component-tight">
 		<p class="eyebrow">Video</p>
@@ -105,7 +125,7 @@
 					{#if qrDataUrl}
 						<img src={qrDataUrl} alt="QR code linking to video" class="h-36 w-36" />
 					{:else}
-						<p class="text-sm text-muted-foreground">Generating QRÃ¢â‚¬Â¦</p>
+						<p class="text-sm text-muted-foreground">Generating QR code…</p>
 					{/if}
 					<p class="break-all text-xs text-muted-foreground">{qrTarget}</p>
 					{#if content.caption?.trim()}
@@ -122,3 +142,4 @@
 		{/if}
 	</div>
 </Card>
+{/if}

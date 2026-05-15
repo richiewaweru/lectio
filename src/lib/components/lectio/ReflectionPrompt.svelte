@@ -23,7 +23,7 @@
 </script>
 
 {#if printMode}
-	<div class="reflection-print">
+	<div class="reflection-print" data-print-container="atomic">
 		<p class="reflection-print-prompt">{@html renderInlineMarkdown(content.prompt)}</p>
 		{#if content.type === 'sentence-stem' && content.sentence_stem}
 			<p class="reflection-print-stem">{content.sentence_stem} ________________</p>

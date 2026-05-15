@@ -41,12 +41,12 @@
 {#if printMode}
 	<!-- Print fallback -->
 	{#if content.spec.print_translation === 'hide'}
-		<div class="simulation-print-note">
+		<div class="simulation-print-note" data-print-container="atomic">
 			<p><strong>Interactive simulation:</strong> {content.spec.goal}</p>
 			<p class="simulation-print-note-sub">Available in digital version</p>
 		</div>
 	{:else if (content.spec.print_translation === 'static_diagram' || content.spec.print_translation === 'static_midstate') && content.fallback_diagram}
-		<div class="simulation-print-fallback">
+		<div class="simulation-print-fallback" data-print-container="atomic" data-print-has-media="true">
 			{#if content.spec.print_translation === 'static_midstate'}
 				<p class="simulation-type-label">{typeLabel}</p>
 			{/if}
@@ -61,8 +61,13 @@
 				<p class="simulation-print-caption">{content.fallback_diagram.caption}</p>
 			{/if}
 		</div>
+	{:else if content.explanation?.trim()}
+		<div class="simulation-print-note" data-print-container="atomic">
+			<p><strong>{typeLabel}.</strong> {content.explanation}</p>
+			<p class="simulation-print-note-sub">Interactive simulation is available in the digital version.</p>
+		</div>
 	{:else}
-		<div class="simulation-print-note">
+		<div class="simulation-print-note" data-print-container="atomic">
 			<p><strong>{typeLabel}:</strong> {content.spec.goal}</p>
 			<p class="simulation-print-note-sub">See digital version for interactive experience</p>
 		</div>

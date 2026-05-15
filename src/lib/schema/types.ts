@@ -215,7 +215,7 @@ export interface ComparisonColumn {
 
 export interface ComparisonRow {
 	criterion: string;
-	values: string[];
+	values: Array<string | { text: string }>;
 	takeaway?: string;
 }
 
@@ -368,7 +368,7 @@ export interface FillInBlankSegment {
 export interface FillInBlankContent {
 	instruction?: string; // e.g. "Complete the passage using the words below"
 	segments: FillInBlankSegment[];
-	word_bank?: string[]; // optional list of words to choose from
+	word_bank?: Array<string | { word: string }>; // optional list of words to choose from
 }
 
 // ─────────────────────────────────────────────
@@ -397,6 +397,7 @@ export interface DiagramCallout {
 }
 
 export interface DiagramContent {
+	media_id?: string;
 	svg_content?: string;
 	image_url?: string; // raster image — renders as plain <figure>, no zoom or callouts
 	caption: string; // max 60 words
@@ -404,12 +405,15 @@ export interface DiagramContent {
 	alt_text: string; // accessibility — max 80 words
 	callouts?: DiagramCallout[]; // max 6 numbered annotation points
 	figure_number?: number; // sequential across section
+	width?: 'full' | 'half' | 'third';
 }
 
 // ──
 
 export interface DiagramCompareContent {
+	before_media_id?: string;
 	before_svg?: string;
+	after_media_id?: string;
 	after_svg?: string;
 	before_image_url?: string;
 	after_image_url?: string;
@@ -426,6 +430,7 @@ export interface DiagramCompareContent {
 export interface DiagramSeriesStep {
 	step_label: string; // max 8 words
 	caption: string; // max 40 words
+	media_id?: string;
 	svg_content?: string;
 	image_url?: string;
 }

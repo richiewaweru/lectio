@@ -1,10 +1,11 @@
 import type { ZodIssue, ZodTypeAny } from 'zod';
 
+import { isContentContractEligible } from '$lib/lectio/export-policy';
 import type { LectioComponentModule } from './types';
 
 type ValidatableModule = Pick<
 	LectioComponentModule,
-	'schema' | 'metadata' | 'print' | 'examples'
+	'schema' | 'metadata' | 'print' | 'examples' | 'contentContract'
 >;
 
 const PHASES = new Set<number>([1, 2, 3, 4, 5, 6, 7]);
@@ -12,6 +13,7 @@ const PHASES = new Set<number>([1, 2, 3, 4, 5, 6, 7]);
 export interface LectioComponentValidationIssue {
 	readonly path: string;
 	readonly message: string;
+	readonly severity?: 'error' | 'warn';
 }
 
 export function validateLectioContentModule(module: ValidatableModule): LectioComponentValidationIssue[] {
@@ -33,11 +35,113 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 	if (!(m.sectionField === null || typeof m.sectionField === 'string'))
 		issues.push({ path: 'metadata.sectionField', message: `${prefix} metadata.sectionField must be string|null` });
 
-	for (const key of ['breakBehavior', 'preferredWidth', 'fallback'] as const) {
-		if (!(typeof module.print[key] === 'string' && module.print[key].trim().length > 0)) {
+	if (isContentContractEligible(module)) {
+		if (!module.contentContract) {
 			issues.push({
-				path: `print.${key}`,
-				message: `${prefix} print.${String(key)} missing`
+				path: 'contentContract',
+				message: `${prefix} contentContract is required for generation-facing exports`,
+				severity: 'error'
+			});
+		} else {
+			if (module.contentContract.componentId !== m.id) {
+				issues.push({
+					path: 'contentContract.componentId',
+					message: `${prefix} contentContract.componentId must match metadata.id`,
+					severity: 'error'
+				});
+			}
+			if (module.contentContract.sectionField !== m.sectionField) {
+				issues.push({
+					path: 'contentContract.sectionField',
+					message: `${prefix} contentContract.sectionField must match metadata.sectionField`,
+					severity: 'error'
+				});
+			}
+
+			const fieldContracts = module.contentContract.fieldContracts ?? {};
+			const fcKeys = Object.keys(fieldContracts);
+			const onlyGenericContentPlaceholder =
+				fcKeys.length === 1 &&
+				fcKeys[0] === 'content' &&
+				fieldContracts.content?.format === 'structured_object' &&
+				fieldContracts.content?.description?.includes('Schema-aligned content payload');
+
+			if (
+				(m.status === 'stable' || m.status === 'beta') &&
+				onlyGenericContentPlaceholder
+			) {
+				issues.push({
+					path: 'contentContract.fieldContracts',
+					message: `${prefix} contentContract uses a generic placeholder; replace with field-level behavior for stable exports`,
+					severity: 'warn'
+				});
+			}
+
+			if (m.id === 'diagram-block') {
+				const needed = ['image_url', 'caption', 'alt_text', 'callouts'];
+				const missing = needed.filter((key) => !fieldContracts[key]);
+				if (missing.length) {
+					issues.push({
+						path: 'contentContract.fieldContracts',
+						message: `${prefix} diagram-block contract should document: ${needed.join(', ')} (missing: ${missing.join(', ')})`,
+						severity: 'warn'
+					});
+				}
+			}
+		}
+	}
+
+	const print = module.print;
+	const breakBehaviors = new Set(['atomic', 'itemized', 'table', 'prose']);
+	const preferredWidths = new Set(['full', 'half', 'third', 'content-fit', 'inline']);
+	const mediaConstraints = new Set(['constrain-height', 'constrain-width', 'fit-cell']);
+
+	if (!breakBehaviors.has(print.breakBehavior)) {
+		issues.push({
+			path: 'print.breakBehavior',
+			message: `${prefix} print.breakBehavior must be atomic|itemized|table|prose`
+		});
+	}
+
+	if (!preferredWidths.has(print.preferredWidth)) {
+		issues.push({
+			path: 'print.preferredWidth',
+			message: `${prefix} print.preferredWidth must be full|half|third|content-fit|inline`
+		});
+	}
+
+	if (!(typeof print.fallback === 'string' && print.fallback.trim().length > 0)) {
+		issues.push({ path: 'print.fallback', message: `${prefix} print.fallback missing` });
+	}
+
+	if (typeof print.hasMedia !== 'boolean') {
+		issues.push({ path: 'print.hasMedia', message: `${prefix} print.hasMedia must be boolean` });
+	}
+
+	if (typeof print.requiresColorReset !== 'boolean') {
+		issues.push({
+			path: 'print.requiresColorReset',
+			message: `${prefix} print.requiresColorReset must be boolean`
+		});
+	}
+
+	if (print.mediaConstraint !== undefined && !mediaConstraints.has(print.mediaConstraint)) {
+		issues.push({
+			path: 'print.mediaConstraint',
+			message: `${prefix} print.mediaConstraint must be constrain-height|constrain-width|fit-cell`
+		});
+	}
+
+	if (print.breakBehavior === 'itemized') {
+		if (!(typeof print.itemSelector === 'string' && print.itemSelector.trim().length > 0)) {
+			issues.push({
+				path: 'print.itemSelector',
+				message: `${prefix} print.itemSelector is required when breakBehavior is itemized`
+			});
+		} else if (!print.itemSelector.trim().startsWith('.')) {
+			issues.push({
+				path: 'print.itemSelector',
+				message: `${prefix} print.itemSelector should be a class selector starting with '.'`
 			});
 		}
 	}

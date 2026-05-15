@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2026-05-15
+
+### Added
+- Added media-upload support fields for diagram-block, diagram-compare, and diagram-series.
+- Added media-aware rendering for uploaded raster images in diagram components.
+
+### Changed
+- Diagram render priority is now media_id → image_url → svg_content.
+- Teacher edit schemas now expose media fields for diagram variants.
+- Diagram-series empty content now includes one starter frame with stable media fields.
+
+### Compatibility
+- Existing SVG-based diagram content remains supported.
+- Existing image_url-based diagram content remains supported.
+
+## [0.4.7] - 2026-05-14
+
+### Added
+- Builder edit schemas for comparison grids, definition families, and fill-in-the-blank word banks.
+- Media picker fields for diagram block, diagram compare, and diagram series content.
+
+### Changed
+- Comparison grid rendering accepts both legacy string cells and builder-edited object cells.
+- Diagram components resolve uploaded media references before falling back to image URLs or SVG content.
+- Validation accepts media-backed diagrams while preserving existing URL/SVG compatibility.
+
+## [0.4.6] - 2026-05-13
+
+### Added
+- **`print-theme.css`:** dedicated `@media print` layer (tokens, legibility reset, `data-print-*` fragmentation, migrated block rules) imported from `theme.css`.
+- **`print_surface`:** exported on `lectio-content-contract.json` root for pipeline sizing (A4 assumptions).
+- **Contract `print` field:** each component card now includes `print` (mirrored as `print_behavior` for compatibility).
+
+### Changed
+- **`LectioPrintSpec`:** expanded with `PrintBreakBehavior` (`atomic` | `itemized` | `table` | `prose`), `hasMedia`, `requiresColorReset`, optional `itemSelector` / `mediaConstraint`.
+- **Print markup:** components emit `data-print-container`, `data-print-item`, `data-print-has-media`, and `data-print-color-reset` where applicable; DiagramSeries grid for 5 frames; WorkedExampleCard print shows alternatives; SimulationBlock uses explanation when no fallback diagram; VideoEmbed print text fallback; ComparisonGrid semantic `<table>` in print.
+
+## [0.4.4] - 2026-05-12
+
+### Added
+- **Print markdown coverage contract:** shared requirements map plus a test that fails if a known print utility skips required markdown rendering.
+
+### Changed
+- **`ExpandedSteps`:** print-mode worked-example steps now render block and inline markdown correctly and use the shared rich-text class for spacing.
+- **Markdown utilities:** `renderInlineMarkdown` and `renderBlockMarkdown` short-circuit when the input already contains HTML, preventing accidental double-processing across print surfaces.
+
+## [0.4.3] - 2026-05-10
+
+### Added
+- **`RichText` component** for inline markdown rendering in block copy.
+- **Print-mode diagram callouts:** static numbered list with explanations when printing (interactive popovers hidden).
+
+### Changed
+- **`DefinitionFamily`:** in print mode, renders all definitions expanded instead of accordion-only content.
+- **`DiagramBlock`:** captions and callout explanations use inline markdown; diagram images use `loading="eager"` when `printMode` is active.
+- **`KeyFact`:** fact and context render through `RichText`.
+- **`CalloutBlock`:** heading and body support inline markdown.
+- **`PitfallAlert`:** title supports inline markdown; examples are always visible in print (no collapsible); title uses an em dash before the misconception text.
+- **`PracticeStack` / `WorkedExampleCard`:** inline diagram images use eager loading in print mode.
+
+## [0.4.1] - 2026-05-06
+
+### Added
+- **Warning-level** contract-quality diagnostics during `pnpm run export-contracts` for placeholder-style or shallow field contracts (does not fail export; errors remain for hard contract violations).
+
+### Changed
+- **Behavior-depth contracts:** replaced generic `structured_object` / single-key placeholder field contracts with explicit, schema-aligned field-level behavior for generation-facing stable components (including `diagram-block` coverage for `image_url`, captions, accessibility fields, and callouts).
+- **Open canvas:** `open-canvas` template `always_present` set to `[]` so the layout is not pinned to default blocks.
+- **DiagramBlock:** positioned callout overlays work for **raster** diagrams (`image_url`), not only SVG.
+- **Docs:** README, component guide, registry field map, and `agents/project.md` now document the first-class component module files (`schema.ts`, `metadata.ts`, `print.ts`, `examples.ts`, `content-contract.ts`, `module.ts`) and the `export-contracts` workflow.
+
+### Regenerated
+- `contracts/section-content-schema.json`, `contracts/lectio-content-contract.json`, and `generated/python/section_content.py`.
+
 ## [0.3.3] - 2026-04-24
 
 ### Changed

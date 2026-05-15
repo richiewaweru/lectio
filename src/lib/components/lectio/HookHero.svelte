@@ -21,6 +21,8 @@
 <section
 	class="relative overflow-hidden rh-radius-outer bg-primary px-6 py-8 text-primary-foreground shadow-warm "
 	data-lectio-block="hook"
+	data-print-container="prose"
+	data-print-color-reset="true"
 >
 	<div
 		class="absolute right-4 top-3 text-[7rem] font-black leading-none text-white/5 sm:text-[9rem]"

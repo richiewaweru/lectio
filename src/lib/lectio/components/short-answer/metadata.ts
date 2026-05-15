@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":true,"acceptsQuestions":true,"producesAnswerKey":true,"interactive":false,"isMedia":false},
 	capacity: {"questionMaxWords":60,"linesMax":10,"marksMax":10},
 
+	teachingIntent: 'practice',
 	status: 'stable',
 	sectionField: 'short_answer',
 	shadcnPrimitive: "Card + Collapsible (mark scheme)"
 } satisfies LectioComponentPublicMetadata;
+

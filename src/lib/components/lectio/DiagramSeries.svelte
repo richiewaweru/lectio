@@ -1,12 +1,19 @@
 <script lang="ts">
 	import type { DiagramSeriesContent } from '$lib/schema/types';
+	import type { MediaReference } from '$lib/teacher/document';
 	import { Card } from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { usePrintMode } from '$lib/utils/printContext';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
 
-let { content }: { content: DiagramSeriesContent } = $props();
+let {
+	content,
+	media = {}
+}: {
+	content: DiagramSeriesContent;
+	media?: Record<string, MediaReference>;
+} = $props();
 
 const getPrintMode = usePrintMode();
 const printMode = $derived(getPrintMode());
@@ -19,8 +26,13 @@ function hasSvg(diagram: DiagramSeriesContent['diagrams'][number] | undefined): 
 	return Boolean(diagram?.svg_content?.trim());
 }
 
+function imageUrl(diagram: DiagramSeriesContent['diagrams'][number] | undefined): string | undefined {
+	const ref = diagram?.media_id ? media[diagram.media_id] : undefined;
+	return ref?.type === 'image' && ref.url ? ref.url : diagram?.image_url;
+}
+
 function hasImage(diagram: DiagramSeriesContent['diagrams'][number] | undefined): boolean {
-	return Boolean(diagram?.image_url?.trim());
+	return Boolean(imageUrl(diagram)?.trim());
 }
 
 $effect(() => {
@@ -35,18 +47,17 @@ const progressPercent = $derived(
 </script>
 
 {#if printMode}
-	<div class="diagram-series-print-root">
+	<div class="diagram-series-print-root" data-print-container="itemized" data-print-has-media="true">
 		<p class="diagram-series-print-title">{content.title}</p>
 		<div class="diagram-series-print-grid" data-count={content.diagrams.length}>
 			{#each content.diagrams as diagram, index}
-				<figure class="diagram-series-print-item">
+				<figure class="diagram-series-print-item" data-print-item="series-frame">
 					<figcaption class="diagram-series-print-label">
-						<span class="diagram-series-print-step">Step {index + 1}</span>
 						{diagram.step_label}
 					</figcaption>
 					{#if hasImage(diagram)}
 						<img
-							src={diagram.image_url}
+							src={imageUrl(diagram)}
 							alt={diagram.caption}
 							class="diagram-series-print-media"
 						/>
@@ -141,7 +152,7 @@ const progressPercent = $derived(
 
 			{#if hasImage(activeDiagram)}
 				<img
-					src={activeDiagram.image_url}
+					src={imageUrl(activeDiagram)}
 					alt={activeDiagram.caption}
 					class="w-full overflow-hidden rh-radius-card border border-border/70 bg-white object-contain"
 				/>
@@ -160,7 +171,6 @@ const progressPercent = $derived(
 <style>
 	.diagram-series-print-root {
 		margin: 0.75rem 0;
-		page-break-inside: avoid;
 	}
 
 	.diagram-series-print-title {
@@ -186,6 +196,10 @@ const progressPercent = $derived(
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
+	.diagram-series-print-grid[data-count="5"] {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
 	.diagram-series-print-grid[data-count="4"] {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -200,14 +214,6 @@ const progressPercent = $derived(
 		font-weight: 600;
 		margin-bottom: 0.4rem;
 		margin-top: 0;
-	}
-
-	.diagram-series-print-step {
-		font-size: var(--rh-eyebrow-size);
-		text-transform: uppercase;
-		letter-spacing: 0.14em;
-		color: #6b7280;
-		margin-right: 0.4rem;
 	}
 
 	.diagram-series-print-media {

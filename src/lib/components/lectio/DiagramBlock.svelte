@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DiagramContent } from '$lib/schema/types';
+	import type { MediaReference } from '$lib/teacher/document';
 	import { Card } from '$lib/components/ui/card';
 	import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
 	import {
@@ -12,13 +13,35 @@
 	} from '$lib/components/ui/dialog';
 	import { ZoomIn } from 'lucide-svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
+	import { usePrintMode } from '$lib/utils/printContext';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
-	let { content }: { content: DiagramContent } = $props();
+	let {
+		content,
+		media = {}
+	}: {
+		content: DiagramContent;
+		media?: Record<string, MediaReference>;
+	} = $props();
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 
 	type DiagramCallout = NonNullable<DiagramContent['callouts']>[number];
-	const hasImage = $derived(!!content.image_url);
+	const mediaRef = $derived(content.media_id ? media[content.media_id] : undefined);
+	const imageUrl = $derived(mediaRef?.type === 'image' && mediaRef.url ? mediaRef.url : content.image_url);
+	const hasImage = $derived(!!imageUrl);
 	const hasSvg = $derived(!!content.svg_content);
-	const showCallouts = $derived(hasSvg && !!(content.callouts?.length));
+	const showCallouts = $derived(!!(content.callouts?.length) && (hasSvg || hasImage));
+	const widthClass = $derived(
+		(
+			{
+				full: 'w-full max-w-full',
+				half: 'w-full max-w-[50%]',
+				third: 'w-full max-w-[33.333333%]'
+			} as const
+		)[content.width ?? 'full']
+	);
 
 	function getMarkerPosition(callout: DiagramCallout) {
 		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
@@ -31,7 +54,7 @@
 	}
 </script>
 
-<div class="diagram-block-root" data-lectio-block="diagram">
+<div class="diagram-block-root" data-lectio-block="diagram" data-print-container="atomic" data-print-has-media="true">
 <Card class="border-primary/10 bg-white/88 rh-pad-card">
 	<div class="rh-gap-component">
 		<div class="flex flex-wrap items-center rh-gap-cluster">
@@ -44,31 +67,105 @@
 		</div>
 
 		{#if hasImage}
-			<figure class="lectio-diagram-figure">
-				<img
-					src={content.image_url}
-					alt={content.alt_text}
-					class="lectio-diagram-image"
-					loading="lazy"
-				/>
+			<figure class="lectio-diagram-figure {widthClass} mx-auto">
+				<div
+					class="relative overflow-hidden rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+					role="img"
+					aria-label={content.alt_text}
+				>
+					<img
+						src={imageUrl}
+						alt={content.alt_text}
+						class="lectio-diagram-image"
+						loading={printMode ? 'eager' : 'lazy'}
+					/>
+					{#if showCallouts}
+						{#each content.callouts as callout, index}
+							{@const markerPosition = getMarkerPosition(callout)}
+							<div
+								class="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 bg-primary shadow-[0_3px_10px_rgba(15,23,42,0.18)] diagram-block-dot"
+								style="left: {callout.x}%; top: {callout.y}%;"
+								data-print-role="diagram-dot"
+							></div>
+							<Popover>
+								<PopoverTrigger>
+									{#snippet child({ props })}
+										<button
+											{...props}
+											type="button"
+											class="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/85 bg-primary text-[11px] font-semibold text-primary-foreground shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform hover:-translate-y-[55%] hover:scale-[1.04] diagram-block-callout-btn"
+											style="left: {markerPosition.left}; top: {markerPosition.top};"
+											aria-label={callout.label}
+											data-print-role="diagram-callout-trigger"
+											onpointerdown={(event) => event.stopPropagation()}
+											onclick={(event) => event.stopPropagation()}
+										>
+											{index + 1}
+										</button>
+									{/snippet}
+								</PopoverTrigger>
+								<PopoverContent class="glass-panel w-64 rounded-[1.1rem] p-3 text-sm leading-6 text-foreground/82">
+									<div class="relative z-10 space-y-2">
+										<div class="flex items-start rh-gap-cluster">
+											<span
+												class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground"
+											>
+												{index + 1}
+											</span>
+											<div>
+												<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+													Diagram point
+												</p>
+												<p class="text-sm font-semibold text-foreground">{callout.label}</p>
+											</div>
+										</div>
+										<p class="text-sm leading-6 text-foreground/80">
+											{callout.explanation}
+										</p>
+									</div>
+								</PopoverContent>
+							</Popover>
+						{/each}
+					{/if}
+				</div>
 				{#if content.caption}
 					<figcaption class="lectio-diagram-caption">
-						{content.caption}
+						{@html renderInlineMarkdown(content.caption)}
 					</figcaption>
 				{/if}
 			</figure>
+			{#if printMode && showCallouts && content.callouts}
+				<ul class="diagram-print-callouts mt-2 list-none space-y-2 text-sm leading-6 text-foreground/85">
+					{#each content.callouts as callout, index}
+						<li>
+							<strong>{index + 1}. {callout.label}</strong>
+							<span class="text-foreground/80"> — {@html renderInlineMarkdown(callout.explanation)}</span>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+			{#if showCallouts && !printMode}
+				<p class="text-xs leading-5 text-muted-foreground">
+					Tap a numbered point to see the labeled detail for that part of the diagram.
+				</p>
+			{/if}
 		{:else}
 		<Dialog>
 			<DialogTrigger>
 				<div class="group relative cursor-pointer" role="img" aria-label={content.alt_text}>
 					<div class="overflow-x-auto rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] [&_svg]:h-auto [&_svg]:min-w-0 [&_svg]:w-full">
 						{#if hasImage}
-							<img src={content.image_url} alt="" class="h-auto w-full" />
+							<img
+								src={imageUrl}
+								alt=""
+								class="h-auto w-full"
+								loading={printMode ? 'eager' : 'lazy'}
+							/>
 						{:else if hasSvg}
 							{@html sanitizeSvg(content.svg_content)}
 						{:else}
 							<div class="flex min-h-48 items-center justify-center rh-pad-card text-sm text-muted-foreground">
-								Diagram source unavailable.
+								No image provided.
 							</div>
 						{/if}
 					</div>
@@ -146,28 +243,47 @@
 							aria-label={content.alt_text}
 						>
 							{#if hasImage}
-								<img src={content.image_url} alt="" class="h-auto w-full" />
+								<img
+									src={imageUrl}
+									alt=""
+									class="h-auto w-full"
+									loading={printMode ? 'eager' : 'lazy'}
+								/>
 							{:else if hasSvg}
 								{@html sanitizeSvg(content.svg_content)}
 							{:else}
 								<div class="flex min-h-64 items-center justify-center rh-pad-card text-sm text-muted-foreground">
-									Diagram source unavailable.
+									No image provided.
 								</div>
 							{/if}
 						</div>
-						<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+						<p class="text-sm leading-6 text-muted-foreground">
+							{@html renderInlineMarkdown(content.caption)}
+						</p>
 					</div>
 				</DialogContent>
 			</DialogPortal>
 		</Dialog>
 
-		{#if showCallouts}
+		{#if printMode && showCallouts && content.callouts}
+			<ul class="diagram-print-callouts mt-2 list-none space-y-2 text-sm leading-6 text-foreground/85">
+				{#each content.callouts as callout, index}
+					<li>
+						<strong>{index + 1}. {callout.label}</strong>
+						<span class="text-foreground/80"> — {@html renderInlineMarkdown(callout.explanation)}</span>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+		{#if showCallouts && !printMode}
 			<p class="text-xs leading-5 text-muted-foreground">
 				Tap a numbered point to see the labeled detail for that part of the diagram.
 			</p>
 		{/if}
 
-		<p class="text-sm leading-6 text-muted-foreground">{content.caption}</p>
+		<p class="text-sm leading-6 text-muted-foreground">
+			{@html renderInlineMarkdown(content.caption)}
+		</p>
 		{/if}
 	</div>
 </Card>

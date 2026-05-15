@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { WorkedStep } from '$lib/schema/types';
+	import { renderBlockMarkdown, renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let {
 		steps,
@@ -13,13 +14,13 @@
 	{/if}
 
 	{#each steps as step, idx}
-		<div class="step">
+		<div class="step worked-step-print" data-print-item="worked-step">
 			<div class="step-number">{idx + 1}</div>
 			<div class="step-content">
 				<div class="step-label">{step.label}</div>
-				<div class="step-detail">{step.content}</div>
+				<div class="step-detail lectio-rich">{@html renderBlockMarkdown(step.content)}</div>
 				{#if step.note}
-					<div class="step-note">{step.note}</div>
+					<div class="step-note">{@html renderInlineMarkdown(step.note)}</div>
 				{/if}
 			</div>
 		</div>

@@ -12,7 +12,7 @@
 </script>
 
 {#if printMode}
-	<div class="textbox-print">
+	<div class="textbox-print" data-print-container="atomic">
 		<RuledLines {lines} label={content.prompt} />
 	</div>
 {:else}

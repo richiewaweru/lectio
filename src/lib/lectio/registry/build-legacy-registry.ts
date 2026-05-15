@@ -34,6 +34,7 @@ export function buildLegacyComponentRegistryFromModules(
 		const meta: ComponentMeta = {
 			id: mod.metadata.id,
 			...t,
+			teachingIntent: mod.metadata.teachingIntent,
 			name: mod.metadata.name,
 			purpose: mod.metadata.role,
 			cognitiveJob: mod.metadata.cognitiveJob,

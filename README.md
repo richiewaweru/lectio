@@ -16,7 +16,7 @@ It provides:
 | You are building | What you need from Lectio |
 |---|---|
 | A SvelteKit app that renders lesson content | Components, template surfaces, `SectionContent` types, `theme.css` |
-| An AI pipeline that generates lesson sections | `contracts/` JSON artifacts, `component-registry.json`, generation hints |
+| An AI pipeline that generates lesson sections | `contracts/lectio-content-contract.json`, `contracts/section-content-schema.json`, generated Python adapter |
 | A lesson editor or builder | Document utilities: `fromSectionContents`, `getEmptyContent`, `getEditSchema` |
 | A Python backend consuming lesson schema | `generated/python/section_content.py` Pydantic adapter |
 
@@ -35,14 +35,28 @@ section.summary     -> SummaryBlock
 section.practice    -> PracticeStack
 ```
 
-The full field-to-component mapping is exported as `contracts/component-field-map.json`.
+The full generation-facing contract is exported as `contracts/lectio-content-contract.json`.
+
+## Adding a component (contributors)
+
+Author each block as a **component module** under `src/lib/lectio/components/<component-id>/`:
+
+- `schema.ts` — Zod schema for the block payload
+- `metadata.ts` — ids, `sectionField`, planner metadata
+- `print.ts` — print rules
+- `examples.ts` — validated examples
+- `content-contract.ts` — **field-level** render behavior for generators and tooling (not generic placeholders)
+- `module.ts` — exports `lectioModule`
+- `Component.svelte` — optional thin wrapper around `src/lib/components/lectio/<Name>.svelte`
+
+Register the module in `src/lib/lectio/registry/components.ts`, keep `SectionContent` + `content-zod` in sync, then run `pnpm run export-contracts`.
 
 ## Installation
 
 ### For SvelteKit Apps
 
 ```bash
-npm install lectio
+npm install lectio@latest
 ```
 
 ### Peer Dependencies
@@ -226,15 +240,17 @@ After `npm install lectio`, these files are available under `node_modules/lectio
 | File | What it contains |
 |---|---|
 | `contracts/section-content-schema.json` | Full JSON Schema for `SectionContent` and nested types |
-| `contracts/component-registry.json` | Component metadata, field mapping, capacity, generation hints |
-| `contracts/component-field-map.json` | Component IDs -> `SectionContent` field names |
-| `contracts/preset-registry.json` | Preset palette and style metadata |
-| `contracts/{template-id}.json` | Per-template requirements, budgets, signal affinity |
+| `contracts/lectio-content-contract.json` | Unified generation contract (templates, planner index, component cards, field contracts, formatting policy, exclusions) |
 | `generated/python/section_content.py` | Auto-generated Pydantic v2 models |
 
-### Generation Hints
+### Contract Migration
 
-`component-registry.json` includes `generation_hint` for every mapped component. Use those hints when constructing generation prompts instead of inventing separate field guidance.
+The old fragmented files (`component-registry.json`, `component-field-map.json`, `component-schemas.json`, `component-examples.json`, `manifest.json`, `print-rules.json`, and per-template JSON exports) were replaced by `lectio-content-contract.json`.
+
+Use:
+- `component_cards[component_id]` for schema summaries, field-level contracts, examples, and print behavior.
+- `planner_index` for planner-facing lookup.
+- `templates` for generation-facing template constraints.
 
 ## Python Adapter
 
@@ -271,10 +287,9 @@ import type { EditSchema, FieldSchema, LessonDocument } from 'lectio';
 Recommended generation flow:
 
 ```text
-Template contract      -> required/optional components for section
-Component registry     -> mapped SectionContent field per component
+Content contract       -> planner index + template constraints + component cards
 SectionContent schema  -> exact field shape
-Generation hint        -> quality target for that field
+Python adapter         -> strict backend validation
 Pipeline output        -> validate against schema before assembly
 ```
 

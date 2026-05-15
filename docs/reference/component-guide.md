@@ -150,12 +150,12 @@ npm run export-contracts -- --out ../some-other-project/contracts
 
 The export now writes:
 
-- 13 `{template-id}.json` files
 - `section-content-schema.json`
-- `component-field-map.json`
-- `component-registry.json`
-- `preset-registry.json`
+- `lectio-content-contract.json`
 - `generated/python/section_content.py`
+
+Legacy fragmented JSON exports were retired. Read `lectio-content-contract.json` as the primary contract surface.
+`diagram-block` contracts keep `callouts` as `positioned_callouts` and treat coordinates as `x/y` percentages (0-100) for image overlay rendering.
 
 Whenever template contracts, presets, or registry metadata change, rerun both `npm run package` and `npm run export-contracts` before publishing.
 
@@ -183,10 +183,10 @@ Full reference (consumer quickstart, per-component tables, contributor guide): [
 
 If you want to reuse a component or template outside this repo, copy these pieces together:
 
-1. The component or template from `src/lib/components/lectio/` or `src/lib/templates/`.
+1. The **component module** from `src/lib/lectio/components/<id>/` (schema, metadata, print, examples, `content-contract.ts`, `module.ts`) and the `.svelte` renderer from `src/lib/components/lectio/` (or the full template from `src/lib/templates/`).
 2. Supporting UI primitives from `src/lib/components/ui/`.
-3. `src/lib/schema/types.ts` for the content contracts.
-4. `src/lib/schema/registry.ts` and `src/lib/templates/registry.ts` if you want showcase and template metadata.
+3. `src/lib/schema/types.ts` for the content contracts and `src/lib/lectio/schemas/content-zod.ts` for Zod mirrors.
+4. `src/lib/lectio/registry/` and `src/lib/templates/registry.ts` if you want showcase and template metadata.
 5. `src/lib/schema/validate.ts` and `src/lib/templates/validation.ts` if you want the same validation behavior.
 6. `src/lib/theme.css` for shared tokens, utilities, animations, and preset styling.
 7. `src/lib/utils.ts` for class merging helpers.

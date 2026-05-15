@@ -65,7 +65,7 @@ let {
 					src={diagram.image_url}
 					alt={diagram.alt_text}
 					class="practice-inline-diagram-media"
-					loading="lazy"
+					loading={printMode ? 'eager' : 'lazy'}
 				/>
 			{:else if diagram.svg_content}
 				<div class="practice-inline-diagram-media">
@@ -83,11 +83,12 @@ let {
 	<div
 		class="practice-print"
 		data-lectio-block="practice"
+		data-print-container="itemized"
 		data-print-show-inline-answers={showInlineAnswersInPrint ? 'true' : 'false'}
 	>
 		<h4 class="practice-print-title">{content.label ?? 'Practice problems'}</h4>
 		{#each content.problems as problem, idx}
-			<div class="practice-print-problem">
+			<div class="practice-print-problem" data-print-item="practice-problem">
 				<div class="practice-print-header">
 					<span class="practice-print-number">Problem {idx + 1}</span>
 					<span class="practice-print-difficulty">{problem.difficulty}</span>

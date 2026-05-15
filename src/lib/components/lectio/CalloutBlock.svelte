@@ -2,6 +2,7 @@
 	import type { CalloutBlockContent } from '$lib/schema/types';
 	import { Alert, AlertTitle, AlertDescription } from '$lib/components/ui/alert';
 	import { Info, Lightbulb, TriangleAlert, GraduationCap, BookOpen } from 'lucide-svelte';
+	import { renderInlineMarkdown } from '$lib/utils/markdown';
 
 	let { content }: { content: CalloutBlockContent } = $props();
 
@@ -33,14 +34,14 @@
 	const Icon = $derived(icons[content.variant] ?? Info);
 </script>
 
-<Alert class={variantStyles[content.variant] ?? variantStyles.info}>
+<Alert class={variantStyles[content.variant] ?? variantStyles.info} data-print-container="atomic">
 	<Icon class="h-4 w-4 {variantIconColor[content.variant] ?? variantIconColor.info}" />
 	{#if content.heading}
 		<AlertTitle class="{variantTitleColor[content.variant] ?? variantTitleColor.info} text-sm font-semibold">
-			{content.heading}
+			{@html renderInlineMarkdown(content.heading)}
 		</AlertTitle>
 	{/if}
 	<AlertDescription class="mt-1 text-sm leading-relaxed">
-		{content.body}
+		{@html renderInlineMarkdown(content.body)}
 	</AlertDescription>
 </Alert>

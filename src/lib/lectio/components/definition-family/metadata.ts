@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"definitionsMax":4,"introMaxWords":40},
 
+	teachingIntent: 'define',
 	status: 'stable',
 	sectionField: 'definition_family',
 	shadcnPrimitive: "Card + Accordion"
 } satisfies LectioComponentPublicMetadata;
+

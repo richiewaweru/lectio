@@ -14,7 +14,7 @@
 </script>
 
 {#if printMode}
-	<div class="short-answer-print">
+	<div class="short-answer-print" data-print-container="atomic">
 		<div class="short-answer-header">
 			<span class="short-answer-question">{content.question}</span>
 			{#if content.marks}

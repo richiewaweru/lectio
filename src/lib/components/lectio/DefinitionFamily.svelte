@@ -8,8 +8,12 @@
 		AccordionContent
 	} from '$lib/components/ui/accordion';
 	import DefinitionCard from './DefinitionCard.svelte';
+	import { usePrintMode } from '$lib/utils/printContext';
 
 	let { content }: { content: DefinitionFamilyContent } = $props();
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 </script>
 
 <Card class="overflow-hidden border-fuchsia-200 bg-[linear-gradient(180deg,rgba(253,244,255,0.9),rgba(255,255,255,0.92))] shadow-[0_20px_48px_rgba(192,38,211,0.1)]">
@@ -22,27 +26,54 @@
 			{/if}
 		</div>
 
-		<Accordion type="single" class="rh-gap-component-tight">
-			{#each content.definitions as definition, index}
-				<AccordionItem
-					value={`definition-${index}`}
-					class="overflow-hidden rh-radius-card border border-fuchsia-200/70 bg-white/84 shadow-[0_14px_36px_rgba(15,23,42,0.08)]"
-				>
-					<AccordionTrigger class="px-5">
-						<div class="flex flex-col items-start gap-1 text-left">
-							<span class="font-semibold text-foreground/92">{definition.term}</span>
-							{#if definition.symbol}
-								<span class="text-sm text-fuchsia-700/78">{definition.symbol}</span>
-							{/if}
-						</div>
-					</AccordionTrigger>
-					<AccordionContent>
+		{#if printMode}
+			<div
+				class="definition-family-print-list rh-gap-component-tight space-y-3"
+				data-print-container="itemized"
+			>
+				{#each content.definitions as definition}
+					<div
+						class="definition-family-print-item overflow-hidden rh-radius-card border border-fuchsia-200/70 bg-white/84 shadow-[0_14px_36px_rgba(15,23,42,0.08)]"
+						data-print-item="definition"
+					>
 						<div class="rh-radius-card bg-[linear-gradient(180deg,rgba(253,244,255,0.72),rgba(255,255,255,0.95))] p-1">
 							<DefinitionCard content={definition} />
 						</div>
-					</AccordionContent>
-				</AccordionItem>
-			{/each}
-		</Accordion>
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<Accordion type="single" class="rh-gap-component-tight">
+				{#each content.definitions as definition, index}
+					<AccordionItem
+						value={`definition-${index}`}
+						class="overflow-hidden rh-radius-card border border-fuchsia-200/70 bg-white/84 shadow-[0_14px_36px_rgba(15,23,42,0.08)]"
+					>
+						<AccordionTrigger class="px-5">
+							<div class="flex flex-col items-start gap-1 text-left">
+								<span class="font-semibold text-foreground/92">{definition.term}</span>
+								{#if definition.symbol}
+									<span class="text-sm text-fuchsia-700/78">{definition.symbol}</span>
+								{/if}
+							</div>
+						</AccordionTrigger>
+						<AccordionContent>
+							<div class="rh-radius-card bg-[linear-gradient(180deg,rgba(253,244,255,0.72),rgba(255,255,255,0.95))] p-1">
+								<DefinitionCard content={definition} />
+							</div>
+						</AccordionContent>
+					</AccordionItem>
+				{/each}
+			</Accordion>
+		{/if}
 	</div>
 </Card>
+
+<style>
+	@media print {
+		.definition-family-print-list {
+			display: grid;
+			gap: var(--rh-gap-component-tight, 0.75rem);
+		}
+	}
+</style>

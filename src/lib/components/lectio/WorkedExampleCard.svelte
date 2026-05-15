@@ -46,7 +46,7 @@
 </script>
 
 {#snippet inlineDiagram(diagram: DiagramContent)}
-	<figure class="worked-example-inline-diagram" data-lectio-inline-diagram>
+	<figure class="worked-example-inline-diagram" data-lectio-inline-diagram data-print-container="atomic">
 		<div
 			class="worked-example-inline-diagram-frame"
 			role={diagram.image_url ? undefined : 'img'}
@@ -57,7 +57,7 @@
 					src={diagram.image_url}
 					alt={diagram.alt_text}
 					class="worked-example-inline-diagram-media"
-					loading="lazy"
+					loading={printMode ? 'eager' : 'lazy'}
 				/>
 			{:else if diagram.svg_content}
 				<div class="worked-example-inline-diagram-media">
@@ -120,7 +120,11 @@
 {/snippet}
 
 {#if printMode}
-	<div class="worked-example-print">
+	<div
+		class="worked-example-print"
+		data-print-container="itemized"
+		data-print-has-media={content.diagram ? 'true' : 'false'}
+	>
 		<p class="worked-example-print-setup">{@html renderInlineMarkdown(content.setup)}</p>
 		{#if content.diagram}
 			{@render inlineDiagram(content.diagram)}
@@ -129,6 +133,22 @@
 		<p class="worked-example-print-conclusion">{@html renderInlineMarkdown(content.conclusion)}</p>
 		{#if content.answer}
 			<p class="worked-example-print-answer"><strong>Answer:</strong> {content.answer}</p>
+		{/if}
+		{#if content.alternative}
+			<div class="worked-example-print-alternatives">
+				<p class="worked-example-print-alt-heading"><strong>Alternative method</strong></p>
+				{@render methodPreview(content.alternative)}
+			</div>
+		{/if}
+		{#if content.alternatives?.length}
+			<div class="worked-example-print-alternatives">
+				<p class="worked-example-print-alt-heading"><strong>Other approaches</strong></p>
+				<ul class="list-disc space-y-2 pl-5 text-sm leading-6">
+					{#each content.alternatives as alternative}
+						<li>{alternative}</li>
+					{/each}
+				</ul>
+			</div>
 		{/if}
 	</div>
 {:else}
@@ -230,7 +250,6 @@
 
 <style>
 	.worked-example-print {
-		page-break-inside: avoid;
 		margin: 1rem 0;
 	}
 
@@ -239,6 +258,17 @@
 		color: #6b7280;
 		margin-bottom: 1rem;
 		line-height: 1.6;
+	}
+
+	.worked-example-print-alternatives {
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.worked-example-print-alt-heading {
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
 	}
 
 	.worked-example-print-conclusion {
