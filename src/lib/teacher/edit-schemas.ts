@@ -264,7 +264,19 @@ const schemasById: Record<string, EditSchema> = {
 		component_id: 'definition-family',
 		fields: [
 			{ field: 'family_title', label: 'Family title', input: 'text', required: true, maxWords: 10 },
-			{ field: 'family_intro', label: 'Intro', input: 'textarea', required: false, maxWords: 40 }
+			{ field: 'family_intro', label: 'Introduction', input: 'textarea', required: false, maxWords: 40 },
+			{
+				field: 'definitions',
+				label: 'Definitions',
+				input: 'object-list',
+				required: true,
+				maxItems: 6,
+				itemSchema: [
+					{ field: 'term', label: 'Term', input: 'text', required: true },
+					{ field: 'formal', label: 'Formal definition', input: 'textarea', required: true, maxWords: 60 },
+					{ field: 'plain', label: 'Plain language', input: 'textarea', required: true, maxWords: 40 }
+				]
+			}
 		]
 	},
 	'glossary-rail': {
@@ -311,7 +323,38 @@ const schemasById: Record<string, EditSchema> = {
 		component_id: 'comparison-grid',
 		fields: [
 			{ field: 'title', label: 'Title', input: 'text', required: true, maxWords: 10 },
-			{ field: 'intro', label: 'Intro', input: 'textarea', required: false, maxWords: 60 }
+			{ field: 'intro', label: 'Introduction', input: 'textarea', required: false, maxWords: 60 },
+			{
+				field: 'columns',
+				label: 'Columns',
+				input: 'object-list',
+				required: true,
+				maxItems: 5,
+				itemSchema: [
+					{ field: 'id', label: 'ID', input: 'text', required: true },
+					{ field: 'title', label: 'Column heading', input: 'text', required: true, maxWords: 6 },
+					{ field: 'summary', label: 'Summary', input: 'textarea', required: false, maxWords: 30 }
+				]
+			},
+			{
+				field: 'rows',
+				label: 'Rows',
+				input: 'object-list',
+				required: true,
+				maxItems: 8,
+				itemSchema: [
+					{ field: 'criterion', label: 'Row label', input: 'text', required: true, maxWords: 8 },
+					{
+						field: 'values',
+						label: 'Cell values (one per column, in order)',
+						input: 'object-list',
+						required: true,
+						itemSchema: [{ field: 'text', label: 'Value', input: 'text', required: true, maxWords: 20 }]
+					},
+					{ field: 'takeaway', label: 'Takeaway', input: 'text', required: false, maxWords: 15 }
+				]
+			},
+			{ field: 'apply_prompt', label: 'Apply prompt', input: 'textarea', required: false, maxWords: 40 }
 		]
 	},
 	'worked-example-card': {
@@ -410,14 +453,32 @@ const schemasById: Record<string, EditSchema> = {
 		component_id: 'fill-in-blank',
 		fields: [
 			{
+				field: 'instruction',
+				label: 'Instruction to student',
+				input: 'textarea',
+				required: false,
+				maxWords: 30
+			},
+			{
 				field: 'segments',
-				label: 'Segments',
+				label: 'Sentence parts (alternate between text and blanks)',
 				input: 'object-list',
 				required: true,
+				maxItems: 12,
 				itemSchema: [
-					{ field: 'text', label: 'Text', input: 'text', required: true },
-					{ field: 'is_blank', label: 'Is blank', input: 'boolean', required: true },
-					{ field: 'answer', label: 'Answer', input: 'text', required: false }
+					{ field: 'text', label: 'Text (leave empty for blanks)', input: 'text', required: false },
+					{ field: 'is_blank', label: 'This is a blank (student fills in)', input: 'boolean', required: true },
+					{ field: 'answer', label: 'Correct answer (if blank)', input: 'text', required: false }
+				]
+			},
+			{
+				field: 'word_bank',
+				label: 'Word bank (optional - shown to student as hints)',
+				input: 'object-list',
+				required: false,
+				maxItems: 8,
+				itemSchema: [
+					{ field: 'word', label: 'Word', input: 'text', required: true }
 				]
 			}
 		]
@@ -433,20 +494,34 @@ const schemasById: Record<string, EditSchema> = {
 	'diagram-block': {
 		component_id: 'diagram-block',
 		fields: [
-			{ field: 'svg_content', label: 'SVG', input: 'svg', required: false },
-			{ field: 'image_url', label: 'Image URL', input: 'text', required: false },
+			{ field: 'media_id', label: 'Image', input: 'media', required: false },
+			{ field: 'image_url', label: 'Image URL (if no upload)', input: 'text', required: false },
+			{ field: 'svg_content', label: 'SVG markup (advanced)', input: 'svg', required: false },
 			{ field: 'caption', label: 'Caption', input: 'textarea', required: true, maxWords: 60 },
-			{ field: 'alt_text', label: 'Alt text', input: 'textarea', required: true, maxWords: 80 }
+			{ field: 'alt_text', label: 'Alt text', input: 'textarea', required: true, maxWords: 80 },
+			{
+				field: 'width',
+				label: 'Width',
+				input: 'select',
+				required: false,
+				options: [
+					{ value: 'full', label: 'Full width' },
+					{ value: 'half', label: 'Half width' },
+					{ value: 'third', label: 'Third width' }
+				]
+			}
 		]
 	},
 	'diagram-compare': {
 		component_id: 'diagram-compare',
 		fields: [
-			{ field: 'before_svg', label: 'Before SVG', input: 'svg', required: false },
-			{ field: 'after_svg', label: 'After SVG', input: 'svg', required: false },
+			{ field: 'before_media_id', label: 'Before image', input: 'media', required: false },
 			{ field: 'before_image_url', label: 'Before image URL', input: 'text', required: false },
-			{ field: 'after_image_url', label: 'After image URL', input: 'text', required: false },
+			{ field: 'before_svg', label: 'Before SVG (advanced)', input: 'svg', required: false },
 			{ field: 'before_label', label: 'Before label', input: 'text', required: true, maxWords: 6 },
+			{ field: 'after_media_id', label: 'After image', input: 'media', required: false },
+			{ field: 'after_image_url', label: 'After image URL', input: 'text', required: false },
+			{ field: 'after_svg', label: 'After SVG (advanced)', input: 'svg', required: false },
 			{ field: 'after_label', label: 'After label', input: 'text', required: true, maxWords: 6 },
 			{ field: 'caption', label: 'Caption', input: 'textarea', required: true, maxWords: 60 },
 			{ field: 'alt_text', label: 'Alt text', input: 'textarea', required: true }
@@ -463,7 +538,9 @@ const schemasById: Record<string, EditSchema> = {
 				required: true,
 				maxItems: 4,
 				itemSchema: [
-					{ field: 'svg_content', label: 'SVG', input: 'svg', required: true },
+					{ field: 'media_id', label: 'Image', input: 'media', required: false },
+					{ field: 'image_url', label: 'Image URL (if no upload)', input: 'text', required: false },
+					{ field: 'svg_content', label: 'SVG markup (advanced)', input: 'svg', required: false },
 					{ field: 'step_label', label: 'Step label', input: 'text', required: true, maxWords: 8 },
 					{ field: 'caption', label: 'Caption', input: 'textarea', required: true, maxWords: 40 }
 				]
