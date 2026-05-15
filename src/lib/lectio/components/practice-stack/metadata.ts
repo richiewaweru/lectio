@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":true,"acceptsQuestions":true,"producesAnswerKey":true,"interactive":false,"isMedia":false},
 	capacity: {"problemsMin":2,"problemsMax":5,"hintsPerProblemMax":3,"questionMaxWords":100,"hintMaxWords":60},
 
+	teachingIntent: 'practice',
 	status: 'stable',
 	sectionField: 'practice',
 	shadcnPrimitive: "Accordion + Collapsible"
 } satisfies LectioComponentPublicMetadata;
+

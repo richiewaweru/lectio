@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"termsMax":8,"termsWarning":6,"definitionMaxWords":30},
 
+	teachingIntent: 'define',
 	status: 'stable',
 	sectionField: 'glossary',
 	shadcnPrimitive: "Card + ScrollArea + Sheet"
 } satisfies LectioComponentPublicMetadata;
+

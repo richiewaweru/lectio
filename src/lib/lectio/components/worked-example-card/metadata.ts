@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"stepsMax":6,"stepsWarning":4,"stepLabelMaxWords":12,"stepContentMaxWords":80},
 
+	teachingIntent: 'show-how',
 	status: 'stable',
 	sectionField: 'worked_example',
 	shadcnPrimitive: "Card + Collapsible"
 } satisfies LectioComponentPublicMetadata;
+

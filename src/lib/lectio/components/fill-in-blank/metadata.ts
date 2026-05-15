@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":true,"acceptsQuestions":true,"producesAnswerKey":true,"interactive":false,"isMedia":false},
 	capacity: {"segmentsMax":60,"blanksMax":10,"wordBankMax":15},
 
+	teachingIntent: 'practice',
 	status: 'stable',
 	sectionField: 'fill_in_blank',
 	shadcnPrimitive: "Input inline"
 } satisfies LectioComponentPublicMetadata;
+

@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"titleMaxWords":12,"subtitleMaxWords":20,"objectiveMaxWords":30},
 
+	teachingIntent: 'structure',
 	status: 'stable',
 	sectionField: 'header',
 	shadcnPrimitive: "Badge (for level pills)"
 } satisfies LectioComponentPublicMetadata;
+

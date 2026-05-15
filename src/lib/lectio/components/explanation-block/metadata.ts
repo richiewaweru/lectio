@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"bodyMaxWords":350,"emphasisMax":3},
 
+	teachingIntent: 'explain',
 	status: 'stable',
 	sectionField: 'explanation',
 	shadcnPrimitive: "Typography"
 } satisfies LectioComponentPublicMetadata;
+

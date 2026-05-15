@@ -6,7 +6,7 @@ Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned ed
 
 ## Current Phase
 
-- Phase 0a - LectioBlockRuntimeSurface
+- Phase 0b - Teaching intent + palette groups
 - Repo: `C:\Projects\lectio`
 - Status: complete
 
@@ -58,3 +58,38 @@ Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned ed
 ## Next Phase Needs
 
 - Phase 0b: add `teachingIntent` metadata and `PALETTE_GROUPS` exports.
+
+---
+
+## Phase 0b Checklist
+
+- [x] Add `TeachingIntent` type to public metadata contracts
+- [x] Add `teachingIntent` to every component `metadata.ts`
+- [x] Add `getComponentsByIntent()` helper
+- [x] Add `src/lib/lectio/registry/palette-groups.ts`
+- [x] Export `TeachingIntent`, `getComponentsByIntent`, and `PALETTE_GROUPS`
+- [x] Add tests for intent mapping and palette-group coverage
+- [x] Run validation: `npm run check && npm run build && npm test`
+- [x] Self-review diff for scope and compatibility
+- [ ] Commit with convention-compliant message
+
+## Phase 0b Validation Evidence
+
+- `npm run check` passed (`svelte-check found 0 errors and 0 warnings`)
+- `npm run build` passed (vite build completed)
+- `npm test` passed (`16 passed` files, `91 passed` tests)
+- Added focused test: `src/lib/schema/teaching-intent.test.ts`
+
+## Phase 0b What Was Done
+
+- Added `TeachingIntent` union and surfaced it through public exports.
+- Added `teachingIntent` metadata to all 32 component metadata modules.
+- Added helper and group exports:
+  - `getComponentsByIntent(intent)`
+  - `PALETTE_GROUPS`
+  - `PaletteGroup` type
+- Added `src/lib/lectio/registry/palette-groups.ts`.
+
+## Next Phase Needs
+
+- Phase 0c: version bump + publish prep and frontend dependency alignment.

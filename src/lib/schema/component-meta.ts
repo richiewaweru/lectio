@@ -1,5 +1,16 @@
 import type { BehaviourMode, SectionContent } from './types';
 
+export type TeachingIntent =
+	| 'explain'
+	| 'define'
+	| 'show-how'
+	| 'practice'
+	| 'reflect'
+	| 'warn'
+	| 'visualize'
+	| 'structure'
+	| 'engage';
+
 /** Legacy Lectio palette + contract metadata consumed by builders and exporters */
 export interface ComponentMeta {
 	id: string;
@@ -7,6 +18,7 @@ export interface ComponentMeta {
 	teacherLabel: string;
 	/** One-sentence description for teachers */
 	teacherDescription: string;
+	teachingIntent: TeachingIntent;
 	name: string;
 	purpose: string;
 	cognitiveJob: string;

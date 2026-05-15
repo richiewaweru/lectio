@@ -16,7 +16,9 @@ export const metadata = {
 	capabilities: {"acceptsMedia":false,"acceptsQuestions":true,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"promptMaxWords":40,"linesMax":10},
 
+	teachingIntent: 'reflect',
 	status: 'stable',
 	sectionField: 'student_textbox',
 	shadcnPrimitive: "Textarea (print: lined box)"
 } satisfies LectioComponentPublicMetadata;
+

@@ -107,11 +107,13 @@ export {
 	componentRegistry,
 	getStableComponents,
 	getComponentsByGroup,
+	getComponentsByIntent,
 	getComponentsForSubject,
 	getComponentById,
-	getComponentFieldMap
+	getComponentFieldMap,
+	PALETTE_GROUPS
 } from './schema/registry';
-export type { ComponentMeta } from './schema/registry';
+export type { ComponentMeta, PaletteGroup, TeachingIntent } from './schema/registry';
 
 // ── Validation ──────────────────────────────────────
 export { validateSection, warnIfInvalid } from './schema/validate';
