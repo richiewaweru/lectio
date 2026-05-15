@@ -11,7 +11,7 @@
 	let showFormal = $state(false);
 </script>
 
-<Card class="border-l-4 border-l-fuchsia-500 bg-fuchsia-50/65" data-lectio-block="definition">
+<Card class="border-l-4 border-l-fuchsia-500 bg-fuchsia-50/65" data-lectio-block="definition" data-print-container="atomic">
 	<div class="rh-gap-component rh-pad-card">
 		<div class="space-y-2">
 			<p class="eyebrow text-fuchsia-600">Define</p>

@@ -7,7 +7,7 @@
 	let { content }: { content: InterviewContent } = $props();
 </script>
 
-<Card class="border-l-4 border-l-orange-400 bg-orange-50/50 rh-pad-card">
+<Card class="border-l-4 border-l-orange-400 bg-orange-50/50 rh-pad-card" data-print-container="atomic">
 	<div class="flex rh-gap-cluster">
 		<MessageCircle class="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
 		<div class="rh-gap-component-tight">

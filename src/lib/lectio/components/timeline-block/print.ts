@@ -1,7 +1,10 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	"breakBehavior": "avoid",
-	"preferredWidth": "full",
-	"fallback": "Vertical event list"
+	breakBehavior: 'itemized',
+	itemSelector: '.timeline-print-event',
+	preferredWidth: 'full',
+	hasMedia: false,
+	requiresColorReset: false,
+	fallback: 'Vertical event list'
 } satisfies LectioPrintSpec;

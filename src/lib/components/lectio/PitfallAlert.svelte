@@ -15,7 +15,7 @@
 	const printMode = $derived(getPrintMode());
 </script>
 
-<div class="pitfall-alert-root" data-lectio-block="pitfall">
+<div class="pitfall-alert-root" data-lectio-block="pitfall" data-print-container="atomic">
 <Alert class={isMinor ? 'border-amber-200 bg-amber-50/60' : 'border-orange-200 bg-orange-50/80'}>
 	<TriangleAlert class="h-4 w-4 {isMinor ? 'text-amber-500' : 'text-orange-600'}" />
 	<AlertTitle class="{isMinor ? 'text-amber-700' : 'text-orange-700'} text-sm font-semibold">

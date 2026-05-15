@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2026-05-15
+
+### Added
+- Added media-upload support fields for diagram-block, diagram-compare, and diagram-series.
+- Added media-aware rendering for uploaded raster images in diagram components.
+
+### Changed
+- Diagram render priority is now media_id → image_url → svg_content.
+- Teacher edit schemas now expose media fields for diagram variants.
+- Diagram-series empty content now includes one starter frame with stable media fields.
+
+### Compatibility
+- Existing SVG-based diagram content remains supported.
+- Existing image_url-based diagram content remains supported.
+
+## [0.4.7] - 2026-05-14
+
+### Added
+- Builder edit schemas for comparison grids, definition families, and fill-in-the-blank word banks.
+- Media picker fields for diagram block, diagram compare, and diagram series content.
+
+### Changed
+- Comparison grid rendering accepts both legacy string cells and builder-edited object cells.
+- Diagram components resolve uploaded media references before falling back to image URLs or SVG content.
+- Validation accepts media-backed diagrams while preserving existing URL/SVG compatibility.
+
+## [0.4.6] - 2026-05-13
+
+### Added
+- **`print-theme.css`:** dedicated `@media print` layer (tokens, legibility reset, `data-print-*` fragmentation, migrated block rules) imported from `theme.css`.
+- **`print_surface`:** exported on `lectio-content-contract.json` root for pipeline sizing (A4 assumptions).
+- **Contract `print` field:** each component card now includes `print` (mirrored as `print_behavior` for compatibility).
+
+### Changed
+- **`LectioPrintSpec`:** expanded with `PrintBreakBehavior` (`atomic` | `itemized` | `table` | `prose`), `hasMedia`, `requiresColorReset`, optional `itemSelector` / `mediaConstraint`.
+- **Print markup:** components emit `data-print-container`, `data-print-item`, `data-print-has-media`, and `data-print-color-reset` where applicable; DiagramSeries grid for 5 frames; WorkedExampleCard print shows alternatives; SimulationBlock uses explanation when no fallback diagram; VideoEmbed print text fallback; ComparisonGrid semantic `<table>` in print.
+
 ## [0.4.4] - 2026-05-12
 
 ### Added

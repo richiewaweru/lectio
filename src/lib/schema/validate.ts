@@ -17,6 +17,10 @@ function words(text: string): number {
 	return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
+function comparisonValueText(value: string | { text: string }): string {
+	return typeof value === 'string' ? value : value.text;
+}
+
 function warn(location: string, message: string): string {
 	return `[Lectio/${location}] ${message}`;
 }
@@ -53,7 +57,7 @@ function validateComparisonGrid(content: ComparisonGridContent, warnings: string
 				)
 			);
 		row.values.forEach((value, valueIndex) => {
-			if (words(value) > 20)
+			if (words(comparisonValueText(value)) > 20)
 				warnings.push(
 					warn('ComparisonGrid', `row ${index + 1} value ${valueIndex + 1} exceeds 20 words`)
 				);
@@ -90,8 +94,8 @@ function validateTimeline(content: TimelineContent, warnings: string[]) {
 
 function validateDiagram(content: DiagramContent, location: string, warnings: string[]) {
 	const hasSvg = Boolean(content.svg_content?.trim());
-	const hasImage = Boolean(content.image_url?.trim());
-	if (!hasSvg && !hasImage) warnings.push(warn(location, 'requires svg_content or image_url'));
+	const hasImage = Boolean(content.media_id?.trim()) || Boolean(content.image_url?.trim());
+	if (!hasSvg && !hasImage) warnings.push(warn(location, 'requires media_id, svg_content, or image_url'));
 	if (words(content.caption) > 60) warnings.push(warn(location, 'caption exceeds 60 words'));
 	if (words(content.alt_text) > 80) warnings.push(warn(location, 'alt_text exceeds 80 words'));
 	if (content.callouts && content.callouts.length > 6)
@@ -103,7 +107,8 @@ function validateDiagram(content: DiagramContent, location: string, warnings: st
 function validateDiagramCompare(content: DiagramCompareContent, warnings: string[]) {
 	const hasSvgPair = Boolean(content.before_svg?.trim()) && Boolean(content.after_svg?.trim());
 	const hasImagePair =
-		Boolean(content.before_image_url?.trim()) && Boolean(content.after_image_url?.trim());
+		(Boolean(content.before_media_id?.trim()) || Boolean(content.before_image_url?.trim())) &&
+		(Boolean(content.after_media_id?.trim()) || Boolean(content.after_image_url?.trim()));
 	if (!hasSvgPair && !hasImagePair)
 		warnings.push(
 			warn(
@@ -124,10 +129,10 @@ function validateDiagramSeries(content: DiagramSeriesContent, warnings: string[]
 
 	content.diagrams.forEach((diagram, index) => {
 		const hasSvg = Boolean(diagram.svg_content?.trim());
-		const hasImage = Boolean(diagram.image_url?.trim());
+		const hasImage = Boolean(diagram.media_id?.trim()) || Boolean(diagram.image_url?.trim());
 		if (!hasSvg && !hasImage)
 			warnings.push(
-				warn('DiagramSeries', `diagram ${index + 1} requires svg_content or image_url`)
+				warn('DiagramSeries', `diagram ${index + 1} requires media_id, svg_content, or image_url`)
 			);
 		if (words(diagram.step_label) > 8)
 			warnings.push(warn('DiagramSeries', `diagram ${index + 1} step_label exceeds 8 words`));
