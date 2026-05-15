@@ -275,6 +275,22 @@ describe('Lectio component harmonization', () => {
 		expect(container.querySelectorAll('svg')).not.toHaveLength(0);
 	});
 
+	it('does not render image compare mode when only one side has a resolved image URL', () => {
+		const { container } = render(DiagramCompare, {
+			props: {
+				content: {
+					...physicsSection.diagram_compare!,
+					before_svg: '',
+					after_svg: '',
+					before_image_url: 'https://example.com/before-only.png',
+					after_image_url: ''
+				}
+			}
+		});
+
+		expect(container.querySelectorAll('img.compare-layer-image')).toHaveLength(0);
+	});
+
 	it('renders labeled diagram callout buttons with guidance text', () => {
 		const { container } = render(DiagramBlock, {
 			props: { content: physicsSection.diagram! }

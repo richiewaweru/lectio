@@ -151,13 +151,15 @@ const factories: Record<string, () => Record<string, unknown>> = {
 	}),
 	'diagram-series': () => ({
 		title: '',
-		diagrams: [] as {
-			media_id?: string;
-			image_url?: string;
-			svg_content?: string;
-			step_label: string;
-			caption: string;
-		}[]
+		diagrams: [
+			{
+				media_id: '',
+				image_url: '',
+				svg_content: '',
+				step_label: '',
+				caption: ''
+			}
+		]
 	}),
 	'video-embed': () => ({
 		media_id: '',

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2026-05-15
+
+### Added
+- Added media-upload support fields for diagram-block, diagram-compare, and diagram-series.
+- Added media-aware rendering for uploaded raster images in diagram components.
+
+### Changed
+- Diagram render priority is now media_id → image_url → svg_content.
+- Teacher edit schemas now expose media fields for diagram variants.
+- Diagram-series empty content now includes one starter frame with stable media fields.
+
+### Compatibility
+- Existing SVG-based diagram content remains supported.
+- Existing image_url-based diagram content remains supported.
+
 ## [0.4.7] - 2026-05-14
 
 ### Added

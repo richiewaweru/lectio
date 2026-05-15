@@ -44,11 +44,21 @@ describe('edit-schemas', () => {
 	});
 
 	it('exposes media picker fields for diagram editing', () => {
-		expect(getEditSchema('diagram-block')?.fields.map((field) => field.field)).toEqual(
+		const blockSchema = getEditSchema('diagram-block');
+		expect(blockSchema?.fields.map((field) => field.field)).toEqual(
 			expect.arrayContaining(['media_id', 'image_url', 'svg_content', 'width'])
 		);
-		expect(getEditSchema('diagram-compare')?.fields.map((field) => field.field)).toEqual(
+		expect(blockSchema?.fields.find((field) => field.field === 'media_id')?.input).toBe('media');
+
+		const compareSchema = getEditSchema('diagram-compare');
+		expect(compareSchema?.fields.map((field) => field.field)).toEqual(
 			expect.arrayContaining(['before_media_id', 'after_media_id', 'before_svg', 'after_svg'])
+		);
+		expect(compareSchema?.fields.find((field) => field.field === 'before_media_id')?.input).toBe(
+			'media'
+		);
+		expect(compareSchema?.fields.find((field) => field.field === 'after_media_id')?.input).toBe(
+			'media'
 		);
 
 		const seriesFrames = getEditSchema('diagram-series')?.fields.find(
@@ -56,6 +66,9 @@ describe('edit-schemas', () => {
 		);
 		expect(seriesFrames?.itemSchema?.map((field) => field.field)).toEqual(
 			expect.arrayContaining(['media_id', 'image_url', 'svg_content'])
+		);
+		expect(seriesFrames?.itemSchema?.find((field) => field.field === 'media_id')?.input).toBe(
+			'media'
 		);
 	});
 });
