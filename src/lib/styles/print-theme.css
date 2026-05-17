@@ -11,16 +11,18 @@
 		--rh-print-border: #d1d5db;
 		--rh-print-bg: #ffffff;
 
-		--rh-pad-card: 0.5rem;
-		--rh-pad-card-tight: 0.35rem;
-		--rh-gap-section: 0.75rem;
-		--rh-gap-component: 0.5rem;
-		--rh-gap-cluster: 0.35rem;
+		--rh-pad-card: 0.3rem;
+		--rh-pad-card-tight: 0.15rem;
+		--rh-pad-shell: 0;
+		--rh-gap-section: 0.5rem;
+		--rh-gap-component: 0.3rem;
+		--rh-gap-component-tight: 0.2rem;
+		--rh-gap-cluster: 0.2rem;
 
-		--rh-body-size: 12px;
-		--rh-eyebrow-size: 9px;
-		--rh-heading-size: 18px;
-		--rh-subheading-size: 14px;
+		--rh-body-size: 11pt;
+		--rh-eyebrow-size: 7.5pt;
+		--rh-heading-size: 16pt;
+		--rh-subheading-size: 13pt;
 
 		--rh-print-diagram-max-width: 65%;
 		--rh-print-series-frame-max-height: 180px;
@@ -43,6 +45,9 @@
 	.diagram-step-label,
 	[data-print-role='label'] {
 		color: var(--rh-print-accent) !important;
+		letter-spacing: 0.05em !important;
+		font-size: var(--rh-eyebrow-size) !important;
+		margin-bottom: 0.1rem !important;
 	}
 
 	.text-muted-foreground,
@@ -54,8 +59,9 @@
 
 	[class*='rounded-xl'],
 	[class*='rounded-lg'],
+	[class*='rounded-md'],
 	.card {
-		border-radius: 4px !important;
+		border-radius: 2px !important;
 		box-shadow: none !important;
 	}
 
@@ -159,12 +165,18 @@
 		background-image: none !important;
 		box-shadow: none !important;
 		backdrop-filter: none !important;
-		border-color: #ddd !important;
+		border: none !important;
+		border-radius: 0 !important;
+		padding: 0 !important;
 	}
 
 	.lesson-shell::before,
 	.glass-panel::before {
 		display: none !important;
+	}
+
+	.rh-pad-shell {
+		padding: 0 !important;
 	}
 
 	[data-schema-warning] {
@@ -175,11 +187,11 @@
 		background: none !important;
 		background-color: transparent !important;
 		border: none !important;
-		border-bottom: 2px solid var(--rh-print-accent) !important;
+		border-bottom: 1.5pt solid var(--rh-print-accent) !important;
 		border-radius: 0 !important;
 		box-shadow: none !important;
-		margin-bottom: 1rem !important;
-		padding-bottom: 0.75rem !important;
+		margin-bottom: 0.5rem !important;
+		padding-bottom: 0.35rem !important;
 		break-before: page;
 		page-break-before: always;
 	}
@@ -202,10 +214,13 @@
 		background: none !important;
 		background-color: transparent !important;
 		border-radius: 0 !important;
-		border-left: 3px solid var(--rh-print-accent) !important;
+		border-left: 2pt solid var(--rh-print-accent) !important;
 		box-shadow: none !important;
 		color: var(--rh-print-text) !important;
-		padding-left: 1rem !important;
+		padding-top: 0 !important;
+		padding-right: 0 !important;
+		padding-bottom: 0 !important;
+		padding-left: 0.6rem !important;
 	}
 
 	[data-lectio-block='hook'] * {
@@ -236,6 +251,7 @@
 		border-radius: 0 !important;
 		box-shadow: none !important;
 		padding: 0 !important;
+		margin: 0 !important;
 	}
 
 	[data-lectio-block='explanation'] .eyebrow {
@@ -254,7 +270,10 @@
 		border-radius: 0 !important;
 		border-right: none !important;
 		border-top: none !important;
-		padding-left: 0.75rem !important;
+		padding: 0.15rem 0 0.15rem 0.6rem !important;
+		margin-top: 0.2rem !important;
+		margin-bottom: 0.2rem !important;
+		font-size: 11px !important;
 	}
 
 	[data-lectio-block='explanation'] [data-callout-type='sidenote'] {
@@ -269,9 +288,23 @@
 		background: none !important;
 		background-color: transparent !important;
 		border: none !important;
-		border-left: 3px solid #a21caf !important;
+		border-left: 2pt solid var(--rh-print-accent) !important;
 		border-radius: 0 !important;
 		box-shadow: none !important;
+		padding: 0.15rem 0 0.15rem 0.5rem !important;
+		margin-bottom: 0.2rem !important;
+	}
+
+	.definition-family-print-item {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+
+	.definition-family-print-list {
+		gap: 0.25rem !important;
 	}
 
 	[data-lectio-block='definition'] [data-print-role='definition-toggle'],
@@ -307,13 +340,31 @@
 		display: block !important;
 	}
 
+	[data-lectio-block='practice'] [data-print-item],
+	.practice-print-problem {
+		border: 0.5pt solid var(--rh-print-border) !important;
+		border-radius: 2px !important;
+		padding: 0.3rem 0.5rem !important;
+		margin-bottom: 0.25rem !important;
+		box-shadow: none !important;
+		background: none !important;
+	}
+
+	[data-lectio-block='practice'] [data-print-role='difficulty-badge'],
+	.practice-print-difficulty {
+		font-size: 7pt !important;
+		padding: 0.05rem 0.25rem !important;
+	}
+
 	[data-lectio-block='what-next'] {
 		background: none !important;
 		background-color: transparent !important;
-		border-left: 2px solid #ccc !important;
+		border-left: 1.5pt solid #ccc !important;
 		border-radius: 0 !important;
 		box-shadow: none !important;
-		padding-left: 0.75rem !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		padding-left: 0.5rem !important;
 	}
 
 	[data-lectio-block='what-next'] [data-print-role='what-next-label'],
@@ -328,8 +379,100 @@
 	}
 
 	[data-lectio-block='pitfall'] {
-		background-color: rgba(251, 191, 36, 0.12) !important;
-		border-left: 3px solid #f59e0b !important;
+		background-color: rgba(251, 191, 36, 0.08) !important;
+		border-left: 2pt solid #f59e0b !important;
+		padding: 0.2rem 0.5rem 0.2rem 0.6rem !important;
+	}
+
+	.worked-example-print-step,
+	[data-print-item='worked-step'] {
+		margin-bottom: 0.3rem !important;
+		padding: 0.2rem 0 !important;
+	}
+
+	.worked-example-print-setup,
+	.worked-example-print-conclusion,
+	.worked-example-print-answer {
+		margin-top: 0.2rem !important;
+		margin-bottom: 0.2rem !important;
+	}
+
+	/* Future-safe print block hooks + current markup hooks */
+	[data-lectio-block='summary'],
+	[data-print-color-reset='true'] {
+		background: none !important;
+		border: 0.5pt solid var(--rh-print-border) !important;
+		border-radius: 2px !important;
+		box-shadow: none !important;
+		padding: 0.3rem 0.5rem !important;
+	}
+
+	[data-lectio-block='callout'],
+	[data-print-container='atomic'][class*='border-blue-'],
+	[data-print-container='atomic'][class*='border-emerald-'],
+	[data-print-container='atomic'][class*='border-amber-'],
+	[data-print-container='atomic'][class*='border-violet-'],
+	[data-print-container='atomic'][class*='border-rose-'] {
+		background: none !important;
+		background-color: transparent !important;
+		border: none !important;
+		border-left: 2pt solid var(--rh-print-accent) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		padding: 0.15rem 0 0.15rem 0.6rem !important;
+	}
+
+	[data-lectio-block='key-fact'],
+	[data-print-container='atomic'][class*='bg-primary/4'] {
+		background: none !important;
+		border: 1pt solid var(--rh-print-border) !important;
+		border-radius: 2px !important;
+		box-shadow: none !important;
+		padding: 0.25rem 0.5rem !important;
+	}
+
+	[data-lectio-block='comparison-grid'],
+	.comparison-grid-print-table {
+		background: none !important;
+		box-shadow: none !important;
+		border-radius: 2px !important;
+		padding: 0.2rem !important;
+	}
+
+	[data-lectio-block='comparison-grid'] td,
+	[data-lectio-block='comparison-grid'] th,
+	[data-lectio-block='comparison-grid'] [data-print-role='grid-cell'],
+	.comparison-grid-print-th,
+	.comparison-grid-print-th-row,
+	.comparison-grid-print-td {
+		padding: 0.15rem 0.3rem !important;
+		font-size: 10pt !important;
+	}
+
+	[data-lectio-block='insight-strip'],
+	section[data-print-container='table'][data-print-color-reset='true'] {
+		padding: 0.2rem !important;
+		gap: 0.2rem !important;
+	}
+
+	[data-lectio-block='insight-strip'] [data-print-role='insight-cell'] {
+		padding: 0.15rem 0.3rem !important;
+	}
+
+	[data-lectio-block='timeline'] [data-print-item='timeline-event'],
+	.timeline-print-event {
+		margin-bottom: 0.25rem !important;
+		padding: 0.15rem 0 !important;
+	}
+
+	[data-lectio-block='prerequisites'],
+	div[data-print-container='atomic'][class*='border-teal-'] {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		padding: 0.1rem 0 !important;
+		font-size: 10pt !important;
 	}
 
 	[data-lectio-block='glossary'] {
