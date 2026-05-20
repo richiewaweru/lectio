@@ -5,5 +5,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: false,
-	fallback: 'Bold bordered fact box'
+	fallback: 'Centred equation display when formula present; bold bordered fact box otherwise'
 } satisfies LectioPrintSpec;

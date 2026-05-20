@@ -5,6 +5,10 @@
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { cn } from '$lib/utils';
 	import { renderInlineMarkdown } from '$lib/utils/markdown';
+	import { usePrintMode } from '$lib/utils/printContext';
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
 
 	let {
 		content,
@@ -35,7 +39,18 @@
 	</ul>
 {/snippet}
 
-{#if mode === 'inline-strip'}
+{#if printMode}
+	<div class="glossary-rail" data-lectio-block="glossary" data-print-container="prose" data-print-color-reset="true">
+		{#each content.terms as term, index}
+			<span class="glossary-rail__entry">
+				<span class="glossary-rail__term">{term.term}</span>: {@html renderInlineMarkdown(term.definition)}
+			</span>
+			{#if index < content.terms.length - 1}
+				<span class="glossary-rail__separator" aria-hidden="true"> • </span>
+			{/if}
+		{/each}
+	</div>
+{:else if mode === 'inline-strip'}
 	<Card class={cn('bg-primary text-primary-foreground p-4', className)} data-lectio-block="glossary" data-print-container="prose" data-print-color-reset="true">
 		<div class="rh-gap-component-tight">
 			<div class="space-y-2">
@@ -114,3 +129,30 @@
 		</div>
 	</Card>
 {/if}
+
+<style>
+	@media print {
+		.glossary-rail {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.25rem 1rem;
+			padding: 0.5rem 0;
+			border-top: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+			margin: 1rem 0;
+		}
+
+		.glossary-rail__entry {
+			font-size: 0.85em;
+			line-height: 1.4;
+		}
+
+		.glossary-rail__term {
+			font-weight: 700;
+		}
+
+		.glossary-rail__separator {
+			color: #999;
+		}
+	}
+</style>

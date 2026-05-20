@@ -34,10 +34,10 @@
 	const Icon = $derived(icons[content.variant] ?? Info);
 </script>
 
-<Alert class={variantStyles[content.variant] ?? variantStyles.info} data-print-container="atomic">
+<Alert class="callout {variantStyles[content.variant] ?? variantStyles.info}" data-print-container="atomic">
 	<Icon class="h-4 w-4 {variantIconColor[content.variant] ?? variantIconColor.info}" />
 	{#if content.heading}
-		<AlertTitle class="{variantTitleColor[content.variant] ?? variantTitleColor.info} text-sm font-semibold">
+		<AlertTitle class="callout__heading {variantTitleColor[content.variant] ?? variantTitleColor.info} text-sm font-semibold">
 			{@html renderInlineMarkdown(content.heading)}
 		</AlertTitle>
 	{/if}
@@ -45,3 +45,22 @@
 		{@html renderInlineMarkdown(content.body)}
 	</AlertDescription>
 </Alert>
+
+<style>
+	@media print {
+		.callout:not(.callout--aside) {
+			border: 1.5px solid #ccc;
+			border-left: 4px solid var(--rh-print-accent, #1e3a5f);
+			padding: 0.75rem 1rem;
+			page-break-inside: avoid;
+		}
+
+		.callout__heading {
+			font-weight: 700;
+			font-size: 0.8em;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			margin-bottom: 0.25rem;
+		}
+	}
+</style>

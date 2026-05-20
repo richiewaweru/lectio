@@ -5,5 +5,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: false,
-	fallback: 'Full static, amber left border'
+	fallback: 'Bordered warning box with icon and misconception/correction structure'
 } satisfies LectioPrintSpec;

@@ -13,12 +13,14 @@ export const metadata = {
 	subjects: ["universal"],
 	behaviourModes: ['static'] as const satisfies readonly BehaviourMode[],
 
-	capabilities: {"acceptsMedia":false,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
+	capabilities: {"acceptsMedia":true,"acceptsQuestions":false,"producesAnswerKey":false,"interactive":false,"isMedia":false},
 	capacity: {"headlineMaxWords":12,"bodyMaxWords":80},
 
 	teachingIntent: 'engage',
 	status: 'stable',
 	sectionField: 'hook',
-	shadcnPrimitive: "none - pure layout"
+	shadcnPrimitive: "none - pure layout",
+	generationHint:
+		'Create felt need before explanation arrives. Can include an image via image for visual hooks.'
 } satisfies LectioComponentPublicMetadata;
 

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-05-20
+
+### Added
+- Optional `formula` on `key-fact`, `description` and `figure_ref` on `diagram-block`, and `label` on `pitfall-alert`.
+- Shared print utilities (`print-utilities.css`) for figure pairs, write-in rules, and accent cards.
+- `aside` as a valid `PrintPreferredWidth` for callout print layout.
+
+### Changed
+- Print-quality rendering pass across 13+ components (equation key facts, horizontal definition families, diagram figure pairs, print pitfall boxes, hook hero with media, and more).
+- `hook-hero` registry metadata now sets `acceptsMedia: true`.
+- Updated print fallbacks, generation hints, compliance tests, gallery fixtures, and exported contracts.
+
 ## [0.4.9] - 2026-05-15
 
 ### Changed

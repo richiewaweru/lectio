@@ -19,6 +19,8 @@ export const metadata = {
 	teachingIntent: 'explain',
 	status: 'stable',
 	sectionField: 'key_fact',
-	shadcnPrimitive: "Card"
+	shadcnPrimitive: "Card",
+	generationHint:
+		'Anchor a critical fact, formula, or equation. Use the formula field for any LaTeX expression that should be visually prominent.'
 } satisfies LectioComponentPublicMetadata;
 

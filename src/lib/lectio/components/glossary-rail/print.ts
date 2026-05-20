@@ -5,5 +5,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: true,
-	fallback: 'Inline vocabulary strip at section end'
+	fallback: 'Compact inline term strip with bold terms and inline definitions'
 } satisfies LectioPrintSpec;

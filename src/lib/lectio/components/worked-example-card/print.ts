@@ -6,5 +6,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: false,
-	fallback: 'All steps expanded'
+	fallback: 'Bordered card with numbered step indicators, all steps expanded'
 } satisfies LectioPrintSpec;

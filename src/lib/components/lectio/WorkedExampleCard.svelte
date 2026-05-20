@@ -121,10 +121,11 @@
 
 {#if printMode}
 	<div
-		class="worked-example-print"
+		class="worked-example worked-example-print"
 		data-print-container="itemized"
 		data-print-has-media={content.diagram ? 'true' : 'false'}
 	>
+		<div class="worked-example__header">{content.title}</div>
 		<p class="worked-example-print-setup">{@html renderInlineMarkdown(content.setup)}</p>
 		{#if content.diagram}
 			{@render inlineDiagram(content.diagram)}
@@ -328,6 +329,53 @@
 	}
 
 	@media print {
+		.worked-example-print {
+			border: 1.5px solid #ccc;
+			border-radius: 2px;
+			padding: 1rem 1.25rem;
+			page-break-inside: avoid;
+		}
+
+		.worked-example__header {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-weight: 700;
+			font-size: 1.05em;
+			margin-bottom: 0.75rem;
+			padding-bottom: 0.5rem;
+			border-bottom: 1px solid #e2e2e2;
+		}
+
+		.worked-example__header::before {
+			content: '✦';
+			font-size: 0.9em;
+		}
+
+		:global(.worked-example-print .step) {
+			display: flex;
+			gap: 0.75rem;
+			padding: 0.5rem 0;
+		}
+
+		:global(.worked-example-print .step-number) {
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			border-radius: 50%;
+			background: #333;
+			color: #fff;
+			font-size: 0.75em;
+			font-weight: 700;
+		}
+
+		:global(.worked-example-print .step:nth-child(even)) {
+			background: #fafafa;
+			margin: 0 -0.5rem;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+
 		.worked-example-inline-diagram {
 			margin: 0.5rem 0;
 		}

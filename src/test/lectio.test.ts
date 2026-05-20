@@ -58,17 +58,15 @@ describe('Lectio component harmonization', () => {
 		expect(screen.getByText('Visual intuition')).toBeInTheDocument();
 	});
 
-	it('renders definition families as accordion triggers with expandable content', async () => {
-		render(DefinitionFamily, {
+	it('renders definition families with a horizontal card strip when there are four or fewer terms', () => {
+		const { container } = render(DefinitionFamily, {
 			props: { content: physicsSection.definition_family! }
 		});
 
-		const trigger = screen.getByRole('button', { name: /Mass \(m\)/i });
-		expect(trigger).toBeInTheDocument();
-
-		await fireEvent.click(trigger);
-
+		expect(container.querySelector('.definition-family--horizontal')).toBeInTheDocument();
+		expect(screen.getByText('Mass (m)')).toBeInTheDocument();
 		expect(screen.getByText(/How much stuff is in an object/i)).toBeInTheDocument();
+		expect(screen.queryByRole('button', { name: /Mass \(m\)/i })).not.toBeInTheDocument();
 	});
 
 	it('keeps diagram series progress and navigation in sync', async () => {

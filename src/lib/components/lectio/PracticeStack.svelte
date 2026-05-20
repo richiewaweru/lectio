@@ -86,7 +86,7 @@ let {
 		data-print-container="itemized"
 		data-print-show-inline-answers={showInlineAnswersInPrint ? 'true' : 'false'}
 	>
-		<h4 class="practice-print-title">{content.label ?? 'Practice problems'}</h4>
+		<h4 class="practice-print-title">{content.label ?? 'Review Exercises'}</h4>
 		{#each content.problems as problem, idx}
 			<div class="practice-print-problem" data-print-item="practice-problem">
 				<div class="practice-print-header">
@@ -361,8 +361,12 @@ let {
 	}
 
 	.practice-print-title {
-		font-size: 1.125rem;
-		font-weight: 600;
+		font-weight: 700;
+		font-size: 0.85em;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding-bottom: 0.4rem;
+		border-bottom: 2px solid #333;
 		margin-bottom: 1rem;
 	}
 
@@ -397,8 +401,24 @@ let {
 	}
 
 	.practice-print-question {
-		margin-bottom: 1rem;
+		margin-bottom: 0.35rem;
+		font-weight: 500;
 		line-height: 1.6;
+	}
+
+	:global(.practice-print [data-print-role='answer-lines']) {
+		border: 1.5px solid #ccc;
+		border-radius: 2px;
+		min-height: 60px;
+		padding: 8px 12px 4px;
+		margin-bottom: 1.25rem;
+		background: repeating-linear-gradient(
+			to bottom,
+			transparent,
+			transparent 27px,
+			#ddd 27px,
+			#ddd 28px
+		);
 	}
 
 	.practice-print-hints {

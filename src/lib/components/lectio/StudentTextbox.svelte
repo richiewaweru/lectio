@@ -12,8 +12,9 @@
 </script>
 
 {#if printMode}
-	<div class="textbox-print" data-print-container="atomic">
+	<div class="textbox-print student-textbox" data-print-container="atomic">
 		<RuledLines {lines} label={content.prompt} />
+		<p class="student-textbox__label">Response Area</p>
 	</div>
 {:else}
 <Card class="border-border/60 rh-pad-card">
@@ -36,5 +37,27 @@
 	.textbox-print {
 		page-break-inside: avoid;
 		margin: 1rem 0;
+	}
+
+	:global(.textbox-print .ruled-lines) {
+		border: 1.5px solid #ccc;
+		border-radius: 2px;
+		min-height: 80px;
+		padding: 8px 12px 4px;
+		background: repeating-linear-gradient(
+			to bottom,
+			transparent,
+			transparent 27px,
+			#ddd 27px,
+			#ddd 28px
+		);
+	}
+
+	.student-textbox__label {
+		font-size: 0.8em;
+		font-style: italic;
+		color: #999;
+		text-align: right;
+		margin-top: 0.25rem;
 	}
 </style>

@@ -77,8 +77,25 @@
 	}
 
 	.short-answer-marks {
-		font-size: 0.875rem;
-		color: #6b7280;
+		font-size: 0.8em;
+		font-style: italic;
+		color: #666;
+		flex-shrink: 0;
 		margin-left: 1rem;
+	}
+
+	:global(.short-answer-print .ruled-lines) {
+		border: 1.5px solid #ccc;
+		border-radius: 2px;
+		min-height: 50px;
+		padding: 8px 12px 4px;
+		margin-bottom: 1rem;
+		background: repeating-linear-gradient(
+			to bottom,
+			transparent,
+			transparent 27px,
+			#ddd 27px,
+			#ddd 28px
+		);
 	}
 </style>

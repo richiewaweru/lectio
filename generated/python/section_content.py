@@ -83,6 +83,8 @@ class DiagramContent(BaseModel):
     alt_text: str
     callouts: Optional[list[DiagramCallout]] = None
     figure_number: Optional[float] = None
+    figure_ref: Optional[str] = None
+    description: Optional[str] = None
     width: Optional[Literal["full", "half", "third"]] = None
 class DiagramCallout(BaseModel):
     model_config = ConfigDict(extra='forbid')
@@ -239,6 +241,7 @@ class PitfallContent(BaseModel):
     model_config = ConfigDict(extra='forbid')
     misconception: str
     correction: str
+    label: Optional[str] = None
     example: Optional[str] = None
     severity: Optional[Literal["minor", "major"]] = None
     examples: Optional[list[str]] = None
@@ -346,6 +349,7 @@ class SectionDividerContent(BaseModel):
 class KeyFactContent(BaseModel):
     model_config = ConfigDict(extra='forbid')
     fact: str
+    formula: Optional[str] = None
     context: Optional[str] = None
     source: Optional[str] = None
 class HookHeroContentDataPoint(BaseModel):

@@ -90,3 +90,23 @@
 		{/if}
 	</div>
 </Card>
+
+<style>
+	@media print {
+		:global([data-lectio-block='definition']) {
+			border: 1.5px solid #ccc;
+			border-left: 4px solid #333;
+			padding: 0.75rem 1rem;
+			page-break-inside: avoid;
+		}
+
+		:global([data-lectio-block='definition'] h3) {
+			font-weight: 700;
+			margin-bottom: 0.25rem;
+		}
+
+		:global([data-lectio-block='definition'] [data-print-role='definition-toggle']) {
+			display: none !important;
+		}
+	}
+</style>

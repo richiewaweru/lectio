@@ -200,6 +200,7 @@ export interface InsightStripContent {
 
 export interface KeyFactContent {
 	fact: string; // the prominent fact, formula, or figure — max 20 words
+	formula?: string; // optional LaTeX equation displayed prominently
 	context?: string; // optional 1-sentence explanation, max 30 words
 	source?: string; // optional attribution
 }
@@ -378,6 +379,7 @@ export interface FillInBlankContent {
 export interface PitfallContent {
 	misconception: string; // max 20 words — the specific wrong belief
 	correction: string; // max 80 words — why wrong and what is true
+	label?: string; // header label, default "Common Misconception"
 	example?: string; // max 40 words — misconception in action
 	severity?: 'minor' | 'major'; // default 'major'
 	examples?: string[]; // backward compat — multiple examples
@@ -405,6 +407,8 @@ export interface DiagramContent {
 	alt_text: string; // accessibility — max 80 words
 	callouts?: DiagramCallout[]; // max 6 numbered annotation points
 	figure_number?: number; // sequential across section
+	figure_ref?: string; // e.g. "Figure 2.1"
+	description?: string; // extended figure description for side-by-side layout
 	width?: 'full' | 'half' | 'third';
 }
 

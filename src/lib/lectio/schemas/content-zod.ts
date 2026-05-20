@@ -181,6 +181,7 @@ export const InsightStripSchema = z
 export const KeyFactSchema = z
 	.object({
 		fact: z.string(),
+		formula: z.string().optional(),
 		context: z.string().optional(),
 		source: z.string().optional()
 	})
@@ -239,7 +240,9 @@ export const DiagramContentSchema = z
 				})
 			)
 			.optional(),
-		figure_number: z.number().optional()
+		figure_number: z.number().optional(),
+		figure_ref: z.string().optional(),
+		description: z.string().optional()
 	})
 	.passthrough();
 
@@ -380,6 +383,7 @@ export const PitfallSchema = z
 	.object({
 		misconception: z.string(),
 		correction: z.string(),
+		label: z.string().optional(),
 		example: z.string().optional(),
 		severity: z.enum(['minor', 'major']).optional(),
 		examples: z.array(z.string()).optional(),

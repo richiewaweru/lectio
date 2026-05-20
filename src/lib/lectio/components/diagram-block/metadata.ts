@@ -20,6 +20,7 @@ export const metadata = {
 	status: 'stable',
 	sectionField: 'diagram',
 	shadcnPrimitive: "Card + Dialog",
-	generationHint: "Write a caption that precisely describes the visual ΓÇö name every labeled element, the relationship or structure being shown, and what the student should notice first. Use present tense. Max 60 words. A good caption works as a standalone description of the image: someone reading it knows exactly what is drawn without having read the section. Do not describe the topic in general terms ΓÇö describe what is visible."
+	generationHint:
+		'Show a labelled diagram or image. Use description for extended figure text and figure_ref for sequential numbering (e.g. Figure 2.1).'
 } satisfies LectioComponentPublicMetadata;
 

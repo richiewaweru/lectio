@@ -57,7 +57,7 @@ export const calculusSection: SectionContent = {
 	},
 
 	explanation: {
-		body: 'This question forced mathematicians to invent an entirely new branch of mathematics. Algebra can find averages — how fast something moved over ten seconds, how much water flowed in an hour. But it breaks down at the boundary: the speed at one instant, the exact area under a curve. Calculus was invented to cross that boundary. It introduced two core tools: derivatives (which measure instantaneous rates of change) and integrals (which measure total accumulation). These tools turn out to be opposites of each other — a discovery called the Fundamental Theorem of Calculus that connects the two halves into one unified framework.',
+		body: 'This question forced mathematicians to invent an entirely new branch of mathematics. Algebra can find averages — how fast something moved over ten seconds, how much water flowed in an hour. But it breaks down at the boundary: the speed at one instant, the exact area under a curve. Calculus was invented to cross that boundary. It introduced two core tools: derivatives (which measure instantaneous rates of change) and integrals (which measure total accumulation). These tools turn out to be opposites of each other — a discovery called the Fundamental Theorem of Calculus that connects the two halves into one unified framework. Before calculus, every measurement was an average over some interval of time or space. The derivative asks what happens when that interval shrinks to zero — a question that looks impossible until you define a limit carefully. The integral asks how to add up infinitely many infinitesimal pieces — the area under a curve, the total distance travelled, the work done by a changing force. Together they let engineers predict orbits, economists model growth, and biologists track populations. Students often meet calculus first as a collection of rules, but the historical motivation was always practical: motion, area, and accumulation in the real world.',
 		emphasis: ['derivatives', 'integrals', 'opposites of each other'],
 		callouts: [
 			{
@@ -89,6 +89,9 @@ export const calculusSection: SectionContent = {
 			svg_content: instantSpeedDiagramSvg,
 			caption: 'A simple motion trace showing a ball moving through three time points as the average speed changes.',
 			alt_text: 'A motion trace with points at t equals 1, 2, and 3 showing a ball moving along a curved path as average speed changes over time.',
+			figure_ref: 'Figure 1.1',
+			description:
+				'The ball moves farther in each equal time step, so average speed increases. Shrinking the interval between measurements approaches the instantaneous speed at a single moment.'
 		},
 		title: 'Finding instantaneous speed from a position function',
 		setup: "A ball dropped from a 100-foot building has height h(t) = 100 − 16t² at time t seconds. What is the ball's speed at exactly t = 2?",
@@ -123,7 +126,14 @@ export const calculusSection: SectionContent = {
 		],
 	},
 
+	key_fact: {
+		fact: 'The limit of average speed as Δt → 0 gives instantaneous speed',
+		formula: 'v_{instant} = \\lim_{\\Delta t \\to 0} \\frac{\\Delta x}{\\Delta t}',
+		context: 'This limit definition is the foundation of the derivative.'
+	},
+
 	pitfall: {
+		label: 'Exam Trap',
 		misconception: 'Calculus is just faster algebra for the same problems',
 		correction:
 			'Calculus solves problems algebra genuinely cannot. Instantaneous speed, exact areas under curves, and rates of change at a point are all impossible with algebra alone.',
@@ -419,6 +429,9 @@ export const physicsSection: SectionContent = {
 		alt_text: 'Free body diagram showing a 5 kg block with a 20 Newton force arrow pointing right and a 5 Newton friction arrow pointing left, with net force annotation below.',
 		zoom_label: 'Expand diagram',
 		figure_number: 1,
+		figure_ref: 'Figure 2.1',
+		description:
+			'The applied force and friction act in opposite directions. Net force is the vector sum — here 15 N to the right, which determines the acceleration via F = ma.',
 		callouts: [
 			{ id: 'c1', x: 82, y: 45, label: 'Applied force', explanation: 'The external push of 20 Newtons applied to the right side of the block.' },
 			{ id: 'c2', x: 18, y: 45, label: 'Friction', explanation: 'Opposes motion at 5 N. Always acts opposite to the direction of movement.' },
@@ -693,8 +706,9 @@ fs.addEventListener('input',upd);upd();
 	},
 
 	key_fact: {
-		fact: '1 Newton = the force needed to accelerate 1 kg by 1 m/s²',
-		context: 'This definition makes F = ma more than a formula — it defines the unit of force itself.',
+		fact: 'Newton\'s Second Law of Motion',
+		formula: 'F_{net} = ma',
+		context: 'Net force equals mass times acceleration — the equation that links force, mass, and motion.',
 		source: 'SI base units definition',
 	},
 

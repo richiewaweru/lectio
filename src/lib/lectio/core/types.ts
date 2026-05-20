@@ -11,7 +11,7 @@ export type ComponentStatus = 'stable' | 'beta' | 'planned';
 /** Fragmentation / grouping contract for print layout and preflight */
 export type PrintBreakBehavior = 'atomic' | 'itemized' | 'table' | 'prose';
 
-export type PrintPreferredWidth = 'full' | 'half' | 'third' | 'content-fit' | 'inline';
+export type PrintPreferredWidth = 'full' | 'half' | 'third' | 'content-fit' | 'inline' | 'aside';
 
 export type PrintMediaConstraint = 'constrain-height' | 'constrain-width' | 'fit-cell';
 

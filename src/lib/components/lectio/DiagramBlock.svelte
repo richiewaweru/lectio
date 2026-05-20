@@ -14,7 +14,7 @@
 	import { ZoomIn } from 'lucide-svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
 	import { usePrintMode } from '$lib/utils/printContext';
-	import { renderInlineMarkdown } from '$lib/utils/markdown';
+	import { renderInlineMarkdown, renderBlockMarkdown } from '$lib/utils/markdown';
 
 	let {
 		content,
@@ -42,6 +42,16 @@
 			} as const
 		)[content.width ?? 'full']
 	);
+	const hasSideBySide = $derived(
+		Boolean(
+			content.description &&
+				(hasImage || hasSvg) &&
+				(printMode || !(content.callouts?.length))
+		)
+	);
+	const figureLabel = $derived(
+		content.figure_ref ?? (content.figure_number != null ? `Figure ${content.figure_number}` : null)
+	);
 
 	function getMarkerPosition(callout: DiagramCallout) {
 		const horizontalOffset = callout.x >= 72 ? -20 : callout.x <= 28 ? 20 : 0;
@@ -59,14 +69,46 @@
 	<div class="rh-gap-component">
 		<div class="flex flex-wrap items-center rh-gap-cluster">
 			<p class="eyebrow">Diagram</p>
-			{#if content.figure_number}
+			{#if figureLabel && !hasSideBySide}
 				<span class="rounded-full border border-border/70 bg-secondary px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75">
-					Figure {content.figure_number}
+					{figureLabel}
 				</span>
 			{/if}
 		</div>
 
-		{#if hasImage}
+		{#if hasSideBySide}
+			<figure class="figure-pair">
+				{#if hasImage}
+					<img
+						class="figure-pair__image"
+						src={imageUrl}
+						alt={content.alt_text}
+						loading={printMode ? 'eager' : 'lazy'}
+					/>
+				{:else if hasSvg}
+					<div
+						class="figure-pair__image overflow-hidden rh-radius-card border border-border/70 bg-white [&_svg]:h-full [&_svg]:w-full [&_svg]:object-contain"
+						role="img"
+						aria-label={content.alt_text}
+					>
+						{@html sanitizeSvg(content.svg_content)}
+					</div>
+				{/if}
+				<figcaption class="figure-pair__text">
+					{#if figureLabel}
+						<span class="diagram__figure-ref">{figureLabel}</span>
+					{/if}
+					{#if content.caption}
+						<span class="diagram__caption lectio-diagram-caption">
+							{@html renderInlineMarkdown(content.caption)}
+						</span>
+					{/if}
+					<div class="diagram__description lectio-rich">
+						{@html renderBlockMarkdown(content.description ?? '')}
+					</div>
+				</figcaption>
+			</figure>
+		{:else if hasImage}
 			<figure class="lectio-diagram-figure {widthClass} mx-auto">
 				<div
 					class="relative overflow-hidden rh-radius-card border border-border/70 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
@@ -128,6 +170,9 @@
 						{/each}
 					{/if}
 				</div>
+				{#if figureLabel}
+					<span class="diagram__figure-ref">{figureLabel}</span>
+				{/if}
 				{#if content.caption}
 					<figcaption class="lectio-diagram-caption">
 						{@html renderInlineMarkdown(content.caption)}
@@ -281,6 +326,9 @@
 			</p>
 		{/if}
 
+		{#if figureLabel}
+			<span class="diagram__figure-ref">{figureLabel}</span>
+		{/if}
 		<p class="text-sm leading-6 text-muted-foreground">
 			{@html renderInlineMarkdown(content.caption)}
 		</p>
@@ -345,5 +393,27 @@
 		font-size: 0.875rem;
 		line-height: 1.625;
 		color: hsl(var(--muted-foreground));
+	}
+
+	.diagram__figure-ref {
+		font-weight: 700;
+		font-size: 0.8em;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--muted-foreground, hsl(var(--muted-foreground)));
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.diagram__description {
+		font-size: 0.9em;
+		line-height: 1.55;
+		color: var(--foreground, hsl(var(--foreground)));
+	}
+
+	@media print {
+		.diagram__figure-ref {
+			color: #333;
+		}
 	}
 </style>

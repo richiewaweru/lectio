@@ -4,20 +4,58 @@
 	import { BarChart3, CircleHelp, Quote, Sparkles } from 'lucide-svelte';
 	import { sanitizeSvg } from '$lib/utils/sanitize';
 	import { renderInlineMarkdown } from '$lib/utils/markdown';
+	import { usePrintMode } from '$lib/utils/printContext';
 
 	let { content }: { content: HookHeroContent } = $props();
 
 	let hideImage = $state(false);
+
+	const getPrintMode = usePrintMode();
+	const printMode = $derived(getPrintMode());
+	const hasVisual = $derived(Boolean(content.svg_content || (content.image && !hideImage)));
 
 	function getHookType(): HookHeroContent['type'] {
 		return content.type ?? 'prose';
 	}
 
 	function showVisual(): boolean {
-		return Boolean(content.svg_content || (content.image && !hideImage));
+		return hasVisual;
 	}
 </script>
 
+{#if printMode}
+	<section
+		class="hook-hero hook-hero--print"
+		class:hook-hero--with-image={hasVisual}
+		data-lectio-block="hook"
+		data-print-container="atomic"
+		data-print-color-reset="true"
+	>
+		{#if hasVisual}
+			<div class="hook-hero__image-wrap">
+				{#if content.svg_content}
+					<div class="hook-hero__image hook-hero__svg">
+						{@html sanitizeSvg(content.svg_content)}
+					</div>
+				{:else if content.image}
+					<img
+						class="hook-hero__image"
+						src={content.image.url}
+						alt={content.image.alt}
+						onerror={() => {
+							hideImage = true;
+						}}
+					/>
+				{/if}
+			</div>
+		{/if}
+		<div class="hook-hero__text">
+			<h2 class="hook-hero__headline">{content.headline}</h2>
+			<p class="hook-hero__body">{@html renderInlineMarkdown(content.body)}</p>
+			<p class="hook-hero__anchor">Anchor: {content.anchor}</p>
+		</div>
+	</section>
+{:else}
 <section
 	class="relative overflow-hidden rh-radius-outer bg-primary px-6 py-8 text-primary-foreground shadow-warm "
 	data-lectio-block="hook"
@@ -156,3 +194,57 @@
 		{/if}
 	</div>
 </section>
+{/if}
+
+<style>
+	.hook-hero--with-image .hook-hero__image {
+		width: 100%;
+		max-height: 240px;
+		object-fit: cover;
+		border-radius: 4px;
+		margin-bottom: 1rem;
+	}
+
+	.hook-hero--with-image .hook-hero__svg {
+		display: block;
+		overflow: hidden;
+	}
+
+	.hook-hero--with-image .hook-hero__svg :global(svg) {
+		width: 100%;
+		max-height: 240px;
+		object-fit: contain;
+	}
+
+	@media print {
+		.hook-hero--print {
+			padding: 0;
+			border-left: 3px solid #333;
+			padding-left: 0.75rem;
+		}
+
+		.hook-hero--with-image .hook-hero__image {
+			max-height: 180px;
+			border-radius: 0;
+			border: 1px solid #ccc;
+			object-fit: contain;
+		}
+
+		.hook-hero__headline {
+			font-size: 1.25rem;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+		}
+
+		.hook-hero__body {
+			font-size: 0.9rem;
+			line-height: 1.5;
+			margin-bottom: 0.35rem;
+		}
+
+		.hook-hero__anchor {
+			font-size: 0.8em;
+			font-style: italic;
+		}
+	}
+</style>

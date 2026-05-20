@@ -5,5 +5,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: false,
-	fallback: 'Static, amber left rule'
+	fallback: 'End card with next-lesson label and arrow'
 } satisfies LectioPrintSpec;

@@ -5,5 +5,5 @@ export const print = {
 	preferredWidth: 'full',
 	hasMedia: false,
 	requiresColorReset: true,
-	fallback: 'Static table'
+	fallback: 'Horizontal metric cards with top accent border'
 } satisfies LectioPrintSpec;

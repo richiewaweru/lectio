@@ -46,6 +46,24 @@ export const contentContract = {
 				'Explanations should clarify the labeled region.',
 				'Compatible with image-based and SVG-based diagrams.'
 			]
+		},
+		description: {
+			format: 'block_markdown',
+			description: 'Extended description of the diagram for side-by-side layout.',
+			renderBehavior:
+				'When present, diagram renders in a two-column grid: image left, description right.',
+			constraints: [
+				'Keep under 80 words.',
+				'Describe what the diagram shows and why it matters.'
+			]
+		},
+		figure_ref: {
+			format: 'plain_text_short',
+			description: 'Sequential figure reference label.',
+			renderBehavior: 'Rendered as a label above or beside the caption.',
+			constraints: [
+				'Use format "Figure X.Y" where X is section number and Y is figure sequence.'
+			]
 		}
 	},
 	componentConstraints: [

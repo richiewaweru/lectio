@@ -33,6 +33,13 @@ export const contentContract = {
 		severity: {
 			format: 'enum',
 			description: 'Relative severity tag (minor or major).'
+		},
+		label: {
+			format: 'plain_text_short',
+			description: 'Header label for the pitfall box.',
+			renderBehavior:
+				'Rendered as a bold heading inside the alert box. Defaults to "Common Misconception" when absent.',
+			constraints: ['Keep to 3 words or fewer.']
 		}
 	},
 	componentConstraints: [

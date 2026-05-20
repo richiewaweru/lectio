@@ -472,6 +472,12 @@
         "figure_number": {
           "type": "number"
         },
+        "figure_ref": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
         "width": {
           "type": "string",
           "enum": [
@@ -1129,6 +1135,9 @@
         "correction": {
           "type": "string"
         },
+        "label": {
+          "type": "string"
+        },
         "example": {
           "type": "string"
         },
@@ -1608,6 +1617,9 @@
       "type": "object",
       "properties": {
         "fact": {
+          "type": "string"
+        },
+        "formula": {
           "type": "string"
         },
         "context": {

@@ -76,7 +76,8 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'none - pure layout',
 		capacity: { headlineMaxWords: 12, bodyMaxWords: 80 },
-		printFallback: 'Pull quote block with left border',
+		printFallback:
+			'Image above headline when present; pull quote block with left border when text-only',
 		status: 'stable'
 	},
 
@@ -124,7 +125,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'Card',
 		capacity: { bodyMaxWords: 50, nextMaxWords: 15, previewMaxWords: 30 },
-		printFallback: 'Static, amber left rule',
+		printFallback: 'End card with next-lesson label and arrow',
 		status: 'stable'
 	},
 
@@ -156,7 +157,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'Alert',
 		capacity: { bodyMaxWords: 60, headingMaxWords: 6 },
-		printFallback: 'Bordered callout box',
+		printFallback: 'Bordered box; floats as aside when adjacent to explanation, full-width otherwise',
 		status: 'stable'
 	},
 
@@ -222,7 +223,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static', 'accordion'],
 		shadcnPrimitive: 'Card + Accordion',
 		capacity: { definitionsMax: 4, introMaxWords: 40 },
-		printFallback: 'All definitions expanded',
+		printFallback: 'Horizontal card strip when 4 or fewer terms; vertical list when more',
 		status: 'stable'
 	},
 
@@ -238,7 +239,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['sticky', 'drawer', 'inline-strip'],
 		shadcnPrimitive: 'Card + ScrollArea + Sheet',
 		capacity: { termsMax: 8, termsWarning: 6, definitionMaxWords: 30 },
-		printFallback: 'Inline vocabulary strip at section end',
+		printFallback: 'Compact inline term strip with bold terms and inline definitions',
 		status: 'stable'
 	},
 
@@ -270,7 +271,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'CSS Grid',
 		capacity: { cellsMax: 3, cellsMin: 2, cellLinesMax: 2 },
-		printFallback: 'Static table',
+		printFallback: 'Horizontal metric cards with top accent border',
 		status: 'stable'
 	},
 
@@ -286,7 +287,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static'],
 		shadcnPrimitive: 'Card',
 		capacity: { factMaxWords: 20, contextMaxWords: 30 },
-		printFallback: 'Bold bordered fact box',
+		printFallback: 'Centred equation display when formula present; bold bordered fact box otherwise',
 		status: 'stable'
 	},
 
@@ -320,7 +321,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static', 'step-reveal', 'accordion', 'compare'],
 		shadcnPrimitive: 'Card + Collapsible',
 		capacity: { stepsMax: 6, stepsWarning: 4, stepLabelMaxWords: 12, stepContentMaxWords: 80 },
-		printFallback: 'All steps expanded',
+		printFallback: 'Bordered card with numbered step indicators, all steps expanded',
 		status: 'stable'
 	},
 
@@ -458,7 +459,7 @@ export const legacyBootstrapRegistry: Record<string, ComponentMeta> = {
 		behaviourModes: ['static', 'hint-toggle'],
 		shadcnPrimitive: 'Alert + Collapsible',
 		capacity: { misconceptionMaxWords: 20, correctionMaxWords: 80, exampleMaxWords: 40 },
-		printFallback: 'Full static, amber left border',
+		printFallback: 'Bordered warning box with icon and misconception/correction structure',
 		status: 'stable'
 	},
 

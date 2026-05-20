@@ -93,7 +93,7 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 
 	const print = module.print;
 	const breakBehaviors = new Set(['atomic', 'itemized', 'table', 'prose']);
-	const preferredWidths = new Set(['full', 'half', 'third', 'content-fit', 'inline']);
+	const preferredWidths = new Set(['full', 'half', 'third', 'content-fit', 'inline', 'aside']);
 	const mediaConstraints = new Set(['constrain-height', 'constrain-width', 'fit-cell']);
 
 	if (!breakBehaviors.has(print.breakBehavior)) {
@@ -106,7 +106,7 @@ export function validateLectioContentModule(module: ValidatableModule): LectioCo
 	if (!preferredWidths.has(print.preferredWidth)) {
 		issues.push({
 			path: 'print.preferredWidth',
-			message: `${prefix} print.preferredWidth must be full|half|third|content-fit|inline`
+			message: `${prefix} print.preferredWidth must be full|half|third|content-fit|inline|aside`
 		});
 	}
 

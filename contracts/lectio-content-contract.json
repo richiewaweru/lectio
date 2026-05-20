@@ -319,7 +319,7 @@
         "bodyMaxWords": 80
       },
       "capabilities": {
-        "acceptsMedia": false,
+        "acceptsMedia": true,
         "acceptsQuestions": false,
         "producesAnswerKey": false,
         "interactive": false,
@@ -392,21 +392,32 @@
           "headline": "Why?",
           "body": "Because.",
           "anchor": "Need"
+        },
+        {
+          "headline": "What happens when the lights go out?",
+          "body": "A forest at night reveals a hidden world of chemical reactions that only begin after sunset.",
+          "anchor": "photosynthesis stops and respiration dominates",
+          "image": {
+            "url": "https://placehold.co/800x400/e2e8f0/334155?text=Forest+at+dusk",
+            "alt": "Forest silhouette at dusk"
+          }
         }
       ],
       "print": {
-        "breakBehavior": "prose",
+        "breakBehavior": "atomic",
         "preferredWidth": "full",
-        "hasMedia": false,
+        "hasMedia": true,
+        "mediaConstraint": "constrain-height",
         "requiresColorReset": true,
-        "fallback": "Pull quote block with left border"
+        "fallback": "Image above headline when present; pull quote block with left border when text-only"
       },
       "print_behavior": {
-        "breakBehavior": "prose",
+        "breakBehavior": "atomic",
         "preferredWidth": "full",
-        "hasMedia": false,
+        "hasMedia": true,
+        "mediaConstraint": "constrain-height",
         "requiresColorReset": true,
-        "fallback": "Pull quote block with left border"
+        "fallback": "Image above headline when present; pull quote block with left border when text-only"
       }
     },
     "explanation-block": {
@@ -610,14 +621,14 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Static, amber left rule"
+        "fallback": "End card with next-lesson label and arrow"
       },
       "print_behavior": {
         "breakBehavior": "prose",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Static, amber left rule"
+        "fallback": "End card with next-lesson label and arrow"
       }
     },
     "interview-anchor": {
@@ -738,17 +749,17 @@
       ],
       "print": {
         "breakBehavior": "atomic",
-        "preferredWidth": "full",
+        "preferredWidth": "aside",
         "hasMedia": false,
-        "requiresColorReset": false,
-        "fallback": "Bordered callout box"
+        "requiresColorReset": true,
+        "fallback": "Bordered box; floats as aside when adjacent to explanation, full-width otherwise"
       },
       "print_behavior": {
         "breakBehavior": "atomic",
-        "preferredWidth": "full",
+        "preferredWidth": "aside",
         "hasMedia": false,
-        "requiresColorReset": false,
-        "fallback": "Bordered callout box"
+        "requiresColorReset": true,
+        "fallback": "Bordered box; floats as aside when adjacent to explanation, full-width otherwise"
       }
     },
     "summary-block": {
@@ -1030,20 +1041,18 @@
         }
       ],
       "print": {
-        "breakBehavior": "itemized",
-        "itemSelector": ".definition-family-print-item",
+        "breakBehavior": "atomic",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "All definitions expanded"
+        "fallback": "Horizontal card strip when 4 or fewer terms; vertical list when more"
       },
       "print_behavior": {
-        "breakBehavior": "itemized",
-        "itemSelector": ".definition-family-print-item",
+        "breakBehavior": "atomic",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "All definitions expanded"
+        "fallback": "Horizontal card strip when 4 or fewer terms; vertical list when more"
       }
     },
     "glossary-rail": {
@@ -1116,14 +1125,14 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": true,
-        "fallback": "Inline vocabulary strip at section end"
+        "fallback": "Compact inline term strip with bold terms and inline definitions"
       },
       "print_behavior": {
         "breakBehavior": "prose",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": true,
-        "fallback": "Inline vocabulary strip at section end"
+        "fallback": "Compact inline term strip with bold terms and inline definitions"
       }
     },
     "insight-strip": {
@@ -1195,14 +1204,14 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": true,
-        "fallback": "Static table"
+        "fallback": "Horizontal metric cards with top accent border"
       },
       "print_behavior": {
         "breakBehavior": "table",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": true,
-        "fallback": "Static table"
+        "fallback": "Horizontal metric cards with top accent border"
       }
     },
     "key-fact": {
@@ -1244,6 +1253,15 @@
           "format": "plain_text",
           "description": "Optional attribution or source label.",
           "renderBehavior": "Plain text."
+        },
+        "formula": {
+          "format": "latex_raw",
+          "description": "Standalone equation or formula to display prominently.",
+          "constraints": [
+            "Use raw LaTeX.",
+            "Do not wrap in dollar-sign delimiters.",
+            "When formula is present, it takes visual priority over the fact text."
+          ]
         }
       },
       "component_constraints": [
@@ -1252,6 +1270,11 @@
       "examples": [
         {
           "fact": "E = mc²"
+        },
+        {
+          "fact": "The Essential Equation of Photosynthesis",
+          "formula": "6CO_2 + 6H_2O + \\text{light energy} \\rightarrow C_6H_{12}O_6 + 6O_2",
+          "context": "Carbon Dioxide + Water + Light → Glucose + Oxygen"
         }
       ],
       "print": {
@@ -1259,14 +1282,14 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Bold bordered fact box"
+        "fallback": "Centred equation display when formula present; bold bordered fact box otherwise"
       },
       "print_behavior": {
         "breakBehavior": "atomic",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Bold bordered fact box"
+        "fallback": "Centred equation display when formula present; bold bordered fact box otherwise"
       }
     },
     "comparison-grid": {
@@ -1490,7 +1513,7 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "All steps expanded"
+        "fallback": "Bordered card with numbered step indicators, all steps expanded"
       },
       "print_behavior": {
         "breakBehavior": "itemized",
@@ -1498,7 +1521,7 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "All steps expanded"
+        "fallback": "Bordered card with numbered step indicators, all steps expanded"
       }
     },
     "process-steps": {
@@ -2187,6 +2210,14 @@
         "severity": {
           "format": "enum",
           "description": "Relative severity tag (minor or major)."
+        },
+        "label": {
+          "format": "plain_text_short",
+          "description": "Header label for the pitfall box.",
+          "renderBehavior": "Rendered as a bold heading inside the alert box. Defaults to \"Common Misconception\" when absent.",
+          "constraints": [
+            "Keep to 3 words or fewer."
+          ]
         }
       },
       "component_constraints": [
@@ -2197,6 +2228,11 @@
         {
           "misconception": "Wrong idea",
           "correction": "Right idea."
+        },
+        {
+          "label": "Exam Trap",
+          "misconception": "Heavier objects fall faster",
+          "correction": "In a vacuum, all objects accelerate at the same rate regardless of mass."
         }
       ],
       "print": {
@@ -2204,14 +2240,14 @@
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Full static, amber left border"
+        "fallback": "Bordered warning box with icon and misconception/correction structure"
       },
       "print_behavior": {
         "breakBehavior": "atomic",
         "preferredWidth": "full",
         "hasMedia": false,
         "requiresColorReset": false,
-        "fallback": "Full static, amber left border"
+        "fallback": "Bordered warning box with icon and misconception/correction structure"
       }
     },
     "diagram-block": {
@@ -2281,6 +2317,23 @@
             "Explanations should clarify the labeled region.",
             "Compatible with image-based and SVG-based diagrams."
           ]
+        },
+        "description": {
+          "format": "block_markdown",
+          "description": "Extended description of the diagram for side-by-side layout.",
+          "renderBehavior": "When present, diagram renders in a two-column grid: image left, description right.",
+          "constraints": [
+            "Keep under 80 words.",
+            "Describe what the diagram shows and why it matters."
+          ]
+        },
+        "figure_ref": {
+          "format": "plain_text_short",
+          "description": "Sequential figure reference label.",
+          "renderBehavior": "Rendered as a label above or beside the caption.",
+          "constraints": [
+            "Use format \"Figure X.Y\" where X is section number and Y is figure sequence."
+          ]
         }
       },
       "component_constraints": [
@@ -2291,6 +2344,13 @@
         {
           "caption": "A labelled diagram for the lesson.",
           "alt_text": "Diagram showing key parts referenced in the prose."
+        },
+        {
+          "caption": "Position–time graph for uniform acceleration.",
+          "alt_text": "Curved line on axes labelled time and position.",
+          "figure_ref": "Figure 2.1",
+          "description": "The curve bends upward because velocity increases over time. Notice how equal time steps cover larger distances — that is the signature of acceleration.",
+          "svg_content": "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 100 Q100 20 180 40\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/></svg>"
         }
       ],
       "print": {

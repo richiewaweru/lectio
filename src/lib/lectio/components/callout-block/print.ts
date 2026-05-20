@@ -2,8 +2,8 @@ import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
 	breakBehavior: 'atomic',
-	preferredWidth: 'full',
+	preferredWidth: 'aside',
 	hasMedia: false,
-	requiresColorReset: false,
-	fallback: 'Bordered callout box'
+	requiresColorReset: true,
+	fallback: 'Bordered box; floats as aside when adjacent to explanation, full-width otherwise'
 } satisfies LectioPrintSpec;

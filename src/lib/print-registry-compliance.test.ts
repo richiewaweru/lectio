@@ -26,7 +26,7 @@ describe('Print Fallback Registry Compliance', () => {
 		const expected: Record<string, string> = {
 			'quiz-check': 'Question and options shown, correct answer marked',
 			'practice-stack': 'All visible, write-in lines rendered; inline answers hidden by default',
-			'worked-example-card': 'All steps expanded',
+			'worked-example-card': 'Bordered card with numbered step indicators, all steps expanded',
 			'simulation-block': 'Static diagram at midstate or explanation text',
 			'fill-in-blank': 'Passage with underlined blanks, word bank box below',
 			'diagram-compare': 'Both diagrams shown side by side',
@@ -59,8 +59,16 @@ describe('Print Fallback Registry Compliance', () => {
 		const expected: Record<string, string> = {
 			'diagram-series': 'All diagrams in sequence with step labels',
 			'diagram-block': 'Static diagram centred, width constrained for print',
-			'pitfall-alert': 'Full static, amber left border',
-			'comparison-grid': 'Static comparison table'
+			'pitfall-alert': 'Bordered warning box with icon and misconception/correction structure',
+			'comparison-grid': 'Static comparison table',
+			'hook-hero':
+				'Image above headline when present; pull quote block with left border when text-only',
+			'definition-family': 'Horizontal card strip when 4 or fewer terms; vertical list when more',
+			'key-fact': 'Centred equation display when formula present; bold bordered fact box otherwise',
+			'callout-block': 'Bordered box; floats as aside when adjacent to explanation, full-width otherwise',
+			'what-next-bridge': 'End card with next-lesson label and arrow',
+			'insight-strip': 'Horizontal metric cards with top accent border',
+			'glossary-rail': 'Compact inline term strip with bold terms and inline definitions'
 		};
 
 		for (const [id, expectedFallback] of Object.entries(expected)) {

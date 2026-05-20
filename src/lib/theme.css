@@ -1,6 +1,7 @@
 @import 'katex/dist/katex.min.css';
 @import './markdown.css';
 @import './styles/print-theme.css';
+@import './lectio/print-utilities.css';
 @source "./components/lectio";
 @source "./components/ui";
 @source "./templates";

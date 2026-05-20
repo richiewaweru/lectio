@@ -1,9 +1,11 @@
 import type { LectioPrintSpec } from '$lib/lectio/core/types';
 
 export const print = {
-	breakBehavior: 'prose',
+	breakBehavior: 'atomic',
 	preferredWidth: 'full',
-	hasMedia: false,
+	hasMedia: true,
+	mediaConstraint: 'constrain-height',
 	requiresColorReset: true,
-	fallback: 'Pull quote block with left border'
+	fallback:
+		'Image above headline when present; pull quote block with left border when text-only'
 } satisfies LectioPrintSpec;
