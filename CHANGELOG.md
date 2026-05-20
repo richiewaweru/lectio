@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-05-20
+
+### Fixed
+- `diagram-block` always uses figure-pair layout when `description` is set (including with callouts).
+- `pitfall-alert` renders `content.label` with default "Common Misconception" (verified; no renderer regression).
+
 ## [0.5.1] - 2026-05-20
 
 ### Changed

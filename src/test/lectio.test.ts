@@ -289,9 +289,40 @@ describe('Lectio component harmonization', () => {
 		expect(container.querySelectorAll('img.compare-layer-image')).toHaveLength(0);
 	});
 
-	it('renders labeled diagram callout buttons with guidance text', () => {
+	it('renders pitfall header label from content or defaults to Common Misconception', () => {
+		const customLabel = render(PitfallAlert, { props: { content: calculusSection.pitfall! } });
+		expect(screen.getByText(/Exam Trap/i)).toBeInTheDocument();
+		customLabel.unmount();
+
+		render(PitfallAlert, {
+			props: {
+				content: {
+					misconception: 'Wrong idea',
+					correction: 'Right idea.'
+				}
+			}
+		});
+		expect(screen.getByText(/Common Misconception/i)).toBeInTheDocument();
+	});
+
+	it('renders figure-pair layout when description is present, including with callouts', () => {
 		const { container } = render(DiagramBlock, {
 			props: { content: physicsSection.diagram! }
+		});
+
+		expect(container.querySelector('.figure-pair')).toBeInTheDocument();
+		expect(container.querySelector('.diagram__figure-ref')).toHaveTextContent('Figure 2.1');
+		expect(container.querySelector('.diagram__description')).toBeInTheDocument();
+		expect(
+			container.querySelectorAll<HTMLButtonElement>('button[data-popover-trigger]')
+		).toHaveLength(0);
+	});
+
+	it('renders labeled diagram callout buttons with guidance text', () => {
+		const { description: _description, figure_ref: _figureRef, ...diagramWithoutPair } =
+			physicsSection.diagram!;
+		const { container } = render(DiagramBlock, {
+			props: { content: diagramWithoutPair }
 		});
 
 		const calloutButtons = Array.from(
@@ -307,14 +338,16 @@ describe('Lectio component harmonization', () => {
 	});
 
 	it('opens diagram inspect content in a centered viewport-bounded dialog', async () => {
+		const { description: _description, figure_ref: _figureRef, ...diagramWithoutPair } =
+			physicsSection.diagram!;
 		render(DiagramBlock, {
-			props: { content: physicsSection.diagram! }
+			props: { content: diagramWithoutPair }
 		});
 
-		await fireEvent.click(screen.getByRole('img', { name: physicsSection.diagram!.alt_text }));
+		await fireEvent.click(screen.getByRole('img', { name: diagramWithoutPair.alt_text }));
 
-		expect(screen.getAllByRole('img', { name: physicsSection.diagram!.alt_text })).toHaveLength(2);
-		expect(screen.getAllByText(physicsSection.diagram!.caption)).toHaveLength(2);
+		expect(screen.getAllByRole('img', { name: diagramWithoutPair.alt_text })).toHaveLength(2);
+		expect(screen.getAllByText(diagramWithoutPair.caption)).toHaveLength(2);
 
 		const centeredDialog = Array.from(document.body.querySelectorAll<HTMLElement>('div')).find(
 			(element) =>

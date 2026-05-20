@@ -42,13 +42,7 @@
 			} as const
 		)[content.width ?? 'full']
 	);
-	const hasSideBySide = $derived(
-		Boolean(
-			content.description &&
-				(hasImage || hasSvg) &&
-				(printMode || !(content.callouts?.length))
-		)
-	);
+	const hasSideBySide = $derived(Boolean(content.description?.trim()));
 	const figureLabel = $derived(
 		content.figure_ref ?? (content.figure_number != null ? `Figure ${content.figure_number}` : null)
 	);
