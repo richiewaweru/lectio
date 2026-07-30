@@ -18,6 +18,9 @@ L3 is complete: the `answer-key` component is registered across the component mo
 teacher builder, document interchange, and public export surfaces. Its focused integration suite,
 type check, production build, and contract export all pass.
 
+L4 is complete: generated JSON and Python contracts reflect the new surface, the changelog and
+public API reference are updated, and the package version is 0.6.0. Publishing remains a human step.
+
 ## Goal
 
 Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned editing workspace by completing Phases 0-8 from the unified implementation guide.
@@ -140,3 +143,28 @@ Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned ed
 ## Next Phase Needs
 
 - Phase 1: move builder module into Textbook Agent frontend.
+
+---
+
+## Xplore 0.6.0 Checklist
+
+- [x] Add optional quiz-option diagnostic metadata
+- [x] Add optional section concept-card provenance
+- [x] Add the diagnostic AnswerKey component and runtime/editor/print integration
+- [x] Export JSON and Python contracts and prepare version 0.6.0
+- [x] Fix SSR-safe markdown and SVG sanitization discovered during browser validation
+- [x] Pass tests, checks, package validation, production build, and port-5173 smoke checks
+
+## Xplore 0.6.0 Validation Evidence
+
+- `pnpm test`: 19 files, 112 tests passed
+- `pnpm run check`: 0 errors; 2 pre-existing CalloutBlock warnings
+- `pnpm run package`: passed with the existing `@sveltejs/kit` dependency declaration warning
+- `pnpm run build`: passed with existing selector and bundle-size warnings
+- Browser smoke: `/`, `/components#answer-key`, `/templates`, and `/docs/contracts` returned
+  HTTP 200 from `127.0.0.1:5173`
+
+## Next Phase Needs
+
+- Publish or locally link Lectio 0.6.0 through the repository owner's release process before
+  beginning the downstream text-book-generator work.

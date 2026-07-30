@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-07-30
+
+### Added
+
+- Optional `diagnoses` misconception metadata on quiz options.
+- Optional `card_id` and `varies_on` provenance metadata on section content.
+- Diagnostic `answer-key` component with public types, runtime and builder registration, accessible
+  evidence wording, and print-aware page-break behavior.
+
+### Changed
+
+- Regenerated the JSON Schema, unified content contract, and Python adapter for the 0.6.0 surface.
+
 ## [0.5.2] - 2026-05-20
 
 ### Fixed
@@ -188,4 +201,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 - First published version to GitHub Packages
 - Pre-1.0: contracts may change in minor versions
-

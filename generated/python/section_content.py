@@ -259,6 +259,25 @@ class QuizOption(BaseModel):
     text: str
     correct: bool
     explanation: str
+    diagnoses: Optional[str] = None
+class AnswerKeyContent(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    label: Optional[str] = None
+    note: Optional[str] = None
+    entries: list[AnswerKeyEntry]
+class AnswerKeyEntry(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    question_number: float
+    question: str
+    correct_answer: str
+    correct_key: Optional[str] = None
+    diagnostics: Optional[list[AnswerKeyDiagnostic]] = None
+class AnswerKeyDiagnostic(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    option_key: Optional[str] = None
+    option_text: str
+    misconception_id: str
+    misconception_label: str
 class ReflectionContent(BaseModel):
     model_config = ConfigDict(extra='forbid')
     prompt: str
@@ -367,6 +386,8 @@ class SectionContent(BaseModel):
     model_config = ConfigDict(extra='forbid')
     section_id: str
     template_id: str
+    card_id: Optional[str] = None
+    varies_on: Optional[str] = None
     header: Optional[SectionHeaderContent] = None
     hook: Optional[HookHeroContent] = None
     explanation: Optional[ExplanationContent] = None
@@ -389,6 +410,7 @@ class SectionContent(BaseModel):
     pitfall: Optional[PitfallContent] = None
     pitfalls: Optional[list[PitfallContent]] = None
     quiz: Optional[QuizContent] = None
+    answer_key: Optional[AnswerKeyContent] = None
     reflection: Optional[ReflectionContent] = None
     glossary: Optional[GlossaryContent] = None
     simulation: Optional[SimulationContent] = None
@@ -445,6 +467,9 @@ InsightCell.model_rebuild()
 PitfallContent.model_rebuild()
 QuizContent.model_rebuild()
 QuizOption.model_rebuild()
+AnswerKeyContent.model_rebuild()
+AnswerKeyEntry.model_rebuild()
+AnswerKeyDiagnostic.model_rebuild()
 ReflectionContent.model_rebuild()
 GlossaryContent.model_rebuild()
 GlossaryTerm.model_rebuild()
