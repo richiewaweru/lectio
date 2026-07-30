@@ -320,7 +320,8 @@ export const QuizSchema = z
 			z.object({
 				text: z.string(),
 				correct: z.boolean(),
-				explanation: z.string()
+				explanation: z.string(),
+				diagnoses: z.string().optional()
 			})
 		),
 		feedback_correct: z.string(),

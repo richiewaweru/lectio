@@ -310,6 +310,7 @@ export interface QuizOption {
 	text: string; // max 20 words
 	correct: boolean;
 	explanation: string; // max 40 words — why right or wrong
+	diagnoses?: string; // misconception id this option reveals, e.g. "M1"
 }
 
 export interface QuizContent {

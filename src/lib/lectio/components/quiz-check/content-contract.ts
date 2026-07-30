@@ -24,6 +24,11 @@ export const contentContract = {
 			format: 'boolean',
 			description: 'Whether this option is the correct answer.'
 		},
+		'options[].diagnoses': {
+			format: 'plain_text',
+			description: 'Optional caller-supplied misconception id revealed by this option.',
+			renderBehavior: 'Metadata only; never rendered in the learner-facing quiz.'
+		},
 		feedback_correct: {
 			format: 'plain_text',
 			description: 'Short feedback when the learner is correct.',
@@ -42,6 +47,7 @@ export const contentContract = {
 	componentConstraints: [
 		'Every option should include an explanation.',
 		'Prefer exactly one correct option unless the quiz explicitly supports otherwise.',
+		'Never generate, validate, or reinterpret a diagnoses id inside Lectio.',
 		'Do not prefix option text with A/B/C labels in the string; the UI numbers options.'
 	]
 } satisfies LectioContentContract;

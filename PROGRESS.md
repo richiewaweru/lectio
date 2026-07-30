@@ -1,5 +1,16 @@
 # Lesson Builder Merge Progress
 
+## Xplore 0.6.0 — Active
+
+The active `xplore` work is tracked in
+`docs/project/runs/2026-07-30-xplore-lectio-0.6.0.md`. It adds diagnostic quiz metadata,
+section-level concept-card provenance, and the diagnostic answer-key component without changing
+existing component behaviour.
+
+L1 is complete: `QuizOption.diagnoses` is optional in the TypeScript and Zod contracts, is
+documented as metadata-only, has a focused passing test, and does not appear in learner-facing
+renderers.
+
 ## Goal
 
 Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned editing workspace by completing Phases 0-8 from the unified implementation guide.
