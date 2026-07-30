@@ -33,6 +33,7 @@ import { lectioModule as cm28 } from '../components/video-embed/module';
 import { lectioModule as cm29 } from '../components/image-block/module';
 import { lectioModule as cm30 } from '../components/timeline-block/module';
 import { lectioModule as cm31 } from '../components/simulation-block/module';
+import { lectioModule as cm32 } from '../components/answer-key/module';
 
 /** Ordered list mirrors legacy `registry.ts` insertion order for stable manifests/exports */
 export const lectioContentModules = [
@@ -67,7 +68,8 @@ export const lectioContentModules = [
 	cm28,
 	cm29,
 	cm30,
-	cm31
+	cm31,
+	cm32
 ] as const satisfies readonly LectioContentModule[];
 
 /** Alias kept for the v3 proposal wording — these modules exclude Svelte */

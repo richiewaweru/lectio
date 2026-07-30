@@ -107,6 +107,14 @@ const factories: Record<string, () => Record<string, unknown>> = {
 		feedback_correct: '',
 		feedback_incorrect: ''
 	}),
+	'answer-key': () => ({
+		label: 'Answer key',
+		entries: [] as {
+			question_number: number;
+			question: string;
+			correct_answer: string;
+		}[]
+	}),
 	'reflection-prompt': () => ({
 		prompt: '',
 		type: 'open' as const

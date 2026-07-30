@@ -27,6 +27,7 @@ export { default as ProcessSteps } from './ProcessSteps.svelte';
 // Group 4 — Assessment & Practice
 export { default as PracticeStack } from './PracticeStack.svelte';
 export { default as QuizCheck } from './QuizCheck.svelte';
+export { default as AnswerKey } from './AnswerKey.svelte';
 export { default as ReflectionPrompt } from './ReflectionPrompt.svelte';
 
 export { default as StudentTextbox } from './StudentTextbox.svelte';

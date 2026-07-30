@@ -106,6 +106,7 @@ const BLOCK_FIELD_ORDER: (keyof SectionContent)[] = [
 	'pitfalls',
 	'practice',
 	'quiz',
+	'answer_key',
 	'short_answer',
 	'fill_in_blank',
 	'student_textbox',

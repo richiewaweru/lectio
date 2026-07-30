@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { calculusSection, physicsSection } from '../dev/dummy-content';
+import type { SectionContent } from '../schema/types';
 import { fromSectionContents, toSectionContents, validateDocument } from './document';
 
 describe('LessonDocument conversion', () => {
@@ -44,6 +45,41 @@ describe('LessonDocument conversion', () => {
 		const result = validateDocument(doc);
 		expect(result.valid).toBe(false);
 		expect(result.errors.some((e) => e.includes('missing-block'))).toBe(true);
+	});
+
+	it('round-trips a diagnostic answer key as a registered block', () => {
+		const section: SectionContent = {
+			section_id: 'teacher-key',
+			template_id: 'open-canvas',
+			answer_key: {
+				entries: [
+					{
+						question_number: 1,
+						question: 'Where did most of the tree mass come from?',
+						correct_answer: 'carbon dioxide from the air',
+						diagnostics: [
+							{
+								option_text: 'minerals from the soil',
+								misconception_id: 'M1',
+								misconception_label: 'mass comes from the soil'
+							}
+						]
+					}
+				]
+			}
+		};
+
+		const doc = fromSectionContents([section], {
+			title: 'Teacher key',
+			subject: 'Biology',
+			preset_id: 'blue-classroom'
+		});
+		const answerKeyBlock = Object.values(doc.blocks).find(
+			(block) => block.component_id === 'answer-key'
+		);
+
+		expect(answerKeyBlock?.content).toEqual(section.answer_key);
+		expect(toSectionContents(doc)[0].answer_key).toEqual(section.answer_key);
 	});
 
 	it('emits at most one simulation-block per section from singular simulation', () => {

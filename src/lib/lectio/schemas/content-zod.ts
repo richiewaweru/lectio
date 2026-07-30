@@ -330,6 +330,35 @@ export const QuizSchema = z
 	})
 	.passthrough();
 
+export const AnswerKeySchema = z
+	.object({
+		label: z.string().optional(),
+		note: z.string().optional(),
+		entries: z.array(
+			z
+				.object({
+					question_number: z.number(),
+					question: z.string(),
+					correct_answer: z.string(),
+					correct_key: z.string().optional(),
+					diagnostics: z
+						.array(
+							z
+								.object({
+									option_key: z.string().optional(),
+									option_text: z.string(),
+									misconception_id: z.string(),
+									misconception_label: z.string()
+								})
+								.passthrough()
+						)
+						.optional()
+				})
+				.passthrough()
+		)
+	})
+	.passthrough();
+
 export const ReflectionSchema = z
 	.object({
 		prompt: z.string(),
@@ -511,6 +540,7 @@ export const SCHEMA_BY_SECTION_FIELD = {
 	process: ProcessSchema,
 	practice: PracticeSchema,
 	quiz: QuizSchema,
+	answer_key: AnswerKeySchema,
 	reflection: ReflectionSchema,
 	student_textbox: StudentTextboxSchema,
 	short_answer: ShortAnswerSchema,

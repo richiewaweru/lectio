@@ -19,7 +19,7 @@
 - [x] Read relevant source code and project rules
 - [x] L1: add optional diagnostic metadata to quiz options
 - [x] L2: add optional concept-card provenance to sections
-- [ ] L3: add and register the answer-key component
+- [x] L3: add and register the answer-key component
 - [ ] L4: export contracts and bump the package to 0.6.0
 - [ ] Run all tests, checks, and production build
 - [ ] Run a browser smoke check on port 5173
@@ -33,6 +33,11 @@
 - L1: no learner-facing Svelte component references `diagnoses`.
 - L2: `card_id` and `varies_on` are optional section-level metadata; production build passed and
   no renderer references either field.
+- L3: answer-key/component integration suite — 28 passed.
+- L3: `pnpm run check` — 0 errors; 2 pre-existing CalloutBlock unused-selector warnings.
+- L3: `pnpm run build` and `pnpm run export-contracts` — passed.
+- L3: no audience policy or literal color values were added; diagnostic wording and print break
+  behavior match the component specification.
 
 ## Risks and follow-up
 

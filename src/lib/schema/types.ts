@@ -322,6 +322,27 @@ export interface QuizContent {
 	show_explanations?: boolean; // default true
 }
 
+export interface AnswerKeyDiagnostic {
+	option_key?: string;
+	option_text: string;
+	misconception_id: string;
+	misconception_label: string;
+}
+
+export interface AnswerKeyEntry {
+	question_number: number;
+	question: string;
+	correct_answer: string;
+	correct_key?: string;
+	diagnostics?: AnswerKeyDiagnostic[];
+}
+
+export interface AnswerKeyContent {
+	label?: string;
+	note?: string;
+	entries: AnswerKeyEntry[];
+}
+
 // ──
 
 export type ReflectionType =
@@ -554,6 +575,7 @@ export interface SectionContent {
 	pitfall?: PitfallContent;
 	pitfalls?: PitfallContent[]; // some sections have multiple
 	quiz?: QuizContent;
+	answer_key?: AnswerKeyContent;
 	reflection?: ReflectionContent;
 	glossary?: GlossaryContent;
 	simulation?: SimulationContent;

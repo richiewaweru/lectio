@@ -415,6 +415,47 @@ const schemasById: Record<string, EditSchema> = {
 			{ field: 'feedback_incorrect', label: 'Incorrect feedback', input: 'textarea', required: true, maxWords: 30 }
 		]
 	},
+	'answer-key': {
+		component_id: 'answer-key',
+		fields: [
+			{ field: 'label', label: 'Label', input: 'text', required: false },
+			{ field: 'note', label: 'Standing note', input: 'textarea', required: false },
+			{
+				field: 'entries',
+				label: 'Questions',
+				input: 'object-list',
+				required: true,
+				itemSchema: [
+					{ field: 'question_number', label: 'Number', input: 'number', required: true },
+					{ field: 'question', label: 'Question', input: 'textarea', required: true },
+					{ field: 'correct_key', label: 'Correct option key', input: 'text', required: false },
+					{ field: 'correct_answer', label: 'Correct answer', input: 'textarea', required: true },
+					{
+						field: 'diagnostics',
+						label: 'Diagnostic distractors',
+						input: 'object-list',
+						required: false,
+						itemSchema: [
+							{ field: 'option_key', label: 'Option key', input: 'text', required: false },
+							{ field: 'option_text', label: 'Option text', input: 'textarea', required: true },
+							{
+								field: 'misconception_id',
+								label: 'Misconception id',
+								input: 'text',
+								required: true
+							},
+							{
+								field: 'misconception_label',
+								label: 'Misconception label',
+								input: 'textarea',
+								required: true
+							}
+						]
+					}
+				]
+			}
+		]
+	},
 	'reflection-prompt': {
 		component_id: 'reflection-prompt',
 		fields: [

@@ -14,6 +14,10 @@ renderers.
 L2 is complete: `SectionContent.card_id` and `SectionContent.varies_on` are optional metadata
 fields and no component branches on either value.
 
+L3 is complete: the `answer-key` component is registered across the component module, runtime,
+teacher builder, document interchange, and public export surfaces. Its focused integration suite,
+type check, production build, and contract export all pass.
+
 ## Goal
 
 Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned editing workspace by completing Phases 0-8 from the unified implementation guide.

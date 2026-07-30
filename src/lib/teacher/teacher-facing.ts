@@ -83,6 +83,10 @@ export const TEACHER_LOOKUP: Record<string, { teacherLabel: string; teacherDescr
 		teacherLabel: 'Quick Check Quiz',
 		teacherDescription: 'Short check-for-understanding with immediate feedback.'
 	},
+	'answer-key': {
+		teacherLabel: 'Diagnostic Answer Key',
+		teacherDescription: 'Lists correct answers and the misconceptions each distractor may reveal.'
+	},
 	'reflection-prompt': {
 		teacherLabel: 'Reflection Prompt',
 		teacherDescription: 'Open pause that encourages deeper thinking or sharing.'
