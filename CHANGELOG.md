@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Regenerated the JSON Schema, unified content contract, and Python adapter for the 0.6.0 surface.
+- Unified contract exports now carry the package release version (`0.6.0`) instead of an
+  independent hard-coded version.
 
 ## [0.5.2] - 2026-05-20
 

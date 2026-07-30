@@ -69,7 +69,10 @@ function buildPlannerIndex(modules: readonly LectioContentModule[]): JsonObject 
 	};
 }
 
-export function buildLectioContentContract(sectionProps: JsonObject): JsonObject {
+export function buildLectioContentContract(
+	sectionProps: JsonObject,
+	version = '1.0.0'
+): JsonObject {
 	const included: LectioContentModule[] = lectioComponentModules.filter((module) =>
 		isContentContractEligible(module)
 	);
@@ -85,7 +88,7 @@ export function buildLectioContentContract(sectionProps: JsonObject): JsonObject
 	const cards = included.map((module) => toComponentCard(module, sectionProps));
 
 	return {
-		version: '1.0.0',
+		version,
 		source: 'lectio',
 		print_surface: LECTIO_PRINT_SURFACE,
 		default_template_id: 'guided-concept-path',

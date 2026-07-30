@@ -40,6 +40,8 @@
   behavior match the component specification.
 - L4: generated JSON and Python contracts contain `diagnoses`, `card_id`, `varies_on`, and
   `answer-key`; package version is 0.6.0.
+- Release audit: the unified contract version is derived from `package.json` and exports as
+  `0.6.0`; the export regression test compares the artifact and package versions.
 - Final: `pnpm test` — 19 files and 112 tests passed.
 - Final: `pnpm run check` — 0 errors; 2 pre-existing CalloutBlock unused-selector warnings.
 - Final: `pnpm run package` and `pnpm run build` — passed.
@@ -50,9 +52,9 @@
 
 ## Risks and follow-up
 
-- Publishing to npm is a human-only step and is intentionally excluded.
-- The downstream text-book-generator work starts only after Lectio 0.6.0 is published or linked
-  locally by its owner.
+- npm publishing is authorized for this release, but requires an authenticated npm session.
+- The downstream text-book-generator work consumes the published package after the release is
+  available, with local contract sync used only for pre-publication validation.
 - Packaging reports the existing `@sveltejs/kit` dependency declaration warning.
 - The component catalog reports an existing nested-button hydration issue in `PrerequisiteStrip`;
   the page remains usable and the issue is outside the xplore contract/component scope.

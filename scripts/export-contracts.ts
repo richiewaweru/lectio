@@ -16,7 +16,7 @@
  * Single source of truth stays here in TypeScript.
  */
 
-import { mkdirSync, writeFileSync } from 'fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { createGenerator } from 'ts-json-schema-generator';
 import { validateAllLectioContentModules } from '../src/lib/lectio/core/validate-component';
@@ -28,6 +28,9 @@ const outFromArg = outArgIndex !== -1 ? process.argv[outArgIndex + 1] : null;
 const outFromEnv = process.env.LECTIO_CONTRACTS_DIR ?? null;
 const OUT = resolve(outFromArg ?? outFromEnv ?? 'contracts');
 mkdirSync(OUT, { recursive: true });
+const packageJson = JSON.parse(readFileSync(resolve('package.json'), 'utf8')) as {
+	version: string;
+};
 
 type JsonObject = Record<string, unknown>;
 
@@ -80,7 +83,7 @@ function getSectionContentPropertyMap(schemaJson: JsonObject): JsonObject {
 }
 
 const sectionProps = getSectionContentPropertyMap(sectionSchema as JsonObject);
-const unifiedContract = buildLectioContentContract(sectionProps);
+const unifiedContract = buildLectioContentContract(sectionProps, packageJson.version);
 writeFileSync(`${OUT}/lectio-content-contract.json`, JSON.stringify(unifiedContract, null, 2));
 
 console.log('Exported SectionContent schema');

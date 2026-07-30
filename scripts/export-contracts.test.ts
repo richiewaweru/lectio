@@ -70,7 +70,8 @@ describe('contract exports', () => {
 			expect(simulationTypeSchema.enum).toBeUndefined();
 
 			const unified = readJson(unifiedContractPath) as Record<string, JsonObject>;
-			expect(unified.version).toBe('1.0.0');
+			const packageJson = readJson(join(ROOT, 'package.json'));
+			expect(unified.version).toBe(packageJson.version);
 			expect(unified.print_surface).toBeTruthy();
 			const printSurface = unified.print_surface as Record<string, unknown>;
 			expect(printSurface.usable_height_px).toBe(970);
