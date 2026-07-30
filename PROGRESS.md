@@ -11,6 +11,9 @@ L1 is complete: `QuizOption.diagnoses` is optional in the TypeScript and Zod con
 documented as metadata-only, has a focused passing test, and does not appear in learner-facing
 renderers.
 
+L2 is complete: `SectionContent.card_id` and `SectionContent.varies_on` are optional metadata
+fields and no component branches on either value.
+
 ## Goal
 
 Merge the Lesson Builder into the Textbook Agent as a polished, teacher-owned editing workspace by completing Phases 0-8 from the unified implementation guide.

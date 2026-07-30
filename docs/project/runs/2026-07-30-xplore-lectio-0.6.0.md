@@ -18,7 +18,7 @@
 - [x] Understood requirements and identified scope
 - [x] Read relevant source code and project rules
 - [x] L1: add optional diagnostic metadata to quiz options
-- [ ] L2: add optional concept-card provenance to sections
+- [x] L2: add optional concept-card provenance to sections
 - [ ] L3: add and register the answer-key component
 - [ ] L4: export contracts and bump the package to 0.6.0
 - [ ] Run all tests, checks, and production build
@@ -31,6 +31,8 @@
 - L1: diagnoses schema test — 1 passed.
 - L1: `pnpm run build` — passed; existing CalloutBlock unused-selector and bundle-size warnings remain.
 - L1: no learner-facing Svelte component references `diagnoses`.
+- L2: `card_id` and `varies_on` are optional section-level metadata; production build passed and
+  no renderer references either field.
 
 ## Risks and follow-up
 

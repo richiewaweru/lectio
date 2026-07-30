@@ -526,6 +526,8 @@ export interface ImageBlockContent {
 export interface SectionContent {
 	section_id: string;
 	template_id: string;
+	card_id?: string; // stable concept card id, e.g. "calc.chain-rule.applying"
+	varies_on?: string; // what this rendering varies, e.g. "register: formal"
 
 	// Foundation fields (optional in v2 partial sections)
 	header?: SectionHeaderContent;
