@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 
 export function sanitizeSvg(svg: string | undefined): string {
 	if (!svg) return '';

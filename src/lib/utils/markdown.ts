@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import katex from 'katex';
 import { marked } from 'marked';
 
@@ -101,14 +101,14 @@ function sanitizeHtml(html: string): string {
 
 export function renderInlineMarkdown(text: string): string {
 	if (!text) return '';
-	if (HTML_TAG_PATTERN.test(text)) return text;
+	if (HTML_TAG_PATTERN.test(text)) return sanitizeHtml(text);
 	const parsed = marked.parseInline(preprocessMath(text), { gfm: true });
 	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
 
 export function renderBlockMarkdown(text: string): string {
 	if (!text) return '';
-	if (HTML_TAG_PATTERN.test(text)) return text;
+	if (HTML_TAG_PATTERN.test(text)) return sanitizeHtml(text);
 	const parsed = marked.parse(preprocessMath(text), { gfm: true, breaks: true });
 	return sanitizeHtml(typeof parsed === 'string' ? parsed : '');
 }
